@@ -48,6 +48,19 @@ MB_fnc_Setup = {
 	
 	MB_ObjectListNames = [];
 	MB_ObjectLists = [];
+	
+	//Fencer
+	MB_FencerDir = 0;
+	MB_FencerPreview = ObjNull;
+	
+	//Autosave
+	MB_autosaveInterval = 300;
+	MB_nextProjectAutosave = time + MB_autosaveInterval;
+	
+	[] spawn MB_fnc_loadLibrary;
+	["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
+	["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
+	
 };
 
 //***************************************
@@ -56,10 +69,12 @@ MB_fnc_Setup = {
 //***************************************
 MB_fnc_Exit = {
 		["MB_Draw3D", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
-		["MB_MapClick", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+		//["MB_MapClick", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		(findDisplay 123) displayRemoveAllEventHandlers "MouseMoving";
-	
+		
+		//MBCamera cameraEffect ["Terminate", "BACK"];
 		player switchCamera "Internal";
+		
 		player enableSimulation true;
 };
 
@@ -72,12 +87,15 @@ MB_fnc_Start = {
 	[1,false] call MB_fnc_togglePopup;
 	[2,false] call MB_fnc_togglePopup;
 	[3,false] call MB_fnc_togglePopup;
-	MBCamera = "camera" camCreate [0,0,0];
+	[4,false] call MB_fnc_togglePopup;
+	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";
 	//MBCamera cameraEffect ["internal", "BACK"];
-	player enableSimulation false;
-
-	["MB_MapClick", "onMapSingleClick", {MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];}, []] call BIS_fnc_addStackedEventHandler;
+	//showcinemaborder false;
+	//cameraEffectEnableHUD true;
+	//MBCamera cameraEffect ["internal", "BACK"];
+	//player enableSimulation false;
+	//["MB_MapClick", "onMapSingleClick", {MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];}, []] call BIS_fnc_addStackedEventHandler;
 	//((findDisplay 123) displayCtrl 170301) onDoubleClick "MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];";
 	
 	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
@@ -88,180 +106,27 @@ MB_fnc_Start = {
 	//(findDisplay 123) displayAddEventHandler ["KeyUp","_nil=_this call MB_fnc_KeyUp"];
 	
 	["MB_Draw3D", "onEachFrame", {call MB_fnc_Draw3D;}] call BIS_fnc_addStackedEventHandler;
-	
+	//addMissionEventHandler ['Draw3D',{call MB_fnc_Draw3D;}];
 	MB_RegisterKeys = true;
-	[] call MB_fnc_refreshFilters;
+	//[] call MB_fnc_refreshFilters;
+	[MB_Library] call MB_fnc_libraryUpdate;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
 		while{dialog} do {
 			[] call MB_fnc_updateCam;
+			["camUpdate"] call MB_fnc_dispatchCallbacks;
 			sleep 0.01;
 		};
 	};
-};
-
-
-
-//=========================================
-//= Selection
-//=========================================
-MB_fnc_Select = {
-	private["_object"];
-	_object = _this select 0;
-	_relPos = [0,0,0];
-	_height = (getposATL _object) select 2;
-	_dir = getdir _object;
-	_pitchBank = _object call BIS_fnc_getPitchBank;
-	if(count(MB_Selected)>0) then {
-		_first = ((MB_Selected select 0) select 0);
-		_relPos = _first worldToModel (getposASL _object);
-	};
-	MB_Selected set [count(MB_Selected),[_object,_relPos,_height,_dir,_pitchBank]];
-	//systemchat format["%1",MB_Selected];
-};
-MB_fnc_Deselect = {
-	private["_object","_newArray","_corners"];
-	_object = _this select 0;
-	_newArray = [];
-	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if(((MB_Selected select _i) select 0) != _object) then {
-			_newArray set [count(_newArray),(MB_Selected select _i)];
-		};
-
-	};
-	MB_Selected = _newArray;	
-};
-
-MB_fnc_DeselectAll = {
-	while{count(MB_Selected)>0} do {
-		[((MB_Selected select 0) select 0)] call MB_fnc_Deselect;	
-	};
-
-};
-MB_fnc_SelectInRectangle = {
-	_cornerA = _this select 0;
-	_cornerB = _this select 1;
-	_layer = MB_Layers select MB_CurLayer;
-	_layerObjects = _layer select 0;
-	{
-		_obj = _x;
-		_opos = getpos _obj;
-		_flag = true;
-		if((_cornerA select 0)>(_cornerB select 0) &&
-			((_opos select 0)>(_cornerA select 0) ||
-			(_opos select 0)<(_cornerB select 0))) then {
-				_flag = false;
-			};
-		if((_cornerA select 0)<(_cornerB select 0) &&
-			((_opos select 0)<(_cornerA select 0) ||
-			(_opos select 0)>(_cornerB select 0))) then {
-				_flag = false;
-			};
-		if((_cornerA select 1)>(_cornerB select 1) &&
-			((_opos select 1)>(_cornerA select 1) ||
-			(_opos select 1)<(_cornerB select 1))) then {
-				_flag = false;
-			};
-		if((_cornerA select 1)<(_cornerB select 1) &&
-			((_opos select 1)<(_cornerA select 1) ||
-			(_opos select 1)>(_cornerB select 1))) then {
-				_flag = false;
-			};
-			if(_flag && !([_obj] call MB_fnc_isSelected)) then {
-				[_obj] call MB_fnc_Select;
-			} else {
-				if(!_flag && ([_obj] call MB_fnc_isSelected)) then {
-					[_obj] call MB_fnc_Deselect;
-				};
-			};
-	} foreach _layerObjects;
-};
-MB_fnc_SelectUnderCursor = {
-	private["_uX","_uY","_layer","_obj","_pos","_opos"];
-	_uX = _this select 0;
-	_uY = _this select 1;
-	_pos = screenToWorld[_uX,_uY];
-	_layer = MB_Layers select MB_CurLayer;
-	_layerObjects = _layer select 0;
-	_obj = objNull;
-	_objects = lineIntersectsWith [getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY], objNull, objNull, true];
-	if(count(_objects)>0) then {
-		_obj = _objects select 0;
-	};
-	//MB_DebugLines set [count(MB_DebugLines),[getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY]]];
-	//Check if one of the objects is in the active layer
-	//{
-	//	_tmpObj = _x;
-	//	{
-	//		if((_x select 0)==_tmpObj) exitwith {_obj=_tmpObj;};
-	//	} foreach _layer;
-	//	if(!isNull(_obj)) exitwith {};
-	//} foreach _objects;
-	
-	//If no object found, try to select one by its baseline
-	//if(isNull(_obj)) then {
-	//	{
-	//		_opos = [getpos _x select 0,getpos _x select 1,0];
-	//		if((isNull _obj && (_opos distance _pos)<5) || (!(isNull _obj) &&(_obj distance _pos)>(_opos distance _pos))) then {
-	//			_obj = _x;
-	//		};
-	//	} foreach _layerObjects;
-	//};
-
-
-	_obj
-};
-
-MB_fnc_isSelected = {
-	private["_object","_newArray","_found"];
-	_object = _this select 0;
-	_found = false;
-	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if(((MB_Selected select _i) select 0) == _object) exitwith {
-			_found = true;
+	[] spawn {
+		while{dialog} do {
+			//[screenToWorld MB_MousePosition] spawn MB_fnc_colorVertices;
+			["loop"] call MB_fnc_dispatchCallbacks;
+			sleep 1;
 		};
 	};
-	_found
-};
-MB_fnc_Copy = {
-	MB_CopyPaste = [];
-	{
-		MB_CopyPaste pushBack [typeof (_x select 0),(_x select 1),(_x select 2),(_x select 3),(_x select 4)];
-	} foreach MB_Selected;
-	systemChat format["Selection of %1 objects copied to clipboard.",count(MB_CopyPaste)];
-};
-MB_fnc_Paste = {
-	[] call MB_fnc_DeselectAll;
-	_objects = [screenToWorld MB_MousePosition,MB_CopyPaste] call MB_fnc_ReconstructSelection;
-	{[_x] call MB_fnc_Select;} foreach _objects;
 };
 
-MB_fnc_ReconstructSelection = {
-//MB_Selected set [count(MB_Selected),[_object,_relPos,_height,_dir,_pitchBank]];
-	_pos = _this select 0;
-	_selection = _this select 1;
-	_createdObjects = [];
-	_primaryObj = objNull;
-	{
-		_pos = [(_pos select 0) + ((_x select 1) select 0),
-						(_pos select 1) + ((_x select 1) select 1),
-						(_x select 2)];
-		_created = [(_x select 0),_pos] call MB_fnc_CreateObject;
-		if(isNull(_primaryObj)) then {
-			_primaryObj = _created;
-		};
-		_created setposATL _pos;
-		
-		if(_primaryObj != _created) then {
-			[_primaryObj,_created,(_x select 1),(_x select 2)] call MB_fnc_SetRelPos;
-		};
-		_created setdir (_x select 3);
-		[_created,((_x select 4) select 0),((_x select 4) select 1)] call BIS_fnc_setPitchBank;
-		_createdObjects pushBack _created;
-	} foreach _selection;
-	
-	_createdObjects;
-};
 
 
 //=========================================
@@ -398,6 +263,27 @@ MB_fnc_Draw3D = {
 		drawLine3D [_c,_d,[0,0,1,1]];
 		drawLine3D [_d,_a,[0,0,1,1]];
 	};
+	if(count(MB_SelectionBox)==2) then {
+	
+	MB_SelectionBox call MB_fnc_DrawBox;
+	
+	};
+	if(!isNil("MB_VertexHelpers")) then {
+		{
+			_row = _x;
+			_rowindex = _forEachIndex;
+			{
+			//drawIcon3D ["\a3\ui_f\data\gui\cfg\cursors\add_gs.paa", [1,1,0,1], _x, 1.0, 1.0, 0,"", 1, 0.05, "PuristaMedium"];
+
+			if(count(_row)>(_forEachIndex+1)) then {
+				drawLine3D [_x,_row select (_forEachIndex+1),[1,1,0,1]];
+			};
+			if(count(MB_VertexHelpers)>(_rowindex+1)) then {
+				drawLine3D [_x,((MB_VertexHelpers select (_rowindex+1)) select _forEachIndex),[1,1,0,1]];
+			};
+			} foreach _row;
+		} foreach MB_VertexHelpers;
+	};
 };
 MB_fnc_DrawBoundingBox = {
 	_obj = _this select 0;
@@ -496,7 +382,100 @@ MB_fnc_DrawBoundingBox = {
 	//Groundlink
 	drawLine3D [(_obj modelToWorld _center),[(_obj modelToWorld _center) select 0,(_obj modelToWorld _center) select 1,0],_color];
 };
+MB_fnc_DrawBox = {
+	_vul = [_this,0,[],[[]],[3]] call bis_fnc_param;
+	_hor = [_this,1,[],[[]],[3]] call bis_fnc_param;
+	_height = (_hor select 2)-(_vul select 2);
+	_width = (_hor select 1)-(_vul select 1);
+	_length = (_hor select 0)-(_vul select 0);
 
+	
+	_vur = [(_vul select 0),(_vul select 1)+_width,(_vul select 2)];
+	_vol = [(_vul select 0),(_vul select 1),(_vul select 2)+_height];
+	_vor = [(_vul select 0),(_vul select 1)+_width,(_vul select 2)+_height];
+	
+	_hur = [(_hor select 0),(_hor select 1),(_hor select 2)-_height];
+	_hol = [(_hor select 0),(_hor select 1)-_width,(_hor select 2)];
+	_hul = [(_hor select 0),(_hor select 1)-_width,(_hor select 2)-_height];
+	
+	_color = [1,1,0,1];
+	//Cross
+	//drawLine3D [([_visPos,_vul] call BIS_fnc_vectorAdd),([_visPos,_hor] call BIS_fnc_vectorAdd),_color];
+		
+	//###Front###
+	//  ___
+	// |   |
+	// |   |
+	// |_#_|
+	drawLine3D [(_vul),(_vur),_color];
+	//  ___
+	// |   |
+	// #   |
+	// |___|	
+	drawLine3D [(_vul),(_vol),_color];
+	//  ___
+	// |   |
+	// | # |
+	// |___|	
+	drawLine3D [(_vul),(_vor),_color];
+	//  _#_
+	// |   |
+	// |   |
+	// |___|	
+	drawLine3D [(_vol),(_vor),_color];
+	//  ___
+	// |   |
+	// |   #
+	// |___|	
+	drawLine3D [(_vor),(_vur),_color];
+	
+	//###Back###
+	//  ___
+	// |   |
+	// |   |
+	// |_#_|
+	drawLine3D [(_hul),(_hur),_color];
+	//  ___
+	// |   |
+	// #   |
+	// |___|	
+	drawLine3D [(_hul),(_hol),_color];
+	//  ___
+	// |   |
+	// | # |
+	// |___|	
+	drawLine3D [(_hul),(_hor),_color];
+	//  _#_
+	// |   |
+	// |   |
+	// |___|	
+	drawLine3D [(_hol),(_hor),_color];
+	//  ___
+	// |   |
+	// |   #
+	// |___|	
+	drawLine3D [(_hor),(_hur),_color];
+	
+	//###Side###
+
+	drawLine3D [(_hul),(_vul),_color];
+	
+	drawLine3D [(_hol),(_vol),_color];
+
+	drawLine3D [(_hor),(_vor),_color];
+	
+	drawLine3D [(_hur),(_vur),_color];
+	
+	drawLine3D [(_hur),(_vul),_color];
+	drawLine3D [(_hor),(_vol),_color];
+	
+	drawLine3D [(_hul),(_vol),_color];
+	drawLine3D [(_hur),(_vor),_color];
+	
+	//Groundlink
+	//drawLine3D [(_center),[(_center) select 0,(_center) select 1,0],_color];
+
+};
 //=========================================
 //= Helper
 //=========================================
@@ -525,7 +504,6 @@ _dir = _this select 2;
 
 MB_fnc_SetRelPos = {
 	private["_parent","_child","_offset","_dir","_localPos","_worldPos","_height"];
-
 	_parent    = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	_child     = [_this,1,objNull,[objNull]] call BIS_fnc_param;
 	_offset    = [_this,2,[0,0,0],[[]]] call BIS_fnc_param;
@@ -540,5 +518,33 @@ MB_fnc_SetRelPos = {
 
 	_child setPosATL [_worldPos select 0,_worldPos select 1, _height];
 	//_child setDir ((getDir _parent) + _dir);
-
 };
+
+MB_fnc_colorVertices = {
+	private["_pos","_grid","_xp","_yp","_index","_vertex"];
+	_pos = [_this,0,[]] call bis_fnc_param;
+	_grid = 4;
+	_radius = 10;
+	_vertices = [];
+	if(isNil("MB_VertexHelpers")) then {
+		MB_VertexHelpers = [];
+	};
+	
+	_xp = (_pos select 0) - ((_pos select 0) mod _grid);
+	_yp = (_pos select 1) - ((_pos select 1) mod _grid);
+	_index = 0;
+	_cols = [];
+	for[{_dx=-_radius},{_dx<=_radius},{_dx=_dx+1}] do {
+		_rows = [];
+		for[{_dy=-_radius},{_dy<=_radius},{_dy=_dy+1}] do {
+			//_vertex = "Sign_Sphere100cm_F" createvehicle [_x+_dx*_grid,_y+_dy*_grid,0];
+			//_vertex setObjectTexture [0, "#(rgb,8,8,3)color(1,0,0,1)"];
+			_vertex = [_xp+_dx*_grid,_yp+_dy*_grid,0.5];
+			_rows pushBack _vertex;
+		};
+		_cols pushBack _rows;
+	};
+	MB_VertexHelpers = _cols;
+};
+
+//drawIcon3D ["targetIcon.paa", [1,1,1,1], getPos cursorTarget, 1, 1, 45, "Target", 1, 0.05, "TahomaB"];

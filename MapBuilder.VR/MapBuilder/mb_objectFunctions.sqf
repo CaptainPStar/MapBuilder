@@ -4,7 +4,7 @@
 //= Object Manipulation
 //=========================================
 MB_fnc_CreateObject = {
-	private["_class","_pos","_dir","_pitch","_bank","_obj","_layer","_scale"];
+	private["_class","_pos","_dir","_pitch","_bank","_obj","_layer","_scale","_normal","_simulation"];
 	_class = [_this,0] call bis_fnc_param;
 	_pos = [_this,1] call bis_fnc_param;
 	_layer = [_this,2,MB_CurLayer] call bis_fnc_param;
@@ -12,15 +12,30 @@ MB_fnc_CreateObject = {
 	_pitch = [_this,4,0] call bis_fnc_param;
 	_bank = [_this,5,0] call bis_fnc_param;
 	_scale = [_this,6,0] call bis_fnc_param;
-	_obj = _class createvehicle _pos;
-	_obj setposATL _pos;
-	_obj enableSimulation false;
+	_normal = [_this,7,false] call bis_fnc_param;
+	_simulation = [_this,8,false] call bis_fnc_param;
+	_obj = _class createvehicle [0,0,0];
+	_obj enableSimulation _simulation;
 	_obj setdir _dir;
+	[_obj,_pos] call MB_fnc_setExactPosition;
 	[_obj,_pitch,_bank] call BIS_fnc_setPitchBank;
+	if(_normal) then {
+		_obj setVectorUp surfaceNormal position _obj;
+	};
 	[[_obj,_layer],"MB_fnc_LayerAddObject",true] call BIS_fnc_mp;
 	_obj;
 };
-
+MB_fnc_CreateNewObject = {
+	private["_class","_pos","_dir","_simul"];
+	_class = [_this,0] call bis_fnc_param;
+	_pos = [_this,1] call bis_fnc_param;
+	_dir = MB_CamPos select 1;
+	if(ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170010)) then {
+		_dir = random 360;
+	};
+	_simul = ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170011);
+	[_class,_pos,MB_CurLayer,_dir,0,0,1,false,_simul] call MB_fnc_CreateObject;
+};
 
 MB_fnc_MoveSelected = {
 	private["_obj","_initialMousePos","_offset","_pos","_relPos","_height"];
@@ -134,4 +149,9 @@ MB_fnc_DeleteAllObjects = {
 	{
 		[_x] call MB_fnc_DeleteObject;
 	} foreach ((MB_Layers select MB_CurLayer) select 0);
+};
+MB_fnc_matchSurfaceNormals = {
+	{
+		(_x select 0) setVectorUp surfaceNormal position (_x select 0);
+	} foreach MB_Selected;
 };

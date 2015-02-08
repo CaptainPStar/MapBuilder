@@ -797,30 +797,30 @@ class RscTree {
 	colorDisabled[] = {0,0,0,0}; // Does nothing, but must be present, otherwise an error is shown
 	colorArrow[] = {0,0,0,0}; // Does nothing, but must be present, otherwise an error is shown
 
-	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-	onDestroy = "systemChat str ['onDestroy',_this]; false";
-	onMouseEnter = "systemChat str ['onMouseEnter',_this]; false";
-	onMouseExit = "systemChat str ['onMouseExit',_this]; false";
-	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onCanDestroy = "";
+	onDestroy = "";
+	onMouseEnter = "";
+	onMouseExit = "";
+	onSetFocus = "";
+	onKillFocus = "";
+	onKeyDown = "";
+	onKeyUp = "";
+	onMouseButtonDown = "";
+	onMouseButtonUp = "";
+	onMouseButtonClick = "";
+	onMouseButtonDblClick = "";
+	onMouseZChanged = "";
 	onMouseMoving = "";
 	onMouseHolding = "";
 
-	onTreeSelChanged = "systemChat str ['onTreeSelChanged',_this]; false";
-	onTreeLButtonDown = "systemChat str ['onTreeLButtonDown',_this]; false";
-	onTreeDblClick = "systemChat str ['onTreeDblClick',_this]; false";
-	onTreeExpanded = "systemChat str ['onTreeExpanded',_this]; false";
-	onTreeCollapsed = "systemChat str ['onTreeCollapsed',_this]; false";
+	onTreeSelChanged = "";
+	onTreeLButtonDown = "";
+	onTreeDblClick = "";
+	onTreeExpanded = "";
+	onTreeCollapsed = "";
 	//onTreeMouseMove = "systemChat str ['onTreeMouseMove',_this]; false"; // Causing CTD
 	//onTreeMouseHold = "systemChat str ['onTreeMouseHold',_this]; false"; // Causing CTD
-	onTreeMouseExit = "systemChat str ['onTreeMouseExit',_this]; false";
+	onTreeMouseExit = "";
 };
 
 class _CT_XLISTBOX

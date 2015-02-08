@@ -16,6 +16,8 @@ class MB_Main
 			y = "safezoneY";
 			w = "safezoneW";
 			h = "safezoneH";
+			//w = "0";
+			//h = "0";
 			
 			text = "";
 			onMouseMoving = "MB_MousePosition=[_this select 1,_this select 2];";
@@ -49,6 +51,7 @@ class MB_Main
 			h = "SafeZoneH * 0.29";
 			sizeEx = 0.03;
 			colorBackground[] = {0, 0.8, 0, 0.5};
+			onTreeSelChanged = "_this call MB_LibrarySelect;";
 			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
             //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
 		};
@@ -68,7 +71,7 @@ class MB_Main
 			w = "SafeZoneW * 0.05";
 			h = "SafeZoneH * 0.05";
 			text = "Export";
-			action = "[1,true] call MB_fnc_togglePopup;";
+			action = "[1f] call MB_fnc_togglePopup;";
 		};
 		class SaveToEditorButton : RscButton {
 			idc = 170006;
@@ -97,12 +100,48 @@ class MB_Main
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.03";
 		};
+		class MB_FencerButton : RscButton {
+			idc = 170008;
+			x = "SafeZoneX + (SafeZoneW * 0.87)";
+			y = "SafeZoneY + (SafezoneH * 0.85)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Fencer";
+			action = "[] call MB_fnc_openFencer;";
+		};
+		class MB_ObjSettingsLabel : RscText {
+			idc = 170009;
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.55)";
+			w = "SafeZoneW * 0.1";
+			h = "SafeZoneH * 0.03";
+			text =  "New Object settings:";
+		};
+		class MB_RndDirCheckbox : RscCheckbox {
+			idc = 170010;
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.59)";
+			w = "SafeZoneW * 0.03";
+			h = "SafeZoneH * 0.03";
+			checked_strings[] = {"RndDir"};
+			strings[] = {"RndDir"};
+		};
+		class MB_SimulCheckbox : RscCheckbox {
+			idc = 170011;
+			x = "SafeZoneX + (SafeZoneW * 0.86)";
+			y = "SafeZoneY + (SafezoneH * 0.59)";
+			w = "SafeZoneW * 0.03";
+			h = "SafeZoneH * 0.03";
+			checked_strings[] = {"Simul"};
+			strings[] = {"Simul"};
+		};
+		
 		//###################
 		//	Taskbar
 		//###################
 		
 		class MB_Taskbar : RscText { //--- Render out.
-			idc = 170008;
+			idc = 171009;
 			text = "";
 			x = "SafeZoneX + (SafeZoneW * 0)";
 			y = "SafeZoneY + (SafezoneH * 0.97)";
@@ -126,8 +165,7 @@ class MB_Main
 			w = "SafeZoneW * 0.4";
 			h = "SafeZoneH * 0.4";
 			onLoad = "";
-			onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;";
-			onMouseEnter = "MB_RegisterKeys = true;";
+			onMouseButtonDblClick = "_this call MB_fnc_mapDblClickTeleport;";
         };
 		class Popup_MapHeader : Rsc_Background {
 			idc = 170302;
@@ -293,7 +331,7 @@ class MB_Main
 		};
 		class Popup_ProjectsSaveButton : RscButton {
 			idc = 170206;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
+			x = "SafeZoneX + (SafeZoneW * 0.22)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
@@ -302,7 +340,7 @@ class MB_Main
 		};
 		class Popup_ProjectsLoadButton : RscButton {
 			idc = 170207;
-			x = "SafeZoneX + (SafeZoneW * 0.45)";
+			x = "SafeZoneX + (SafeZoneW * 0.42)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
@@ -319,12 +357,21 @@ class MB_Main
 		};
 		class Popup_ProjectsImportButton : RscButton {
 			idc = 170209;
-			x = "SafeZoneX + (SafeZoneW * 0.35)";
+			x = "SafeZoneX + (SafeZoneW * 0.32)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
 			text = "Import";
 			action = "[ctrlText 170205] spawn MB_fnc_importProject;";
+		};
+		class Popup_ProjectsClearButton : RscButton {
+			idc = 170210;
+			x = "SafeZoneX + (SafeZoneW * 0.52)";
+			y = "SafeZoneY + (SafezoneH * 0.72)";
+			w = "SafeZoneW * 0.08";
+			h = "SafeZoneH * 0.03";
+			text = "Clear";
+			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
 		};
 		//###################
 		//	Fencer
@@ -355,47 +402,74 @@ class MB_Main
 			w = "SafeZoneW * 0.02";
 			h = "SafeZoneH * 0.02";
 			colorBackground[] = {0,0.75,0,0.75};
-			action = "[4,false] call MB_fnc_togglePopup;";
+			action = "[] call MB_fnc_closeFencer;";
 		};
 		class Popup_FencerUpButton : RscButton {
 			idc = 170404;
 			x = "SafeZoneX + (SafeZoneW * 0.665)";
-			y = "SafeZoneY + (SafezoneH * 0.87)";
+			y = "SafeZoneY + (SafezoneH * 0.86)";
 			w = "SafeZoneW * 0.015";
 			h = "SafeZoneH * 0.02";
 			text = "U";
-			action = "[0] call MB_FNC_FencerPlace;";
+			action = "MB_FencerDir = 0;[] call MB_FNC_FencerUpdatePreview;";
 		};
 		class Popup_FencerDownButton : RscButton {
 			idc = 170405;
 			x = "SafeZoneX + (SafeZoneW * 0.665)";
-			y = "SafeZoneY + (SafezoneH * 0.895)";
+			y = "SafeZoneY + (SafezoneH * 0.885)";
 			w = "SafeZoneW * 0.015";
 			h = "SafeZoneH * 0.02";
 			text = "D";
-			action = "[1] call MB_FNC_FencerPlace;";
+			action = "MB_FencerDir = 1;[] call MB_FNC_FencerUpdatePreview;";
 		};
 		class Popup_FencerLeftButton : RscButton {
 			idc = 170406;
 			x = "SafeZoneX + (SafeZoneW * 0.645)";
-			y = "SafeZoneY + (SafezoneH * 0.882)";
+			y = "SafeZoneY + (SafezoneH * 0.872)";
 			w = "SafeZoneW * 0.015";
 			h = "SafeZoneH * 0.02";
 			text = "L";
-			action = "[2] call MB_FNC_FencerPlace;";
+			action = "MB_FencerDir = 2;[] call MB_FNC_FencerUpdatePreview;";
 		};
 		class Popup_FencerRightButton : RscButton {
 			idc = 170407;
 			x = "SafeZoneX + (SafeZoneW * 0.685)";
-			y = "SafeZoneY + (SafezoneH * 0.882)";
+			y = "SafeZoneY + (SafezoneH * 0.872)";
 			w = "SafeZoneW * 0.015";
 			h = "SafeZoneH * 0.02";
 			text = "R";
-			action = "[3] call MB_FNC_FencerPlace;";
+			action = "MB_FencerDir = 3;[] call MB_FNC_FencerUpdatePreview;";
+		};
+		class Popup_FencerPlaceButton : RscButton {
+			idc = 170408;
+			x = "SafeZoneX + (SafeZoneW * 0.645)";
+			y = "SafeZoneY + (SafezoneH * 0.92)";
+			w = "SafeZoneW * 0.06";
+			h = "SafeZoneH * 0.02";
+			text = "Place";
+			action = "[] call MB_FNC_FencerPlace;";
+		};
+		class Popup_FencerOffsetText : RscText {
+			idc = 170409;
+			x = "SafeZoneX + (SafeZoneW * 0.72)";
+			y = "SafeZoneY + (SafezoneH * 0.88)";
+			w = "SafeZoneW * 0.05";
+			h = "SafeZoneH * 0.02";
+			text = "Offset";
+		};
+		class Popup_FencerOffset : RscEdit {
+			idc = 170410;
+			text = "0.0";
+			x = "SafeZoneX + (SafeZoneW * 0.72)";
+			y = "SafeZoneY + (SafezoneH * 0.92)";
+			w = "SafeZoneW * 0.05";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0,0.75,0,0.75};
 		};
 		//###################
 		//	Brusher
 		//###################
+		
 	};
 	class Objects
 	{

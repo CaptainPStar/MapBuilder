@@ -169,7 +169,7 @@ MB_fnc_loadProject = {
 	[_filename] call MB_fnc_importProject;
 };
 MB_fnc_saveProject = {
-	private["_filename"];
+	private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_type"];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
 	MB_ProjectName = _filename;
@@ -178,7 +178,7 @@ MB_fnc_saveProject = {
 	systemChat format["Opening %1",_path];
 	{
 		_obj = _x;
-		_pos = getPosATL _obj;
+		_zPos = (getPosATL _obj) select 2;
 		_dir = getdir _obj;
 		_type =(typeof _obj);
 
@@ -187,12 +187,14 @@ MB_fnc_saveProject = {
 		_pitch = [_pitchBank select 0] call MB_fnc_roundNumbers;
 		_bank = [_pitchBank select 1] call MB_fnc_roundNumbers;
 		_scale = 1;
-		_xPos  = [_pos select 0] call MB_fnc_roundNumbers;
-		_yPos  = [_pos select 1] call MB_fnc_roundNumbers;
-		_zPos  = [_pos select 2] call MB_fnc_roundNumbers;
+		_zPos  = [_zPos] call MB_fnc_roundNumbers;
+		systemChat format["Pos before: %1",getpos _obj];
+		_pos = [_obj] call MB_fnc_exactPosition;
+		
 		_dir = [_dir] call MB_fnc_roundNumbers;
 		_layer = 0;
-		_string = format["write|%1;%2;%3;%4;%5;%6;%7;%8;%9",_layer,_type,_xPos,_yPos,_zPos,_dir,_pitch,_bank,_scale];
+		_string = format["write|%1;%2;%3;%4;%5;%6;%7;%8;%9",_layer,_type,(_pos select 0),(_pos select 1),(_pos select 2),_dir,_pitch,_bank,_scale];
+		systemChat _string;
 		systemChat ("MB_FileIO" callExtension _string);
 	} foreach ((MB_Layers select MB_CurLayer) select 0);
 	systemChat ("MB_FileIO" callExtension "close");
@@ -213,15 +215,22 @@ MB_fnc_importProject = {
 	_line = "MB_FileIO" callExtension "readline";
 	while{_line != "EOF"} do {
 		_object = [_line,";"] call BIS_fnc_splitString;
-		[
+		//_xAr = [(_object select 2),"."] call BIS_fnc_splitString;
+		//_yAr = [(_object select 3),"."] call BIS_fnc_splitString;
+		//_x = parseNumber(format["%1.%2",(_xAr select 0),(_xAr select 1)]);
+		//_y = parseNumber(format["%1.%2",(_yAr select 0),(_yAr select 1)]);
+		private["_obj"];
+		_obj = [
 			_object select 1,	//Object type
-			[parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)], //Position
+			[(_object select 2),(_object select 3),(_object select 4)], //Position
 			parseNumber (_object select 0),	//Layer
 			parseNumber (_object select 5),	//Dir
 			parseNumber (_object select 6),	//Pitch
 			parseNumber (_object select 7),	//Bank
 			parseNumber (_object select 8) //Scale
 		] call MB_fnc_CreateObject;
+		//[_obj,[(_object select 2),_y],parseNumber (_object select 4)] call MB_fnc_setExactPosition;
+		//systemchat format["[%1,%2,%3]",parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)];
 		_line = "MB_FileIO" callExtension "readline";
 	};
 	systemChat ("MB_FileIO" callExtension "close");
@@ -229,7 +238,7 @@ MB_fnc_importProject = {
 MB_fnc_roundNumbers = {
 private["_number","_digits","_acc"];
 	_number = [_this,0,0] call bis_fnc_param;
-	_digits = [_this,1,5] call bis_fnc_param;
+	_digits = [_this,1,4] call bis_fnc_param;
 	//Accuracy is 5 digits
 	_acc = 10^_digits;
 	_number = round((_number)*_acc)/_acc;
@@ -238,14 +247,26 @@ private["_number","_digits","_acc"];
 
 //Thanks to Mondkalb for this
 MB_fnc_exactPosition = {
-	private["_output","_object","_offset","_xcord","_xcordAC","_ycord","_ycordAC","_tempArray"];
+	private["_output","_object","_offset","_xcord","_xcordAC","_ycord","_ycordAC","_tempArray","_zcord","_zcordAC","_pos"];
 	_object = [_this,0] call bis_fnc_param;
 	_offset = [_this,1,[0,0]] call bis_fnc_param;
-	_xcord = floor ((getPos _object) select 0);
-	_xcordAC = (((getPos _object) select 0) - (floor ((getPos _object) select 0)));
-	_ycord = floor ((getPos _object) select 1);
-	_ycordAC = (((getPos _object) select 1) - (floor ((getPos _object) select 1)));
-
+	
+	_isWater = surfaceIsWater position _object;
+	if(_isWater) then {
+		_xcord = floor ((getPosASL _object) select 0);
+		_xcordAC = (((getPosASL _object) select 0) - (floor ((getPosASL _object) select 0)));
+		_ycord = floor ((getPosASL _object) select 1);
+		_ycordAC = (((getPosASL _object) select 1) - (floor ((getPosASL _object) select 1)));
+		_zcord = floor ((getPosASL _object) select 2);
+		_zcordAC = (((getPosASL _object) select 2) - (floor ((getPosASL _object) select 2))); 
+	} else {
+		_xcord = floor ((getPosATL _object) select 0);
+		_xcordAC = (((getPosATL _object) select 0) - (floor ((getPosATL _object) select 0)));
+		_ycord = floor ((getPosATL _object) select 1);
+		_ycordAC = (((getPosATL _object) select 1) - (floor ((getPosATL _object) select 1)));
+		_zcord = floor ((getPosATL _object) select 2);
+		_zcordAC = (((getPosATL _object) select 2) - (floor ((getPosATL _object) select 2))); 
+	};
 
 	_tempArray = toArray str _xcordAC;
 	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
@@ -265,6 +286,48 @@ MB_fnc_exactPosition = {
 		_ycordAC = toString _tempArray;
 	};
 	
-	_output = [format["%1.%2",(_xcord+(_offset select 0)),_xcordAC],format["%1.%2",(_ycord+(_offset select 1)),_ycordAC]];
+	_tempArray = toArray str _zcordAC;
+	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
+	{
+		_tempArray set [0, 999];
+		_tempArray set [1, 999];
+		_tempArray = _tempArray - [999];
+		_zcordAC = toString _tempArray;
+	};
+	
+	_output = [format["%1.%2",(_xcord+(_offset select 0)),_xcordAC],
+				format["%1.%2",(_ycord+(_offset select 1)),_ycordAC],
+				format["%1.%2",_zcord,_zcordAC]];
 	_output;
+};
+MB_fnc_setExactPosition = {
+	private["_object","_position","_var","_isWater","_posType","_command"];
+	_object = [_this,0] call bis_fnc_param;
+	_position = [_this,1,-1,[[]],[2,3]] call bis_fnc_param;
+	_var = [_object] call BIS_fnc_objectVar;
+	_isWater = false;
+	_pos = call compile format["[%1,%2,%3]",_position select 0,_position select 1,_position select 2];
+	_isWater = surfaceIsWater _pos;
+	_posType = "";
+	if(_isWater) then {
+		_posType = "setposASL";
+	} else {
+		_posType = "setposATL";
+	};
+	_command = format["%1 %2 [%3,%4,%5]",_var,_posType,_position select 0,_position select 1,_position select 2];
+	systemchat _command;
+	call compile _command;
+};
+
+MB_nextProjectAutosave = -1;
+MB_fnc_autosave = {
+	if(time>=MB_nextProjectAutosave && MB_nextProjectAutosave>0) then {
+		["autosave"] call MB_fnc_saveProject;
+		MB_nextProjectAutosave = time + MB_autosaveInterval;
+	};
+};
+MB_fnc_clearProject = {
+
+	systemChat "Not implemented yet. Next update!";
+
 };

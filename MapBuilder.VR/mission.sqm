@@ -6,13 +6,14 @@ class Mission
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
 		"a3_map_stratis",
-		"map_vr"
+		"map_vr",
+		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
-		"map_vr"
+		"neo_rieda_cfg"
 	};
 	randomSeed=12986964;
 	class Intel
@@ -43,7 +44,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={4044.6902,5,4477.8213};
+					position[]={1651.4159,9.9511194,2285.084};
 					id=0;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -61,7 +62,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={4064.218,5,4477.8643};
+					position[]={1670.9436,10.506301,2285.127};
 					id=1;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -78,11 +79,12 @@ class Intro
 	addOns[]=
 	{
 		"a3_map_stratis",
-		"map_vr"
+		"map_vr",
+		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"map_vr"
+		"neo_rieda_cfg"
 	};
 	randomSeed=6047355;
 	class Intel
@@ -109,11 +111,12 @@ class OutroWin
 	addOns[]=
 	{
 		"a3_map_stratis",
-		"map_vr"
+		"map_vr",
+		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"map_vr"
+		"neo_rieda_cfg"
 	};
 	randomSeed=5141507;
 	class Intel
@@ -140,11 +143,12 @@ class OutroLoose
 	addOns[]=
 	{
 		"a3_map_stratis",
-		"map_vr"
+		"map_vr",
+		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"map_vr"
+		"neo_rieda_cfg"
 	};
 	randomSeed=2744005;
 	class Intel
