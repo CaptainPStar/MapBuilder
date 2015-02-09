@@ -4,16 +4,12 @@ class Mission
 	addOns[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_characters_f",
-		"a3_map_stratis",
-		"map_vr",
-		"neo_rieda_cfg"
+		"a3_characters_f"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_characters_f",
-		"neo_rieda_cfg"
+		"a3_characters_f"
 	};
 	randomSeed=12986964;
 	class Intel
@@ -78,13 +74,9 @@ class Intro
 {
 	addOns[]=
 	{
-		"a3_map_stratis",
-		"map_vr",
-		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"neo_rieda_cfg"
 	};
 	randomSeed=6047355;
 	class Intel
@@ -110,13 +102,9 @@ class OutroWin
 {
 	addOns[]=
 	{
-		"a3_map_stratis",
-		"map_vr",
-		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"neo_rieda_cfg"
 	};
 	randomSeed=5141507;
 	class Intel
@@ -142,13 +130,9 @@ class OutroLoose
 {
 	addOns[]=
 	{
-		"a3_map_stratis",
-		"map_vr",
-		"neo_rieda_cfg"
 	};
 	addOnsAuto[]=
 	{
-		"neo_rieda_cfg"
 	};
 	randomSeed=2744005;
 	class Intel
