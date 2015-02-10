@@ -71,7 +71,7 @@ class MB_Main
 			w = "SafeZoneW * 0.05";
 			h = "SafeZoneH * 0.05";
 			text = "Export";
-			action = "[1f] call MB_fnc_togglePopup;";
+			action = "[1] call MB_fnc_togglePopup;";
 		};
 		class SaveToEditorButton : RscButton {
 			idc = 170006;
