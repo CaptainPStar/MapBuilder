@@ -5,23 +5,10 @@ MB_fnc_loadLibrary = {
 	_cats = [];
 	_cfgVehicleClasses = configFile >> "CfgVehicleClasses";
 	_all = [];
-	_allCats = [];
-	_mbCats = [];
-	for "_i" from 0 to (count _cfgVehicleClasses)-1 do
-	{
-		_cur_cat = _cfgVehicleClasses select _i;
-
-		if(isClass _cur_cat) then
-		{
-			_classname = configName _cur_cat;
-			_name = getText (configFile >> "CfgVehicleClasses" >> _classname >> "displayname");
-			if (true) then
-			{
-				_all pushBack [_name,[]];
-				_allCats pushBack _name;
-			};
-		};
-	};
+	
+	_mbLibrary = [];
+	_config = [];
+	
 	//Load Objects
 	_cfgVehicles = configFile >> "CfgVehicles";
 	
@@ -34,24 +21,30 @@ MB_fnc_loadLibrary = {
 			_classname = configName _cur_obj;
 
 			_cur_catName = getText (configFile >> "CfgVehicles" >> _classname >> "VehicleClass");
+			
 			_catDisplayName = getText (configFile >> "CfgVehicleClasses" >> _cur_catName >> "displayname");
+			
+			_mbFilter = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_filter",""] call BIS_fnc_returnConfigEntry;
+			
 			_scope = getNumber (configFile >> "CfgVehicles" >> _classname >> "scope");
 
 			_name = getText (configFile >> "CfgVehicles" >> _classname >> "displayname");
-			_mbFilter = [(configFile >> "CfgVehicles" >> _classname),"mapbuilder_filter",""] call BIS_fnc_returnConfigEntry;
 			//I have no idea what I am doing!
 			if ((_scope >= 1) && (_classname != "\access")) then
 			{
-				_catIndex = _allCats find _cur_catName;
-				if(_catIndex >= 0) then {
-					((_all select _catIndex) select 1) pushBack [_name, _classname];
+				if(_catDisplayName != "") then {
+					_catIndex = [_config,_catDisplayName] call MB_fnc_libraryFindName;
+					if(_catIndex == -1) then {
+						_catIndex = _config pushBack [_catDisplayName,[]];
+					};
+					((_config select _catIndex) select 1) pushBack [_name,_classname];
 				};
 				if(_mbFilter != "") then {
-					_catIndex = [_mbCats,_mbFilter] call MB_fnc_libraryFindName;
+					_catIndex = [_mbLibrary,_mbFilter] call MB_fnc_libraryFindName;
 					if(_catIndex == -1) then {
-						_catIndex = _mbCats pushBack [_mbFilter,[]];
+						_catIndex = _mbLibrary pushBack [_mbFilter,[]];
 					};
-					_mbCat = ((_mbCats select _catIndex) select 1);
+					_mbCat = ((_mbLibrary select _catIndex) select 1);
 					_catIndex = [_mbCat,_catDisplayName] call MB_fnc_libraryFindName;
 					if(_catIndex == -1) then {
 						_catIndex = _mbCat pushBack [_catDisplayName,[]];
@@ -62,7 +55,7 @@ MB_fnc_loadLibrary = {
 		};
 	};
 	
-	MB_Library = [["Library",_mbCats],["Config (All)",_all]];
+	MB_Library = [["Library",_mbLibrary],["Config (All)",_config],["Favorites",[]],["Used",[]]];
 
 };
 MB_fnc_libraryFindName = {
