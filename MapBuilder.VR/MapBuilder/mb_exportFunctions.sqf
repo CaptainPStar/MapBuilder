@@ -71,9 +71,9 @@ MB_fnc_exportSQF = {
 		_height = str ((getposATL _obj) select 2);
 		_pos pushBack _height;
 		_dir = [getdir _obj,3] call MB_fnc_roundNumbers;
-		_string = format["write|_obj = ""%1"" createvehicle %2;",_type,str _pos];
+		_string = format["write|_obj = ""%1"" createvehicle [%2,%3,%4];",_type,_pos select 0,_pos select 1,_pos select 2];
 		systemChat ("MB_FileIO" callExtension _string);
-		_string = format["write|_obj setposATL %1;",str _pos];
+		_string = format["write|_obj setposATL [%1,%2,%3];",_pos select 0,_pos select 1,_pos select 2];
 		systemChat ("MB_FileIO" callExtension _string);
 		_string = format["write|_obj setdir %1;",_dir];
 		systemChat ("MB_FileIO" callExtension _string);
@@ -229,7 +229,7 @@ MB_fnc_importProject = {
 			parseNumber (_object select 7),	//Bank
 			parseNumber (_object select 8) //Scale
 		] call MB_fnc_CreateObject;
-		//[_obj,[(_object select 2),_y],parseNumber (_object select 4)] call MB_fnc_setExactPosition;
+		[_obj,[(_object select 2),(_object select 3),(_object select 4)]] call MB_fnc_setExactPosition;
 		//systemchat format["[%1,%2,%3]",parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)];
 		_line = "MB_FileIO" callExtension "readline";
 	};
@@ -257,17 +257,16 @@ MB_fnc_exactPosition = {
 		_xcordAC = (((getPosASL _object) select 0) - (floor ((getPosASL _object) select 0)));
 		_ycord = floor ((getPosASL _object) select 1);
 		_ycordAC = (((getPosASL _object) select 1) - (floor ((getPosASL _object) select 1)));
-		_zcord = floor ((getPosASL _object) select 2);
-		_zcordAC = (((getPosASL _object) select 2) - (floor ((getPosASL _object) select 2))); 
+		_zcord = ((getPosASL _object) select 2);
+		//_zcordAC = (((getPosASL _object) select 2) - (floor ((getPosASL _object) select 2))); 
 	} else {
 		_xcord = floor ((getPosATL _object) select 0);
 		_xcordAC = (((getPosATL _object) select 0) - (floor ((getPosATL _object) select 0)));
 		_ycord = floor ((getPosATL _object) select 1);
 		_ycordAC = (((getPosATL _object) select 1) - (floor ((getPosATL _object) select 1)));
-		_zcord = floor ((getPosATL _object) select 2);
-		_zcordAC = (((getPosATL _object) select 2) - (floor ((getPosATL _object) select 2))); 
+		_zcord = ((getPosATL _object) select 2);
+		//_zcordAC = (((getPosATL _object) select 2) - (floor ((getPosATL _object) select 2))); 
 	};
-
 	_tempArray = toArray str _xcordAC;
 	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
 	{
@@ -285,19 +284,18 @@ MB_fnc_exactPosition = {
 		_tempArray = _tempArray - [999];
 		_ycordAC = toString _tempArray;
 	};
-	
-	_tempArray = toArray str _zcordAC;
-	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
-	{
-		_tempArray set [0, 999];
-		_tempArray set [1, 999];
-		_tempArray = _tempArray - [999];
-		_zcordAC = toString _tempArray;
-	};
-	
+	//_zcordAC = [_zcordAC,6] call MB_fnc_roundNumbers;
+	//_tempArray = toArray str _zcordAC;
+	//if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
+	//{
+	//	_tempArray set [0, 999];
+	//	_tempArray set [1, 999];
+	//	_tempArray = _tempArray - [999];
+	//	_zcordAC = toString _tempArray;
+	//};
 	_output = [format["%1.%2",(_xcord+(_offset select 0)),_xcordAC],
 				format["%1.%2",(_ycord+(_offset select 1)),_ycordAC],
-				format["%1.%2",_zcord,_zcordAC]];
+				format["%1",_zcord]];
 	_output;
 };
 MB_fnc_setExactPosition = {
@@ -308,7 +306,7 @@ MB_fnc_setExactPosition = {
 	_isWater = false;
 	_pos = call compile format["[%1,%2,%3]",_position select 0,_position select 1,_position select 2];
 	_isWater = surfaceIsWater _pos;
-	_posType = "";
+	_posType = "setposATL";
 	if(_isWater) then {
 		_posType = "setposASL";
 	} else {
