@@ -54,7 +54,7 @@ MB_fnc_Setup = {
 	MB_FencerPreview = ObjNull;
 	
 	//Autosave
-	MB_autosaveInterval = 300;
+	MB_autosaveInterval = -1;
 	MB_nextProjectAutosave = time + MB_autosaveInterval;
 	
 	[] spawn MB_fnc_loadLibrary;
