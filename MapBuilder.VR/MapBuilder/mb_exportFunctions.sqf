@@ -177,26 +177,28 @@ MB_fnc_saveProject = {
 	_path = ("MB_FileIO" callExtension format["open_w|projects\%1.mbp",_filename]);
 	systemChat format["Opening %1",_path];
 	{
-		_obj = _x;
-		_zPos = (getPosATL _obj) select 2;
-		_dir = getdir _obj;
-		_type =(typeof _obj);
+		if(!isNull(_x)) then {
+			_obj = _x;
 
-		_pitchBank = _obj call BIS_fnc_getPitchBank;
+			_type =(typeof _obj);
+			
+			_scale = 1;
 		
-		_pitch = [_pitchBank select 0] call MB_fnc_roundNumbers;
-		_bank = [_pitchBank select 1] call MB_fnc_roundNumbers;
-		_scale = 1;
-		_zPos  = [_zPos] call MB_fnc_roundNumbers;
-		systemChat format["Pos before: %1",getpos _obj];
-		_pos = [_obj] call MB_fnc_exactPosition;
-		
-		_dir = [_dir] call MB_fnc_roundNumbers;
-		_layer = 0;
-		_string = format["write|%1;%2;%3;%4;%5;%6;%7;%8;%9",_layer,_type,(_pos select 0),(_pos select 1),(_pos select 2),_dir,_pitch,_bank,_scale];
-		systemChat _string;
-		systemChat ("MB_FileIO" callExtension _string);
-	} foreach ((MB_Layers select MB_CurLayer) select 0);
+			
+			_pos = _obj getvariable "MB_ObjVar_PositionATL";
+			_pitch = _obj getvariable "MB_ObjVar_Pitch";
+			_bank = _obj getvariable "MB_ObjVar_Bank";
+			_yaw = _obj getvariable "MB_ObjVar_Yaw";
+			_simulate = _obj getvariable "MB_ObjVar_Simulate";
+			_locked = _obj getvariable "MB_ObjVar_Locked";
+			
+			
+			_layer = 0;
+			_string = format["write|%1;%2;%3;%4;%5;%6;%7;%8;%9",_layer,_type,(_pos select 0),(_pos select 1),(_pos select 2),_yaw,_pitch,_bank,_scale];
+			systemChat _string;
+			systemChat ("MB_FileIO" callExtension _string);
+		};
+	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["Project saved!"];
 };
@@ -214,26 +216,32 @@ MB_fnc_importProject = {
 	
 	_line = "MB_FileIO" callExtension "readline";
 	while{_line != "EOF"} do {
+		private["_obj","_type","_layer","_pos","_dir","_pitch","_bank","_scale"];
+		systemChat _line;
 		_object = [_line,";"] call BIS_fnc_splitString;
-		//_xAr = [(_object select 2),"."] call BIS_fnc_splitString;
-		//_yAr = [(_object select 3),"."] call BIS_fnc_splitString;
-		//_x = parseNumber(format["%1.%2",(_xAr select 0),(_xAr select 1)]);
-		//_y = parseNumber(format["%1.%2",(_yAr select 0),(_yAr select 1)]);
-		private["_obj"];
-		_obj = [
-			_object select 1,	//Object type
-			[(_object select 2),(_object select 3),(_object select 4)], //Position
-			parseNumber (_object select 0),	//Layer
-			parseNumber (_object select 5),	//Dir
-			parseNumber (_object select 6),	//Pitch
-			parseNumber (_object select 7),	//Bank
-			parseNumber (_object select 8) //Scale
-		] call MB_fnc_CreateObject;
-		[_obj,[(_object select 2),(_object select 3),(_object select 4)]] call MB_fnc_setExactPosition;
+		systemChat format["%1",_object];
+		_type = (_object select 1);
+		_pos = [parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)]; //Position
+		_layer = parseNumber (_object select 0);//Layer
+		_dir =	parseNumber (_object select 5);	//Dir
+		_pitch = parseNumber (_object select 6);	//Pitch
+		_bank =	parseNumber (_object select 7);	//Bank
+		_scale=	parseNumber (_object select 8); //Scale
+		
+		_obj = [_type,_pos] call MB_fnc_CreateObject;
+		_obj setvariable["MB_ObjVar_PositionATL",_pos,false];
+		_obj setvariable["MB_ObjVar_Pitch",_pitch,false];
+		_obj setvariable["MB_ObjVar_Bank",_bank,false];
+		_obj setvariable["MB_ObjVar_Yaw",_dir,false];
+		systemchat format["Bank is %1",_bank];
+
+		[_obj] call MB_fnc_UpdateObject;
+		
 		//systemchat format["[%1,%2,%3]",parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)];
 		_line = "MB_FileIO" callExtension "readline";
 	};
 	systemChat ("MB_FileIO" callExtension "close");
+	[] call MB_fnc_updateUsed;
 };
 MB_fnc_roundNumbers = {
 private["_number","_digits","_acc"];
@@ -325,7 +333,13 @@ MB_fnc_autosave = {
 	};
 };
 MB_fnc_clearProject = {
-
-	systemChat "Not implemented yet. Next update!";
-
+	["clearedProject"] call MB_fnc_saveProject;
+	{
+		if(!isNull(_x)) then {
+			[_x] call MB_fnc_DeleteObject;
+		};
+	} foreach MB_Objects;
+	MB_Objects = [];
+	MB_NUID = 0;
+	publicvariable "MB_NUID";
 };

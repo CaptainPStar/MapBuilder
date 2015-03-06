@@ -24,7 +24,8 @@ MB_fnc_Setup = {
 	MB_MouseKeys = [];
 	MB_MouseKeys set [MB_L,[false,0,0]];
 	MB_MouseKeys set [MB_R,[false,0,0]];
-	MB_MousePosition = [0,0];
+	MB_MousePosition = [0,0,0];
+	MB_LastMousePosition = [0,0,0];
 	MB_MousePositionDelta = [0,0];
 	MB_CamPos = [[getpos player select 0, getpos player select 1,(getpos player select 2)+2],getdir player,0];//[X,Y,Z],Dir,Dive
 	MB_Selected = [];
@@ -46,8 +47,21 @@ MB_fnc_Setup = {
 	MB_SelectedPolyline = [];
 	MB_PopupOpen = false; 
 	
-	MB_ObjectListNames = [];
-	MB_ObjectLists = [];
+	//MB_ObjectListNames = [];
+	//MB_ObjectLists = []; //Ob
+	
+	MB_LibraryFavorites = [];
+	MB_LibraryInUse = [];
+	
+	MB_Objects = []; //All placed objects
+	
+	//MB safe variables
+	if(isNil("MB_NUID")) then {
+		MB_NUID = 0;
+		publicVariable "MB_NUID";
+	};
+	
+	
 	
 	//Fencer
 	MB_FencerDir = 0;
@@ -57,10 +71,10 @@ MB_fnc_Setup = {
 	MB_autosaveInterval = -1;
 	MB_nextProjectAutosave = time + MB_autosaveInterval;
 	
-	[] spawn MB_fnc_loadLibrary;
+	[] call MB_fnc_loadLibrary;
 	["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
 	["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
-	
+	["onMouseDblClick","MB_fnc_CreateObjectByClick"] call mb_fnc_addCallback;
 };
 
 //***************************************
@@ -157,84 +171,6 @@ MB_fnc_isMode = {
 	};
 	true;
 };
-//=========================================
-//= Layer Depreciated
-//=========================================
-MB_fnc_LayerUpdateObject = {
-
-};
-MB_fnc_LayerHasObject = {
-
-};
-MB_fnc_LayerAddObject = {
-	_object =[_this,0] call bis_fnc_param;
-	_layerIndex = [_this,1] call bis_fnc_param;
-	if(count(MB_Layers)-1 < _layerIndex) then {
-		MB_Layers set[_layerIndex,[[]]];
-	};
-	_layer = MB_Layers select _layerIndex;
-	_layerObjects = _layer select 0;
-	_layerObjects pushBack _object;
-	//_layer set [0,_layerObjects];
-	//MB_Layers set [MB_CurLayer,_layer];
-};
-MB_fnc_LayerRemoveObject = {
-	_object =[_this,0] call bis_fnc_param;
-	_layerIndex = [_this,1] call bis_fnc_param;
-	
-	_layer = MB_Layers select _layerIndex;
-	_layerObjects = _layer select 0;
-	_layerObjects = _layerObjects - [_object];
-	_layer set [0,_layerObjects];
-};
-
-//=========================================
-//= Polyline
-//=========================================
-
-MB_fnc_StartPolyline = {
-	if(count(MB_SelectedPolyline)==0) then {
-		_vertex = [MB_ClickedPosition] call MB_fnc_CreatePolylineVertex;
-		MB_SelectedPolyline set [0,[_vertex,[]]];
-	} else {
-		_vertex = [MB_ClickedPosition] call MB_fnc_CreatePolylineVertex;
-		_lastVertex = (MB_SelectedPolyline select (count(MB_SelectedPolyline)-1)) select 0;
-		_lineList = [getposATL _lastVertex,getposATL _vertex] call MB_fnc_CreateLine;
-		MB_SelectedPolyline set[count(MB_SelectedPolyline),[_vertex,_lastVertex]]
-	};
-};
-MB_fnc_CreatePolylineVertex = {
-	_pos = _this select 0;
-	_dir = [_this,1,0] call BIS_fnc_param;
-	_height = [_this,2,0.25] call BIS_fnc_param;
-	_color = [_this,3,[1,1,1,1],[[]]] call BIS_fnc_param;
-	_vertex = "UserTexture1m_F" createVehicle _pos;
-	_vertex setObjectTexture [0,format["#(argb,8,8,1)color(%1,%2,%3,%4)",_color select 0,_color select 1,_color select 2,_color select 3]];
-	_vertex setposATL [_pos select 0, _pos select 1, _height];
-	_vertex setdir _dir;
-	[_vertex,-90,0] call BIS_fnc_SetPitchBank;
-	_vertex;
-};
-MB_fnc_CreateLine = {
-	_pos1 = _this select 0;
-	_pos2 = _this select 1;
-	_dir = [_pos1,_pos2] call BIS_fnc_dirTo;
-	_distance = round([_pos1, _pos2] call BIS_fnc_Distance2D);
-	_list = [];
-	_vec = [((_pos2 select 0)-(_pos1 select 0))/_distance,((_pos2 select 1)-(_pos1 select 1))/_distance,0];
-	for "_i" from 0 to _distance do {
-		_vertex = [[(_pos1 select 0)+_i*(_vec select 0),(_pos1 select 1)+_i*(_vec select 1),0],_dir,0.1,[0,0,1,1]] call MB_fnc_CreatePolylineVertex;
-		_list set[count(_list),_vertex];
-	};
-	_list
-};
-MB_fnc_FinishPolyline = {
-	_layer = ((MB_Layers select MB_CurLayer) select 1);
-	_layer set [count(_layer),MB_SelectedPolyline];
-};
-MB_fnc_DeletePolyline = {};
-
-MB_fnc_DeleteCreatedPolyline = {};
 
 //=========================================
 //= Scene drawing
@@ -242,7 +178,7 @@ MB_fnc_DeleteCreatedPolyline = {};
 
 MB_fnc_Draw3D = {
 	{
-		[_x select 0] call MB_fnc_DrawBoundingBox;
+		[_x] call MB_fnc_DrawBoundingBox;
 	} foreach MB_Selected;
 	
 	{

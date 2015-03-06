@@ -5,15 +5,7 @@
 MB_fnc_Select = {
 	private["_object"];
 	_object = _this select 0;
-	_relPos = [0,0,0];
-	_height = (getposATL _object) select 2;
-	_dir = getdir _object;
-	_pitchBank = _object call BIS_fnc_getPitchBank;
-	if(count(MB_Selected)>0) then {
-		_first = ((MB_Selected select 0) select 0);
-		_relPos = _first worldToModel (getposASL _object);
-	};
-	MB_Selected set [count(MB_Selected),[_object,_relPos,_height,_dir,_pitchBank]];
+	MB_Selected set [count(MB_Selected),_object];
 	//systemchat format["%1",MB_Selected];
 };
 MB_fnc_Deselect = {
@@ -21,7 +13,7 @@ MB_fnc_Deselect = {
 	_object = _this select 0;
 	_newArray = [];
 	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if(((MB_Selected select _i) select 0) != _object) then {
+		if((MB_Selected select _i) != _object) then {
 			_newArray set [count(_newArray),(MB_Selected select _i)];
 		};
 
@@ -31,15 +23,14 @@ MB_fnc_Deselect = {
 
 MB_fnc_DeselectAll = {
 	while{count(MB_Selected)>0} do {
-		[((MB_Selected select 0) select 0)] call MB_fnc_Deselect;	
+		[(MB_Selected select 0)] call MB_fnc_Deselect;	
 	};
+	MB_Selected = [];
 
 };
 MB_fnc_SelectInRectangle = {
 	_cornerA = _this select 0;
 	_cornerB = _this select 1;
-	_layer = MB_Layers select MB_CurLayer;
-	_layerObjects = _layer select 0;
 	{
 		_obj = _x;
 		_opos = getpos _obj;
@@ -71,19 +62,20 @@ MB_fnc_SelectInRectangle = {
 					[_obj] call MB_fnc_Deselect;
 				};
 			};
-	} foreach _layerObjects;
+	} foreach MB_Objects;
 };
 MB_fnc_SelectUnderCursor = {
 	private["_uX","_uY","_layer","_obj","_pos","_opos"];
 	_uX = _this select 0;
 	_uY = _this select 1;
 	_pos = screenToWorld[_uX,_uY];
-	_layer = MB_Layers select MB_CurLayer;
-	_layerObjects = _layer select 0;
 	_obj = objNull;
 	_objects = lineIntersectsWith [getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY], objNull, objNull, true];
 	if(count(_objects)>0) then {
 		_obj = _objects select 0;
+	};
+	if(!(_obj in MB_Objects)) then {
+		_obj = objNull;
 	};
 	//MB_DebugLines set [count(MB_DebugLines),[getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY]]];
 	//Check if one of the objects is in the active layer
@@ -113,24 +105,38 @@ MB_fnc_isSelected = {
 	private["_object","_newArray","_found"];
 	_object = _this select 0;
 	_found = false;
-	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if(((MB_Selected select _i) select 0) == _object) exitwith {
-			_found = true;
-		};
+	if(_object in MB_Selected) then {
+		_found = true;
 	};
 	_found
 };
+
+//TODO To new selection
 MB_fnc_Copy = {
+	private["_vars","_offset"];
 	MB_CopyPaste = [];
 	{
-		MB_CopyPaste pushBack [typeof (_x select 0),(_x select 1),(_x select 2),(_x select 3),(_x select 4)];
+		_vars = [_x] call MB_fnc_getObjectVars;
+		_offset = (_vars select 0) vectorDiff MB_MousePosition;
+		MB_CopyPaste pushBack [typeof _x,_offset,_vars];
 	} foreach MB_Selected;
 	systemChat format["Selection of %1 objects copied to clipboard.",count(MB_CopyPaste)];
 };
 MB_fnc_Paste = {
+	private["_vars","_offset"];
 	[] call MB_fnc_DeselectAll;
-	_objects = [screenToWorld MB_MousePosition,MB_CopyPaste] call MB_fnc_ReconstructSelection;
-	{[_x] call MB_fnc_Select;} foreach _objects;
+	//_objects = [screenToWorld MB_MousePosition,MB_CopyPaste] call MB_fnc_ReconstructSelection;
+	_center = MB_MousePosition;
+	{
+		_type = _x select 0;
+		_offset = _x select 1;
+		_vars = _x select 2;
+		_pos = _center vectorAdd _offset;
+		_obj = [_type,_pos] call MB_fnc_CreateObject;
+		_vars set[0,_pos];
+		[_obj,_vars] call MB_fnc_setObjectVars;
+		[_obj] call MB_fnc_Select;
+	} foreach MB_CopyPaste;
 };
 
 MB_fnc_ReconstructSelection = {
@@ -173,7 +179,7 @@ MB_fnc_calcSelectionCenter = {
 		//_zrange = [];
 		_points = [];
 		{
-			_obj = (_x select 0);
+			_obj = _x;
 			_box = boundingBoxReal _obj;
 			_vul =  (_box select 0);
 			_hor =  (_box select 1);

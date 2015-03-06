@@ -1,6 +1,6 @@
+MB_LibraryFavorites = [];
+MB_LibraryUsed = [];
 MB_fnc_loadLibrary = {
-	MB_LibraryFavorites = [];
-	MB_LibraryInUse = [];
 	disableSerialization;
 	_cats = [];
 	_cfgVehicleClasses = configFile >> "CfgVehicleClasses";
@@ -55,7 +55,7 @@ MB_fnc_loadLibrary = {
 		};
 	};
 	
-	MB_Library = [["Library",_mbLibrary],["Config (All)",_config],["Favorites",[]],["Used",[]]];
+	MB_Library = [["Library",_mbLibrary],["Config (All)",_config],["Favorites",MB_LibraryFavorites],["Used",MB_LibraryInUse]];
 
 };
 MB_fnc_libraryFindName = {
@@ -76,6 +76,27 @@ MB_fnc_libraryAddNode = {
 };
 MB_fnc_libraryAddLeaf = {
 
+};
+MB_fnc_updateUsed = {
+	private["_index","_used","_data","_count","_type","_name"];
+	_index = [MB_Library,"Used"] call MB_fnc_libraryFindName;
+	_used = [];
+	_data = [];
+	_count = tvCount  [170003, [_index]];
+	for[{_i=(_count-1)},{_i>=0},{_i=_i-1}] do {
+			tvDelete [170003, [_index,_i]];
+	};
+	//tvDelete [170003, [_index]];
+	//_index = tvAdd [170003,[],"Used"];
+	{
+		if(!(typeof _x in _used)) then {
+			_type = typeof _x;
+			_used pushBack _type;
+			_name = getText (configFile >> "CfgVehicles" >> _type >> "displayname");
+			_data pushback [_name,_type];
+		};
+	} foreach MB_Objects;
+	[_data,[_index]] call MB_fnc_libraryUpdate;
 };
 MB_fnc_libraryUpdate = {
 	private["_node","_path","_name","_value","_index","_newPath"];

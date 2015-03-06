@@ -17,10 +17,10 @@ MB_FNC_CloseFencer = {
 MB_FNC_FencerUpdatePreview = {
 	private["_relPos","_created","_direction","_obj","_dir","_pos","_maxWidth","_maxLength"];
 	if(count(MB_Selected)>0) then {
-		_obj = (MB_Selected select (count(MB_Selected)-1)) select 0;
+		_obj = (MB_Selected select (count(MB_Selected)-1));
 		
 		_relPos = [_obj] call MB_FNC_FencerCalcPosition;
-		_obj = (MB_Selected select 0) select 0;
+		//_obj = (MB_Selected select 0);
 		_pos = _relPos select 0;
 		_maxWidth = _relPos select 2;
 		_maxLength = _relPos select 1;
@@ -96,7 +96,7 @@ MB_FNC_FencerPlace = {
 	private["_obj","_direction","_bbr","_dir","_fpos"];
 	
 	
-	_obj = (MB_Selected select (count(MB_Selected)-1)) select 0;
+	_obj = (MB_Selected select (count(MB_Selected)-1));
 	_relPos = [_obj] call MB_FNC_FencerCalcPosition;
 	
 	_pos = _relPos select 0;
@@ -104,7 +104,13 @@ MB_FNC_FencerPlace = {
 	_maxLength = _relPos select 1;
 	_dir = _relPos select 3;
 	
-	_created = [(typeof _obj),_pos,MB_CurLayer,_dir,0,0,1,true,false] call MB_fnc_CreateObject;
+	_created = [(typeof _obj),_pos] call MB_fnc_CreateObject;
+	_created setvariable ["MB_ObjVar_Yaw",_dir,false];
+	[_created] call MB_fnc_UpdateObject;
+	if(isMultiplayer) then {
+		[_created] call MB_fnc_syncObject;
+	};
+
 	//_created setdir _dir;
 	
 	_direction = MB_FencerDir;
