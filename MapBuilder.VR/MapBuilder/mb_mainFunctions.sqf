@@ -74,6 +74,7 @@ MB_fnc_Setup = {
 	[] call MB_fnc_loadLibrary;
 	["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
 	["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
+	["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
 	["onMouseDblClick","MB_fnc_CreateObjectByClick"] call mb_fnc_addCallback;
 };
 
@@ -97,6 +98,7 @@ MB_fnc_Exit = {
 //* Starts MB dialog and camera
 //***************************************
 MB_fnc_Start = {
+	startLoadingScreen ["Starting MapBuilder..."];
 	MBDialog = createDialog "MB_Main";
 	[1,false] call MB_fnc_togglePopup;
 	[2,false] call MB_fnc_togglePopup;
@@ -104,6 +106,7 @@ MB_fnc_Start = {
 	[4,false] call MB_fnc_togglePopup;
 	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";
+	[] call MB_fnc_updateCam;
 	//MBCamera cameraEffect ["internal", "BACK"];
 	//showcinemaborder false;
 	//cameraEffectEnableHUD true;
@@ -124,6 +127,11 @@ MB_fnc_Start = {
 	MB_RegisterKeys = true;
 	//[] call MB_fnc_refreshFilters;
 	[MB_Library] call MB_fnc_libraryUpdate;
+	[] call MB_fnc_updateUsed;
+	[] call MB_fnc_disable3DPreview;
+	[] call MB_fnc_SetEditorFocus;
+	[] call MB_fnc_hidePresetWindow;
+	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
 		while{dialog} do {
