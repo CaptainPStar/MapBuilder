@@ -5,8 +5,9 @@
 //################################################
 
 MB_fnc_exportTB = {
+	startLoadingScreen ["Exporting Terrain Builder file..."];
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
-	
+	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.txt",_filename]);
 	systemChat format["Opening %1",_path];
 	_count = 0;
@@ -40,15 +41,19 @@ MB_fnc_exportTB = {
 
 			_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_model,(_pos select 0),(_pos select 1),_dir,_pitch,_bank,_scale,_height];
 			systemChat ("MB_FileIO" callExtension _string);
-			_count = _count + 1;
+			
 		};
+		_count = _count + 1;
+		progressLoadingScreen (_count/count(MB_Objects));
 	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
+	endLoadingScreen;
 };
 MB_fnc_exportSQF = {
+	startLoadingScreen ["Exporting scriptfile..."];
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};
+	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqf",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];
@@ -81,16 +86,19 @@ MB_fnc_exportSQF = {
 			systemChat ("MB_FileIO" callExtension _string);
 			_string = format["write|[_obj,%1,%2] call BIS_fnc_setPitchBank;",_pitch,_bank];
 			systemChat ("MB_FileIO" callExtension _string);
-		_count = _count + 1;
 		};
+		_count = _count + 1;
+		progressLoadingScreen (_count/count(MB_Objects));
 	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
+	endLoadingScreen;
 };
 
 MB_fnc_exportSQM = {
+	startLoadingScreen ["Exporting mission..."];
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};
+	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqm",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];
@@ -130,8 +138,9 @@ MB_fnc_exportSQM = {
 				"MB_FileIO" callExtension format["write|init=""[this,%1,%2] call BIS_fnc_setPitchBank;"";",_pitch,_bank];
 			};
 			"MB_FileIO" callExtension "write|};";
-			_count = _count + 1;
 		};
+		_count = _count + 1;
+		progressLoadingScreen (_count/count(MB_Objects));
 	} foreach MB_Objects;
 	"MB_FileIO" callExtension "write|};";
 	"MB_FileIO" callExtension "write|};";
@@ -159,6 +168,7 @@ MB_fnc_exportSQM = {
 	
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
+	endLoadingScreen;
 };
 MB_fnc_import = {
 
@@ -173,12 +183,14 @@ MB_fnc_loadProject = {
 };
 MB_fnc_saveProject = {
 	private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_type"];
+	startLoadingScreen ["Saving project..."];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
+	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";endLoadingScreen;};
 	MB_ProjectName = _filename;
 	[2,false] call MB_fnc_togglePopup;
 	_path = ("MB_FileIO" callExtension format["open_w|projects\%1.mbp",_filename]);
 	systemChat format["Opening %1",_path];
+	_count = 0;
 	{
 		if(!isNull(_x)) then {
 			_obj = _x;
@@ -201,14 +213,18 @@ MB_fnc_saveProject = {
 			systemChat _string;
 			systemChat ("MB_FileIO" callExtension _string);
 		};
+		_count = _count + 1;
+		progressLoadingScreen (_count/count(MB_Objects));
 	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["Project saved!"];
+	endLoadingScreen;
 };
 MB_fnc_importProject = {
 	private["_filename"];
+	startLoadingScreen ["Loading project..."];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Can't load a project without name!";};
+	if(_filename == "") exitWith {systemChat "Error: Can't load a project without name!";endLoadingScreen;};
 	_projectFolder = ("MB_FileIO" callExtension "listfiles|projects");
 	_projects = [_projectFolder,"|"] call BIS_fnc_splitString;
 	if((_projects find format["%1.mbp",_filename])==-1) exitwith {systemChat "Error: Project not found!"};
@@ -245,6 +261,7 @@ MB_fnc_importProject = {
 	};
 	systemChat ("MB_FileIO" callExtension "close");
 	[] call MB_fnc_updateUsed;
+	endLoadingScreen;
 };
 MB_fnc_roundNumbers = {
 private["_number","_digits","_acc"];
