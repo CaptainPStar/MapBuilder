@@ -107,12 +107,15 @@ MB_fnc_MouseMove = {
 	_camPos = MB_CamPos select 0;
 	MB_MousePositionDelta = [_dx,_dy];
 	_worldDelta = MB_MousePosition vectorDiff MB_LastMousePosition;
-	MB_LastMousePosition = MB_MousePosition;
 	
 	if([DIK_LALT] call MB_fnc_isPressed) then {
 		MB_CamPos set [1,(MB_CamPos select 1)+_dx];
 		MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];
+		setMousePosition [0.5, 0.5];
 	};	
+	
+	MB_LastMousePosition = MB_MousePosition;
+	
 	if(([MB_L] call MB_fnc_isMousePressed) && 
 	!([DIK_LSHIFT] call MB_fnc_isPressed) && 
 	!([DIK_LCONTROL] call MB_fnc_isPressed) && 
@@ -263,22 +266,30 @@ MB_fnc_resetKeys = {
 //= Camera
 //=========================================
 
+MB_CamSpeed = 1.0;
+
 MB_fnc_updateCam = {
 	private["_mod"];
-	_mod = 1;
 	if([DIK_LSHIFT] call MB_fnc_isPressed) then {
-		_mod = 10;
+		MB_CamSpeed = MB_CamSpeed + 0.1;
+	}
+	else {
+		MB_CamSpeed = MB_CamSpeed - 1.0;
 	};
+	MB_CamSpeed = MB_CamSpeed max 0.8 min 10.0;
+	_mod = MB_CamSpeed;
 	_camPos = MB_CamPos select 0;
 	//Move forward
 	if([DIK_W] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)+_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)+_mod*0.1*cos(MB_CamPos select 1)];
+		_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
 	};
 	//Move backward
 	if([DIK_S] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)-_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)-_mod*0.1*cos(MB_CamPos select 1)];
+		_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
 	};
 	//Move Left
 	if([DIK_A] call MB_fnc_isPressed) then {
