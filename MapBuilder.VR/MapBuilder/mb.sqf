@@ -12,6 +12,7 @@ call compile preprocessFileLineNumbers "MapBuilder\mb_fencerFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_mapFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_hookFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_multiplayerFunctions.sqf";
+call compile preprocessFileLineNumbers "MapBuilder\mb_presetFunctions.sqf";
 
 MB_var_useConfig = true;
 MB_var_classBlacklist = ["Logic","AllVehicles","LaserTarget","NVTarget","ArtilleryTarget","FireSectorTarget",

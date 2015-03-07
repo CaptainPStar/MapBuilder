@@ -29,8 +29,10 @@ MB_fnc_loadLibrary = {
 			_scope = getNumber (configFile >> "CfgVehicles" >> _classname >> "scope");
 
 			_name = getText (configFile >> "CfgVehicles" >> _classname >> "displayname");
+			
+			_model = [(configFile >> "CfgVehicles" >> _classname),"model",""] call BIS_fnc_returnConfigEntry;
 			//I have no idea what I am doing!
-			if ((_scope >= 1) && (_classname != "\access") && _name != "") then
+			if ((_scope >= 2) && (_classname != "\access") && _name != "" && _model != "") then
 			{
 				_name = format["%1 (%2)",_name,_classname];
 				if(_catDisplayName != "") then {
@@ -124,5 +126,52 @@ MB_LibrarySelect = {
 	_data = tvData [170003,(tvCurSel 170003)];
 	if(_data != "") then {
 		MB_CurClass = _data;
+		disableSerialization;
+		_display = uinamespace getvariable 'mb_main_dialog';
+		_ctrl = _display displayCtrl 170007;
+		_ctrl ctrlSetStructuredText parseText format["Selected: %1",tvText [170003,(tvCurSel 170003)]];
+		
+		(_display displayCtrl (180000)) ctrlSetModel (getText (configFile >> "CfgVehicles" >> _data >> "model"));
+		[(getText (configFile >> "CfgVehicles" >> _data >> "model"))] call MB_fnc_show3DPreview;
 	};
+};
+
+MB_3D_PreviewShown = false;
+MB_3D_PreviewRotation = 0;
+MB_fnc_show3DPreview = {
+	private["_model","_display","_ctrl"];
+	disableSerialization;
+	_model = [_this,0,""] call bis_fnc_param;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 180000;
+	if(_model != "") then {
+		_ctrl ctrlSetModel _model;
+		_ctrl ctrlSetModelScale 0.1;
+		_ctrl ctrlShow true;
+		MB_3D_PreviewShown = true;
+	};
+
+};
+MB_fnc_rotate3DPreview = {
+	private["_dirandUp","_display","_ctrl","_dir"];
+	if(MB_3D_PreviewShown) then {
+		disableSerialization;
+		_display = uinamespace getvariable 'mb_main_dialog';
+		_ctrl = _display displayCtrl 180000;
+		_dir = 0;
+		_dirandUp = [30,0,MB_3D_PreviewRotation] call MB_fnc_CalcDirAndUpVector;
+		_ctrl ctrlSetModelDirAndUp _dirandUp;
+		MB_3D_PreviewRotation = MB_3D_PreviewRotation + 1.0;
+		if(MB_3D_PreviewRotation >=360) then {
+			MB_3D_PreviewRotation = 0;
+		};	
+	};
+};
+MB_fnc_disable3DPreview = {
+	disableSerialization;
+	private["_display","_ctrl"];
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 180000;
+	_ctrl ctrlShow false;
+	MB_3D_PreviewShown = false;
 };

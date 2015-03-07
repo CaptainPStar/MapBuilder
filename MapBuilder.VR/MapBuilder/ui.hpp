@@ -30,8 +30,50 @@ class MB_Main
 			onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;";
 			onMouseEnter = "MB_RegisterKeys = true;";
 		};
+		//class MB_LoadingScreen : RscText {
+		//	idc = 180000;
+		//	style = ST_CENTER;
+		//	x = "SafeZoneX + (SafeZoneW * 0)";
+		//	y = "SafeZoneY + (SafezoneH * 0)";
+		//	w = "SafeZoneW * 1";
+		//	h = "SafeZoneH * 1";
+		//	colorBackground[] = {0.1, 0.9, 0.1, 1.0};
+		//	text = "Loading...";
+		//};
 	};
-	
+	class Objects
+	{
+ 
+		class Can
+		{
+ 
+			onObjectMoved = "";
+ 
+			idc = 180000; 
+			type = 82;
+			model = "\A3\Structures_F\Items\Food\Can_V3_F.p3d";
+			scale = 1;
+ 
+			direction[] = {0, -0.35, -0.65};
+			up[] = {0, 0.65, -0.35}; 
+ 
+			//position[] = {0,0,0.2}; optional
+ 
+			x = 0.37;
+			y = 0.37;
+			z = 2.0;
+ 
+			//positionBack[] = {0,0,1.2}; optional
+ 
+			xBack = 0.37;
+			yBack = 0.37;
+			zBack = 2.0;
+ 
+			inBack = 0;
+			enableZoom = 1;
+			zoomDuration = 0.001;
+		};
+	};
 	class controls {
 		class RscObject;
 		class Rsc_Background : RscText { //--- Render out.
@@ -46,12 +88,13 @@ class MB_Main
 		class listboxA : RscTree {
 			idc = 170003;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.07)";
+			y = "SafeZoneY + (SafezoneH * 0.02)";
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.29";
 			sizeEx = 0.03;
 			colorBackground[] = {0, 0.8, 0, 0.5};
 			onTreeSelChanged = "_this call MB_LibrarySelect;";
+			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
 			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
             //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
 		};
@@ -92,13 +135,14 @@ class MB_Main
 			w = "0.08";
 			h = "0.09";
 		};
-		class MB_FilterSelector : _CT_COMBO {
+		class MB_SelectedTemplate : RscStructuredText {
 			idc = 170007;
 
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.02)";
+			y = "SafeZoneY + (SafezoneH * 0.32)";
 			w = "SafeZoneW * 0.18";
-			h = "SafeZoneH * 0.03";
+			h = "SafeZoneH * 0.08";
+			text =  "Selected: None";
 		};
 		class MB_FencerButton : RscButton {
 			idc = 170008;
@@ -135,6 +179,15 @@ class MB_Main
 			checked_strings[] = {"Simul"};
 			strings[] = {"Simul"};
 		};
+		class PresetsButton : RscButton {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.81)";
+			y = "SafeZoneY + (SafezoneH * 0.85)";
+			w = "SafeZoneW * 0.05";
+			h = "SafeZoneH * 0.05";
+			text = "Presets";
+			action = "[] call MB_fnc_showPresetWindow;";
+		};
 		
 		//###################
 		//	Taskbar
@@ -149,7 +202,6 @@ class MB_Main
 			h = "SafeZoneH * 0.03";
 			colorBackground[] = {0, 0, 0, 0.3};
 		};
-		
 		
 		//###################
 		//	Map Popup
@@ -294,7 +346,7 @@ class MB_Main
 		};
 		class Popup_ProjectsHeader : Rsc_Background {
 			idc = 170202;
-			text = "Export Objects";
+			text = "Save/Load Projects";
 			x = "SafeZoneX + (SafeZoneW * 0.2)";
 			y = "SafeZoneY + (SafezoneH * 0.4)";
 			w = "SafeZoneW * 0.4";
@@ -331,7 +383,7 @@ class MB_Main
 		};
 		class Popup_ProjectsSaveButton : RscButton {
 			idc = 170206;
-			x = "SafeZoneX + (SafeZoneW * 0.22)";
+			x = "SafeZoneX + (SafeZoneW * 0.21)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
@@ -340,7 +392,7 @@ class MB_Main
 		};
 		class Popup_ProjectsLoadButton : RscButton {
 			idc = 170207;
-			x = "SafeZoneX + (SafeZoneW * 0.42)";
+			x = "SafeZoneX + (SafeZoneW * 0.39)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
@@ -357,7 +409,7 @@ class MB_Main
 		};
 		class Popup_ProjectsImportButton : RscButton {
 			idc = 170209;
-			x = "SafeZoneX + (SafeZoneW * 0.32)";
+			x = "SafeZoneX + (SafeZoneW * 0.30)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
@@ -366,13 +418,18 @@ class MB_Main
 		};
 		class Popup_ProjectsClearButton : RscButton {
 			idc = 170210;
-			x = "SafeZoneX + (SafeZoneW * 0.52)";
+			x = "SafeZoneX + (SafeZoneW * 0.48)";
 			y = "SafeZoneY + (SafezoneH * 0.72)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
 			text = "Clear";
 			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
 		};
+		
+		
+		
+		
+		
 		//###################
 		//	Fencer
 		//###################
@@ -470,8 +527,100 @@ class MB_Main
 		//	Brusher
 		//###################
 		
-	};
-	class Objects
-	{
+		//###################
+		//	Presets
+		//###################
+		 class MB_Popup_PresetGroup : RscControlsGroup
+		{
+			idc = 170500;
+			x = "SafeZoneX + (SafeZoneW * 0.2)";
+			y = "SafeZoneY + (SafezoneH * 0.3)";
+			w = "SafeZoneW * 0.4";
+			h = "SafeZoneH * 0.5";
+
+			class Controls
+			{
+				class MB_Popup_Preset_Background : RscText { 
+					idc = -1;
+					text = "";
+					x = "0";
+					y = "0";
+					w = "SafeZoneW * 0.4";
+					h = "SafeZoneH * 0.5";
+					colorBackground[] = {0, 0, 0, 0.8};
+				};
+				class MB_Popup_Preset_Header : Rsc_Background {
+					idc = -1;
+					text = "Presets";
+					x = "0";
+					y = "0";
+					w = "SafeZoneW * 0.4";
+					h = "SafeZoneH * 0.02";
+					colorBackground[] = {0,0.75,0,0.75};
+				};
+				class MB_Popup_Preset_HeaderClose : RscActiveText {
+					idc = -1;
+					text = "X";
+					x = "0.93";
+					y = "0";
+					w = "SafeZoneW * 0.01";
+					h = "SafeZoneH * 0.02";
+					colorBackground[] = {0,0.75,0,0.75};
+					action = "[] call MB_fnc_hidePresetWindow;";
+				};
+				class MB_Popup_Preset_List : RscListBox {
+					idc = 170501;
+					x = "0.02";
+					y = "0.1";
+					w = "SafeZoneW * 0.3";
+					h = "SafeZoneH * 0.2";
+					onLBSelChanged="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been changed
+					onLBDblClick="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been double clicked
+				};
+				class MB_Popup_Preset_Filename : RscEdit {
+					idc = 170502;
+					text = "";
+					x = "0.02";
+					y = "0.48";
+					w = "SafeZoneW * 0.2";
+					h = "SafeZoneH * 0.02";
+					colorBackground[] = {0,0.75,0,0.75};
+				};
+				class MB_Popup_Preset_SaveButton : RscButton {
+					idc = -1;
+					x = "0.1";
+					y = "0.53";
+					w = "SafeZoneW * 0.08";
+					h = "SafeZoneH * 0.03";
+					text = "Save";
+					action = "[ctrlText 170502] spawn MB_fnc_savePreset;";
+				};
+				class MB_Popup_Preset_OpenButton : RscButton {
+					idc = 170207;
+					x = "0.49";
+					y = "0.53";
+					w = "SafeZoneW * 0.08";
+					h = "SafeZoneH * 0.03";
+					text = "Load";
+					action = "[ctrlText 170502] spawn MB_fnc_loadPreset;";
+				};
+				class MB_Popup_Preset_Helptext : RscText {
+					idc = -1;
+					x = "0.02";
+					y = "0.05";
+					w = "SafeZoneW * 0.3";
+					h = "SafeZoneH * 0.02";
+					text = "Existing presets:";
+				};
+				class MB_Popup_Preset_Tip: RscStructuredText {
+					idc = -1;
+					x = "0.02";
+					y = "0.6";
+					w = "SafeZoneW * 0.35";
+					h = "SafeZoneH * 0.1";
+					text = "Presets are small selections that can be saved and loaded. To save a preset, select some objects, enter a name and click 'save'. To load a preset, select it from the list and click load. It can now be placed with Ctrl + V.";
+				};
+			};
+		 };
 	};
 };
