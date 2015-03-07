@@ -13,35 +13,36 @@ MB_fnc_exportTB = {
 	_mapframeX = 200000;
 	_mapframeY = 0;
 	{
-		_obj = _x;
-		_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_exactPosition;
-		_height = str ((getposATL _obj) select 2);
-		_dir = getdir _obj;
-		_model = getText (configFile >> "CfgVehicles" >> (typeof _obj) >> "model");
-		_model = toLower(_model);
+		if(!isNull(_x)) then {
+			_obj = _x;
+			_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_exactPosition;
+			_height = str ((getposATL _obj) select 2);
+			_dir = getdir _obj;
+			_model = getText (configFile >> "CfgVehicles" >> (typeof _obj) >> "model");
+			_model = toLower(_model);
 
-		//Split modelname into parts
-		_model = [_model,"\"] call BIS_fnc_splitString;
-		//Extract last part (model.p3d) and split into name and extension
-		_model = [(_model select (count(_model)-1)),"."] call BIS_fnc_splitString;
-		//Use extension
-		_model = _model select 0;
-		
-		_pitchBank = _obj call BIS_fnc_getPitchBank;
-		
-		_pitch = [_pitchBank select 0] call MB_fnc_roundNumbers;
-		_bank = [_pitchBank select 1] call MB_fnc_roundNumbers;
-		_scale = 1;
+			//Split modelname into parts
+			_model = [_model,"\"] call BIS_fnc_splitString;
+			//Extract last part (model.p3d) and split into name and extension
+			_model = [(_model select (count(_model)-1)),"."] call BIS_fnc_splitString;
+			//Use extension
+			_model = _model select 0;
+			
+			_pitchBank = _obj call BIS_fnc_getPitchBank;
+			
+			_pitch = [_pitchBank select 0] call MB_fnc_roundNumbers;
+			_bank = [_pitchBank select 1] call MB_fnc_roundNumbers;
+			_scale = 1;
 
-		_dir = [_dir] call MB_fnc_roundNumbers;
-		//_name;_x_pos;_y_pos;_yaw;_pitch;_roll;_scale;_z_pos_rel;
-		
+			_dir = [_dir] call MB_fnc_roundNumbers;
+			//_name;_x_pos;_y_pos;_yaw;_pitch;_roll;_scale;_z_pos_rel;
+			
 
-		_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_model,(_pos select 0),(_pos select 1),_dir,_pitch,_bank,_scale,_height];
-		systemChat ("MB_FileIO" callExtension _string);
-		_count = _count + 1;
-	 
-	} foreach ((MB_Layers select MB_CurLayer) select 0);
+			_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_model,(_pos select 0),(_pos select 1),_dir,_pitch,_bank,_scale,_height];
+			systemChat ("MB_FileIO" callExtension _string);
+			_count = _count + 1;
+		};
+	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
 };
@@ -58,30 +59,31 @@ MB_fnc_exportSQF = {
 	systemChat ("MB_FileIO" callExtension "write|private[""_obj""];");
 	_count = 0;
 	{
-		_obj = _x;
-		_dir = getdir _obj;
+		if(!isNull(_x)) then {
+			_obj = _x;
+			_dir = getdir _obj;
 
-		_pitchBank = _obj call BIS_fnc_getPitchBank;
-		
-		_pitch = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
-		_bank = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
-		_type = (typeof _obj);
-		_obj = _x;
-		_pos = [_obj] call MB_fnc_exactPosition;
-		_height = str ((getposATL _obj) select 2);
-		_pos pushBack _height;
-		_dir = [getdir _obj,3] call MB_fnc_roundNumbers;
-		_string = format["write|_obj = ""%1"" createvehicle [%2,%3,%4];",_type,_pos select 0,_pos select 1,_pos select 2];
-		systemChat ("MB_FileIO" callExtension _string);
-		_string = format["write|_obj setposATL [%1,%2,%3];",_pos select 0,_pos select 1,_pos select 2];
-		systemChat ("MB_FileIO" callExtension _string);
-		_string = format["write|_obj setdir %1;",_dir];
-		systemChat ("MB_FileIO" callExtension _string);
-		_string = format["write|[_obj,%1,%2] call BIS_fnc_setPitchBank;",_pitch,_bank];
-		systemChat ("MB_FileIO" callExtension _string);
+			_pitchBank = _obj call BIS_fnc_getPitchBank;
+			
+			_pitch = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
+			_bank = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
+			_type = (typeof _obj);
+			_obj = _x;
+			_pos = [_obj] call MB_fnc_exactPosition;
+			_height = str ((getposATL _obj) select 2);
+			_pos pushBack _height;
+			_dir = [getdir _obj,3] call MB_fnc_roundNumbers;
+			_string = format["write|_obj = ""%1"" createvehicle [%2,%3,%4];",_type,_pos select 0,_pos select 1,_pos select 2];
+			systemChat ("MB_FileIO" callExtension _string);
+			_string = format["write|_obj setposATL [%1,%2,%3];",_pos select 0,_pos select 1,_pos select 2];
+			systemChat ("MB_FileIO" callExtension _string);
+			_string = format["write|_obj setdir %1;",_dir];
+			systemChat ("MB_FileIO" callExtension _string);
+			_string = format["write|[_obj,%1,%2] call BIS_fnc_setPitchBank;",_pitch,_bank];
+			systemChat ("MB_FileIO" callExtension _string);
 		_count = _count + 1;
-	 
-	} foreach ((MB_Layers select MB_CurLayer) select 0);
+		};
+	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
 };
@@ -103,33 +105,34 @@ MB_fnc_exportSQM = {
 	"MB_FileIO" callExtension format["write|items=%1;",count(((MB_Layers select MB_CurLayer) select 0))];
 	_count = 0;
 	{
-		_obj = _x;
-		_dir = getdir _obj;
+		if(!isNull(_x)) then {
+			_obj = _x;
+			_dir = getdir _obj;
 
-		_pitchBank = _obj call BIS_fnc_getPitchBank;
-		
-		_pitch = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
-		_bank = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
-		_type = (typeof _obj);
-		_pos = [_obj] call MB_fnc_exactPosition;
-		_height = str ((getposATL _obj) select 2);
-		_pos pushBack _height;
-		_dir = [getdir _obj,3] call MB_fnc_roundNumbers;
-		"MB_FileIO" callExtension format["write|class Item%1 {",_forEachIndex];
-		"MB_FileIO" callExtension format["write|position[]={%1,%3,%2};",_pos select 0, _pos select 1, _pos select 2];
-		"MB_FileIO" callExtension format["write|azimut=%1;",_dir];
-		"MB_FileIO" callExtension format["write|offsetY=%1;",_pos select 2];
-		"MB_FileIO" callExtension format["write|id=%1;",_forEachIndex];
-		"MB_FileIO" callExtension "write|side=""EMPTY"";";
-		"MB_FileIO" callExtension format["write|vehicle=""%1"";",typeof _obj];
-		"MB_FileIO" callExtension "write|skill=0.6;";
-		if(_pitch!=0 || _bank!=0) then {
-			"MB_FileIO" callExtension format["write|init=""[this,%1,%2] call BIS_fnc_setPitchBank;"";",_pitch,_bank];
+			_pitchBank = _obj call BIS_fnc_getPitchBank;
+			
+			_pitch = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
+			_bank = [_pitchBank select 0,3] call MB_fnc_roundNumbers;
+			_type = (typeof _obj);
+			_pos = [_obj] call MB_fnc_exactPosition;
+			_height = str ((getposATL _obj) select 2);
+			_pos pushBack _height;
+			_dir = [getdir _obj,3] call MB_fnc_roundNumbers;
+			"MB_FileIO" callExtension format["write|class Item%1 {",_forEachIndex];
+			"MB_FileIO" callExtension format["write|position[]={%1,%3,%2};",_pos select 0, _pos select 1, _pos select 2];
+			"MB_FileIO" callExtension format["write|azimut=%1;",_dir];
+			"MB_FileIO" callExtension format["write|offsetY=%1;",_pos select 2];
+			"MB_FileIO" callExtension format["write|id=%1;",_forEachIndex];
+			"MB_FileIO" callExtension "write|side=""EMPTY"";";
+			"MB_FileIO" callExtension format["write|vehicle=""%1"";",typeof _obj];
+			"MB_FileIO" callExtension "write|skill=0.6;";
+			if(_pitch!=0 || _bank!=0) then {
+				"MB_FileIO" callExtension format["write|init=""[this,%1,%2] call BIS_fnc_setPitchBank;"";",_pitch,_bank];
+			};
+			"MB_FileIO" callExtension "write|};";
+			_count = _count + 1;
 		};
-		"MB_FileIO" callExtension "write|};";
-		_count = _count + 1;
-	 
-	} foreach ((MB_Layers select MB_CurLayer) select 0);
+	} foreach MB_Objects;
 	"MB_FileIO" callExtension "write|};";
 	"MB_FileIO" callExtension "write|};";
 
@@ -254,6 +257,7 @@ private["_number","_digits","_acc"];
 };
 
 //Thanks to Mondkalb for this
+//Depreciated
 MB_fnc_exactPosition = {
 	private["_output","_object","_offset","_xcord","_xcordAC","_ycord","_ycordAC","_tempArray","_zcord","_zcordAC","_pos"];
 	_object = [_this,0] call bis_fnc_param;
