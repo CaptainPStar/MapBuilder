@@ -20,7 +20,7 @@ class MB_Main
 			//h = "0";
 			
 			text = "";
-			onMouseMoving = "MB_MousePosition=screenToWorld [_this select 1,_this select 2];";
+			onMouseMoving = "MB_MouseScreenPosition = [_this select 1,_this select 2];MB_MousePosition=screenToWorld [_this select 1,_this select 2];";
 			onMouseButtonDown = "_this call MB_fnc_MouseDown;";
 			onMouseButtonUp = "_this call MB_fnc_MouseUp;";
 			onMouseButtonDblClick = "_this call MB_fnc_MouseDblClick;";

@@ -111,7 +111,7 @@ MB_fnc_MouseMove = {
 	if([DIK_LALT] call MB_fnc_isPressed) then {
 		MB_CamPos set [1,(MB_CamPos select 1)+_dx];
 		MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];
-		setMousePosition [0.5, 0.5];
+		setMousePosition [0, 0];
 	};	
 	
 	MB_LastMousePosition = MB_MousePosition;

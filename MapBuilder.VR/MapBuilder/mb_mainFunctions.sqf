@@ -25,6 +25,7 @@ MB_fnc_Setup = {
 	MB_MouseKeys set [MB_L,[false,0,0]];
 	MB_MouseKeys set [MB_R,[false,0,0]];
 	MB_MousePosition = [0,0,0];
+	MB_MouseScreenPosition = [0,0];
 	MB_LastMousePosition = [0,0,0];
 	MB_MousePositionDelta = [0,0];
 	MB_CamPos = [[getpos player select 0, getpos player select 1,(getpos player select 2)+2],getdir player,0];//[X,Y,Z],Dir,Dive
