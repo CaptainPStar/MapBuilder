@@ -30,8 +30,9 @@ MB_fnc_loadLibrary = {
 
 			_name = getText (configFile >> "CfgVehicles" >> _classname >> "displayname");
 			//I have no idea what I am doing!
-			if ((_scope >= 1) && (_classname != "\access")) then
+			if ((_scope >= 1) && (_classname != "\access") && _name != "") then
 			{
+				_name = format["%1 (%2)",_name,_classname];
 				if(_catDisplayName != "") then {
 					_catIndex = [_config,_catDisplayName] call MB_fnc_libraryFindName;
 					if(_catIndex == -1) then {
