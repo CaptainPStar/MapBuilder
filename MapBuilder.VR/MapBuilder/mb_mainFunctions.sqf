@@ -27,6 +27,7 @@ MB_fnc_Setup = {
 	MB_MousePosition = [0,0,0];
 	MB_MouseScreenPosition = [0,0];
 	MB_LastMousePosition = [0,0,0];
+	MB_LastMouseScreenPosition = [0,0];
 	MB_MousePositionDelta = [0,0];
 	MB_CamPos = [[getpos player select 0, getpos player select 1,(getpos player select 2)+2],getdir player,0];//[X,Y,Z],Dir,Dive
 	MB_Selected = [];
@@ -39,9 +40,9 @@ MB_fnc_Setup = {
 	MB_ClickedObject = objNull;
 	MB_ClickedPosition = [];
 	MB_ProjectName = "";
-	MB_DataSource = "Array"; 
-	MB_Modes = ["Object","Polygon"];
-	MB_CurMode = 0;
+	//MB_DataSource = "Array"; 
+	//MB_Modes = ["Object","Polygon"];
+	MB_Mode = -1;
 	MB_DebugLines = [];
 	MB_RegisterKeys = true;
 	
@@ -62,8 +63,15 @@ MB_fnc_Setup = {
 		publicVariable "MB_NUID";
 	};
 	
-	
-	
+	//ProjectSettings
+	if(isNil("MB_IslandGridSize")) then {
+		//MB_IslandGridSize = -1;
+		MB_IslandGridSize = 5;
+	};
+	if(isNil("MB_IslandSize")) then {
+		//MB_IslandSize = -1;
+		MB_IslandSize = 5120;
+	};
 	//Fencer
 	MB_FencerDir = 0;
 	MB_FencerPreview = ObjNull;
@@ -73,10 +81,9 @@ MB_fnc_Setup = {
 	MB_nextProjectAutosave = time + MB_autosaveInterval;
 	
 	[] call MB_fnc_loadLibrary;
-	["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
-	["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
-	["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
-	["onMouseDblClick","MB_fnc_CreateObjectByClick"] call mb_fnc_addCallback;
+	//["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
+	//["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
+	//["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
 };
 
 //***************************************
@@ -118,9 +125,16 @@ MB_fnc_Start = {
 	
 	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
 	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","_nil=_this call MB_fnc_MouseUp"];
-	(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
+	//(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
+	//(findDisplay 123) displayAddEventHandler ["MouseButtonDown","systemchat format[""MB Down: %1"",_this];"];
+	//(findDisplay 123) displayAddEventHandler ["MouseButtonUp","systemchat format[""MB Up: %1"",_this];"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseMoving","_this call MB_fnc_MouseMove;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseEnter","[true] call MB_fnc_MouseInView;"];
+    ((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseExit","[false] call MB_fnc_MouseInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonDown","_this call MB_fnc_MouseButtonDownInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonUp","_this call MB_fnc_MouseButtonUpInView;"];
 	//(findDisplay 123) displayAddEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseZ"];
-	//(findDisplay 123) displayAddEventHandler ["KeyDown","_nil=_this call MB_fnc_KeyDown"];
+	//findDisplay 123) displayAddEventHandler ["KeyDown","systemchat format[""%1"",_this];"];
 	//(findDisplay 123) displayAddEventHandler ["KeyUp","_nil=_this call MB_fnc_KeyUp"];
 	
 	["MB_Draw3D", "onEachFrame", {call MB_fnc_Draw3D;}] call BIS_fnc_addStackedEventHandler;
@@ -132,6 +146,7 @@ MB_fnc_Start = {
 	[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[] call MB_fnc_hidePresetWindow;
+	[0] call MB_fnc_switchMode;
 	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {

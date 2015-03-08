@@ -5,8 +5,10 @@
 MB_fnc_Select = {
 	private["_object"];
 	_object = _this select 0;
-	MB_Selected set [count(MB_Selected),_object];
-	//systemchat format["%1",MB_Selected];
+	if(!isNull _object) then {
+		MB_Selected set [count(MB_Selected),_object];
+		systemchat format["%1",MB_Selected];
+	};
 };
 MB_fnc_Deselect = {
 	private["_object","_newArray","_corners"];
@@ -65,41 +67,35 @@ MB_fnc_SelectInRectangle = {
 	} foreach MB_Objects;
 };
 MB_fnc_SelectUnderCursor = {
-	private["_uX","_uY","_layer","_obj","_pos","_opos"];
-	_uX = _this select 0;
-	_uY = _this select 1;
-	_pos = screenToWorld[_uX,_uY];
+	private["_uX","_uY","_layer","_obj","_pos","_opos","_objects","_shift","_isSelected"];
+	_uX = _this select 2;
+	_uY = _this select 3;
+	_shift = _this select 4;
 	_obj = objNull;
 	_objects = lineIntersectsWith [getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY], objNull, objNull, true];
+	//systemChat format["%1",_objects];
 	if(count(_objects)>0) then {
 		_obj = _objects select 0;
-	};
-	if(!(_obj in MB_Objects)) then {
-		_obj = objNull;
-	};
-	//MB_DebugLines set [count(MB_DebugLines),[getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY]]];
-	//Check if one of the objects is in the active layer
-	//{
-	//	_tmpObj = _x;
-	//	{
-	//		if((_x select 0)==_tmpObj) exitwith {_obj=_tmpObj;};
-	//	} foreach _layer;
-	//	if(!isNull(_obj)) exitwith {};
-	//} foreach _objects;
-	
-	//If no object found, try to select one by its baseline
-	//if(isNull(_obj)) then {
-	//	{
-	//		_opos = [getpos _x select 0,getpos _x select 1,0];
-	//		if((isNull _obj && (_opos distance _pos)<5) || (!(isNull _obj) &&(_obj distance _pos)>(_opos distance _pos))) then {
-	//			_obj = _x;
-	//		};
-	//	} foreach _layerObjects;
-	//};
+		if((_obj in MB_Objects)) then {
+			if(!_shift) then {
+				[] call MB_fnc_DeselectAll;
+			};
+			_isSelected = [_obj] call MB_fnc_isSelected;
+			if(!_isSelected) then {
+				[_obj] call MB_fnc_Select;
+			} else {
+				[_obj] call MB_fnc_Deselect;
+			};
 
+		} else {
+			[] call MB_fnc_DeselectAll;
+		};
+	} else {
+		[] call MB_fnc_DeselectAll;
+	};
 
-	_obj
 };
+["LeftMouseClick","MB_fnc_SelectUnderCursor",{MB_Mode==0 && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
 
 MB_fnc_isSelected = {
 	private["_object","_newArray","_found"];
@@ -167,8 +163,16 @@ MB_fnc_ReconstructSelection = {
 };
 
 MB_SelectionBox = [];
-
 MB_fnc_calcSelectionCenter = {
+	private["_center"];
+	_center = [0,0,0];
+	{
+		_center = _center vectorAdd (_x getvariable "MB_ObjVar_PositionATL");
+	} foreach MB_Selected;
+	_center = _center vectorMultiply 1/count(MB_Selected);
+	_center;
+};
+MB_fnc_calcSelectionBox = {
 	private["_edge1","_edge2","_vul","_hor","_box","_obj","_box","_points"];
 	if(count(MB_Selected)>1) then {
 		_edge1 = [0,0,0];

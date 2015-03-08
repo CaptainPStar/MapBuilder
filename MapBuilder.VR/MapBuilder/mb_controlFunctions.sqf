@@ -12,9 +12,11 @@ MB_fnc_MouseDown = {
 	_status = MB_MouseKeys select _key;
 	_hasSelected = false;
 	MB_MouseKeys set [_key,[true,diag_tickTime,_status select 2]];
-	MB_ClickedObject = [_uX,_uY] call MB_fnc_SelectUnderCursor;
+	//MB_ClickedObject = [_uX,_uY] call MB_fnc_SelectUnderCursor;
 	MB_ClickedPosition = screenToWorld [_uX,_uY];
-	
+
+	["onMouseDown",[_key,[_uX,_uY]]] call MB_fnc_dispatchCallbacks;
+
 	if(diag_tickTime-(_status select 2)>0.2) then {
 		if(_key==MB_L) then {
 			private["_obj"];
@@ -67,9 +69,8 @@ MB_fnc_MouseUp = {
 	_uY = _this select 3;
 	_status = MB_MouseKeys select _key;
 	MB_MouseKeys set [_key,[false,_status select 1,diag_tickTime]];
-	//if(!([DIK_LSHIFT] call MB_fnc_isPressed) && isNull(MB_ClickedObject) && (diag_tickTime-(_status select 1)<0.5)) then {
-	//	[] call MB_fnc_DeselectAll;	
-	//};
+
+	["onMouseUp",[_key,[_uX,_uY]]] call MB_fnc_dispatchCallbacks;
 	
 	if(isMultiplayer) then {
 		{
@@ -88,7 +89,7 @@ MB_fnc_MouseClick = {
 };
 MB_fnc_MouseDblClick = {
 	private["_obj"];
-	["onMouseDblClick",[MB_ClickedPosition]] call MB_fnc_dispatchCallbacks;
+	//["onMouseDblClick",[MB_ClickedPosition]] call MB_fnc_dispatchCallbacks;
 	//if((["Object"] call MB_fnc_isMode)) then {
 	//	[] call MB_fnc_DeselectAll;
 	//	//[[MB_CurClass,MB_ClickedPosition],"MB_fnc_CreateObject",false] call bis_fnc_mp;
@@ -99,15 +100,26 @@ MB_fnc_MouseDblClick = {
 	//	};
 	//};
 };
-
 MB_fnc_MouseMove = {
+	private["_viewport","_xp","_yp","_screenDelta","_moveDelta"];
+	_viewport = _this select 0;
+	_xp = (_this select 1);
+	_yp = (_this select 2);
+	MB_LastMouseScreenPosition = MB_MouseScreenPosition;
+	_screenDelta = [_xp-(MB_MouseScreenPosition select 0),_yp-(MB_MouseScreenPosition select 1)];
+	_moveDelta = (screenToWorld [_xp,_yp]) vectorDiff MB_MousePosition;
+	MB_MousePosition = screenToWorld [_xp,_yp];
+	MB_MouseScreenPosition = [_xp,_yp];
+	["MouseMoved",[_screenDelta,_moveDelta]] spawn MB_fnc_dispatchCallbacks;
+};
+MB_fnc_MouseMove_dep = {
 	private["_dx","_dy","_rotateCenter","_worldDelta"];
 	_dx = (_this select 1);
 	_dy = (_this select 2);
 	_camPos = MB_CamPos select 0;
 	MB_MousePositionDelta = [_dx,_dy];
 	_worldDelta = MB_MousePosition vectorDiff MB_LastMousePosition;
-	
+	["onMouseMove",[[_dx,_dy]]] call MB_fnc_dispatchCallbacks;
 	if([DIK_LALT] call MB_fnc_isPressed) then {
 		MB_CamPos set [1,(MB_CamPos select 1)+_dx];
 		MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];

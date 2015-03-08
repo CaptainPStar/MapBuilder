@@ -14,21 +14,22 @@ class MB_Main
 			
 			x = "safezoneX";
 			y = "safezoneY";
-			w = "safezoneW";
-			h = "safezoneH";
+			w = "safezoneW * 0.8";
+			h = "safezoneH * 0.97";
 			//w = "0";
 			//h = "0";
-			
+			colorBackground[] = {0, 0, 0, 0};
 			text = "";
-			onMouseMoving = "MB_MouseScreenPosition = [_this select 1,_this select 2];MB_MousePosition=screenToWorld [_this select 1,_this select 2];";
-			onMouseButtonDown = "_this call MB_fnc_MouseDown;";
-			onMouseButtonUp = "_this call MB_fnc_MouseUp;";
-			onMouseButtonDblClick = "_this call MB_fnc_MouseDblClick;";
-			onMouseZChanged = "_this call MB_fnc_MouseZ;";
+			//onMouseMoving = "MB_MouseScreenPosition = [_this select 1,_this select 2];MB_MousePosition=screenToWorld [_this select 1,_this select 2];";
+			//onMouseButtonDown = "_this call MB_fnc_MouseDown;";
+			//onMouseButtonUp = "_this call MB_fnc_MouseUp;";
+			//onMouseButtonDblClick = "_this call MB_fnc_MouseDblClick;";
+			//onMouseZChanged = "_this call MB_fnc_MouseZ;";
 			onKeyDown = "_this call MB_fnc_KeyDown;";
 			onKeyUp = "_this call MB_fnc_KeyUp;";
-			onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;";
-			onMouseEnter = "MB_RegisterKeys = true;";
+			//onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;[false] call MB_fnc_MouseInView";
+			//onMouseEnter = "MB_RegisterKeys = true;[true] call MB_fnc_MouseInView";
+			//onMouseMoving = "systemchat format[""%1"",_this];";
 		};
 		//class MB_LoadingScreen : RscText {
 		//	idc = 180000;
@@ -84,6 +85,8 @@ class MB_Main
 			w = "SafeZoneW * 0.20";
 			h = "SafeZoneH * 1";
 			colorBackground[] = {0, 0, 0, 0.3};
+			onMouseExit = "[false] call MB_fnc_MouseInView;";
+			onMouseEnter = "[true] call MB_fnc_MouseInView;";
 		};
 		class listboxA : RscTree {
 			idc = 170003;
@@ -145,7 +148,7 @@ class MB_Main
 			text =  "Selected: None";
 		};
 		class MB_FencerButton : RscButton {
-			idc = 170008;
+			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.87)";
 			y = "SafeZoneY + (SafezoneH * 0.85)";
 			w = "SafeZoneW * 0.07";
@@ -154,9 +157,9 @@ class MB_Main
 			action = "[] call MB_fnc_openFencer;";
 		};
 		class MB_ObjSettingsLabel : RscText {
-			idc = 170009;
+			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.82)";
-			y = "SafeZoneY + (SafezoneH * 0.55)";
+			y = "SafeZoneY + (SafezoneH * 0.41)";
 			w = "SafeZoneW * 0.1";
 			h = "SafeZoneH * 0.03";
 			text =  "New Object settings:";
@@ -164,7 +167,7 @@ class MB_Main
 		class MB_RndDirCheckbox : RscCheckbox {
 			idc = 170010;
 			x = "SafeZoneX + (SafeZoneW * 0.82)";
-			y = "SafeZoneY + (SafezoneH * 0.59)";
+			y = "SafeZoneY + (SafezoneH * 0.45)";
 			w = "SafeZoneW * 0.03";
 			h = "SafeZoneH * 0.03";
 			checked_strings[] = {"RndDir"};
@@ -173,11 +176,31 @@ class MB_Main
 		class MB_SimulCheckbox : RscCheckbox {
 			idc = 170011;
 			x = "SafeZoneX + (SafeZoneW * 0.86)";
-			y = "SafeZoneY + (SafezoneH * 0.59)";
+			y = "SafeZoneY + (SafezoneH * 0.45)";
 			w = "SafeZoneW * 0.03";
 			h = "SafeZoneH * 0.03";
 			checked_strings[] = {"Simul"};
 			strings[] = {"Simul"};
+		};
+		class MB_ModeSettingsLabel : RscText {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.50)";
+			w = "SafeZoneW * 0.1";
+			h = "SafeZoneH * 0.03";
+			text =  "Mode:";
+		};
+		class MB_ModeSettings : MyRscToolbox {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.54)";
+			w = "SafeZoneW * 0.16";
+			h = "SafeZoneH * 0.05";
+			rows = 1;
+			columns = 2;
+			strings[] = {"Objects","MM"};
+			values[] = {0,1};
+			onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;"
 		};
 		class PresetsButton : RscButton {
 			idc = -1;
@@ -188,7 +211,15 @@ class MB_Main
 			text = "Presets";
 			action = "[] call MB_fnc_showPresetWindow;";
 		};
-		
+		class ProjectSettingsButton : RscButton {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.87)";
+			y = "SafeZoneY + (SafezoneH * 0.79)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Settings";
+			action = "[] call MB_fnc_showPresetWindow;";
+		};
 		//###################
 		//	Taskbar
 		//###################

@@ -5,12 +5,14 @@
 //=========================================
 
 MB_fnc_CreateObjectByClick = {
-	private["_pos"];
-	_pos = [_this,0] call bis_fnc_param;
-	systemchat format["New Obj at %1",_pos];
-	[MB_CurClass,_pos] call MB_fnc_CreateObject;
+	private["_xp","_yp"];
+	_xp = [_this,2] call bis_fnc_param;
+	_yp = [_this,3] call bis_fnc_param;
+	[MB_CurClass,screenToWorld [_xp,_yp]] call MB_fnc_CreateObject;
 	[] call MB_fnc_updateUsed;
 };
+["LeftMouseDblClick",{_this spawn MB_fnc_CreateObjectByClick;},{MB_Mode==0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+
 
 MB_fnc_CreateObject = {
 	private["_obj","_class","_pos","_dir","_uid","_var"];
@@ -116,7 +118,221 @@ MB_fnc_setObjectVars = {
 	[_obj] call MB_fnc_UpdateObject;
 };
 
+//############################
+// Object Selection Movement
+//############################
+MB_ObjectMoveSelection = [];
+MB_fnc_BeginObjectDrag = {
+	_center = MB_MousePosition;
+	{
+		_vars = [_x] call MB_fnc_getObjectVars;
+		_offset = (_vars select 0) vectorDiff _center;
+		MB_ObjectMoveSelection pushBack [_x,_offset];
+	} foreach MB_Selected;
 
+
+};
+MB_fnc_UpdateObjectDrag = {
+	_center = MB_MousePosition;
+	{
+		_obj = _x select 0;
+		_offset = _x select 1;
+
+		_pos = _center vectorAdd _offset;
+		_obj setposATL _pos;
+	} foreach MB_ObjectMoveSelection;
+
+};
+MB_fnc_EndObjectDrag = {
+	_center = MB_MousePosition;
+	{
+		_obj = _x select 0;
+		_offset = _x select 1;
+		_pos = _center vectorAdd _offset;
+		
+		_obj setvariable["MB_ObjVar_PositionATL",_pos,false];
+		[_obj] call MB_fnc_UpdateObject;
+	} foreach MB_ObjectMoveSelection;
+	MB_ObjectMoveSelection = [];
+};
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectDrag;},{MB_Mode==0 && count(MB_Selected)>0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectDrag;},{MB_Mode==0 && count(MB_ObjectMoveSelection)>0}] call MB_fnc_addCallback;
+["MouseMoved",{_this spawn MB_fnc_UpdateObjectDrag;},{MB_Mode==0 && count(MB_ObjectMoveSelection)>0}] call MB_fnc_addCallback;
+
+//############################
+// Object Selection Height
+//############################
+MB_ObjectChangeHeightSelection = [];
+MB_fnc_BeginObjectHeightDrag = {
+	private["_pos","_obj"];
+	{
+		_obj = _x;
+		_pos = _obj getvariable "MB_ObjVar_PositionATL";
+		MB_ObjectChangeHeightSelection pushBack [_obj,_pos];
+	} foreach MB_Selected;
+};
+MB_fnc_UpdateObjectHeightDrag = {
+	private["_screenDelta","_pos","_obj"];
+	_screenDelta = _this select 0;
+	{
+		_obj = _x select 0;
+		_pos = _x select 1;
+
+		_pos = _pos vectorAdd [0,0,-(_screenDelta select 1)];
+		_x set [1,_pos];
+		_obj setposATL _pos;
+	} foreach MB_ObjectChangeHeightSelection;
+
+};
+MB_fnc_EndObjectHeightDrag = {
+	private["_pos","_obj"];
+	{
+		_obj = _x select 0;
+		_pos = _x select 1;
+		
+		_obj setvariable["MB_ObjVar_PositionATL",_pos,false];
+		[_obj] call MB_fnc_UpdateObject;
+	} foreach MB_ObjectChangeHeightSelection;
+	MB_ObjectChangeHeightSelection = [];
+};
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectHeightDrag;},{MB_Mode==0 && count(MB_Selected)>0 && (_this select 4)}] call MB_fnc_addCallback;
+["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
+["MouseMoved",{_this spawn MB_fnc_UpdateObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
+
+//############################
+// Object Selection Rotation
+//############################
+MB_ObjectChangeYawSelection = [];
+MB_ObjectChangeYawRotationCenter = [];
+MB_fnc_BeginObjectYawDrag = {
+	private["_yaw","_obj","_pos"];
+	
+
+	if((_this select 4)) then {
+		MB_ObjectChangeYawRotationCenter = MB_MousePosition;
+	} else {
+		if(isNull(MB_ClickedObject)) then {
+			MB_ObjectChangeYawRotationCenter =[] call MB_fnc_calcSelectionCenter;
+		} else {
+			MB_ObjectChangeYawRotationCenter = MB_ClickedObject getvariable "MB_ObjVar_PositionATL";
+		};
+	};
+	{
+		_obj = _x;
+		_yaw = _obj getvariable "MB_ObjVar_Yaw";
+		_pos = _obj getvariable "MB_ObjVar_PositionATL";
+		MB_ObjectChangeYawSelection pushBack [_obj,_yaw,_pos];
+	} foreach MB_Selected;
+};
+MB_fnc_UpdateObjectYawDrag = {
+	private["_screenDelta","_pos","_obj","_rot","_yaw","_pitch","_bank"];
+	_screenDelta = _this select 0;
+	{
+		_obj = _x select 0;
+		_yaw = _x select 1;
+		_pos = _x select 2;
+		_rot = (_screenDelta select 0)*100;
+		_yaw = _yaw + _rot;
+		if(_yaw < 0) then {
+			_yaw = 360;
+		};
+		if(_yaw > 360) then {
+			_yaw = 0;
+		};
+		_pos = [MB_ObjectChangeYawRotationCenter,_pos,_rot] call MB_fnc_RotatePos;
+		_x set [1,_yaw];
+		_x set [2,_pos];
+		_pitch = _obj getvariable "MB_ObjVar_Pitch";
+		_bank = _obj getvariable "MB_ObjVar_Bank";
+		[_obj,[_pitch,_bank,_yaw]] call MB_fnc_SetPitchBankYaw;
+		_obj setposATL _pos;
+	} foreach MB_ObjectChangeYawSelection;
+
+};
+MB_fnc_EndObjectYawDrag = {
+	private["_pos","_obj"];
+	{
+		_obj = _x select 0;
+		_yaw = _x select 1;
+		_pos = _x select 2;
+		_obj setvariable["MB_ObjVar_Yaw",_yaw,false];
+		_obj setvariable["MB_ObjVar_PositionATL",_pos,false];
+		[_obj] call MB_fnc_UpdateObject;
+	} foreach MB_ObjectChangeYawSelection;
+	MB_ObjectChangeYawSelection = [];
+};
+["BeginRightMBDrag",{_this spawn MB_fnc_BeginObjectYawDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+["EndRightMBDrag",{_this spawn MB_fnc_EndObjectYawDrag;},{MB_Mode==0 && count(MB_ObjectChangeYawSelection)>0}] call MB_fnc_addCallback;
+["MouseMoved",{_this spawn MB_fnc_UpdateObjectYawDrag;},{MB_Mode==0 && count(MB_ObjectChangeYawSelection)>0}] call MB_fnc_addCallback;
+
+
+//############################
+// Object Selection Pitch
+//############################
+MB_ObjectChangePitchBankSelection = [];
+MB_fnc_BeginObjectPitchBankDrag = {
+	private["_pitch","_obj","_bank"];
+	{
+		_obj = _x;
+		_pitch = _obj getvariable "MB_ObjVar_Pitch";
+		_bank = _obj getvariable "MB_ObjVar_Bank";
+		MB_ObjectChangePitchBankSelection pushBack [_obj,_pitch,_bank];
+	} foreach MB_Selected;
+};
+MB_fnc_UpdateObjectPitchBankDrag = {
+	private["_screenDelta","_pitch","_obj","_bank","_yaw","_pos"];
+	_screenDelta = _this select 0;
+	{
+		_obj = _x select 0;
+		_pitch = _x select 1;
+		_bank = _x select 2;
+		_pitch = (_pitch + (_screenDelta select 0)*100);
+		_bank = (_bank + (_screenDelta select 1)*100);
+		
+		if(_pitch>180) then {
+			_pitch = 180;
+		};
+		if(_bank>180) then {
+			_bank = 180;
+		};
+		if(_pitch<-180) then {
+			_pitch = -180;
+		};
+		if(_bank<-180) then {
+			_bank = -180;
+		};
+		
+		
+		
+		_yaw = _obj getvariable "MB_ObjVar_Yaw";
+		_pos = _obj getvariable "MB_ObjVar_PositionATL";
+		_x set [1,_pitch];
+		_x set [2,_bank];
+		_obj setposATL _pos;
+		[_obj,[_pitch,_bank,_yaw]] call MB_fnc_SetPitchBankYaw;
+		_obj setposATL _pos;
+	} foreach MB_ObjectChangePitchBankSelection;
+
+};
+MB_fnc_EndObjectPitchBankDrag = {
+	private["_pitch","_obj","_bank"];
+	{
+		_obj = _x select 0;
+		_pitch = _x select 1;
+		_bank = _x select 2;
+		_obj setvariable["MB_ObjVar_Pitch",_pitch,false];
+		_obj setvariable["MB_ObjVar_Bank",_bank,false];
+		[_obj] call MB_fnc_UpdateObject;
+	} foreach MB_ObjectChangePitchBankSelection;
+	MB_ObjectChangePitchBankSelection = [];
+};
+["BeginRightMBDrag",{_this spawn MB_fnc_BeginObjectPitchBankDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  !(_this select 4) && !(_this select 6) && (_this select 5)}] call MB_fnc_addCallback;
+["EndRightMBDrag",{_this spawn MB_fnc_EndObjectPitchBankDrag;},{MB_Mode==0 && count(MB_ObjectChangePitchBankSelection)>0}] call MB_fnc_addCallback;
+["MouseMoved",{_this spawn MB_fnc_UpdateObjectPitchBankDrag;},{MB_Mode==0 && count(MB_ObjectChangePitchBankSelection)>0}] call MB_fnc_addCallback;
+
+//############################
+// Object Selection Bank
+//############################
 MB_fnc_MoveSelected = {
 	private["_initialMousePos","_offset","_pos","_relPos","_height","_delta"];
 	_delta  = [_this,0] call bis_fnc_param;
@@ -232,7 +448,7 @@ MB_fnc_resetOrientation = {
 		_x setvariable["MB_ObjVar_Pitch",0,false];
 		_x setvariable["MB_ObjVar_Bank",0,false];
 		_x setvariable["MB_ObjVar_Yaw",0,false];
-		[_obj] call MB_fnc_UpdateObject;
+		[_x] call MB_fnc_UpdateObject;
 	} foreach MB_Selected;
 };
 MB_fnc_SetPitchBankYaw = { 

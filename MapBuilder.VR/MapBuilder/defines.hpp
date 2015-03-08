@@ -983,3 +983,28 @@ class RscControlsGroup
 	};
 	class Controls{};// an empty class telling the engine, no custom, additional controls
 };
+class MyRscToolbox {
+  idc = 200;
+  type = CT_TOOLBOX;  //defined constant (6)
+  style = ST_LEFT; //defined constant (0)
+
+  x = 0.1;
+  y = 0.2;
+  w = 0.2;
+  h = 0.15;
+  
+  colorText[] = {1, 1, 1, 1};
+  color[] = {0, 0, 0, 1};    // seems nothing to change, but define it to avoid error!
+  colorTextSelect[] = {1, 1, 1, 1};
+  colorSelect[] = {0, 0, 1, 1};
+  colorTextDisable[] = {0.4, 0.4, 0.4, 1};
+  colorDisable[] = {0.4, 0.4, 0.4, 1};
+  colorSelectedBg[] = {0.0, 0.8, 0.0, 1};
+  font = "TahomaB";
+  sizeEx = 0.03;
+	
+  rows = 3;
+  columns = 2;
+  strings[] = {"Entry 1","Entry 2","Entry 3","Entry 4","Entry 5","Entry 6"};
+  values[] = {1,1,0,1,0,0};
+};
