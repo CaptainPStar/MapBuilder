@@ -270,7 +270,8 @@ MB_CamSpeed = 1.0;
 
 MB_fnc_updateCam = {
 	private["_mod"];
-	if([DIK_LSHIFT] call MB_fnc_isPressed) then {
+	// if lshift and any direction key is pressed increase camspeed
+	if(([DIK_LSHIFT] call MB_fnc_isPressed) && ( ([DIK_W] call MB_fnc_isPressed) || ([DIK_S] call MB_fnc_isPressed) || ([DIK_A] call MB_fnc_isPressed) || ([DIK_D] call MB_fnc_isPressed) || ([DIK_Q] call MB_fnc_isPressed) || ([DIK_Z] call MB_fnc_isPressed) )) then {
 		MB_CamSpeed = MB_CamSpeed + 0.1;
 	}
 	else {
@@ -283,13 +284,19 @@ MB_fnc_updateCam = {
 	if([DIK_W] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)+_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)+_mod*0.1*cos(MB_CamPos select 1)];
-		_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
+		// only move in height while LALT is pressed
+		if([DIK_LALT] call MB_fnc_isPressed) then {
+			_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
+		};
 	};
 	//Move backward
 	if([DIK_S] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)-_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)-_mod*0.1*cos(MB_CamPos select 1)];
-		_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
+		// only move in height while LALT is pressed
+		if([DIK_LALT] call MB_fnc_isPressed) then {
+			_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
+		};
 	};
 	//Move Left
 	if([DIK_A] call MB_fnc_isPressed) then {
