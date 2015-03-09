@@ -33,7 +33,6 @@ MB_fnc_Setup = {
 	MB_Selected = [];
 	MB_SelectedVertices = [];
 	MB_CopyPaste = [];
-	MB_SelectionRectangle = [];
 	MB_CurClass = "Land_HBarrier_3_F";
 	MB_Layers=[[[]]];
 	MB_CurLayer = 0;
@@ -111,7 +110,6 @@ MB_fnc_Start = {
 	[1,false] call MB_fnc_togglePopup;
 	[2,false] call MB_fnc_togglePopup;
 	[3,false] call MB_fnc_togglePopup;
-	[4,false] call MB_fnc_togglePopup;
 	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";
 	[] call MB_fnc_updateCam;
@@ -146,6 +144,7 @@ MB_fnc_Start = {
 	[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[] call MB_fnc_hidePresetWindow;
+	[] call MB_FNC_CloseFencer;
 	[0] call MB_fnc_switchMode;
 	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
@@ -472,7 +471,7 @@ MB_fnc_SetRelPos = {
 
 
 	//get the anchor position
-	_localPos = [_parent worldToModel (getPosATL _parent),_offset] call BIS_fnc_vectorAdd;
+	_localPos = [_parent worldToModel (getPosATL _parent),_offset] call BIS_fnc_vectorAdd; //vectorADD
 	_worldPos = _parent modelToWorld _localPos;
 	//_worldPos = ATLtoASL _worldPos;
 

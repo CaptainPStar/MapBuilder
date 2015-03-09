@@ -30,9 +30,46 @@ MB_fnc_DeselectAll = {
 	MB_Selected = [];
 
 };
+
+//############################
+// Rectangle Selection
+//############################
+MB_SelectionRectangle = [];
+MB_SelectionModeAdd = false; 
+MB_fnc_BeginRectangleDrag = {
+	systemchat format["Rectdrag at %1",MB_MousePosition];
+	MB_SelectionRectangle = [MB_MousePosition,MB_MousePosition];
+	MB_SelectionModeAdd = (_this select 4);
+};
+
+MB_fnc_UpdateRectangleDrag = {
+	MB_SelectionRectangle set [1,MB_MousePosition];
+	//When Mouse is released outside viewport, first value gets <null>. Don't ask me why.
+	if(!isNil{MB_SelectionRectangle select 0}) then {
+		[MB_SelectionRectangle,MB_SelectionModeAdd] call MB_fnc_SelectInRectangle;
+	} else {
+		MB_SelectionRectangle = [];
+	};
+	systemchat format["%1",MB_SelectionRectangle];
+};
+MB_fnc_EndRectangleDrag = {
+	MB_SelectionRectangle = [];
+};
+["BeginLeftMBDrag",{_this call MB_fnc_BeginRectangleDrag;},{MB_Mode==0 && count(MB_Selected)==0 || (_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+["EndLeftMBDrag",{_this call MB_fnc_EndRectangleDrag;},{MB_Mode==0 && count(MB_SelectionRectangle)>0}] call MB_fnc_addCallback;
+["MouseMoved",{_this call MB_fnc_UpdateRectangleDrag;},{MB_Mode==0 && count(MB_SelectionRectangle)>0}] call MB_fnc_addCallback;
+
+
+
+
+
+
 MB_fnc_SelectInRectangle = {
-	_cornerA = _this select 0;
-	_cornerB = _this select 1;
+	private["_edges","_add","_cornerA","_cornerB","_obj","_flag"];
+	_edges = _this select 0;
+	_add = _this select 1;
+	_cornerA = _edges select 0;
+	_cornerB = _edges select 1;
 	{
 		_obj = _x;
 		_opos = getpos _obj;
@@ -60,7 +97,7 @@ MB_fnc_SelectInRectangle = {
 			if(_flag && !([_obj] call MB_fnc_isSelected)) then {
 				[_obj] call MB_fnc_Select;
 			} else {
-				if(!_flag && ([_obj] call MB_fnc_isSelected)) then {
+				if(!_flag && ([_obj] call MB_fnc_isSelected) && !_add) then {
 					[_obj] call MB_fnc_Deselect;
 				};
 			};

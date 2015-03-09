@@ -195,7 +195,7 @@ MB_fnc_EndObjectHeightDrag = {
 	} foreach MB_ObjectChangeHeightSelection;
 	MB_ObjectChangeHeightSelection = [];
 };
-["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectHeightDrag;},{MB_Mode==0 && count(MB_Selected)>0 && (_this select 4)}] call MB_fnc_addCallback;
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectHeightDrag;},{MB_Mode==0 && count(MB_Selected)>0 && (_this select 5)}] call MB_fnc_addCallback;
 ["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
 ["MouseMoved",{_this spawn MB_fnc_UpdateObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
 
@@ -267,7 +267,7 @@ MB_fnc_EndObjectYawDrag = {
 
 
 //############################
-// Object Selection Pitch
+// Object Selection Pitch/Bank
 //############################
 MB_ObjectChangePitchBankSelection = [];
 MB_fnc_BeginObjectPitchBankDrag = {

@@ -2,7 +2,6 @@
 
 MB_fnc_MouseInView = {
 	private["_in"];
-	systemChat "Blub";
 	_in = [_this,0] call bis_fnc_param;
 	if(_in) then {
 		systemChat "Mouse in View";
@@ -10,6 +9,7 @@ MB_fnc_MouseInView = {
 		systemChat "Mouse left View";
 	};
 };
+
 
 MB_ViewportLastRMBDown = 0;
 MB_ViewportLastLMBDown = 0;
