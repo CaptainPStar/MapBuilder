@@ -167,6 +167,9 @@ MB_fnc_rotate3DPreview = {
 		};	
 	};
 };
+["camUpdate","MB_fnc_rotate3DPreview",{MB_3D_PreviewShown}] call MB_fnc_addCallback;
+
+
 MB_fnc_disable3DPreview = {
 	disableSerialization;
 	private["_display","_ctrl"];
