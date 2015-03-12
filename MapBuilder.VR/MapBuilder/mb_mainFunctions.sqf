@@ -1,4 +1,5 @@
 #include "dik.hpp"
+#include "version.hpp"
 
 //################################################
 //# Map Builder Main File
@@ -144,8 +145,10 @@ MB_fnc_Start = {
 	[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[] call MB_fnc_hidePresetWindow;
-	[] call MB_FNC_CloseFencer;
+	[170400] spawn MB_fnc_closeWindow;
+	[170600] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
+	[] call MB_fnc_checkVersion;
 	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
@@ -163,36 +166,24 @@ MB_fnc_Start = {
 		};
 	};
 };
+MB_CurVersionNum = 0;
+MB_NewVersionNum = 0;
+MB_CurVersion = "Unknown";
+MB_NewVersion = "Unknown";
+MB_fnc_checkVersion = {
+	private["_curVersionStr","_curVersion","_latestVersionStr","_curVersion"];
+	MB_CurVersion = MB_VERSION;
+	MB_CurVersionNum = parseNumber ([MB_CurVersion,"0123456789"] call BIS_fnc_filterString);
+	MB_NewVersion = "MB_Helper" callExtension "checkversion";
+	MB_NewVersionNum = parseNumber ([MB_NewVersion,"0123456789"] call BIS_fnc_filterString);
+	//if(MB_NewVersionNum>MB_CurVersionNum) then {
+		//systemChat format["Your Map Builder version is v%1.",_curVersionStr];
+		//systemChat format["There is a newer version of Map Builder (v%1) available.",_latestVersionStr];
+	
+	//} else {
+		//systemChat format["Your Map Builder version v%1 is up-to-date.",_curVersionStr];
+	//};
 
-
-
-//=========================================
-//= Modes
-//=========================================
-
-
-MB_fnc_ToggleMode = {
-	MB_CurMode = MB_CurMode + 1;
-	if(MB_CurMode>=count(MB_Modes)) then {
-		MB_CurMode = 0;
-	};
-	systemchat format["%1-Mode now active",(MB_Modes select MB_CurMode)];
-};
-MB_fnc_Mode = {
-	_mode = MB_Modes select MB_CurMode;
-	_mode;
-};
-MB_fnc_isMode = {
-	_mode = _this select 0;
-	_index = MB_Modes find _mode;
-	if(_index<0) exitwith {
-		systemchat "Unknown Mode";
-		false;
-	};
-	if(_index!=MB_CurMode) exitwith {
-		false;
-	};
-	true;
 };
 
 //=========================================
@@ -457,7 +448,7 @@ _dir = _this select 2;
     _rpx = ( (_px - _mpx) * cos(_ma) ) + ( (_py - _mpy) * sin(_ma) ) + _mpx;
     _rpy = (-(_px - _mpx) * sin(_ma) ) + ( (_py - _mpy) * cos(_ma) ) + _mpy;
 
-[_rpx, _rpy, 0]
+[_rpx, _rpy, (_pos select 2)]
 };
 
 
