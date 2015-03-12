@@ -1,5 +1,5 @@
-#include "defines.hpp"
-
+#include "ui\defines.hpp"
+#include "version.hpp"
 class MB_Main
 {
 	idd = 123;
@@ -139,8 +139,8 @@ class MB_Main
 			color[] = {1,1,1,0.9};
 		colorActive[] = {1,1,1,1};
 			text = "MapBuilder\icon.paa";
-			action = "systemchat ""Bild geklickt!"";";
-					};
+			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
+		};
 		class MB_SelectedTemplate : RscStructuredText {
 			idc = 170007;
 
@@ -460,225 +460,13 @@ class MB_Main
 			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
 		};
 		
-		
-		
-		
-		
-		//###################
-		//	Fencer
-		//###################
-		 class MB_Popup_FencerGroup : RscControlsGroup
-		{
-			idc = 170400;
-			x = "SafeZoneX + (SafeZoneW * 0.58)";
-			y = "SafeZoneY + (SafezoneH * 0.75)";
-			w = "SafeZoneW * 0.2";
-			h = "SafeZoneH * 0.2";
-
-			class Controls
-			{
-				class Popup_FencerBG : Rsc_Background {
-					idc = 170401;
-					text = "";
-					x = 0;
-					y = 0;
-					w = "SafeZoneW * 0.2";
-					h = "SafeZoneH * 0.2";
-					colorBackground[] = {0.2,0.2,0.2,0.75};
-				};
-				class Popup_FencerHeader : Rsc_Background {
-					idc = 170402;
-					text = "Fencer";
-					x = 0;
-					y = 0;
-					w = "SafeZoneW * 0.2";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-				};
-				class Popup_FencerHeaderClose : RscActiveText {
-					idc = 170403;
-					text = "X";
-					x = 0.4;
-					y = 0;
-					w = "SafeZoneW * 0.02";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-					action = "[] call MB_fnc_closeFencer;";
-				};
-				class Popup_FencerUpButton : RscButton {
-					idc = 170404;
-					x = 0.1;
-					y = 0.10;
-					w = "SafeZoneW * 0.015";
-					h = "SafeZoneH * 0.02";
-					text = "U";
-					action = "MB_FencerDir = 0;[] call MB_FNC_FencerUpdatePreview;";
-				};
-				class Popup_FencerDownButton : RscButton {
-					idc = 170405;
-					x = 0.1;
-					y = 0.14;
-					w = "SafeZoneW * 0.015";
-					h = "SafeZoneH * 0.02";
-					text = "D";
-					action = "MB_FencerDir = 1;[] call MB_FNC_FencerUpdatePreview;";
-				};
-				class Popup_FencerLeftButton : RscButton {
-					idc = 170406;
-					x = 0.06;
-					y = 0.12;
-					w = "SafeZoneW * 0.015";
-					h = "SafeZoneH * 0.02";
-					text = "L";
-					action = "MB_FencerDir = 2;[] call MB_FNC_FencerUpdatePreview;";
-				};
-				class Popup_FencerRightButton : RscButton {
-					idc = 170407;
-					x = 0.16;
-					y = 0.12;
-					w = "SafeZoneW * 0.015";
-					h = "SafeZoneH * 0.02";
-					text = "R";
-					action = "MB_FencerDir = 3;[] call MB_FNC_FencerUpdatePreview;";
-				};
-				class Popup_FencerPlaceButton : RscButton {
-					idc = 170408;
-					x = 0.2;
-					y = 0.25;
-					w = "SafeZoneW * 0.06";
-					h = "SafeZoneH * 0.02";
-					text = "Place";
-					action = "[] call MB_FNC_FencerPlace;";
-				};
-				class Popup_FencerOffsetText : RscText {
-					idc = 170409;
-					x = 0.2;
-					y = 0.15;
-					w = "SafeZoneW * 0.05";
-					h = "SafeZoneH * 0.02";
-					text = "Offset";
-				};
-				class Popup_FencerOffset : RscEdit {
-					idc = 170410;
-					text = "0.0";
-					x = 0.2;
-					y = 0.2;
-					w = "SafeZoneW * 0.05";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-				};
-				class Popup_FencerMode : MyRscToolbox {
-					idc = -1;
-					x = 0.2;
-					y = 0.05;
-					w = "SafeZoneW * 0.1";
-					h = "SafeZoneH * 0.05";
-					rows = 1;
-					columns = 3;
-					strings[] = {"ATL","GND","CONST"};
-					values[] = {0,1,2};
-					onToolBoxSelChanged = "systemchat format[""%1"",(_this select 1)];MB_FencerHeightMode = (_this select 1);"
-				};
-			};
-		};
+		#include "ui\fencer.hpp"
 		//###################
 		//	Brusher
 		//###################
 		
-		//###################
-		//	Presets
-		//###################
-		 class MB_Popup_PresetGroup : RscControlsGroup
-		{
-			idc = 170500;
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.3)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.5";
-
-			class Controls
-			{
-				class MB_Popup_Preset_Background : RscText { 
-					idc = -1;
-					text = "";
-					x = "0";
-					y = "0";
-					w = "SafeZoneW * 0.4";
-					h = "SafeZoneH * 0.5";
-					colorBackground[] = {0, 0, 0, 0.8};
-				};
-				class MB_Popup_Preset_Header : Rsc_Background {
-					idc = -1;
-					text = "Presets";
-					x = "0";
-					y = "0";
-					w = "SafeZoneW * 0.4";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-				};
-				class MB_Popup_Preset_HeaderClose : RscActiveText {
-					idc = -1;
-					text = "X";
-					x = "0.93";
-					y = "0";
-					w = "SafeZoneW * 0.01";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-					action = "[] call MB_fnc_hidePresetWindow;";
-				};
-				class MB_Popup_Preset_List : RscListBox {
-					idc = 170501;
-					x = "0.02";
-					y = "0.1";
-					w = "SafeZoneW * 0.3";
-					h = "SafeZoneH * 0.2";
-					onLBSelChanged="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been changed
-					onLBDblClick="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been double clicked
-				};
-				class MB_Popup_Preset_Filename : RscEdit {
-					idc = 170502;
-					text = "";
-					x = "0.02";
-					y = "0.48";
-					w = "SafeZoneW * 0.2";
-					h = "SafeZoneH * 0.02";
-					colorBackground[] = {0,0.75,0,0.75};
-				};
-				class MB_Popup_Preset_SaveButton : RscButton {
-					idc = -1;
-					x = "0.1";
-					y = "0.53";
-					w = "SafeZoneW * 0.08";
-					h = "SafeZoneH * 0.03";
-					text = "Save";
-					action = "[ctrlText 170502] spawn MB_fnc_savePreset;";
-				};
-				class MB_Popup_Preset_OpenButton : RscButton {
-					idc = 170207;
-					x = "0.49";
-					y = "0.53";
-					w = "SafeZoneW * 0.08";
-					h = "SafeZoneH * 0.03";
-					text = "Load";
-					action = "[ctrlText 170502] spawn MB_fnc_loadPreset;";
-				};
-				class MB_Popup_Preset_Helptext : RscText {
-					idc = -1;
-					x = "0.02";
-					y = "0.05";
-					w = "SafeZoneW * 0.3";
-					h = "SafeZoneH * 0.02";
-					text = "Existing presets:";
-				};
-				class MB_Popup_Preset_Tip: RscStructuredText {
-					idc = -1;
-					x = "0.02";
-					y = "0.6";
-					w = "SafeZoneW * 0.35";
-					h = "SafeZoneH * 0.1";
-					text = "Presets are small selections that can be saved and loaded. To save a preset, select some objects, enter a name and click 'save'. To load a preset, select it from the list and click load. It can now be placed with Ctrl + V.";
-				};
-			};
-		 };
+		#include "ui\presets.hpp"
+		#include "ui\test.hpp"
+		#include "ui\about.hpp"
 	};
 };

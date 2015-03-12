@@ -5,6 +5,12 @@
 #define GUI_GRID_WAbs	(1)
 #define GUI_GRID_HAbs	(1)
 
+#define MB_WINDOW_GRID_X (0.032)
+#define MB_WINDOW_GRID_Y (0.040)
+
+#define MB_WINDOW_PADDING_X (0.01)
+#define MB_WINDOW_PADDING_Y (0.01)
+
 // Control types
 #define CT_STATIC           0
 #define CT_BUTTON           1
