@@ -4,9 +4,7 @@ MB_FencerHeightMode = 0;
 MB_FNC_CloseFencer = {
 	private["_display","_ctrl"];
 	disableSerialization;
-	_display = uinamespace getvariable 'mb_main_dialog';
-	_ctrl = _display displayCtrl 170400;
-	_ctrl ctrlShow false;
+	[170400,false] spawn MB_fnc_closeWindow;
 	MB_FencerActive = false;
 };
 MB_FNC_OpenFencer = {
@@ -15,10 +13,10 @@ MB_FNC_OpenFencer = {
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrl = _display displayCtrl 170400;
 	if(!ctrlShown _ctrl) then {
-		_ctrl ctrlShow true;
+		[170400,false] spawn MB_fnc_openWindow;
 		MB_FencerActive = true;
 	} else {
-		[] call MB_FNC_CloseFencer;
+		[170400,false] spawn MB_fnc_closeWindow;
 	};
 	
 };
