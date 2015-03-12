@@ -468,5 +468,6 @@ class MB_Main
 		#include "ui\presets.hpp"
 		#include "ui\test.hpp"
 		#include "ui\about.hpp"
+		#include "ui\inspector.hpp"
 	};
 };

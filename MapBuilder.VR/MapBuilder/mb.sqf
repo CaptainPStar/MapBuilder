@@ -17,6 +17,7 @@ call compile preprocessFileLineNumbers "MapBuilder\mb_maskerFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_projectSettingsFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_viewFunctions.sqf";
 call compile preprocessFileLineNumbers "MapBuilder\mb_windowFunctions.sqf";
+call compile preprocessFileLineNumbers "MapBuilder\mb_objectInspectorFunctions.sqf";
 
 [] call MB_fnc_Setup;
 

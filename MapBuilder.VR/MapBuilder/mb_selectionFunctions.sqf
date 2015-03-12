@@ -103,16 +103,26 @@ MB_fnc_SelectInRectangle = {
 			};
 	} foreach MB_Objects;
 };
-MB_fnc_SelectUnderCursor = {
-	private["_uX","_uY","_layer","_obj","_pos","_opos","_objects","_shift","_isSelected"];
+MB_fnc_getClickedObject = {
+		private["_uX","_uY","_layer","_obj","_objects","_shift","_isSelected"];
 	_uX = _this select 2;
 	_uY = _this select 3;
 	_shift = _this select 4;
 	_obj = objNull;
 	_objects = lineIntersectsWith [getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY], objNull, objNull, true];
-	//systemChat format["%1",_objects];
 	if(count(_objects)>0) then {
 		_obj = _objects select 0;
+	};
+	_obj;
+};
+
+MB_fnc_SelectUnderCursor = {
+	private["_uX","_uY","_layer","_obj","_pos","_opos","_objects","_shift","_isSelected"];
+	_uX = _this select 2;
+	_uY = _this select 3;
+	_shift = _this select 4;
+	_obj = _this call MB_fnc_getClickedObject;
+	if(!isNull _obj) then {
 		if((_obj in MB_Objects)) then {
 			if(!_shift) then {
 				[] call MB_fnc_DeselectAll;
