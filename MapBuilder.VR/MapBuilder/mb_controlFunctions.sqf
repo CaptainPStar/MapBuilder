@@ -194,7 +194,12 @@ MB_fnc_updateCam = {
 	else {
 		MB_CamSpeed = MB_CamSpeed - 1.0;
 	};
-	MB_CamSpeed = MB_CamSpeed max 0.8 min 10.0;
+	
+	if(([DIK_LALT] call MB_fnc_isPressed)) then {
+		MB_CamSpeed = 200;
+	} else {
+		MB_CamSpeed = MB_CamSpeed max 0.8 min 50.0;
+	};
 	_mod = MB_CamSpeed;
 	_camPos = MB_CamPos select 0;
 	//Move forward
@@ -202,7 +207,7 @@ MB_fnc_updateCam = {
 		_camPos set[0,(_camPos select 0)+_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)+_mod*0.1*cos(MB_CamPos select 1)];
 		// only move in height while LALT is pressed
-		if([DIK_LALT] call MB_fnc_isPressed) then {
+		if([DIK_SPACE] call MB_fnc_isPressed) then {
 			_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
 		};
 	};
@@ -211,7 +216,7 @@ MB_fnc_updateCam = {
 		_camPos set[0,(_camPos select 0)-_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)-_mod*0.1*cos(MB_CamPos select 1)];
 		// only move in height while LALT is pressed
-		if([DIK_LALT] call MB_fnc_isPressed) then {
+		if([DIK_SPACE] call MB_fnc_isPressed) then {
 			_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
 		};
 	};
@@ -275,4 +280,17 @@ MB_fnc_updateCam = {
 	[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;	
 	MBCamera SetPosATL [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
 	MBCamera camCommit 0;
+		
+	
+};
+["MouseMoved",{_this call MB_fnc_camFreeMove;},{[DIK_SPACE] call MB_fnc_isPressed}] call MB_fnc_addCallback;
+MB_fnc_camFreeMove = {
+	private["_delta","_dx","_dy"];
+	_delta = _this select 0;
+	_dx = (_delta select 0)*250;
+	_dy = (_delta select 1)*250;
+	//systemChat format["Mousemove: %1",_this];
+	MB_CamPos set [1,(MB_CamPos select 1)+_dx];
+	MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];
+
 };
