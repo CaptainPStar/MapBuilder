@@ -1,4 +1,5 @@
 #include "dik.hpp"
+#include "version.hpp"
 
 //################################################
 //# Map Builder Main File
@@ -24,31 +25,53 @@ MB_fnc_Setup = {
 	MB_MouseKeys = [];
 	MB_MouseKeys set [MB_L,[false,0,0]];
 	MB_MouseKeys set [MB_R,[false,0,0]];
-	MB_MousePosition = [0,0];
+	MB_MousePosition = [0,0,0];
+	MB_MouseScreenPosition = [0,0];
+	MB_LastMousePosition = [0,0,0];
+	MB_LastMouseScreenPosition = [0,0];
 	MB_MousePositionDelta = [0,0];
 	MB_CamPos = [[getpos player select 0, getpos player select 1,(getpos player select 2)+2],getdir player,0];//[X,Y,Z],Dir,Dive
 	MB_Selected = [];
 	MB_SelectedVertices = [];
 	MB_CopyPaste = [];
-	MB_SelectionRectangle = [];
 	MB_CurClass = "Land_HBarrier_3_F";
 	MB_Layers=[[[]]];
 	MB_CurLayer = 0;
 	MB_ClickedObject = objNull;
 	MB_ClickedPosition = [];
 	MB_ProjectName = "";
-	MB_DataSource = "Array"; 
-	MB_Modes = ["Object","Polygon"];
-	MB_CurMode = 0;
+	//MB_DataSource = "Array"; 
+	//MB_Modes = ["Object","Polygon"];
+	MB_Mode = -1;
 	MB_DebugLines = [];
 	MB_RegisterKeys = true;
 	
 	MB_SelectedPolyline = [];
 	MB_PopupOpen = false; 
 	
-	MB_ObjectListNames = [];
-	MB_ObjectLists = [];
+	//MB_ObjectListNames = [];
+	//MB_ObjectLists = []; //Ob
 	
+	MB_LibraryFavorites = [];
+	MB_LibraryInUse = [];
+	
+	MB_Objects = []; //All placed objects
+	
+	//MB safe variables
+	if(isNil("MB_NUID")) then {
+		MB_NUID = 0;
+		publicVariable "MB_NUID";
+	};
+	
+	//ProjectSettings
+	if(isNil("MB_IslandGridSize")) then {
+		//MB_IslandGridSize = -1;
+		MB_IslandGridSize = 5;
+	};
+	if(isNil("MB_IslandSize")) then {
+		//MB_IslandSize = -1;
+		MB_IslandSize = 5120;
+	};
 	//Fencer
 	MB_FencerDir = 0;
 	MB_FencerPreview = ObjNull;
@@ -57,10 +80,10 @@ MB_fnc_Setup = {
 	MB_autosaveInterval = -1;
 	MB_nextProjectAutosave = time + MB_autosaveInterval;
 	
-	[] spawn MB_fnc_loadLibrary;
-	["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
-	["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
-	
+	[] call MB_fnc_loadLibrary;
+	//["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
+	//["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
+	//["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
 };
 
 //***************************************
@@ -83,13 +106,14 @@ MB_fnc_Exit = {
 //* Starts MB dialog and camera
 //***************************************
 MB_fnc_Start = {
+	startLoadingScreen ["Starting MapBuilder..."];
 	MBDialog = createDialog "MB_Main";
 	[1,false] call MB_fnc_togglePopup;
 	[2,false] call MB_fnc_togglePopup;
 	[3,false] call MB_fnc_togglePopup;
-	[4,false] call MB_fnc_togglePopup;
 	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";
+	[] call MB_fnc_updateCam;
 	//MBCamera cameraEffect ["internal", "BACK"];
 	//showcinemaborder false;
 	//cameraEffectEnableHUD true;
@@ -99,10 +123,17 @@ MB_fnc_Start = {
 	//((findDisplay 123) displayCtrl 170301) onDoubleClick "MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];";
 	
 	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","_nil=_this call MB_fnc_MouseUp"];
-	(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
+	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","if(MB_LibraryDrag != """") then {_this call MB_fnc_createObjectByDrag;};"];
+	//(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
+	//(findDisplay 123) displayAddEventHandler ["MouseButtonDown","systemchat format[""MB Down: %1"",_this];"];
+	//(findDisplay 123) displayAddEventHandler ["MouseButtonUp","systemchat format[""MB Up: %1"",_this];"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseMoving","_this call MB_fnc_MouseMove;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseEnter","[true] call MB_fnc_MouseInView;"];
+    ((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseExit","[false] call MB_fnc_MouseInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonDown","_this call MB_fnc_MouseButtonDownInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonUp","_this call MB_fnc_MouseButtonUpInView;"];
 	//(findDisplay 123) displayAddEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseZ"];
-	//(findDisplay 123) displayAddEventHandler ["KeyDown","_nil=_this call MB_fnc_KeyDown"];
+	//findDisplay 123) displayAddEventHandler ["KeyDown","systemchat format[""%1"",_this];"];
 	//(findDisplay 123) displayAddEventHandler ["KeyUp","_nil=_this call MB_fnc_KeyUp"];
 	
 	["MB_Draw3D", "onEachFrame", {call MB_fnc_Draw3D;}] call BIS_fnc_addStackedEventHandler;
@@ -110,6 +141,17 @@ MB_fnc_Start = {
 	MB_RegisterKeys = true;
 	//[] call MB_fnc_refreshFilters;
 	[MB_Library] call MB_fnc_libraryUpdate;
+	[] call MB_fnc_updateUsed;
+	[] call MB_fnc_disable3DPreview;
+	[] call MB_fnc_SetEditorFocus;
+	[] call MB_fnc_hidePresetWindow;
+	[170400] spawn MB_fnc_closeWindow;
+	[170600] spawn MB_fnc_closeWindow;
+	//[666] spawn MB_fnc_closeWindow;
+	[170700,true] spawn MB_fnc_closeWindow;
+	[0] call MB_fnc_switchMode;
+	[] call MB_fnc_checkVersion;
+	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
 		while{dialog} do {
@@ -126,115 +168,25 @@ MB_fnc_Start = {
 		};
 	};
 };
-
-
-
-//=========================================
-//= Modes
-//=========================================
-
-
-MB_fnc_ToggleMode = {
-	MB_CurMode = MB_CurMode + 1;
-	if(MB_CurMode>=count(MB_Modes)) then {
-		MB_CurMode = 0;
-	};
-	systemchat format["%1-Mode now active",(MB_Modes select MB_CurMode)];
-};
-MB_fnc_Mode = {
-	_mode = MB_Modes select MB_CurMode;
-	_mode;
-};
-MB_fnc_isMode = {
-	_mode = _this select 0;
-	_index = MB_Modes find _mode;
-	if(_index<0) exitwith {
-		systemchat "Unknown Mode";
-		false;
-	};
-	if(_index!=MB_CurMode) exitwith {
-		false;
-	};
-	true;
-};
-//=========================================
-//= Layer Depreciated
-//=========================================
-MB_fnc_LayerUpdateObject = {
-
-};
-MB_fnc_LayerHasObject = {
-
-};
-MB_fnc_LayerAddObject = {
-	_object =[_this,0] call bis_fnc_param;
-	_layerIndex = [_this,1] call bis_fnc_param;
-	if(count(MB_Layers)-1 < _layerIndex) then {
-		MB_Layers set[_layerIndex,[[]]];
-	};
-	_layer = MB_Layers select _layerIndex;
-	_layerObjects = _layer select 0;
-	_layerObjects pushBack _object;
-	//_layer set [0,_layerObjects];
-	//MB_Layers set [MB_CurLayer,_layer];
-};
-MB_fnc_LayerRemoveObject = {
-	_object =[_this,0] call bis_fnc_param;
-	_layerIndex = [_this,1] call bis_fnc_param;
+MB_CurVersionNum = 0;
+MB_NewVersionNum = 0;
+MB_CurVersion = "Unknown";
+MB_NewVersion = "Unknown";
+MB_fnc_checkVersion = {
+	private["_curVersionStr","_curVersion","_latestVersionStr","_curVersion"];
+	MB_CurVersion = MB_VERSION;
+	MB_CurVersionNum = parseNumber ([MB_CurVersion,"0123456789"] call BIS_fnc_filterString);
+	MB_NewVersion = "MB_Helper" callExtension "checkversion";
+	MB_NewVersionNum = parseNumber ([MB_NewVersion,"0123456789"] call BIS_fnc_filterString);
+	//if(MB_NewVersionNum>MB_CurVersionNum) then {
+		//systemChat format["Your Map Builder version is v%1.",_curVersionStr];
+		//systemChat format["There is a newer version of Map Builder (v%1) available.",_latestVersionStr];
 	
-	_layer = MB_Layers select _layerIndex;
-	_layerObjects = _layer select 0;
-	_layerObjects = _layerObjects - [_object];
-	_layer set [0,_layerObjects];
-};
+	//} else {
+		//systemChat format["Your Map Builder version v%1 is up-to-date.",_curVersionStr];
+	//};
 
-//=========================================
-//= Polyline
-//=========================================
-
-MB_fnc_StartPolyline = {
-	if(count(MB_SelectedPolyline)==0) then {
-		_vertex = [MB_ClickedPosition] call MB_fnc_CreatePolylineVertex;
-		MB_SelectedPolyline set [0,[_vertex,[]]];
-	} else {
-		_vertex = [MB_ClickedPosition] call MB_fnc_CreatePolylineVertex;
-		_lastVertex = (MB_SelectedPolyline select (count(MB_SelectedPolyline)-1)) select 0;
-		_lineList = [getposATL _lastVertex,getposATL _vertex] call MB_fnc_CreateLine;
-		MB_SelectedPolyline set[count(MB_SelectedPolyline),[_vertex,_lastVertex]]
-	};
 };
-MB_fnc_CreatePolylineVertex = {
-	_pos = _this select 0;
-	_dir = [_this,1,0] call BIS_fnc_param;
-	_height = [_this,2,0.25] call BIS_fnc_param;
-	_color = [_this,3,[1,1,1,1],[[]]] call BIS_fnc_param;
-	_vertex = "UserTexture1m_F" createVehicle _pos;
-	_vertex setObjectTexture [0,format["#(argb,8,8,1)color(%1,%2,%3,%4)",_color select 0,_color select 1,_color select 2,_color select 3]];
-	_vertex setposATL [_pos select 0, _pos select 1, _height];
-	_vertex setdir _dir;
-	[_vertex,-90,0] call BIS_fnc_SetPitchBank;
-	_vertex;
-};
-MB_fnc_CreateLine = {
-	_pos1 = _this select 0;
-	_pos2 = _this select 1;
-	_dir = [_pos1,_pos2] call BIS_fnc_dirTo;
-	_distance = round([_pos1, _pos2] call BIS_fnc_Distance2D);
-	_list = [];
-	_vec = [((_pos2 select 0)-(_pos1 select 0))/_distance,((_pos2 select 1)-(_pos1 select 1))/_distance,0];
-	for "_i" from 0 to _distance do {
-		_vertex = [[(_pos1 select 0)+_i*(_vec select 0),(_pos1 select 1)+_i*(_vec select 1),0],_dir,0.1,[0,0,1,1]] call MB_fnc_CreatePolylineVertex;
-		_list set[count(_list),_vertex];
-	};
-	_list
-};
-MB_fnc_FinishPolyline = {
-	_layer = ((MB_Layers select MB_CurLayer) select 1);
-	_layer set [count(_layer),MB_SelectedPolyline];
-};
-MB_fnc_DeletePolyline = {};
-
-MB_fnc_DeleteCreatedPolyline = {};
 
 //=========================================
 //= Scene drawing
@@ -242,7 +194,7 @@ MB_fnc_DeleteCreatedPolyline = {};
 
 MB_fnc_Draw3D = {
 	{
-		[_x select 0] call MB_fnc_DrawBoundingBox;
+		[_x] call MB_fnc_DrawBoundingBox;
 	} foreach MB_Selected;
 	
 	{
@@ -498,7 +450,7 @@ _dir = _this select 2;
     _rpx = ( (_px - _mpx) * cos(_ma) ) + ( (_py - _mpy) * sin(_ma) ) + _mpx;
     _rpy = (-(_px - _mpx) * sin(_ma) ) + ( (_py - _mpy) * cos(_ma) ) + _mpy;
 
-[_rpx, _rpy, 0]
+[_rpx, _rpy, (_pos select 2)]
 };
 
 
@@ -512,7 +464,7 @@ MB_fnc_SetRelPos = {
 
 
 	//get the anchor position
-	_localPos = [_parent worldToModel (getPosATL _parent),_offset] call BIS_fnc_vectorAdd;
+	_localPos = [_parent worldToModel (getPosATL _parent),_offset] call BIS_fnc_vectorAdd; //vectorADD
 	_worldPos = _parent modelToWorld _localPos;
 	//_worldPos = ATLtoASL _worldPos;
 

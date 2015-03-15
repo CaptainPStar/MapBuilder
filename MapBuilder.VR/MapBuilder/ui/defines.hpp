@@ -5,6 +5,12 @@
 #define GUI_GRID_WAbs	(1)
 #define GUI_GRID_HAbs	(1)
 
+#define MB_WINDOW_GRID_X (0.032)
+#define MB_WINDOW_GRID_Y (0.040)
+
+#define MB_WINDOW_PADDING_X (0.01)
+#define MB_WINDOW_PADDING_Y (0.01)
+
 // Control types
 #define CT_STATIC           0
 #define CT_BUTTON           1
@@ -825,127 +831,186 @@ class RscTree {
 
 class _CT_XLISTBOX
 {
-			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
-			idc = CT_XLISTBOX; // Control identification (without it, the control won't be displayed)
-			type = CT_XLISTBOX; // Type is 42
-			style = SL_HORZ + ST_CENTER + LB_TEXTURES; // Style
-			default = 0; // Control selected by default (only one within a display can be used)
-			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+	access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+	idc = CT_XLISTBOX; // Control identification (without it, the control won't be displayed)
+	type = CT_XLISTBOX; // Type is 42
+	style = SL_HORZ + ST_CENTER + LB_TEXTURES; // Style
+	default = 0; // Control selected by default (only one within a display can be used)
+	blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
 
-			x = 0; // Horizontal coordinates
-			y = 0; // Vertical coordinates
-			w = 0; // Width
-			h = 0; // Height
+	x = 0; // Horizontal coordinates
+	y = 0; // Vertical coordinates
+	w = 0; // Width
+	h = 0; // Height
 
-			color[] = {1,1,1,1}; // Arrow color
-			colorActive[] = {1,0.5,0,1}; // Selected arrow color
+	color[] = {1,1,1,1}; // Arrow color
+	colorActive[] = {1,0.5,0,1}; // Selected arrow color
 
-			sizeEx = 0.03; // Text size
-			font = "TahomaB"; // Font from CfgFontFamilies
-			shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
-			colorText[] = {1,1,1,1}; // Text color
-			colorSelect[] = {1,0.5,0,1}; // Selected text color
-			colorDisabled[] = {1,1,1,0.5}; // Disabled text color
+	sizeEx = 0.03; // Text size
+	font = "TahomaB"; // Font from CfgFontFamilies
+	shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
+	colorText[] = {1,1,1,1}; // Text color
+	colorSelect[] = {1,0.5,0,1}; // Selected text color
+	colorDisabled[] = {1,1,1,0.5}; // Disabled text color
 
-			tooltip = "CT_XLISTBOX"; // Tooltip text
-			tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
-			tooltipColorText[] = {1,1,1,1}; // Tooltip text color
-			tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+	tooltip = "CT_XLISTBOX"; // Tooltip text
+	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
 
-			arrowEmpty = "\A3\ui_f\data\gui\cfg\slider\arrowEmpty_ca.paa"; // Arrow
-			arrowFull = "\A3\ui_f\data\gui\cfg\slider\arrowFull_ca.paa"; // Arrow when clicked on
-			border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa"; // Fill texture
+	arrowEmpty = "\A3\ui_f\data\gui\cfg\slider\arrowEmpty_ca.paa"; // Arrow
+	arrowFull = "\A3\ui_f\data\gui\cfg\slider\arrowFull_ca.paa"; // Arrow when clicked on
+	border = "\A3\ui_f\data\gui\cfg\slider\border_ca.paa"; // Fill texture
 
-			soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1}; // Sound played when an item is selected
+	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1}; // Sound played when an item is selected
 
-			onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-			onDestroy = "systemChat str ['onDestroy',_this]; false";
-			onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-			onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-			onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-			onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-			onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-			onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-			onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-			onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-			onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
-			onMouseMoving = "";
-			onMouseHolding = "";
+	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
+	onDestroy = "systemChat str ['onDestroy',_this]; false";
+	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
+	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
+	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
+	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
+	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
+	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
+	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
+	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
+	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onMouseMoving = "";
+	onMouseHolding = "";
 
-			onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
-			onLBDblClick = "systemChat str ['onLBDblClick',_this]; false";
-		};
-		class _CT_COMBO
-		{
-			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
-			idc = CT_COMBO; // Control identification (without it, the control won't be displayed)
-			type = CT_COMBO; // Type is 4
-			style = ST_LEFT + LB_TEXTURES; // Style
-			default = 0; // Control selected by default (only one within a display can be used)
-			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+	onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
+	onLBDblClick = "systemChat str ['onLBDblClick',_this]; false";
+};
+class _CT_COMBO
+{
+	access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+	idc = CT_COMBO; // Control identification (without it, the control won't be displayed)
+	type = CT_COMBO; // Type is 4
+	style = ST_LEFT + LB_TEXTURES; // Style
+	default = 0; // Control selected by default (only one within a display can be used)
+	blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
 
-			x = 0; // Horizontal coordinates
-			y = 0; // Vertical coordinates
-			w = 0.1; // Width
-			h = 0.1; // Height
+	x = 0; // Horizontal coordinates
+	y = 0; // Vertical coordinates
+	w = 0.1; // Width
+	h = 0.1; // Height
 
-			colorBackground[] = {0.2,0.2,0.2,1}; // Fill color
-			colorSelectBackground[] = {0,0.8,0,0.8}; // Selected item fill color
+	colorBackground[] = {0.2,0.2,0.2,1}; // Fill color
+	colorSelectBackground[] = {0,0.8,0,0.8}; // Selected item fill color
 
-			sizeEx = 0.03; // Text size
-			font = "TahomaB"; // Font from CfgFontFamilies
-			shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
-			colorText[] = {1,1,1,1}; // Text and frame color
-			colorDisabled[] = {1,1,1,0.5}; // Disabled text color
-			colorSelect[] = {1,1,1,1}; // Text selection color
+	sizeEx = 0.03; // Text size
+	font = "TahomaB"; // Font from CfgFontFamilies
+	shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
+	colorText[] = {1,1,1,1}; // Text and frame color
+	colorDisabled[] = {1,1,1,0.5}; // Disabled text color
+	colorSelect[] = {1,1,1,1}; // Text selection color
 
-			pictureColor[] = {1,0.5,0,1}; // Picture color
-			pictureColorSelect[] = {1,1,1,1}; // Selected picture color
-			pictureColorDisabled[] = {1,1,1,0.5}; // Disabled picture color
+	pictureColor[] = {1,0.5,0,1}; // Picture color
+	pictureColorSelect[] = {1,1,1,1}; // Selected picture color
+	pictureColorDisabled[] = {1,1,1,0.5}; // Disabled picture color
 
-			tooltip = "CT_COMBO"; // Tooltip text
-			tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
-			tooltipColorText[] = {1,1,1,1}; // Tooltip text color
-			tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+	tooltip = "CT_COMBO"; // Tooltip text
+	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
 
-			arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa"; // Expand arrow
-			arrowFull = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa"; // Collapse arrow
+	arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa"; // Expand arrow
+	arrowFull = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa"; // Collapse arrow
 
-			wholeHeight = 5 * 0.05; // Maximum height of expanded box (including the control height)
-			maxHistoryDelay = 1; // Time since last keyboard type search to reset it
+	wholeHeight = 5 * 0.05; // Maximum height of expanded box (including the control height)
+	maxHistoryDelay = 1; // Time since last keyboard type search to reset it
 
-			soundExpand[] = {"\A3\ui_f\data\sound\RscCombo\soundExpand",0.1,1}; // Sound played when the list is expanded
-			soundCollapse[] = {"\A3\ui_f\data\sound\RscCombo\soundCollapse",0.1,1}; // Sound played when the list is collapsed
-			soundSelect[] = {"\A3\ui_f\data\sound\RscCombo\soundSelect",0.1,1}; // Sound played when an item is selected
+	soundExpand[] = {"\A3\ui_f\data\sound\RscCombo\soundExpand",0.1,1}; // Sound played when the list is expanded
+	soundCollapse[] = {"\A3\ui_f\data\sound\RscCombo\soundCollapse",0.1,1}; // Sound played when the list is collapsed
+	soundSelect[] = {"\A3\ui_f\data\sound\RscCombo\soundSelect",0.1,1}; // Sound played when an item is selected
 
-			// Scrollbar configuration (applied only when LB_TEXTURES style is used)
-			class ComboScrollBar
-			{
-				width = 0; // width of ComboScrollBar
-				height = 0; // height of ComboScrollBar
-				scrollSpeed = 0.01; // scrollSpeed of ComboScrollBar
+	// Scrollbar configuration (applied only when LB_TEXTURES style is used)
+	class ComboScrollBar
+	{
+		width = 0; // width of ComboScrollBar
+		height = 0; // height of ComboScrollBar
+		scrollSpeed = 0.01; // scrollSpeed of ComboScrollBar
 
-				arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa"; // Arrow
-				arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa"; // Arrow when clicked on
-				border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa"; // Slider background (stretched vertically)
-				thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa"; // Dragging element (stretched vertically)
+		arrowEmpty = "\A3\ui_f\data\gui\cfg\scrollbar\arrowEmpty_ca.paa"; // Arrow
+		arrowFull = "\A3\ui_f\data\gui\cfg\scrollbar\arrowFull_ca.paa"; // Arrow when clicked on
+		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa"; // Slider background (stretched vertically)
+		thumb = "\A3\ui_f\data\gui\cfg\scrollbar\thumb_ca.paa"; // Dragging element (stretched vertically)
 
-				color[] = {1,1,1,1}; // Scrollbar color
-			};
+		color[] = {1,1,1,1}; // Scrollbar color
+	};
 
-			onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-			onDestroy = "systemChat str ['onDestroy',_this]; false";
-			onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-			onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-			onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-			onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-			onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-			onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-			onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-			onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-			onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
-			onMouseMoving = "";
-			onMouseHolding = "";
+	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
+	onDestroy = "systemChat str ['onDestroy',_this]; false";
+	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
+	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
+	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
+	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
+	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
+	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
+	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
+	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
+	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onMouseMoving = "";
+	onMouseHolding = "";
 
-			onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
-		};
+	onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
+};
+class RscControlsGroup  
+{
+	type = CT_CONTROLS_GROUP;
+	idc = -1;
+	style = ST_MULTI;
+        x = 0;     y = 0; w = 1; h = 1;
+	shadow=0;
+	class VScrollbar 
+	{
+		width = 0.021;
+		autoScrollSpeed = -1;
+		autoScrollDelay = 5;
+		autoScrollRewind = 0;
+                shadow=0;
+	};
+	
+	class HScrollbar 
+	{
+		height = 0.028;
+                shadow=0;
+	};
+	
+	class ScrollBar
+	{
+                color[] = {1,1,1,0.6};
+		colorActive[] = {1,1,1,1};
+		colorDisabled[] = {1,1,1,0.3};
+		thumb = "#(argb,8,8,3)color(1,1,1,1)";
+		arrowEmpty = "#(argb,8,8,3)color(1,1,1,1)";
+		arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
+		border = "#(argb,8,8,3)color(1,1,1,1)";
+	};
+	class Controls{};// an empty class telling the engine, no custom, additional controls
+};
+class MyRscToolbox {
+  idc = 200;
+  type = CT_TOOLBOX;  //defined constant (6)
+  style = ST_LEFT; //defined constant (0)
+
+  x = 0.1;
+  y = 0.2;
+  w = 0.2;
+  h = 0.15;
+  
+  colorText[] = {1, 1, 1, 1};
+  color[] = {0, 0, 0, 1};    // seems nothing to change, but define it to avoid error!
+  colorTextSelect[] = {1, 1, 1, 1};
+  colorSelect[] = {0, 0, 1, 1};
+  colorTextDisable[] = {0.4, 0.4, 0.4, 1};
+  colorDisable[] = {0.4, 0.4, 0.4, 1};
+  colorSelectedBg[] = {0.0, 0.8, 0.0, 1};
+  font = "TahomaB";
+  sizeEx = 0.03;
+	
+  rows = 3;
+  columns = 2;
+  strings[] = {"Entry 1","Entry 2","Entry 3","Entry 4","Entry 5","Entry 6"};
+  values[] = {1,1,0,1,0,0};
+};

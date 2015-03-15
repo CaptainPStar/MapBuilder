@@ -1,30 +1,39 @@
-MB_Fencer_callback = [];
-MB_FNC_OpenFencer = {
-	if(count(MB_Fencer_callback)==0) then {
-		MB_Fencer_callback = ["loop","MB_FNC_FencerUpdatePreview"] call mb_fnc_addCallback;
-		[4,true] call mb_fnc_togglePopup;
-	
-	} else {
-		[] call MB_FNC_CloseFencer;
-	};
-};
+MB_FencerActive = false;
+MB_Fencer_callback = ["camUpdate","MB_FNC_FencerUpdatePreview",{MB_FencerActive}] call mb_fnc_addCallback;
+MB_FencerHeightMode = 0;
 MB_FNC_CloseFencer = {
-	[MB_Fencer_callback] call mb_fnc_removeCallback;
-	MB_Fencer_callback = [];
-	[] call MB_FNC_FencerDeletePreview;
-	[4,false] call mb_fnc_togglePopup;
+	private["_display","_ctrl"];
+	disableSerialization;
+	[170400,false] spawn MB_fnc_closeWindow;
+	MB_FencerActive = false;
 };
+MB_FNC_OpenFencer = {
+	private["_display","_ctrl"];
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170400;
+	if(!ctrlShown _ctrl) then {
+		[170400,false] spawn MB_fnc_openWindow;
+		MB_FencerActive = true;
+	} else {
+		[170400,false] spawn MB_fnc_closeWindow;
+	};
+	
+};
+
+
+
 MB_FNC_FencerUpdatePreview = {
-	private["_relPos","_created","_direction","_obj","_dir","_pos","_maxWidth","_maxLength"];
+	private["_relPos","_created","_direction","_obj","_dir","_pos","_maxWidth","_maxLength","_bounding"];
 	if(count(MB_Selected)>0) then {
-		_obj = (MB_Selected select (count(MB_Selected)-1)) select 0;
+		_obj = (MB_Selected select (count(MB_Selected)-1));
 		
-		_relPos = [_obj] call MB_FNC_FencerCalcPosition;
-		_obj = (MB_Selected select 0) select 0;
-		_pos = _relPos select 0;
-		_maxWidth = _relPos select 2;
-		_maxLength = _relPos select 1;
-		_dir = _relPos select 3;
+		_bounding = [_obj] call MB_FNC_FencerCalcBounding;
+		_dir = _obj getvariable "MB_ObjVar_Yaw";
+		_pos = _obj getvariable "MB_ObjVar_PositionATL";
+		_maxWidth = _bounding select 1;
+		_maxLength = _bounding select 0;
+
 
 		if(isNull MB_FencerPreview) then {
 		
@@ -70,17 +79,17 @@ MB_FNC_FencerDeletePreview = {
 		MB_FencerPreview = objNull;
 	}
 };
-MB_FNC_FencerCalcPosition = {
+MB_FNC_FencerCalcBounding = {
 	private["_obj","_direction","_box","_dir","_pos"];
-	_box = [_this,0,[],[[],objNull]] call bis_fnc_param; 
+	_obj = [_this,0,[],[[],objNull]] call bis_fnc_param; 
 	
-	if(typename _box == "OBJECT") then {
-		_dir = getdir _box;
-		_pos = getpos _box;
-		_box = boundingBoxReal _box;
+	if(typename _obj == "OBJECT") then {
+		//_dir = _obj getvariable "MB_ObjVar_Yaw";
+		//_pos = _obj getvariable "MB_ObjVar_PositionATL";
+		_box = boundingBoxReal _obj;
 	} else {
-		_dir = 0;
-		_pos = MB_SelectionCenter;
+		//_dir = 0;
+		//_pos = MB_SelectionCenter;
 	};
 	
 	_p1 = _box select 0;
@@ -89,43 +98,89 @@ MB_FNC_FencerCalcPosition = {
 	_maxLength = abs ((_p2 select 1) - (_p1 select 1));
 	_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
 	
-	_return = [_pos,_maxLength,_maxWidth,_dir];
+	
+	_return = [_maxLength,_maxWidth];
 	_return;
 };
 MB_FNC_FencerPlace = {
-	private["_obj","_direction","_bbr","_dir","_fpos"];
+	private["_parent","_direction","_bbr","_dir","_fpos","_relPos"];
 	
 	
-	_obj = (MB_Selected select (count(MB_Selected)-1)) select 0;
-	_relPos = [_obj] call MB_FNC_FencerCalcPosition;
+	_parent = (MB_Selected select (count(MB_Selected)-1));
+	_bounding = [_parent] call MB_FNC_FencerCalcBounding;
 	
-	_pos = _relPos select 0;
-	_maxWidth = _relPos select 2;
-	_maxLength = _relPos select 1;
-	_dir = _relPos select 3;
+	_parentPos = _parent getvariable "MB_ObjVar_PositionATL";
+	_maxWidth = _bounding select 1;
+	_maxLength = _bounding select 0;
+	_dir =  _parent getvariable "MB_ObjVar_Yaw";
 	
-	_created = [(typeof _obj),_pos,MB_CurLayer,_dir,0,0,1,true,false] call MB_fnc_CreateObject;
-	//_created setdir _dir;
+	_created = [(typeof _parent),_parentPos] call MB_fnc_CreateObject;
+	_created setvariable ["MB_ObjVar_Yaw",_dir,false];
 	
 	_direction = MB_FencerDir;
 		_offset = parseNumber (ctrlText 170410);
 	switch (_direction) do {
 		case 0: {
-			[_obj,_created,[0,_maxLength+_offset,0]] call MB_fnc_SetRelPos;
+			_relPos = [_parent,_created,[0,_maxLength+_offset,0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 1: {
-			[_obj,_created,[0,-1*(_maxLength+_offset),0]] call MB_fnc_SetRelPos;
+			_relPos = [_parent,_created,[0,-1*(_maxLength+_offset),0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 2: {
-			[_obj,_created,[-1*(_maxWidth+_offset),0,0]] call MB_fnc_SetRelPos;
+			_relPos = [_parent,_created,[-1*(_maxWidth+_offset),0,0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 3: {
-			[_obj,_created,[_maxWidth+_offset,0,0]] call MB_fnc_SetRelPos;
+			_relPos = [_parent,_created,[_maxWidth+_offset,0,0]] call MB_fnc_CalcRelativePosition;
 		};
-};
+	};
+
+	switch (MB_FencerHeightMode) do {
+		case 0: {
+			//Do Nothing. It is already ATL
+			_relPos set [2,_parentPos select 2];
+			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
+			systemchat format["%1",_relPos];
+		};
+		case 1: {
+			//Height to Zero
+			_relPos set [2,0];
+			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
+			systemchat format["%1",_relPos];
+		};
+		case 2: {
+			//Get the ASL Pos and transform to ATL at new position
+			_relPos set [2,(getposASL _parent) select 2];
+			_created setvariable ["MB_ObjVar_PositionATL",ASLtoATL _relPos,false];
+			systemchat format["%1",ASLtoATL _relPos];
+		};
+
+	};	
+	
+	[_created] call MB_fnc_UpdateObject;
+	if(isMultiplayer) then {
+		[_created] call MB_fnc_syncObject;
+	};
 
 	[_created] call MB_fnc_Select;
 	[] call MB_FNC_FencerUpdatePreview;
+};
+
+MB_fnc_CalcRelativePosition = {
+	private["_parent","_child","_offset","_dir","_localPos","_worldPos","_return"];
+	_parent    = [_this,0,objNull,[objNull]] call BIS_fnc_param;
+	_child     = [_this,1,objNull,[objNull]] call BIS_fnc_param;
+	_offset    = [_this,2,[0,0,0],[[]]] call BIS_fnc_param;
+
+
+	//get the anchor position
+	_localPos = (_parent worldToModel (getPosATL _parent)) vectorAdd _offset; //vectorADD
+	_worldPos = _parent modelToWorld _localPos;
+
+	
+	_worldPos;
+	//_child setDir ((getDir _parent) + _dir);
+	
+
 };
 
 

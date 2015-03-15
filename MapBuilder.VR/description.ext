@@ -1,13 +1,14 @@
 respawn = 3;
 respawndelay = 5;
 
+enableDebugConsole = 2;
 
-onLoadMission = "Map Builder v0.7 Alpha";
+onLoadMission = "Map Builder Alpha";
 OnLoadMissionTime = FALSE;
 dev = "NeoArmageddon";
-briefingName = "Map Builder v0.7 Alpha";
+briefingName = "Map Builder Alpha";
 author = "NeoArmageddon";
-overviewText =  "Map Builder v0.7 Alpha";
+overviewText =  "Map Builder Alpha";
 onLoadName =  "Map Builder";
 loadScreen = "mapbuilder_logo.paa"; 
 #include "MapBuilder\ui.hpp"

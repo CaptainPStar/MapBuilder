@@ -1,33 +1,11 @@
 Map Builder - Ingame 3D-Editor for terrain creation
 by NeoArmageddon
 www.modfact.net
-Version 0.6.1 Alpha
+Version 0.7 Alpha
 
 Project Status
 
 This project is in an alpha-state. It is neither featurecomplete nor fully tested/bugfree. I am releasing a first unfinished alpha to collect feedback, ideas and bug reports. I want this project to be as open to the community as possible.
-
-
-Features
-
-Editor View.
-A complete objectlist from read config.
-Objectmanipulation (Pos,Pitch,Bank,Yaw,....).
-Selections (Movement of groups of objects).
-Copy & Paste.
-Simple export for Terrain Builder.
-Works in Multiplayer.
-More to come.
-
-
-Planned Features
-
-Saving and loading of projects.
-Layers of objects.
-Brush-Mode (Draw forests, bushes, rocks, streetposts, lamps, etc).
-Fence-Mode (Draw a line of snapping fences).
-Everything you wish and I am able to script.
-
 
 
 License
@@ -47,8 +25,8 @@ The author's name and credits of this projects must stay in all adapted works (i
 
 Installation
 
-Extract the mission archive to your missions-folder (MapBuilder.VR to somethign like C:\Users\Nickname\Documents\Arma 3 - Other Profiles\Profilename\missions). Rename the folders extension to the island on which you want to use the editor.
-Extract @MapBuilder to your ArmA3-Folder or a Subfolder and load it with your favorite method to load mods (launcher, commandline, parameterfile, etc).
+Extract the mission archive to your missions-folder (MapBuilder.VR to something like C:\Users\Nickname\Documents\Arma 3 - Other Profiles\Profilename\missions). Rename the folders extension to the island on which you want to use the editor.
+Extract @MapBuilder to your ArmA3-Folder or a subfolder and load it with your favorite method to load mods (launcher, commandline, parameterfile, etc).
 
 You can start the editor while previewing the mission in your action menu.
 
@@ -76,19 +54,25 @@ Ctrl + C: Copy selection
 Ctrl + V: Paste selection
 Escape: Exit editor
 
+Exporting
 
-Export
+Exporting multiple files with the same name will overwrite the last export!
 
-Press the export button and all objects will be written to a file (@MapBuilder/exports/TBexports.txt). 
-Beware: Exporting multiple times will overwrite the last export for now. Custom filenames are coming soon.
+Press the export button, enter a file name and click the export specific button. TerrainBuilder, SQF and SQM is supported at the moment.
+TerrainBuilder-exports can be reimport into Terrain Builder by drag&drop the created file directly into the Terrain Builder window. 
+The objecttemplates must be in your objectlibrary before you import the list!
 
 
 
 Credits
-CypeRevenge - Editor Upgrade Addon included in MapBuilder
-Scruffy - Config stuff and testing
-Mondkalb - For showing me how to create dialogs and fill listboxes
-Bushlurker, Jakerod, M1lkm8n, NigelS, Giallustio and all the guys from the map maker skypegroup
+CypeRevenge - A3 Editor upgrade included in MapBuilder.
+ZeroG - A2 editor upgrade.
+Scruffy - Testing and config stuff.
+MemphisBelle - Testing and config stuff.
+Mondkalb - Showing me how to create dialogs back in the good old times, precisionfix and general advices.
+cyrokrypto - Helping with some UI issues.
+Maikeks - Proofreading every single sentence - twice!
+Bushlurker, Jakerod, M1lkm8n, NigelS, badbenson, Giallustio and all the guys from the map maker skypegroup for discussions, feedback and help. I am doing this for you guys!
 
 
 Help

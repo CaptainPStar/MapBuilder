@@ -12,56 +12,12 @@ MB_fnc_MouseDown = {
 	_status = MB_MouseKeys select _key;
 	_hasSelected = false;
 	MB_MouseKeys set [_key,[true,diag_tickTime,_status select 2]];
-	MB_ClickedObject = [_uX,_uY] call MB_fnc_SelectUnderCursor;
+	//MB_ClickedObject = [_uX,_uY] call MB_fnc_SelectUnderCursor;
 	MB_ClickedPosition = screenToWorld [_uX,_uY];
-	
-	if(diag_tickTime-(_status select 2)>0.2) then {
-		if(_key==MB_L) then {
-			private["_obj"];
-			_obj = MB_ClickedObject;
-			if(isNull _obj) then {
-				[] spawn {
-					_clickpos = MB_ClickedPosition;
-					if([MB_L] call MB_fnc_isMousePressed) then {
-						while{[MB_L] call MB_fnc_isMousePressed} do {
-							_npos = screenToWorld MB_MousePosition;
-							if(_npos distance MB_ClickedPosition>0.5) then {
-								MB_SelectionRectangle = [_clickpos,_npos];	
-								MB_SelectionRectangle call MB_fnc_SelectInRectangle;
-							} else {
-								MB_SelectionRectangle = [];
-							};
-						};
-						//if(count(MB_SelectionRectangle)==2) then {
-						//	if(!([DIK_LSHIFT] call MB_fnc_isPressed)) then {
-						//		[] call MB_fnc_DeselectAll;
-						//	};
-						//	MB_SelectionRectangle call MB_fnc_SelectInRectangle;
-						//};
-						MB_SelectionRectangle = [];
-					};
-				};
-			} else {
-				if([_obj] call MB_fnc_isSelected) then {
-					if(([DIK_LSHIFT] call MB_fnc_isPressed)) then {
-						[_obj] call MB_fnc_Deselect;
-					} else {
-						//Move
-						if(!([DIK_LSHIFT] call MB_fnc_isPressed) && !([DIK_LCONTROL] call MB_fnc_isPressed) && (["Object"] call MB_fnc_isMode)) then {
-							[] spawn MB_fnc_MoveSelected;
-						};
-					};
-				} else {
-					if(([DIK_LSHIFT] call MB_fnc_isPressed)) then {
-						[_obj] call MB_fnc_Select;
-					} else {
-						[] call MB_fnc_DeselectAll;
-						[_obj] call MB_fnc_Select;
-					};
-				};
-			};
-		};
-	};	
+
+	["onMouseDown",[_key,[_uX,_uY]]] call MB_fnc_dispatchCallbacks;
+
+
 	true
 };
 MB_fnc_MouseUp = {
@@ -71,11 +27,16 @@ MB_fnc_MouseUp = {
 	_uY = _this select 3;
 	_status = MB_MouseKeys select _key;
 	MB_MouseKeys set [_key,[false,_status select 1,diag_tickTime]];
-	if(!([DIK_LSHIFT] call MB_fnc_isPressed) && isNull(MB_ClickedObject) && (diag_tickTime-(_status select 1)<0.5)) then {
-		[] call MB_fnc_DeselectAll;	
+
+	["onMouseUp",[_key,[_uX,_uY]]] call MB_fnc_dispatchCallbacks;
+	
+	if(isMultiplayer) then {
+		{
+			[_x] call MB_fnc_syncObject;
+		} foreach MB_Selected;
 	};
 
-	true
+	true;
 };
 MB_fnc_MouseClick = {
 	_display = (_this select 0);
@@ -86,58 +47,30 @@ MB_fnc_MouseClick = {
 };
 MB_fnc_MouseDblClick = {
 	private["_obj"];
-	if((["Object"] call MB_fnc_isMode)) then {
-		[] call MB_fnc_DeselectAll;
-		//[[MB_CurClass,MB_ClickedPosition],"MB_fnc_CreateObject",false] call bis_fnc_mp;
-		[MB_CurClass,MB_ClickedPosition] call MB_fnc_CreateNewObject;
-	} else {
-		if((["Polygon"] call MB_fnc_isMode)) then {
-			[] call MB_fnc_StartPolyline;
-		};
-	};
+	//["onMouseDblClick",[MB_ClickedPosition]] call MB_fnc_dispatchCallbacks;
+	//if((["Object"] call MB_fnc_isMode)) then {
+	//	[] call MB_fnc_DeselectAll;
+	//	//[[MB_CurClass,MB_ClickedPosition],"MB_fnc_CreateObject",false] call bis_fnc_mp;
+	//	[MB_CurClass,MB_ClickedPosition] call MB_fnc_CreateObject;
+	//} else {
+	//	if((["Polygon"] call MB_fnc_isMode)) then {
+	//		[] call MB_fnc_StartPolyline;
+	//	};
+	//};
+};
+MB_fnc_MouseMove = {
+	private["_viewport","_xp","_yp","_screenDelta","_moveDelta"];
+	_viewport = _this select 0;
+	_xp = (_this select 1);
+	_yp = (_this select 2);
+	MB_LastMouseScreenPosition = MB_MouseScreenPosition;
+	_screenDelta = [_xp-(MB_MouseScreenPosition select 0),_yp-(MB_MouseScreenPosition select 1)];
+	_moveDelta = (screenToWorld [_xp,_yp]) vectorDiff MB_MousePosition;
+	MB_MousePosition = screenToWorld [_xp,_yp];
+	MB_MouseScreenPosition = [_xp,_yp];
+	["MouseMoved",[_screenDelta,_moveDelta]] spawn MB_fnc_dispatchCallbacks;
 };
 
-MB_fnc_MouseMove = {
-	private["_dx","_dy","_rotateCenter"];
-	_dx = (_this select 1);
-	_dy = (_this select 2);
-	_camPos = MB_CamPos select 0;
-	MB_MousePositionDelta = [_dx,_dy];
-	
-	if([DIK_LALT] call MB_fnc_isPressed) then {
-		MB_CamPos set [1,(MB_CamPos select 1)+_dx];
-		MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];
-	};	
-	if([DIK_LCONTROL] call MB_fnc_isPressed  && (["Object"] call MB_fnc_isMode)) then {
-		if([MB_R] call MB_fnc_isMousePressed && !([MB_L] call MB_fnc_isMousePressed)) then {
-			if(count(MB_Selected)>0) then {
-				//Pitchbank
-				[_dx*0.5,0] call MB_fnc_ChangePitchBankSelected;			
-			};
-		};
-		if(!([MB_R] call MB_fnc_isMousePressed) && ([MB_L] call MB_fnc_isMousePressed)  && (["Object"] call MB_fnc_isMode)) then {
-			if(count(MB_Selected)>0) then {
-				//Pitchbank
-				[0,_dy*0.5] call MB_fnc_ChangePitchBankSelected;			
-			};
-		};
-	} else {
-		if([MB_R] call MB_fnc_isMousePressed && !([MB_L] call MB_fnc_isMousePressed)  && (["Object"] call MB_fnc_isMode)) then {
-			if(count(MB_Selected)>0) then {
-				//Rotate
-				[_dx] call MB_fnc_RotateSelected;			
-			};
-		};
-		if([MB_L] call MB_fnc_isMousePressed && [MB_R] call MB_fnc_isMousePressed  && (["Object"] call MB_fnc_isMode)) then {
-			if(count(MB_Selected)>0) then {
-				//Height
-				[_dy*0.05] call MB_fnc_ChangeHeightSelected;
-			};
-		};
-	};
-	
-	//call MB_fnc_updateCam;
-};
 MB_fnc_MouseZ = {
 	_z = (_this select 1);
 	_camPos = MB_CamPos select 0;
@@ -190,10 +123,7 @@ MB_fnc_keyDown = {
 		//[] call	MB_fnc_ToggleMode;
 	//};
 	if([DIK_LCONTROL] call MB_fnc_isPressed && _dikCode == DIK_R) exitwith {
-		{
-			[(_x select 0),0,0] call BIS_fnc_setPitchBank;
-			MB_Selected set [_forEachIndex,[(_x select 0),(_x select 1),(_x select 2),(_x select 3),((_x select 0) call BIS_fnc_getPitchBank)]];
-		} foreach MB_Selected;	
+		[] call MB_fnc_resetOrientation;
 	};
 	if([DIK_LCONTROL] call MB_fnc_isPressed && _dikCode == DIK_C) exitwith {
 		[] call MB_fnc_Copy;
@@ -206,7 +136,7 @@ MB_fnc_keyDown = {
 	};
 	
 	if([DIK_LCONTROL] call MB_fnc_isPressed && _dikCode == DIK_T) exitwith {
-		[] call MB_fnc_matchSurfaceNormals;
+		//[] call MB_fnc_matchSurfaceNormals;
 	};
 	
 	_handled;  
@@ -253,22 +183,42 @@ MB_fnc_resetKeys = {
 //= Camera
 //=========================================
 
+MB_CamSpeed = 1.0;
+
 MB_fnc_updateCam = {
 	private["_mod"];
-	_mod = 1;
-	if([DIK_LSHIFT] call MB_fnc_isPressed) then {
-		_mod = 10;
+	// if lshift and any direction key is pressed increase camspeed
+	if(([DIK_LSHIFT] call MB_fnc_isPressed) && ( ([DIK_W] call MB_fnc_isPressed) || ([DIK_S] call MB_fnc_isPressed) || ([DIK_A] call MB_fnc_isPressed) || ([DIK_D] call MB_fnc_isPressed) || ([DIK_Q] call MB_fnc_isPressed) || ([DIK_Z] call MB_fnc_isPressed) )) then {
+		MB_CamSpeed = MB_CamSpeed + 0.1;
+	}
+	else {
+		MB_CamSpeed = MB_CamSpeed - 1.0;
 	};
+	
+	if(([DIK_LALT] call MB_fnc_isPressed)) then {
+		MB_CamSpeed = 200;
+	} else {
+		MB_CamSpeed = MB_CamSpeed max 0.8 min 50.0;
+	};
+	_mod = MB_CamSpeed;
 	_camPos = MB_CamPos select 0;
 	//Move forward
 	if([DIK_W] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)+_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)+_mod*0.1*cos(MB_CamPos select 1)];
+		// only move in height while LALT is pressed
+		if([DIK_SPACE] call MB_fnc_isPressed) then {
+			_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
+		};
 	};
 	//Move backward
 	if([DIK_S] call MB_fnc_isPressed) then {
 		_camPos set[0,(_camPos select 0)-_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)-_mod*0.1*cos(MB_CamPos select 1)];
+		// only move in height while LALT is pressed
+		if([DIK_SPACE] call MB_fnc_isPressed) then {
+			_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
+		};
 	};
 	//Move Left
 	if([DIK_A] call MB_fnc_isPressed) then {
@@ -330,4 +280,17 @@ MB_fnc_updateCam = {
 	[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;	
 	MBCamera SetPosATL [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
 	MBCamera camCommit 0;
+		
+	
+};
+["MouseMoved",{_this call MB_fnc_camFreeMove;},{[DIK_SPACE] call MB_fnc_isPressed}] call MB_fnc_addCallback;
+MB_fnc_camFreeMove = {
+	private["_delta","_dx","_dy"];
+	_delta = _this select 0;
+	_dx = (_delta select 0)*250;
+	_dy = (_delta select 1)*250;
+	//systemChat format["Mousemove: %1",_this];
+	MB_CamPos set [1,(MB_CamPos select 1)+_dx];
+	MB_CamPos set [2,((MB_CamPos select 2) - _dy) max -90 min +90];
+
 };

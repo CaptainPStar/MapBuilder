@@ -4,28 +4,31 @@ class Mission
 	addOns[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_characters_f"
+		"a3_characters_f",
+		"neo_rieda_cfg",
+		"map_vr"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
-		"a3_characters_f"
+		"a3_characters_f",
+		"map_vr"
 	};
-	randomSeed=12986964;
+	randomSeed=3903291;
 	class Intel
 	{
-		startWeather=0.29999998;
-		startWind=0.099999994;
-		startWaves=0.099999994;
-		forecastWeather=0.29999998;
-		forecastWind=0.099999994;
-		forecastWaves=0.099999994;
-		forecastLightnings=0.099999994;
+		timeOfChanges=1800.0002;
+		startWeather=0;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
 		year=2035;
-		month=7;
-		day=6;
-		hour=12;
-		minute=0;
+		day=28;
+		hour=13;
+		minute=37;
 		startFogDecay=0.013;
 		forecastFogDecay=0.013;
 	};
@@ -40,13 +43,15 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={1651.4159,9.9511194,2285.084};
+					position[]={3485.3071,11.759295,2069.5779};
+					azimut=-183.785;
 					id=0;
 					side="WEST";
 					vehicle="B_Soldier_F";
 					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.60000002;
+					text="s1";
 				};
 			};
 		};
@@ -58,13 +63,15 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={1670.9436,10.506301,2285.127};
+					position[]={3465.8242,13.337646,2068.2478};
+					azimut=-183.785;
 					id=1;
 					side="WEST";
 					vehicle="B_Soldier_F";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
+					text="s2";
 				};
 			};
 		};
@@ -74,26 +81,28 @@ class Intro
 {
 	addOns[]=
 	{
+		"neo_rieda_cfg",
+		"map_vr"
 	};
 	addOnsAuto[]=
 	{
+		"map_vr"
 	};
-	randomSeed=6047355;
+	randomSeed=310351;
 	class Intel
 	{
 		timeOfChanges=1800.0002;
-		startWeather=0.30000001;
+		startWeather=0;
 		startWind=0.1;
 		startWaves=0.1;
-		forecastWeather=0.30000001;
+		forecastWeather=0;
 		forecastWind=0.1;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
 		year=2035;
-		month=7;
-		day=6;
-		hour=12;
-		minute=0;
+		day=28;
+		hour=13;
+		minute=37;
 		startFogDecay=0.013;
 		forecastFogDecay=0.013;
 	};
@@ -102,26 +111,28 @@ class OutroWin
 {
 	addOns[]=
 	{
+		"neo_rieda_cfg",
+		"map_vr"
 	};
 	addOnsAuto[]=
 	{
+		"map_vr"
 	};
-	randomSeed=5141507;
+	randomSeed=48485;
 	class Intel
 	{
 		timeOfChanges=1800.0002;
-		startWeather=0.30000001;
+		startWeather=0;
 		startWind=0.1;
 		startWaves=0.1;
-		forecastWeather=0.30000001;
+		forecastWeather=0;
 		forecastWind=0.1;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
 		year=2035;
-		month=7;
-		day=6;
-		hour=12;
-		minute=0;
+		day=28;
+		hour=13;
+		minute=37;
 		startFogDecay=0.013;
 		forecastFogDecay=0.013;
 	};
@@ -130,26 +141,28 @@ class OutroLoose
 {
 	addOns[]=
 	{
+		"neo_rieda_cfg",
+		"map_vr"
 	};
 	addOnsAuto[]=
 	{
+		"map_vr"
 	};
-	randomSeed=2744005;
+	randomSeed=12020962;
 	class Intel
 	{
 		timeOfChanges=1800.0002;
-		startWeather=0.30000001;
+		startWeather=0;
 		startWind=0.1;
 		startWaves=0.1;
-		forecastWeather=0.30000001;
+		forecastWeather=0;
 		forecastWind=0.1;
 		forecastWaves=0.1;
 		forecastLightnings=0.1;
 		year=2035;
-		month=7;
-		day=6;
-		hour=12;
-		minute=0;
+		day=28;
+		hour=13;
+		minute=37;
 		startFogDecay=0.013;
 		forecastFogDecay=0.013;
 	};
