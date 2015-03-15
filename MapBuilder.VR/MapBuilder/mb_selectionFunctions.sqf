@@ -6,8 +6,9 @@ MB_fnc_Select = {
 	private["_object"];
 	_object = _this select 0;
 	if(!isNull _object) then {
-		MB_Selected set [count(MB_Selected),_object];
-		systemchat format["%1",MB_Selected];
+		if(!(_object in MB_Selected)) then {
+			MB_Selected set [count(MB_Selected),_object];
+		};
 	};
 };
 MB_fnc_Deselect = {

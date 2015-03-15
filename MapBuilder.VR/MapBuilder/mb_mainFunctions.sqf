@@ -147,8 +147,9 @@ MB_fnc_Start = {
 	[] call MB_fnc_hidePresetWindow;
 	[170400] spawn MB_fnc_closeWindow;
 	[170600] spawn MB_fnc_closeWindow;
-	//[666] spawn MB_fnc_closeWindow;
+	[666] spawn MB_fnc_closeWindow;
 	[170700,true] spawn MB_fnc_closeWindow;
+	[170800,true] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	endLoadingScreen;

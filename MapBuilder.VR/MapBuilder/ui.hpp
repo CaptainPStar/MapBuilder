@@ -99,8 +99,8 @@ class MB_Main
 			onTreeSelChanged = "_this call MB_LibrarySelect;";
 			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
 			//onMouseButtonDown = "_this call MB_fnc_libraryMousedown;";
-			onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
-			onTreeLButtonDown = "_this call MB_fnc_libraryMousedown;";
+			//onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
+			//onTreeLButtonDown = "_this call MB_fnc_libraryMousedown;";
 			//onLBDrag = "systemchat ""Drag!"";";
 			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
             //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
@@ -149,10 +149,19 @@ class MB_Main
 			idc = 170007;
 
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.32)";
+			y = "SafeZoneY + (SafezoneH * 0.36)";
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.08";
 			text =  "Selected: None";
+		};
+		class UsedObjectsButton : RscButton {
+			idc = 170006;
+			x = "SafeZoneX + (SafeZoneW * 0.81)";
+			y = "SafeZoneY + (SafezoneH * 0.32)";
+			w = "SafeZoneW * 0.05";
+			h = "SafeZoneH * 0.025";
+			text = "Used Obj";
+			action = "[] call MB_fnc_OpenUsedWindow;";
 		};
 		class MB_FencerButton : RscButton {
 			idc = -1;
@@ -189,26 +198,26 @@ class MB_Main
 			checked_strings[] = {"Simul"};
 			strings[] = {"Simul"};
 		};
-		class MB_ModeSettingsLabel : RscText {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.82)";
-			y = "SafeZoneY + (SafezoneH * 0.50)";
-			w = "SafeZoneW * 0.1";
-			h = "SafeZoneH * 0.03";
-			text =  "Mode:";
-		};
-		class MB_ModeSettings : MyRscToolbox {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.82)";
-			y = "SafeZoneY + (SafezoneH * 0.54)";
-			w = "SafeZoneW * 0.16";
-			h = "SafeZoneH * 0.05";
-			rows = 1;
-			columns = 2;
-			strings[] = {"Objects","MM"};
-			values[] = {0,1};
-			onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;"
-		};
+		//class MB_ModeSettingsLabel : RscText {
+		//	idc = -1;
+		//	x = "SafeZoneX + (SafeZoneW * 0.82)";
+		//	y = "SafeZoneY + (SafezoneH * 0.50)";
+		//	w = "SafeZoneW * 0.1";
+		//	h = "SafeZoneH * 0.03";
+		//	text =  "Mode:";
+		//};
+		//class MB_ModeSettings : MyRscToolbox {
+		//	idc = -1;
+		//	x = "SafeZoneX + (SafeZoneW * 0.82)";
+		//	y = "SafeZoneY + (SafezoneH * 0.54)";
+		//	w = "SafeZoneW * 0.16";
+		//	h = "SafeZoneH * 0.05";
+		//	rows = 1;
+		//	columns = 2;
+		//	strings[] = {"Objects","MM"};
+		//	values[] = {0,1};
+		//	onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;"
+		//};
 		class PresetsButton : RscButton {
 			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
@@ -473,5 +482,6 @@ class MB_Main
 		#include "ui\test.hpp"
 		#include "ui\about.hpp"
 		#include "ui\inspector.hpp"
+		#include "ui\used.hpp"
 	};
 };

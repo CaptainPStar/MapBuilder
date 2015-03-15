@@ -1,5 +1,4 @@
 MB_LibraryFavorites = [];
-MB_LibraryUsed = [];
 MB_fnc_loadLibrary = {
 	disableSerialization;
 	_cats = [];
@@ -58,7 +57,7 @@ MB_fnc_loadLibrary = {
 		};
 	};
 	
-	MB_Library = [["Library",_mbLibrary],["Config (All)",_config],["Favorites",MB_LibraryFavorites],["Used",MB_LibraryInUse]];
+	MB_Library = [["Library",_mbLibrary],["Config (All)",_config]];
 
 };
 MB_fnc_libraryFindName = {
@@ -74,33 +73,60 @@ MB_fnc_libraryFindName = {
 	} foreach _array;
 	_return;
 };
-MB_fnc_libraryAddNode = {
 
-};
-MB_fnc_libraryAddLeaf = {
-
-};
 MB_fnc_updateUsed = {
 	private["_index","_used","_data","_count","_type","_name"];
-	_index = [MB_Library,"Used"] call MB_fnc_libraryFindName;
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170801;
+
+	tvClear 170801;
 	_used = [];
 	_data = [];
-	_count = tvCount  [170003, [_index]];
-	for[{_i=(_count-1)},{_i>=0},{_i=_i-1}] do {
-			tvDelete [170003, [_index,_i]];
-	};
-	//tvDelete [170003, [_index]];
-	//_index = tvAdd [170003,[],"Used"];
 	{
-		if(!(typeof _x in _used)) then {
-			_type = typeof _x;
-			_used pushBack _type;
-			_name = getText (configFile >> "CfgVehicles" >> _type >> "displayname");
-			_data pushback [_name,_type];
+		if(!isNull _x) then {
+			if(!(typeof _x in _used)) then {
+				_type = typeof _x;
+				_used pushBack _type;
+				_name = getText (configFile >> "CfgVehicles" >> _type >> "displayname");
+				_data pushback [format["%1 (1)",_type],_type,1];
+			} else {
+				_index = _used find (typeof _x);
+				_count = ((_data select _index) select 2);
+				_count = _count +1;
+				(_data select _index) set [2,_count];
+				(_data select _index) set [0,format["%1 (%2)",(_data select _index) select 1,_count]];
+			};
 		};
 	} foreach MB_Objects;
-	[_data,[_index]] call MB_fnc_libraryUpdate;
+	
+	
+	{
+		private["_index"];
+		_index = tvAdd [170801,[],(_x select 0)];
+		tvSetData [170801,[_index],(_x select 1)];
+
+	} foreach _data;
+	_ctrl tvSort [ [], false];
 };
+MB_fnc_SelectAllUsed = {
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170801;
+	_class = _ctrl tvData(tvCurSel _ctrl);
+	if(_class != "") then {
+		if(!([DIK_LSHIFT] call MB_fnc_isPressed)) then {
+			[] call MB_fnc_DeselectAll;
+		};
+		{
+			if((typeof _x) == _class) then {
+				[_x] call MB_fnc_Select;
+			};
+		} foreach MB_Objects;
+	};
+};
+
+
 MB_fnc_libraryUpdate = {
 	private["_node","_path","_name","_value","_index","_newPath"];
 	disableSerialization;
@@ -123,13 +149,14 @@ MB_fnc_libraryUpdate = {
 };
 MB_LibrarySelect = {
 	private["_data"];
-	_data = tvData [170003,(tvCurSel 170003)];
+	_ctrl = _this select 0;
+	_data = _ctrl tvData (tvCurSel _ctrl);
 	if(_data != "") then {
 		MB_CurClass = _data;
 		disableSerialization;
 		_display = uinamespace getvariable 'mb_main_dialog';
-		_ctrl = _display displayCtrl 170007;
-		_ctrl ctrlSetStructuredText parseText format["Selected: %1",tvText [170003,(tvCurSel 170003)]];
+		_lctrl = _display displayCtrl 170007;
+		_lctrl ctrlSetStructuredText parseText format["Selected: %1",_ctrl tvText (tvCurSel _ctrl)];
 		
 		(_display displayCtrl (180000)) ctrlSetModel (getText (configFile >> "CfgVehicles" >> _data >> "model"));
 		[(getText (configFile >> "CfgVehicles" >> _data >> "model"))] call MB_fnc_show3DPreview;
@@ -197,5 +224,22 @@ MB_fnc_libraryMouseup = {
 			systemchat format["Dropped %1",MB_LibraryDrag];
 			MB_LibraryDrag = "";
 	};
+};
+
+
+MB_fnc_OpenUsedWindow = {
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170800;
+	if(!ctrlShown _ctrl) then {
+		[170800,false] spawn MB_fnc_openWindow;
+	} else {
+		[170800,false] spawn MB_fnc_closeWindow;
+	};
+
+};
+
+MB_fnc_CloseUsedWindow = {
+	[170800,true] spawn MB_fnc_closeWindow;
 
 };
