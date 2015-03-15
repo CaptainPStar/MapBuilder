@@ -173,9 +173,11 @@ MB_fnc_isPressed = {
 };
 MB_fnc_resetKeys = {
 	private["_key","_return","_status"];
+	systemChat "Keyreset";
 	{
 		MB_Keys set[_foreachindex,false];
 	} foreach MB_Keys;
+;
 };
 
 
