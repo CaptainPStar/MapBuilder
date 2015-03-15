@@ -4,9 +4,9 @@ MB_fnc_MouseInView = {
 	private["_in"];
 	_in = [_this,0] call bis_fnc_param;
 	if(_in) then {
-		//systemChat "Mouse in View";
+		systemChat "Mouse in View";
 	} else {
-		//systemChat "Mouse left View";
+		systemChat "Mouse left View";
 	};
 };
 

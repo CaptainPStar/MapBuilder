@@ -1,5 +1,8 @@
 ["RightMouseDblClick",{_this spawn MB_fnc_InspectObject;},{MB_Mode==0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+
 MB_InspectedObject = objNull;
+
+//MB_fnc_PreviewObjectUpdate
 MB_fnc_InspectObject = {
 		disableSerialization;
 	private["_obj"];
@@ -15,10 +18,41 @@ MB_fnc_InspectObject = {
 	_ww = (ctrlPosition _window) select 2;
 	_wh = (ctrlPosition _window) select 3;
 	_window ctrlSetPosition [_this select 2,_this select 3,_ww,_wh];
+	
 	MB_InspectedObject = _obj;
 	[] call MB_fnc_InspectorFill;
+	
 };
 
+
+MB_fnc_InspectorPreview = {
+	disableSerialization;
+	private["_object","_pos","_pitch","_bank","_yaw","_simulate","_locked","_return"];
+	_object = MB_InspectedObject;
+	if(!isNull _object) then {
+		_display = uinamespace getvariable 'mb_main_dialog';
+		_titleCtrl = _display displayCtrl 170701;
+		_xCtrl = _display displayCtrl 170702;
+		_yCtrl = _display displayCtrl 170703;
+		_heightCtrl = _display displayCtrl 170704;
+		_yawCtrl = _display displayCtrl 170705;
+		_pitchCtrl = _display displayCtrl 170706;
+		_bankCtrl = _display displayCtrl 170707;
+		
+		_name = ctrlText _titleCtrl;
+		_xpos = parseNumber ctrlText _xCtrl;
+		_ypos = parseNumber ctrlText _yCtrl;
+		_height = parseNumber ctrlText _heightCtrl;
+		_yaw = parseNumber ctrlText _yawCtrl;
+		_pitch = parseNumber ctrlText _pitchCtrl;
+		_bank = parseNumber ctrlText _bankCtrl;
+
+		[_object,[_xpos,_ypos,_height],_pitch,_bank,_yaw] call MB_fnc_PreviewObjectUpdate;
+		
+		//_object setvariable["MB_ObjVar_Simulate",(_vars select 4),false];
+		//_object setvariable["MB_ObjVar_Locked",(_vars select 5),false];
+	};
+};
 
 MB_fnc_InspectorFill = {
 	disableSerialization;
@@ -49,6 +83,8 @@ MB_fnc_InspectorFill = {
 		_yawCtrl ctrlSetText format["%1",_yaw];
 		_pitchCtrl ctrlSetText format["%1",_pitch];
 		_bankCtrl ctrlSetText format["%1",_bank];
+
+		
 	};
 };
 
@@ -90,8 +126,15 @@ disableSerialization;
 		[] call MB_fnc_closeInspector;
 	};
 };
-
+MB_fnc_InspectorRefresh = {
+	_object = MB_InspectedObject;
+	if(!isNull _object) then {
+		[_object] call MB_fnc_UpdateObject;
+	};
+	[] call MB_fnc_InspectorFill;
+};
 MB_fnc_closeInspector = {
+	[MB_InspectedObject] call MB_fnc_UpdateObject;
 	MB_InspectedObject = objNull;
 	[170700,false] spawn MB_fnc_closeWindow;
 };

@@ -171,12 +171,12 @@ class MB_Popup_ObjInspectorGroup : RscControlsGroup
 		};
 		class Popup_ObjInspector_Button_Apply : RscButton {
 			idc = -1;
-			text = "Apply";
+			text = "Preview";
 			x =  1*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 4;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 16;
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
-			action = "[false] call MB_fnc_InspectorApply;";
+			action = "[] call MB_fnc_InspectorPreview;";
 		};
 		class Popup_ObjInspector_Button_Refresh : RscButton {
 			idc = -1;
@@ -185,7 +185,7 @@ class MB_Popup_ObjInspectorGroup : RscControlsGroup
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 16;
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
-			action = "[] call MB_fnc_InspectorFill;";
+			action = "[] call MB_fnc_InspectorRefresh;";
 		};
 		class Popup_ObjInspector_Button_Cancel : RscButton {
 			idc = -1;

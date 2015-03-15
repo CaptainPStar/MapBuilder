@@ -178,3 +178,24 @@ MB_fnc_disable3DPreview = {
 	_ctrl ctrlShow false;
 	MB_3D_PreviewShown = false;
 };
+MB_LibraryDrag = "";
+MB_fnc_libraryMousedown = {
+	_ctrl = _this select 0;
+	_path = _this select 1;
+	_data = tvData [170003,_path];
+	if(_data != "") then {
+		MB_LibraryDrag = _data;
+		systemchat format["Dragging %1",_data];
+	};
+
+};
+
+
+MB_fnc_libraryMouseup = {
+	systemchat format["%1",_this];
+	if(MB_LibraryDrag != "") then {
+			systemchat format["Dropped %1",MB_LibraryDrag];
+			MB_LibraryDrag = "";
+	};
+
+};

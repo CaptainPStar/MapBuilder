@@ -26,7 +26,7 @@ class MB_Main
 			//onMouseButtonDblClick = "_this call MB_fnc_MouseDblClick;";
 			//onMouseZChanged = "_this call MB_fnc_MouseZ;";
 			onKeyDown = "_this call MB_fnc_KeyDown;";
-			onKeyUp = "_this call MB_fnc_KeyUp;";
+			onKeyUp = "_this call MB_fnc_KeyUp;false;";
 			//onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;[false] call MB_fnc_MouseInView";
 			//onMouseEnter = "MB_RegisterKeys = true;[true] call MB_fnc_MouseInView";
 			//onMouseMoving = "systemchat format[""%1"",_this];";
@@ -98,6 +98,10 @@ class MB_Main
 			colorBackground[] = {0, 0.8, 0, 0.5};
 			onTreeSelChanged = "_this call MB_LibrarySelect;";
 			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
+			//onMouseButtonDown = "_this call MB_fnc_libraryMousedown;";
+			onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
+			onTreeLButtonDown = "_this call MB_fnc_libraryMousedown;";
+			//onLBDrag = "systemchat ""Drag!"";";
 			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
             //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
 		};

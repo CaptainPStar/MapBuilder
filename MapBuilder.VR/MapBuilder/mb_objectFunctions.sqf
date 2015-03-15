@@ -13,7 +13,16 @@ MB_fnc_CreateObjectByClick = {
 };
 ["LeftMouseDblClick",{_this spawn MB_fnc_CreateObjectByClick;},{MB_Mode==0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
 
+MB_fnc_createObjectByDrag = {
+private["_xp","_yp"];
+	_xp = [_this,2] call bis_fnc_param;
+	_yp = [_this,3] call bis_fnc_param;
+	[MB_LibraryDrag,screenToWorld [_xp,_yp]] call MB_fnc_CreateObject;
+	MB_LibraryDrag = "";
 
+};
+
+//["onMouseUp","MB_fnc_createObjectByDrag",{MB_LibraryDrag != ""}] call MB_fnc_addCallback;
 MB_fnc_CreateObject = {
 	private["_obj","_class","_pos","_dir","_uid","_var"];
 	_class = [_this,0] call bis_fnc_param;
@@ -90,6 +99,25 @@ MB_fnc_UpdateObject = {
 	_obj enableSimulation _simulate;
 	
 };
+
+MB_fnc_PreviewObjectUpdate = {
+	private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked"];
+	_obj = [_this,0] call bis_fnc_param;
+	
+	_pos = [_this,1] call bis_fnc_param;
+	_pitch =[_this,2] call bis_fnc_param;
+	_bank = [_this,3] call bis_fnc_param;
+	_yaw = [_this,4] call bis_fnc_param;
+	//_simulate = _obj getvariable "MB_ObjVar_Simulate";
+	//_locked = _obj getvariable "MB_ObjVar_Locked";
+	
+	_obj setposATL _pos;
+	[_obj,[_pitch,_bank,_yaw]] call MB_fnc_SetPitchBankYaw;
+	_obj setposATL _pos;
+//	_obj enableSimulation _simulate;
+	
+};
+
 MB_fnc_getObjectVars = {
 	private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked","_return"];
 	_obj = [_this,0] call bis_fnc_param;

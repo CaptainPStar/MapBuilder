@@ -123,7 +123,7 @@ MB_fnc_Start = {
 	//((findDisplay 123) displayCtrl 170301) onDoubleClick "MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];";
 	
 	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","_nil=_this call MB_fnc_MouseUp"];
+	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","if(MB_LibraryDrag != """") then {_this call MB_fnc_createObjectByDrag;};"];
 	//(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonDown","systemchat format[""MB Down: %1"",_this];"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonUp","systemchat format[""MB Up: %1"",_this];"];
@@ -147,6 +147,8 @@ MB_fnc_Start = {
 	[] call MB_fnc_hidePresetWindow;
 	[170400] spawn MB_fnc_closeWindow;
 	[170600] spawn MB_fnc_closeWindow;
+	//[666] spawn MB_fnc_closeWindow;
+	[170700,true] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	endLoadingScreen;

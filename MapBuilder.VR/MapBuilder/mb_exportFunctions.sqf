@@ -364,3 +364,60 @@ MB_fnc_clearProject = {
 	MB_NUID = 0;
 	publicvariable "MB_NUID";
 };
+
+MB_fnc_objToArr = {
+
+private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_type"];
+	_filename = [_this,0,"exporttest"] call bis_fnc_param;
+	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
+	_path = ("MB_FileIO" callExtension format["open_w|export\%1.arr",_filename]);
+	systemChat format["Opening %1",_path];
+	_count = 0;
+	{
+		if(!isNull(_x)) then {
+			_obj = _x;
+
+			_type =(typeof _obj);
+			
+			_scale = 1;
+		
+			
+			_pos = _obj getvariable "MB_ObjVar_PositionATL";
+			_pitch = _obj getvariable "MB_ObjVar_Pitch";
+			_bank = _obj getvariable "MB_ObjVar_Bank";
+			_yaw = _obj getvariable "MB_ObjVar_Yaw";
+			_simulate = _obj getvariable "MB_ObjVar_Simulate";
+			_locked = _obj getvariable "MB_ObjVar_Locked";
+			
+			
+			_exp = format["[""object"",[%1,[%2,%3,%4],%5,%6,%7,%8]];",_type,(_pos select 0),(_pos select 1),(_pos select 2),_yaw,_pitch,_bank,_scale];
+			
+			_layer = 0;
+			_string = format["write|%1",_exp];
+			systemChat ("MB_FileIO" callExtension _string);
+		};
+	} foreach MB_Objects;
+	systemChat ("MB_FileIO" callExtension "close");
+	systemchat format["Saved!"];
+};
+MB_fnc_loadArr = {
+private["_filename"];
+	_filename = [_this,0,"exporttest"] call bis_fnc_param;
+	if(_filename == "") exitWith {systemChat "Error: Can't load a project without name!";};
+	_projectFolder = ("MB_FileIO" callExtension "listfiles|export");
+	_projects = [_projectFolder,"|"] call BIS_fnc_splitString;
+	if((_projects find format["%1.arr",_filename])==-1) exitwith {systemChat "Error: Project not found!"};
+	_path = ("MB_FileIO" callExtension format["open_r|export\%1.arr",_filename]);
+	systemChat format["Opening %1",_path];
+	
+	_line = "MB_FileIO" callExtension "readline";
+	_return = [];
+	while{_line != "EOF"} do {
+		private["_obj","_type","_layer","_pos","_dir","_pitch","_bank","_scale"];
+		_object = call compile _line;
+		_return pushBack _object;
+		_line = "MB_FileIO" callExtension "readline";
+	};
+	systemChat ("MB_FileIO" callExtension "close");
+	_return;
+};
