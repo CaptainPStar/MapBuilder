@@ -174,6 +174,7 @@ MB_NewVersionNum = 0;
 MB_CurVersion = "Unknown";
 MB_NewVersion = "Unknown";
 MB_fnc_checkVersion = {
+	disableSerialization;
 	private["_curVersionStr","_curVersion","_latestVersionStr","_curVersion"];
 	MB_CurVersion = MB_VERSION;
 	MB_CurVersionNum = parseNumber ([MB_CurVersion,"0123456789"] call BIS_fnc_filterString);
@@ -186,7 +187,12 @@ MB_fnc_checkVersion = {
 	//} else {
 		//systemChat format["Your Map Builder version v%1 is up-to-date.",_curVersionStr];
 	//};
-
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 171010;
+	_ctrl ctrlSetText format["Version: %1",MB_CurVersion];
+	if(MB_NewVersionNum>MB_CurVersionNum) then {
+		_ctrl ctrlSetTextColor [1,0,0,1];
+	};
 };
 
 //=========================================

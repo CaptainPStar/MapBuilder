@@ -134,5 +134,22 @@
 			values[] = {0,1,2};
 			onToolBoxSelChanged = "systemchat format[""%1"",(_this select 1)];MB_FencerHeightMode = (_this select 1);"
 		};
+		class Popup_FencerTerrainModeLabel : RscText {
+			idc = -1;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
+			w = MB_WINDOW_GRID_X * 5;
+			h = MB_WINDOW_GRID_Y * 1;
+			text = "Terrain Align:";
+		};
+		class Popup_FencerTerrainMode : RscCheckbox {
+			idc = 170411;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 5;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
+			w = MB_WINDOW_GRID_X * 3;
+			h = MB_WINDOW_GRID_Y * 1;
+			checked_strings[] = {"Terrain"};
+			strings[] = {"Flat"};
+		};
 	};
 };

@@ -13,9 +13,9 @@ MB_fnc_togglePopup = {
 		_show = !(ctrlShown _control);
 	};
 	if(_show) then {
-		systemchat "showing popup";
+		//systemchat "showing popup";
 	} else {
-		systemchat "hiding popup";
+		//systemchat "hiding popup";
 	};
 	while{str _control != "no control"} do {
 		_control ctrlShow _show;

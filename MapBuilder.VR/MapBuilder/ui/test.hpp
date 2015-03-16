@@ -16,7 +16,6 @@ class MB_Popup_TestGroup : RscControlsGroup
 			w = MB_WINDOW_GRID_X * 12;
 			h = MB_WINDOW_GRID_Y * 11;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
-			onMouseButtonUp = "systemchat ""UP!"";";
 		};
 		class Popup_TestHeader : Rsc_Background {
 			idc = -1;

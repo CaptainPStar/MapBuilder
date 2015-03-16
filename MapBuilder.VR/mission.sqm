@@ -5,7 +5,6 @@ class Mission
 	{
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
-		"neo_rieda_cfg",
 		"map_vr"
 	};
 	addOnsAuto[]=
@@ -81,7 +80,6 @@ class Intro
 {
 	addOns[]=
 	{
-		"neo_rieda_cfg",
 		"map_vr"
 	};
 	addOnsAuto[]=
@@ -111,7 +109,6 @@ class OutroWin
 {
 	addOns[]=
 	{
-		"neo_rieda_cfg",
 		"map_vr"
 	};
 	addOnsAuto[]=
@@ -141,7 +138,6 @@ class OutroLoose
 {
 	addOns[]=
 	{
-		"neo_rieda_cfg",
 		"map_vr"
 	};
 	addOnsAuto[]=

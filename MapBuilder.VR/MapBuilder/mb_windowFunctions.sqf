@@ -26,7 +26,7 @@ MB_fnc_updateWindowDrag = {
 	_h = (ctrlPosition _control) select 3;
 	_control ctrlSetPosition [_xp+_xo-(MB_DraggedWindowOffset select 0),_yp+_yo-(MB_DraggedWindowOffset select 1),_w,_h];
 	_control ctrlCommit 0.01;
-	systemChat format["%1",MB_DraggedWindowOffset];
+	//systemChat format["%1",MB_DraggedWindowOffset];
 	};
 };
 MB_fnc_endWindowDrag = {

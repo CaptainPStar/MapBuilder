@@ -136,7 +136,11 @@ MB_fnc_keyDown = {
 	};
 	
 	if([DIK_LCONTROL] call MB_fnc_isPressed && _dikCode == DIK_T) exitwith {
-		//[] call MB_fnc_matchSurfaceNormals;
+		{
+			if(!isNull _x) then {
+				[_x] call MB_fnc_AlignObjectToTerrain;
+			};
+		} foreach MB_Selected;
 	};
 	
 	_handled;  
@@ -173,7 +177,6 @@ MB_fnc_isPressed = {
 };
 MB_fnc_resetKeys = {
 	private["_key","_return","_status"];
-	systemChat "Keyreset";
 	{
 		MB_Keys set[_foreachindex,false];
 	} foreach MB_Keys;
