@@ -227,15 +227,15 @@ class MB_Main
 			text = "Presets";
 			action = "[] call MB_fnc_showPresetWindow;";
 		};
-		class ProjectSettingsButton : RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.87)";
-			y = "SafeZoneY + (SafezoneH * 0.79)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Settings";
-			action = "[] call MB_fnc_showPresetWindow;";
-		};
+		//class ProjectSettingsButton : RscButton {
+		//	idc = -1;
+		//	x = "SafeZoneX + (SafeZoneW * 0.87)";
+		//	y = "SafeZoneY + (SafezoneH * 0.79)";
+		//	w = "SafeZoneW * 0.07";
+		//	h = "SafeZoneH * 0.05";
+		//	text = "Settings";
+		//	action = "[] call MB_fnc_showPresetWindow;";
+		//};
 		//###################
 		//	Taskbar
 		//###################
@@ -248,6 +248,14 @@ class MB_Main
 			w = "SafeZoneW * 0.80";
 			h = "SafeZoneH * 0.03";
 			colorBackground[] = {0, 0, 0, 0.3};
+		};
+		class MB_Taskbar_Version : RscText { //--- Render out.
+			idc = 171010;
+			text = "Version: 0.0.0";
+			x = "SafeZoneX + (SafeZoneW * 0.92)";
+			y = "SafeZoneY + (SafezoneH * 0.97)";
+			w = "SafeZoneW * 0.08";
+			h = "SafeZoneH * 0.03";
 		};
 		
 		//###################

@@ -396,7 +396,6 @@ MB_fnc_RotateSelected = {
 		
 		_relPos = [_rotateCenter,_pos,_rot] call MB_fnc_RotatePos;
 		_relPos set[2,(_pos select 2)];
-		systemChat format["ROTATE: %1 (Delta: %2)",_dir,_rot];
 		_x setvariable ["MB_ObjVar_PositionATL",_relPos,false];
 		_x setvariable ["MB_ObjVar_Yaw",_dir,false];
 		[_x] call MB_fnc_UpdateObject;
@@ -557,3 +556,60 @@ MB_fnc_CalcDirAndUpVector = {
 	_return = [_dir,_up];
     _return;
 };  
+MB_fnc_CalcEulerAngles = { 
+	_vdir = _this select 0;
+    _vup = _this select 1;
+	private ["_obj","_pitch","_bank","_yaw","_vdir","_vup","_sign"];
+
+	_yaw = acos((_vdir) vectorCos [0,1,0]);
+
+	//rotate it around the origin according to the object's yaw (direction)
+	//we will then be left with the objects vectordir if it were facing north
+	_vdir = [_vdir, _yaw] call BIS_fnc_rotateVector2D;
+	_vdirY = _vdir select 1;
+	if (_vdirY == 0) then {_vdirY = 0.01;};
+
+	//if we reverse the process we used to set pitch, we can now get pitch
+	_pitch = atan ((_vdir select 2) / _vdirY);
+
+
+	//----------------------------
+	//find bank
+	//----------------------------
+
+	//repeat for bank (vectorup) with the same process as above
+	//for some reason, the results of this are not fully accurate
+	//the amount it is off depends on the pitch (you'd think I'd be able to figure it out from that clue...)
+
+	_vup = [_vup, _yaw] call BIS_fnc_rotateVector2D;
+	_vupZ = _vup select 2;
+	if (_vupZ == 0) then {_vupZ = 0.01;};
+	_bank = atan ((_vup select 0) / _vupZ);
+
+	//if we are rolled over (abs bank > 90), we need to adjust our result
+	if((_vup select 2) < 0) then
+	{
+		_sign = [1,-1] select (_bank < 0);
+		_bank = _bank - _sign*180;
+	};
+
+
+	//----------------------------
+	//return value
+	//----------------------------
+
+	[_yaw, _pitch, _bank];
+}; 
+
+MB_fnc_AlignObjectToTerrain = {
+	_obj = _this select 0;
+	_pos = _obj getvariable "MB_ObjVar_PositionATL";
+	
+	_surfaceNormal = surfaceNormal _pos;
+	_obj setvectorUp _surfaceNormal;
+	_eulers = _obj call BIS_fnc_getPitchBank;
+	
+	_obj setvariable["MB_ObjVar_Pitch",(_eulers select 0),false];
+	_obj setvariable["MB_ObjVar_Bank",(_eulers select 1),false];
+	[_obj] call MB_fnc_UpdateObject;
+};

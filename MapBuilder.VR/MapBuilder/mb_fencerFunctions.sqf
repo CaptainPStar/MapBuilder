@@ -103,6 +103,7 @@ MB_FNC_FencerCalcBounding = {
 	_return;
 };
 MB_FNC_FencerPlace = {
+	disableSerialization;
 	private["_parent","_direction","_bbr","_dir","_fpos","_relPos"];
 	
 	
@@ -139,22 +140,27 @@ MB_FNC_FencerPlace = {
 			//Do Nothing. It is already ATL
 			_relPos set [2,_parentPos select 2];
 			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
-			systemchat format["%1",_relPos];
 		};
 		case 1: {
 			//Height to Zero
 			_relPos set [2,0];
 			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
-			systemchat format["%1",_relPos];
 		};
 		case 2: {
 			//Get the ASL Pos and transform to ATL at new position
 			_relPos set [2,(getposASL _parent) select 2];
 			_created setvariable ["MB_ObjVar_PositionATL",ASLtoATL _relPos,false];
-			systemchat format["%1",ASLtoATL _relPos];
 		};
 
 	};	
+	
+	
+
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170411;
+	if(ctrlChecked _ctrl) then {
+		[_created] call MB_fnc_AlignObjectToTerrain;
+	};
 	
 	[_created] call MB_fnc_UpdateObject;
 	if(isMultiplayer) then {

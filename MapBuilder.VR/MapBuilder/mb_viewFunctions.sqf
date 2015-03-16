@@ -5,12 +5,12 @@ MB_fnc_MouseInView = {
 	private["_in"];
 	_in = [_this,0] call bis_fnc_param;
 	if(_in) then {
-		systemChat "Mouse in View";
+		//systemChat "Mouse in View";
 		_display = uinamespace getvariable 'mb_main_dialog';
 		_ctrl = _display displayCtrl 170001;
 		ctrlSetFocus _ctrl;
 	} else {
-		systemChat "Mouse left View";
+		//systemChat "Mouse left View";
 		_this call MB_fnc_resetKeys;
 	};
 };
@@ -29,7 +29,7 @@ MB_ViewportLMBDrag = false;
 MB_ViewportRMBDrag = false;
 MB_ViewportMMBDrag = false;
 MB_fnc_MouseButtonDownInView = {
-	systemchat format["%1",(_this select 1)];
+	//systemchat format["%1",(_this select 1)];
 	switch ((_this select 1)) do {
 		case MB_L: { 
 			MB_ViewportLastLMBDown = diag_tickTime;

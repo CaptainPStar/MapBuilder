@@ -38,7 +38,7 @@ MB_fnc_DeselectAll = {
 MB_SelectionRectangle = [];
 MB_SelectionModeAdd = false; 
 MB_fnc_BeginRectangleDrag = {
-	systemchat format["Rectdrag at %1",MB_MousePosition];
+	//systemchat format["Rectdrag at %1",MB_MousePosition];
 	MB_SelectionRectangle = [MB_MousePosition,MB_MousePosition];
 	MB_SelectionModeAdd = (_this select 4);
 };
@@ -51,7 +51,7 @@ MB_fnc_UpdateRectangleDrag = {
 	} else {
 		MB_SelectionRectangle = [];
 	};
-	systemchat format["%1",MB_SelectionRectangle];
+	//systemchat format["%1",MB_SelectionRectangle];
 };
 MB_fnc_EndRectangleDrag = {
 	MB_SelectionRectangle = [];
