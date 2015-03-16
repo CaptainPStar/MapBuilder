@@ -132,7 +132,7 @@
 			columns = 3;
 			strings[] = {"ATL","GND","CST"};
 			values[] = {0,1,2};
-			onToolBoxSelChanged = "systemchat format[""%1"",(_this select 1)];MB_FencerHeightMode = (_this select 1);"
+			onToolBoxSelChanged = "MB_FencerHeightMode = (_this select 1);";
 		};
 		class Popup_FencerTerrainModeLabel : RscText {
 			idc = -1;
