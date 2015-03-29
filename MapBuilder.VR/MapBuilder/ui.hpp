@@ -42,39 +42,6 @@ class MB_Main
 		//	text = "Loading...";
 		//};
 	};
-	class Objects
-	{
- 
-		class Can
-		{
- 
-			onObjectMoved = "";
- 
-			idc = 180000; 
-			type = 82;
-			model = "\A3\Structures_F\Items\Food\Can_V3_F.p3d";
-			scale = 1;
- 
-			direction[] = {0, -0.35, -0.65};
-			up[] = {0, 0.65, -0.35}; 
- 
-			//position[] = {0,0,0.2}; optional
- 
-			x = 0.37;
-			y = 0.37;
-			z = 2.0;
- 
-			//positionBack[] = {0,0,1.2}; optional
- 
-			xBack = 0.37;
-			yBack = 0.37;
-			zBack = 2.0;
- 
-			inBack = 0;
-			enableZoom = 1;
-			zoomDuration = 0.001;
-		};
-	};
 	class controls {
 		class RscObject;
 		class Rsc_Background : RscText { //--- Render out.
@@ -144,7 +111,8 @@ class MB_Main
 		colorActive[] = {1,1,1,1};
 			text = "MapBuilder\icon.paa";
 			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
-		};
+		};		
+		
 		class MB_SelectedTemplate : RscStructuredText {
 			idc = 170007;
 
@@ -155,13 +123,22 @@ class MB_Main
 			text =  "Selected: None";
 		};
 		class UsedObjectsButton : RscButton {
-			idc = 170006;
+			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
 			y = "SafeZoneY + (SafezoneH * 0.32)";
-			w = "SafeZoneW * 0.05";
+			w = "SafeZoneW * 0.06";
 			h = "SafeZoneH * 0.025";
-			text = "Used Obj";
+			text = "Used Objs";
 			action = "[] call MB_fnc_OpenUsedWindow;";
+		};
+		class FavoritesObjectsButton : RscButton {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.88)";
+			y = "SafeZoneY + (SafezoneH * 0.32)";
+			w = "SafeZoneW * 0.06";
+			h = "SafeZoneH * 0.025";
+			text = "Fav Objs";
+			action = "[] call MB_fnc_OpenFavoritesWindow;";
 		};
 		class MB_FencerButton : RscButton {
 			idc = -1;
@@ -198,14 +175,14 @@ class MB_Main
 			checked_strings[] = {"Simul"};
 			strings[] = {"Simul"};
 		};
-		//class MB_ModeSettingsLabel : RscText {
-		//	idc = -1;
-		//	x = "SafeZoneX + (SafeZoneW * 0.82)";
-		//	y = "SafeZoneY + (SafezoneH * 0.50)";
-		//	w = "SafeZoneW * 0.1";
-		//	h = "SafeZoneH * 0.03";
-		//	text =  "Mode:";
-		//};
+		class MB_ModeSettingsLabel : RscText {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.50)";
+			w = "SafeZoneW * 0.1";
+			h = "SafeZoneH * 0.03";
+			text =  "Mode:";
+		};
 		//class MB_ModeSettings : MyRscToolbox {
 		//	idc = -1;
 		//	x = "SafeZoneX + (SafeZoneW * 0.82)";
@@ -214,9 +191,9 @@ class MB_Main
 		//	h = "SafeZoneH * 0.05";
 		//	rows = 1;
 		//	columns = 2;
-		//	strings[] = {"Objects","MM"};
+		//	strings[] = {"Objects","Brusher"};
 		//	values[] = {0,1};
-		//	onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;"
+		//	onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;";
 		//};
 		class PresetsButton : RscButton {
 			idc = -1;
@@ -491,5 +468,8 @@ class MB_Main
 		#include "ui\about.hpp"
 		#include "ui\inspector.hpp"
 		#include "ui\used.hpp"
+		#include "ui\favorites.hpp"
+		#include "ui\infopopup.hpp"
+		#include "ui\3dpreview.hpp"
 	};
 };
