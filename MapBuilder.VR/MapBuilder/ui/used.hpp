@@ -4,7 +4,7 @@
  class MB_Window_UsedGroup : RscControlsGroup
 {
 	idc = 170800;
-	x = "SafeZoneX + (SafeZoneW * 0.05)";
+	x = "SafeZoneX + (SafeZoneW * 0.01)";
 	y = "SafeZoneY + (SafezoneH * 0.1)";
 	w = MB_WINDOW_GRID_X * 10 + 2*MB_WINDOW_PADDING_X + 0.01;
 	h = MB_WINDOW_GRID_Y * 10 + 2*MB_WINDOW_PADDING_Y + 0.01;
