@@ -36,22 +36,30 @@ MB_fnc_DeselectAll = {
 // Rectangle Selection
 //############################
 MB_SelectionRectangle = [];
+MB_SelectionRectangle_Mutex = false;
 MB_SelectionModeAdd = false; 
 MB_fnc_BeginRectangleDrag = {
 	//systemchat format["Rectdrag at %1",MB_MousePosition];
 	MB_SelectionRectangle = [MB_MousePosition,MB_MousePosition];
 	MB_SelectionModeAdd = (_this select 4);
+	if(!MB_SelectionModeAdd) then {
+		[] call MB_fnc_DeselectAll;
+	};
 };
 
 MB_fnc_UpdateRectangleDrag = {
-	MB_SelectionRectangle set [1,MB_MousePosition];
-	//When Mouse is released outside viewport, first value gets <null>. Don't ask me why.
-	if(!isNil{MB_SelectionRectangle select 0}) then {
-		[MB_SelectionRectangle,MB_SelectionModeAdd] call MB_fnc_SelectInRectangle;
-	} else {
-		MB_SelectionRectangle = [];
+	if(!MB_SelectionRectangle_Mutex) then {
+		MB_SelectionRectangle_Mutex = true;
+		MB_SelectionRectangle set [1,MB_MousePosition];
+		//When Mouse is released outside viewport, first value gets <null>. Don't ask me why.
+		if(!isNil{MB_SelectionRectangle select 0}) then {
+			[MB_SelectionRectangle,MB_SelectionModeAdd] call MB_fnc_SelectInRectangle;
+		} else {
+			MB_SelectionRectangle = [];
+		};
+		//systemchat format["%1",MB_SelectionRectangle];
+		MB_SelectionRectangle_Mutex = false;
 	};
-	//systemchat format["%1",MB_SelectionRectangle];
 };
 MB_fnc_EndRectangleDrag = {
 	MB_SelectionRectangle = [];

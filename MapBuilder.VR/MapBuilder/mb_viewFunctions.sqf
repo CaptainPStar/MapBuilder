@@ -28,6 +28,23 @@ MB_DblClickTime = 0.3;
 MB_ViewportLMBDrag = false;
 MB_ViewportRMBDrag = false;
 MB_ViewportMMBDrag = false;
+
+MB_fnc_ViewIsMouseButtonPressed = {
+_return = false;
+switch ((_this select 0)) do {
+		case MB_L: { 
+			if(MB_ViewportLastLMBDown>MB_ViewportLastLMBUp) then {
+				_return = true;
+			};
+		};
+		case MB_R: { 
+			if(MB_ViewportLastRMBDown>MB_ViewportLastRMBUp) then {
+				_return = true;
+			};
+		};
+	};
+	_return;
+};
 MB_fnc_MouseButtonDownInView = {
 	//systemchat format["%1",(_this select 1)];
 	switch ((_this select 1)) do {
@@ -37,7 +54,7 @@ MB_fnc_MouseButtonDownInView = {
 				private["_downtime"];
 				_downtime = MB_ViewportLastLMBDown;
 				sleep MB_DragStartTime;
-				if(MB_ViewportLastLMBUp<_downtime) then {
+				if(MB_ViewportLastLMBUp<_downtime && !MB_ViewportRMBDrag) then {
 					MB_ViewportLMBDrag = true;
 					["BeginLeftMBDrag",_this] spawn MB_fnc_dispatchCallbacks;
 				};
@@ -49,7 +66,7 @@ MB_fnc_MouseButtonDownInView = {
 				private["_downtime"];
 				_downtime = MB_ViewportLastRMBDown;
 				sleep MB_DragStartTime;
-				if(MB_ViewportLastRMBUp<_downtime) then {
+				if(MB_ViewportLastRMBUp<_downtime&& !MB_ViewportLMBDrag) then {
 					MB_ViewportRMBDrag = true;
 					["BeginRightMBDrag",_this] spawn MB_fnc_dispatchCallbacks;
 				};
