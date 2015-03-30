@@ -1,1 +1,3 @@
-call compile preprocessFileLineNumbers "MapBuilder\mb.sqf";
+if(!isDedicated) then {
+	call compile preprocessFileLineNumbers "MapBuilder\mb.sqf";
+};
