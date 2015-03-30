@@ -5,14 +5,13 @@ class Mission
 	{
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
-		"A3_Soft_F_SUV",
-		"map_vr"
+		"map_vr",
+		"A3_Characters_F_Civil"
 	};
 	addOnsAuto[]=
 	{
-		"A3_Characters_F_BLUFOR",
+		"A3_Characters_F_Civil",
 		"a3_characters_f",
-		"A3_Soft_F_SUV",
 		"map_vr"
 	};
 	randomSeed=3903291;
@@ -35,60 +34,78 @@ class Mission
 	};
 	class Groups
 	{
-		items=2;
+		items=4;
 		class Item0
 		{
-			side="WEST";
+			side="CIV";
 			class Vehicles
 			{
 				items=1;
 				class Item0
 				{
-					position[]={2914.9949,75.234749,1638.037};
-					azimut=285.80875;
+					position[]={2949.1284,5,1601.6489};
 					id=0;
-					side="WEST";
-					vehicle="B_Soldier_F";
-					player="PLAYER COMMANDER";
+					side="CIV";
+					vehicle="C_man_polo_1_F";
+					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
-					text="s1";
 				};
 			};
 		};
 		class Item1
 		{
-			side="WEST";
+			side="CIV";
 			class Vehicles
 			{
 				items=1;
 				class Item0
 				{
-					position[]={2910.9685,74.938499,1618.9291};
-					azimut=285.80875;
+					position[]={3020.2676,5,1602.3999};
 					id=1;
-					side="WEST";
-					vehicle="B_Soldier_F";
+					side="CIV";
+					vehicle="C_man_polo_3_F";
 					player="PLAY CDG";
 					leader=1;
 					skill=0.60000002;
-					text="s2";
 				};
 			};
 		};
-	};
-	class Vehicles
-	{
-		items=1;
-		class Item0
+		class Item2
 		{
-			position[]={2914.0154,75.220207,1628.8518};
-			azimut=-84.280518;
-			id=2;
-			side="EMPTY";
-			vehicle="C_SUV_01_F";
-			leader=1;
-			skill=0.60000002;
+			side="CIV";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={2914.9951,5,1603.7178};
+					id=2;
+					side="CIV";
+					vehicle="C_man_1";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
+		};
+		class Item3
+		{
+			side="CIV";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={2991.5364,5,1602.6831};
+					id=3;
+					side="CIV";
+					vehicle="C_man_polo_2_F";
+					player="PLAY CDG";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
 		};
 	};
 };
