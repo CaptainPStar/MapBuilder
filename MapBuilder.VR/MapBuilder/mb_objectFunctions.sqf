@@ -24,11 +24,11 @@ private["_xp","_yp"];
 
 //["onMouseUp","MB_fnc_createObjectByDrag",{MB_LibraryDrag != ""}] call MB_fnc_addCallback;
 MB_fnc_CreateObject = {
-	private["_obj","_class","_pos","_dir","_uid","_var"];
+	private["_obj","_class","_pos","_dir","_uid","_var","_sync"];
 	_class = [_this,0] call bis_fnc_param;
 	_pos = [_this,1] call bis_fnc_param;
 	_uid =  [_this,2,-1] call bis_fnc_param;
-	
+	_sync =  [_this,3,true] call bis_fnc_param;
 	if(_uid == -1) then {
 		_uid = MB_NUID;
 		MB_NUID = MB_NUID + 1;
@@ -49,18 +49,17 @@ MB_fnc_CreateObject = {
 		call compile format["%1 = _obj;",_var];
 		_obj setvariable["MB_ObjVar_UID",_uid,false];
 		MB_Objects set[_uid,_obj];
-		[_obj] call MB_fnc_InitObject;
-		if(isMultiplayer) then {
-			[_obj] call MB_fnc_syncObject;
-		};
+		[_obj,_sync] call MB_fnc_InitObject;
 	} else {
 		_obj = objNull;
 	};
 	_obj;
 };
 MB_fnc_InitObject = {
-	private["_obj","_pos","_yaw","_pitch","_bank","_simulate","_locked"];
+	private["_obj","_pos","_yaw","_pitch","_bank","_simulate","_locked","_sync"];
 	_obj = [_this,0] call bis_fnc_param;
+	_sync =  [_this,1,true] call bis_fnc_param;
+	
 	_pos = getposATL _obj;
 	_yaw = 0;
 	if(ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170010)) then {
@@ -81,13 +80,13 @@ MB_fnc_InitObject = {
 	
 	_obj setvariable["MB_ObjVar_Scale",1,false];
 	
-	[_obj] call MB_fnc_UpdateObject;
+	[_obj,_sync] call MB_fnc_UpdateObject;
 };
 
 MB_fnc_UpdateObject = {
-	private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked"];
+	private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked","_sync"];
 	_obj = [_this,0] call bis_fnc_param;
-	
+	_sync = [_this,1,true] call bis_fnc_param; //Should the object beeing synced in MP
 	_pos = _obj getvariable "MB_ObjVar_PositionATL";
 	_pitch = _obj getvariable "MB_ObjVar_Pitch";
 	_bank = _obj getvariable "MB_ObjVar_Bank";
@@ -100,6 +99,9 @@ MB_fnc_UpdateObject = {
 	[_obj,[_pitch,_bank,_yaw]] call MB_fnc_SetPitchBankYaw;
 	_obj setposATL _pos;
 	_obj enableSimulation _simulate;
+	if(isMultiplayer && _sync) then {
+		[_obj] call MB_fnc_syncObject;
+	};
 	
 };
 

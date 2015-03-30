@@ -51,7 +51,7 @@ MB_fnc_syncRemoteObject = {
 	};
 	_obj = objNull;
 	if(_create) then {
-		_obj = [_type,_pos,_uid] call MB_fnc_CreateObject;
+		_obj = [_type,_pos,_uid,false] call MB_fnc_CreateObject;
 	} else {
 		_obj = MB_Objects select _uid;
 	};
@@ -62,7 +62,7 @@ MB_fnc_syncRemoteObject = {
 		_obj setvariable["MB_ObjVar_Yaw",_yaw,false];	
 		_obj setvariable["MB_ObjVar_Simulate",_simulate,false];
 		_obj setvariable["MB_ObjVar_Locked",_locked,false];
-		[_obj] call MB_fnc_UpdateObject;
+		[_obj,false] call MB_fnc_UpdateObject;
 	} else {
 		systemChat "Error while creating a remote objects!";
 	};
