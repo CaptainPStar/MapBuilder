@@ -7,29 +7,23 @@ MB_fnc_Select = {
 	_object = _this select 0;
 	if(!isNull _object) then {
 		if(!(_object in MB_Selected)) then {
-			MB_Selected set [count(MB_Selected),_object];
+			MB_Selected pushBack _object;
 		};
 	};
 };
 MB_fnc_Deselect = {
 	private["_object","_newArray","_corners"];
 	_object = _this select 0;
-	_newArray = [];
-	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if((MB_Selected select _i) != _object) then {
-			_newArray set [count(_newArray),(MB_Selected select _i)];
+	if(!isNull _object) then {
+		_index = MB_Selected find _object;
+		if(_index>=0) then {
+			MB_Selected deleteAt _index;
 		};
-
 	};
-	MB_Selected = _newArray;	
 };
 
 MB_fnc_DeselectAll = {
-	while{count(MB_Selected)>0} do {
-		[(MB_Selected select 0)] call MB_fnc_Deselect;	
-	};
 	MB_Selected = [];
-
 };
 
 //############################
@@ -74,7 +68,7 @@ MB_fnc_EndRectangleDrag = {
 
 
 MB_fnc_SelectInRectangle = {
-	private["_edges","_add","_cornerA","_cornerB","_obj","_flag"];
+	private["_edges","_add","_cornerA","_cornerB","_obj","_flag","_opos"];
 	_edges = _this select 0;
 	_add = _this select 1;
 	_cornerA = _edges select 0;
