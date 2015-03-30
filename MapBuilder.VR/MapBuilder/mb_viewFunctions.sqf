@@ -82,7 +82,6 @@ MB_fnc_MouseButtonDownInView = {
 			};
 		};
 		case MB_M: { 
-			systemchat "middle";
 			MB_ViewportLastMMBDown = diag_tickTime;
 			_this spawn {
 				private["_downtime"];
