@@ -5,7 +5,7 @@
 //################################################
 
 MB_fnc_exportTB = {
-	startLoadingScreen ["Exporting Terrain Builder file..."];
+	//startLoadingScreen ["Exporting Terrain Builder file..."];
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.txt",_filename]);
@@ -14,19 +14,19 @@ MB_fnc_exportTB = {
 	_mapframeX = 200000;
 	_mapframeY = 0;
 	{
+		private["_pos","_pitch","_bank","_model","_obj","_yaw","_scale"];
 		if(!isNull(_x)) then {
 			_obj = _x;
 			
 			_model = getText (configFile >> "CfgVehicles" >> (typeof _obj) >> "model");
 			_model = toLower(_model);
 			
-			_pos = _obj getvariable "MB_ObjVar_PositionATL";
-			_pitch = _obj getvariable "MB_ObjVar_Pitch";
-			_bank = _obj getvariable "MB_ObjVar_Bank";
-			_yaw = _obj getvariable "MB_ObjVar_Yaw";
-			_scale = _obj getvariable "MB_ObjVar_Scale";
-			_pos set[0,((_pos select 0)+_mapframeX)];
-			_pos set[1,((_pos select 1)+_mapframeY)];
+			_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_exactPosition;
+			_pitch = str (_obj getvariable "MB_ObjVar_Pitch");
+			_bank = str (_obj getvariable "MB_ObjVar_Bank");
+			_yaw = str (_obj getvariable "MB_ObjVar_Yaw");
+			_scale = str (_obj getvariable "MB_ObjVar_Scale");
+;
 			//Split modelname into parts
 			_model = [_model,"\"] call BIS_fnc_splitString;
 			//Extract last part (model.p3d) and split into name and extension
@@ -42,11 +42,11 @@ MB_fnc_exportTB = {
 			
 		};
 		_count = _count + 1;
-		progressLoadingScreen (_count/count(MB_Objects));
+		//progressLoadingScreen (_count/count(MB_Objects));
 	} foreach MB_Objects;
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
-	endLoadingScreen;
+	//endLoadingScreen;
 };
 MB_fnc_exportSQF = {
 	startLoadingScreen ["Exporting scriptfile..."];
@@ -69,7 +69,7 @@ MB_fnc_exportSQF = {
 			_type = (typeof _obj);
 			_obj = _x;
 			
-			_pos = _obj getvariable "MB_ObjVar_PositionATL";
+			_pos = [_obj,[0,0]] call MB_fnc_exactPosition;
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";
@@ -111,7 +111,7 @@ MB_fnc_exportComposition = {
 			_type = (typeof _obj);
 
 			
-			_pos = _obj getvariable "MB_ObjVar_PositionATL";
+			_pos = [_obj,[0,0]] call MB_fnc_exactPosition;
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";
@@ -158,7 +158,7 @@ MB_fnc_exportSQM = {
 
 
 			_type = (typeof _obj);
-			_pos = _obj getvariable "MB_ObjVar_PositionATL";
+			_pos = [_obj,[0,0]] call MB_fnc_exactPosition;
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";
@@ -174,7 +174,7 @@ MB_fnc_exportSQM = {
 			"MB_FileIO" callExtension "write|side=""EMPTY"";";
 			"MB_FileIO" callExtension format["write|vehicle=""%1"";",typeof _obj];
 			"MB_FileIO" callExtension "write|skill=0.6;";
-			"MB_FileIO" callExtension format["write|init=""this setVectorDirAndUp %1;"";",_dirAndUp];
+			"MB_FileIO" callExtension format["write|init=""this setVectorDirAndUp %1;this setposATL [%2,%3,%4];"";",_dirAndUp,_pos select 0,_pos select 1,_pos select 2];
 			"MB_FileIO" callExtension "write|};";
 			_count = _count + 1;
 		};
@@ -290,7 +290,6 @@ MB_fnc_importProjectOld = {
 		_obj setvariable["MB_ObjVar_Pitch",_pitch,false];
 		_obj setvariable["MB_ObjVar_Bank",_bank,false];
 		_obj setvariable["MB_ObjVar_Yaw",_dir,false];
-		systemchat format["Bank is %1",_bank];
 
 		[_obj] call MB_fnc_UpdateObject;
 		
@@ -434,4 +433,47 @@ private["_line","_object"];
 	_line = [_this,0,"[]"] call bis_fnc_param;
 	_object = call compile _line;
 	_object;
+};
+MB_fnc_exactPosition = {
+	private["_output","_object","_offset","_xcord","_xcordAC","_ycord","_ycordAC","_tempArray","_zcord","_zcordAC","_pos"];
+	_object = [_this,0] call bis_fnc_param;
+	_offset = [_this,1,[0,0]] call bis_fnc_param;
+	
+	_xcord = floor ((_obj getvariable "MB_ObjVar_PositionATL") select 0);
+	_xcordAC = (((_obj getvariable "MB_ObjVar_PositionATL") select 0) - (floor ((_obj getvariable "MB_ObjVar_PositionATL") select 0)));
+	_ycord = floor ((_obj getvariable "MB_ObjVar_PositionATL") select 1);
+	_ycordAC = (((_obj getvariable "MB_ObjVar_PositionATL") select 1) - (floor ((_obj getvariable "MB_ObjVar_PositionATL") select 1)));
+	_zcord = ((_obj getvariable "MB_ObjVar_PositionATL") select 2);
+		//_zcordAC = (((getPosATL _object) select 2) - (floor ((getPosATL _object) select 2))); 
+
+	_tempArray = toArray str _xcordAC;
+	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
+	{
+		_tempArray set [0, 999];
+		_tempArray set [1, 999];
+		_tempArray = _tempArray - [999];
+		_xcordAC = toString _tempArray;
+	};
+	
+	_tempArray = toArray str _ycordAC;
+	if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
+	{
+		_tempArray set [0, 999];
+		_tempArray set [1, 999];
+		_tempArray = _tempArray - [999];
+		_ycordAC = toString _tempArray;
+	};
+	//_zcordAC = [_zcordAC,6] call MB_fnc_roundNumbers;
+	//_tempArray = toArray str _zcordAC;
+	//if ((_tempArray select 0) == 48 and (_tempArray select 1) == 46) then
+	//{
+	//	_tempArray set [0, 999];
+	//	_tempArray set [1, 999];
+	//	_tempArray = _tempArray - [999];
+	//	_zcordAC = toString _tempArray;
+	//};
+	_output = [format["%1.%2",(_xcord+(_offset select 0)),_xcordAC],
+				format["%1.%2",(_ycord+(_offset select 1)),_ycordAC],
+				format["%1",_zcord]];
+	_output;
 };
