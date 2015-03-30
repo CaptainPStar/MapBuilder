@@ -5,12 +5,14 @@ class Mission
 	{
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
+		"A3_Soft_F_SUV",
 		"map_vr"
 	};
 	addOnsAuto[]=
 	{
 		"A3_Characters_F_BLUFOR",
 		"a3_characters_f",
+		"A3_Soft_F_SUV",
 		"map_vr"
 	};
 	randomSeed=3903291;
@@ -42,8 +44,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={3485.3071,11.759295,2069.5779};
-					azimut=-183.785;
+					position[]={2914.9949,75.234749,1638.037};
+					azimut=285.80875;
 					id=0;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -62,8 +64,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={3465.8242,13.337646,2068.2478};
-					azimut=-183.785;
+					position[]={2910.9685,74.938499,1618.9291};
+					azimut=285.80875;
 					id=1;
 					side="WEST";
 					vehicle="B_Soldier_F";
@@ -73,6 +75,20 @@ class Mission
 					text="s2";
 				};
 			};
+		};
+	};
+	class Vehicles
+	{
+		items=1;
+		class Item0
+		{
+			position[]={2914.0154,75.220207,1628.8518};
+			azimut=-84.280518;
+			id=2;
+			side="EMPTY";
+			vehicle="C_SUV_01_F";
+			leader=1;
+			skill=0.60000002;
 		};
 	};
 };
