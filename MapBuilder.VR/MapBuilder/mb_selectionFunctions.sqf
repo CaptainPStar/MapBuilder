@@ -113,7 +113,7 @@ MB_fnc_SelectInRectangle = {
 	} foreach MB_Objects;
 };
 MB_fnc_getClickedObject = {
-		private["_uX","_uY","_layer","_obj","_objects","_shift","_isSelected"];
+	private["_uX","_uY","_layer","_obj","_objects","_shift","_isSelected"];
 	_uX = _this select 2;
 	_uY = _this select 3;
 	_shift = _this select 4;

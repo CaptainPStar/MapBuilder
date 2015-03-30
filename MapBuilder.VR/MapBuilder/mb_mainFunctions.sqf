@@ -97,7 +97,8 @@ MB_fnc_Exit = {
 		["MB_Draw3D", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 		//["MB_MapClick", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		(findDisplay 123) displayRemoveAllEventHandlers "MouseMoving";
-		
+		(findDisplay 46) displayRemoveAllEventHandlers "MouseButtonDown";
+		(findDisplay 46) displayRemoveAllEventHandlers "MouseButtonUp";
 		//MBCamera cameraEffect ["Terminate", "BACK"];
 		player switchCamera "Internal";
 		
@@ -125,14 +126,17 @@ MB_fnc_Start = {
 	//["MB_MapClick", "onMapSingleClick", {MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];}, []] call BIS_fnc_addStackedEventHandler;
 	//((findDisplay 123) displayCtrl 170301) onDoubleClick "MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];";
 	
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","if(MB_LibraryDrag != """") then {_this call MB_fnc_createObjectByDrag;};"];
+	//Middle Mouse works only in Display 46...
+	(findDisplay 46) displayAddEventHandler  ["MouseButtonDown","if(MB_ViewportHasFocus && (_this select 1)==2) then {_nil=_this call MB_fnc_MouseButtonDownInView;};"];
+	(findDisplay 46) displayAddEventHandler  ["MouseButtonUp","if((_this select 1)==2) then {_nil=_this call MB_fnc_MouseButtonUpInView;};"];
 	//(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonDown","systemchat format[""MB Down: %1"",_this];"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonUp","systemchat format[""MB Up: %1"",_this];"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseMoving","_this call MB_fnc_MouseMove;"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseEnter","[true] call MB_fnc_MouseInView;"];
     ((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseExit","[false] call MB_fnc_MouseInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseWheelMoveInView;"];
+
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonDown","_this call MB_fnc_MouseButtonDownInView;"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonUp","_this call MB_fnc_MouseButtonUpInView;"];
 	//(findDisplay 123) displayAddEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseZ"];

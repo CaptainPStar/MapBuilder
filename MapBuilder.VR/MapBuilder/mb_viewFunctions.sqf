@@ -1,5 +1,7 @@
 #include "dik.hpp"
 
+MB_ViewportHasFocus = true;
+
 MB_fnc_MouseInView = {
 	disableSerialization;
 	private["_in"];
@@ -9,9 +11,11 @@ MB_fnc_MouseInView = {
 		_display = uinamespace getvariable 'mb_main_dialog';
 		_ctrl = _display displayCtrl 170001;
 		ctrlSetFocus _ctrl;
+		MB_ViewportHasFocus = true;
 	} else {
 		//systemChat "Mouse left View";
 		_this call MB_fnc_resetKeys;
+		MB_ViewportHasFocus = false;
 	};
 };
 
@@ -39,6 +43,11 @@ switch ((_this select 0)) do {
 		};
 		case MB_R: { 
 			if(MB_ViewportLastRMBDown>MB_ViewportLastRMBUp) then {
+				_return = true;
+			};
+		};
+		case MB_M: { 
+			if(MB_ViewportLastMMBDown>MB_ViewportLastMMBUp) then {
 				_return = true;
 			};
 		};
@@ -176,4 +185,10 @@ MB_fnc_MouseButtonDblClick = {
 				["MiddleMouseDblClick",_this] spawn MB_fnc_dispatchCallbacks;
 		};
 	};
+};
+MB_fnc_MouseWheelMoveInView = {
+	private["_ctrl","_change"];
+	_ctrl = [_this,0] call bis_fnc_param;
+	_change = [_this,1] call bis_fnc_param;
+	["MouseWheelMove",[_change]] spawn MB_fnc_dispatchCallbacks;
 };
