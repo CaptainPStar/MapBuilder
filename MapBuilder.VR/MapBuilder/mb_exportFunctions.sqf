@@ -318,8 +318,7 @@ MB_fnc_autosave = {
 		MB_nextProjectAutosave = time + MB_autosaveInterval;
 	};
 };
-MB_fnc_clearProject = {
-	["clearedProject"] call MB_fnc_saveProject;
+MB_fnc_resetProject = {
 	{
 		if(!isNull(_x)) then {
 			[_x] call MB_fnc_DeleteObject;
@@ -333,6 +332,10 @@ MB_fnc_clearProject = {
 	[] call MB_fnc_updateFavorites;
 	[] call MB_fnc_updateUsed;
 	MB_ProjectName = "";
+};
+MB_fnc_clearProject = {
+	["clearedProject"] call MB_fnc_saveProject;
+	[] call MB_fnc_resetProject;
 };
 MB_fnc_saveProject = {
 	private["_filename"];
@@ -365,7 +368,8 @@ MB_fnc_loadProject = {
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
 	systemChat format["Loading project %1",_filename];
-	[] call MB_fnc_clearProject;
+	//[format["%1_backup",_filename]] call MB_fnc_saveProject;
+	[] call MB_fnc_resetProject;
 	MB_ProjectName = _filename;
 	[_filename] call MB_fnc_importProject;
 };
