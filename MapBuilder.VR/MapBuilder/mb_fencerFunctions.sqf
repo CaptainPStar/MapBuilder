@@ -4,19 +4,20 @@ MB_FencerHeightMode = 0;
 MB_FNC_CloseFencer = {
 	private["_display","_ctrl"];
 	disableSerialization;
-	[170400,false] spawn MB_fnc_closeWindow;
 	MB_FencerActive = false;
+	[] call MB_FNC_FencerDeletePreview;
+	[170400,false] spawn MB_fnc_closeWindow;
 };
 MB_FNC_OpenFencer = {
 	private["_display","_ctrl"];
 	disableSerialization;
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrl = _display displayCtrl 170400;
-	if(!ctrlShown _ctrl) then {
+	if(!MB_FencerActive) then {
 		[170400,false] spawn MB_fnc_openWindow;
 		MB_FencerActive = true;
 	} else {
-		[170400,false] spawn MB_fnc_closeWindow;
+		call MB_FNC_CloseFencer;
 	};
 	
 };
@@ -25,7 +26,7 @@ MB_FNC_OpenFencer = {
 
 MB_FNC_FencerUpdatePreview = {
 	private["_relPos","_created","_direction","_obj","_dir","_pos","_maxWidth","_maxLength","_bounding"];
-	if(count(MB_Selected)>0) then {
+	if(count(MB_Selected)>0 && MB_FencerActive) then {
 		_obj = (MB_Selected select (count(MB_Selected)-1));
 		
 		_bounding = [_obj] call MB_FNC_FencerCalcBounding;
@@ -163,9 +164,6 @@ MB_FNC_FencerPlace = {
 	};
 	
 	[_created] call MB_fnc_UpdateObject;
-	if(isMultiplayer) then {
-		[_created] call MB_fnc_syncObject;
-	};
 
 	[_created] call MB_fnc_Select;
 	[] call MB_FNC_FencerUpdatePreview;
