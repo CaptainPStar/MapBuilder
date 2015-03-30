@@ -7,7 +7,12 @@ MB_fnc_InspectObject = {
 	disableSerialization;
 	private["_obj"];
 	_obj = _this call MB_fnc_getClickedObject;
+
+	
 	if(!isNull _obj) then {
+	
+		[] call MB_fnc_DeselectAll;
+		[_obj] call MB_fnc_Select;
 		systemchat format["Inspecting %1",_obj];
 		[170700,false] spawn MB_fnc_openWindow;
 		_display = uinamespace getvariable 'mb_main_dialog';
