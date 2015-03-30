@@ -143,13 +143,14 @@ MB_fnc_exportSQM = {
 	private["_number","_digits","_acc"];
 	version=12;
 
-	"MB_FileIO" callExtension "write|version=12";
+	"MB_FileIO" callExtension "write|version=12;";
 	"MB_FileIO" callExtension "write|class Mission {";
 	"MB_FileIO" callExtension "write|addOns[]= {};";
 	"MB_FileIO" callExtension "write|addOnsAuto[]= {};";
 	"MB_FileIO" callExtension "write|class Intel{};";
 	"MB_FileIO" callExtension "write|class Vehicles {";
-	"MB_FileIO" callExtension format["write|items=%1;",({!isNull _x} count MB_Objects)];
+	_total = ({!isNull _x} count MB_Objects);
+	"MB_FileIO" callExtension format["write|items=%1;",_total];
 	_count = 0;
 	{
 		if(!isNull(_x)) then {
@@ -165,19 +166,20 @@ MB_fnc_exportSQM = {
 					
 			
 			_dirAndUp = [_pitch,_bank,_yaw] call MB_fnc_CalcDirAndUpVector;
-			"MB_FileIO" callExtension format["write|class Item%1 {",_forEachIndex];
+			"MB_FileIO" callExtension format["write|class Item%1 {",_count];
 			"MB_FileIO" callExtension format["write|position[]={%1,%3,%2};",_pos select 0, _pos select 1, _pos select 2];
 			"MB_FileIO" callExtension format["write|azimut=%1;",_yaw];
 			"MB_FileIO" callExtension format["write|offsetY=%1;",_pos select 2];
-			"MB_FileIO" callExtension format["write|id=%1;",_forEachIndex];
+			"MB_FileIO" callExtension format["write|id=%1;",_count];
 			"MB_FileIO" callExtension "write|side=""EMPTY"";";
 			"MB_FileIO" callExtension format["write|vehicle=""%1"";",typeof _obj];
 			"MB_FileIO" callExtension "write|skill=0.6;";
 			"MB_FileIO" callExtension format["write|init=""this setVectorDirAndUp %1;"";",_dirAndUp];
 			"MB_FileIO" callExtension "write|};";
+			_count = _count + 1;
 		};
-		_count = _count + 1;
-		progressLoadingScreen (_count/count(MB_Objects));
+		
+		progressLoadingScreen (_count/_total);
 	} foreach MB_Objects;
 	"MB_FileIO" callExtension "write|};";
 	"MB_FileIO" callExtension "write|};";
@@ -362,7 +364,7 @@ MB_fnc_loadProject = {
 	private["_filename"];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
-	systemChat format["Loading rojects %1",_filename];
+	systemChat format["Loading project %1",_filename];
 	[] call MB_fnc_clearProject;
 	MB_ProjectName = _filename;
 	[_filename] call MB_fnc_importProject;
@@ -377,10 +379,10 @@ MB_fnc_importProject = {
 	if((_projects find format["%1.mbproj",_filename])==-1) exitwith {
 		//Load old file here
 		if((_projects find format["%1.mbp",_filename])==-1) then {
+			systemChat "Error: Project not found!";
+		} else {
 			systemChat "Loading old project format.";
 			[_filename] spawn MB_fnc_importProjectOld;
-		} else {
-			systemChat "Error: Project not found!";
 		};
 	};
 	[2,false] call MB_fnc_togglePopup;
