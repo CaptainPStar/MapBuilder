@@ -22,96 +22,119 @@ class CfgVehicleClasses
 {
  class MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Trees(MB)";
-  mapbuilder_filter = "A2";
+  displayName = "MB A2 Trees";
+  mapbuilder_library = "A2";
+  mapbuilder_displayname = "Trees";
  };
  class MB_A2_EditorObjects_Deadtrees : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Deadtrees(MB)";
+  displayName = "MB A2 Deadtrees";
+  mapbuilder_displayname = "Deadtrees";
  };
  class MB_A2_EditorObjects_Bushes : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Bushes(MB)";
+  displayName = "MB A2 Bushes";
+  mapbuilder_displayname = "Bushes";
  };
  class MB_A2_EditorObjects_Plants : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Plants(MB)";
+  displayName = "MB A2 Plants";
+  mapbuilder_displayname = "Plants";
  };
  class MB_A2_EditorObjects_Rocks : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Rocks(MB)";
+  displayName = "MB A2 Rocks";
+  mapbuilder_displayname = "Rocks";
  };
  class MB_A2_EditorObjects_Water : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Water(MB)";
+  displayName = "MB A2 Water";
+  mapbuilder_displayname = "Water";
  };
  class MB_A2_EditorObjects_Various : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Various(MB)";
+  displayName = "MB A2 Various";
+  mapbuilder_displayname = "Various";
  };
  class MB_A2_EditorObjects_Civilian : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Civilian Structures(MB)";
+  displayName = "MB A2 Civilian Structures";
+  mapbuilder_displayname = "Civilian Structures";
  };
  class MB_A2_EditorObjects_Industry : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Industrial Structures(MB)";
+  displayName = "MB A2 Industrial Structures";
+  mapbuilder_displayname = "Industrial Structures";
  };
  class MB_A2_EditorObjects_Military : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Military Structures(MB)";
+  displayName = "MB A2 Military Structures";
+  mapbuilder_displayname = "Military Structures";
  };
  class MB_A2_EditorObjects_Cargo : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Cargo(MB)";
+  displayName = "MB A2 Cargo";
+  mapbuilder_displayname = "Cargo";
  };
  class MB_A2_EditorObjects_Signs : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Signs(MB)";
+  displayName = "MB A2 Signs";
+  mapbuilder_displayname = "Signs";
  };
  class MB_A2_EditorObjects_Walls : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Walls(MB)";
+  displayName = "MB A2 Walls";
+  mapbuilder_displayname = "Walls";
  };
  class MB_A2_EditorObjects_Fences : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Fences(MB)";
+  displayName = "MB A2 Fences";
+  mapbuilder_displayname = "Fences";
  };
  class MB_A2_EditorObjects_Pipelines : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Pipelines(MB)";
+  displayName = "MB A2 Pipelines";
+  mapbuilder_displayname = "Pipelines";
  };
  class MB_A2_EditorObjects_Powerlines : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Powerlines(MB)";
+  displayName = "MB A2 Powerlines";
+  mapbuilder_displayname = "Powerlines";
  };
  class MB_A2_EditorObjects_Roads : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Roads(MB)";
+  displayName = "MB A2 Roads";
+  mapbuilder_displayname = "Roads";
  };
  class MB_A2_EditorObjects_Rails : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Rails(MB)";
+  displayName = "MB A2 Rails";
+  mapbuilder_displayname = "Rails";
  };
  class MB_A2_EditorObjects_Runway : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Runway(MB)";
+  displayName = "MB A2 Runway";
+  mapbuilder_displayname = "Runway";
  };
  class MB_A2_EditorObjects_Sidewalks : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Sidewalks(MB)";
+  displayName = "MB A2 Sidewalks";
+  mapbuilder_displayname = "Sidewalks";
  };
  class MB_A2_EditorObjects_Pier : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Pier(MB)";
+  displayName = "MB A2 Pier";
+  mapbuilder_displayname = "Pier";
  };
  class MB_A2_EditorObjects_Ruins : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Ruins(MB)";
+  displayName = "MB A2 Ruins";
+  mapbuilder_displayname = "Ruins";
  };
  class MB_A2_EditorObjects_Wrecks : MB_A2_EditorObjects_Trees
  {
-  displayName = "A2 Wrecks(MB)";
+  displayName = "MB A2 Wrecks";
+  mapbuilder_displayname = "Wrecks";
  };
 };
 class CfgVehicles
@@ -129,119 +152,119 @@ class CfgVehicles
   cost = 0;
   armor = 1000;
   ladders[] = {};
-  icon = "\MapBuilder_A2_EditorObjects\icons\tree.paa";
+  icon = "iconObject";
   placement = "vertical";
   mapbuilder_filter = "A2";
  };
  class MB_A2_Various: MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Various";
-  icon = "\MapBuilder_A2_EditorObjects\icons\various.paa";
+  icon = "iconObject";
  };
  class MB_A2_Bushes : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Bushes";
-  icon = "\MapBuilder_A2_EditorObjects\icons\bushes.paa";
+  icon = "iconObject";
  };
  class MB_A2_Deadtrees : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Deadtrees";
-  icon = "\MapBuilder_A2_EditorObjects\icons\deadtrees.paa";
+  icon = "iconObject";
  };
  class MB_A2_Plants : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Plants";
-  icon = "\MapBuilder_A2_EditorObjects\icons\plants.paa";
+  icon = "iconObject";
  };
  class MB_A2_Rocks : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Rocks";
-  icon = "\MapBuilder_A2_EditorObjects\icons\rocks.paa";
+  icon = "iconObject";
  };
  class MB_A2_Water : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Water";
-  icon = "\MapBuilder_A2_EditorObjects\icons\water.paa";
+  icon = "iconObject";
  };
  class MB_A2_Civilian : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Civilian";
-  icon = "\MapBuilder_A2_EditorObjects\icons\civilian.paa";
+  icon = "iconObject";
  };
  class MB_A2_Industry : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Industry";
-  icon = "\MapBuilder_A2_EditorObjects\icons\industry.paa";
+  icon = "iconObject";
  };
  class MB_A2_Military : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Military";
-  icon = "\MapBuilder_A2_EditorObjects\icons\military.paa";
+  icon = "iconObject";
  };
  class MB_A2_Cargo : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Cargo";
-  icon = "\MapBuilder_A2_EditorObjects\icons\cargo.paa";
+  icon = "iconObject";
  };
  class MB_A2_Signs : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Signs";
-  icon = "\MapBuilder_A2_EditorObjects\icons\signs.paa";
+  icon = "iconObject";
  };
  class MB_A2_Walls : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Walls";
-  icon = "\MapBuilder_A2_EditorObjects\icons\walls.paa";
+  icon = "iconObject";
  };
  class MB_A2_Fences : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Fences";
-  icon = "\MapBuilder_A2_EditorObjects\icons\fences.paa";
+  icon = "iconObject";
  };
  class MB_A2_Pipelines : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Pipelines";
-  icon = "\MapBuilder_A2_EditorObjects\icons\pipelines.paa";
+  icon = "iconObject";
  };
  class MB_A2_Powerlines : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Powerlines";
-  icon = "\MapBuilder_A2_EditorObjects\icons\powerlines.paa";
+  icon = "iconObject";
  };
  class MB_A2_Roads : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Roads";
-  icon = "\MapBuilder_A2_EditorObjects\icons\roads.paa";
+  icon = "iconObject";
  };
  class MB_A2_Rails : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Rails";
-  icon = "\MapBuilder_A2_EditorObjects\icons\rails.paa";
+  icon = "iconObject";
  };
  class MB_A2_Runway : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Runway";
-  icon = "\MapBuilder_A2_EditorObjects\icons\runway.paa";
+  icon = "iconObject";
  };
  class MB_A2_Sidewalks : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Sidewalks";
-  icon = "\MapBuilder_A2_EditorObjects\icons\sidewalks.paa";
+  icon = "iconObject";
  };
  class MB_A2_Pier : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Pier";
-  icon = "\MapBuilder_A2_EditorObjects\icons\icon_pier.paa";
+  icon = "iconObject";
  };
  class MB_A2_Ruins : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Ruins";
-  icon = "\MapBuilder_A2_EditorObjects\icons\ruins.paa";
+  icon = "iconObject";
  };
  class MB_A2_Wrecks : MB_A2_Baseclass
  {
   vehicleClass = "MB_A2_EditorObjects_Wrecks";
-  icon = "\MapBuilder_A2_EditorObjects\icons\wrecks.paa";
+  icon = "iconObject";
  };
  class 00_trees_00_t_acer2s: MB_A2_Baseclass
  {

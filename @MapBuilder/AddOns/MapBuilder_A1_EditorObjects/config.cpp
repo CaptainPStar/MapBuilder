@@ -13,28 +13,34 @@ class CfgVehicleClasses
 {
 	class MB_A1_EditorClass_Buildings
 	{
-		displayName = "Buildings";
-		mapbuilder_filter = "A1";
+		displayName = "MB A1 Buildings";
+		mapbuilder_library = "A1";
+		mapbuilder_displayname = "Buildings";
 	};
 	class MB_A1_EditorClass_Misc : MB_A1_EditorClass_Buildings
 	{
-		displayName = "Misc";
+		displayName = "MB A1 Misc";
+		mapbuilder_displayname = "Misc";
 	};
 	class MB_A1_EditorClass_Plants : MB_A1_EditorClass_Buildings
 	{
-		displayName = "Plants";
+		displayName = "MB A1 Plants";
+		mapbuilder_displayname = "Plants";
 	};
 	class MB_A1_EditorClass_Roads : MB_A1_EditorClass_Buildings
 	{
-		displayName = "Roads";
+		displayName = "MB A1 Roads";
+		mapbuilder_displayname = "Roads";
 	};
 	class MB_A1_EditorClass_Rocks : MB_A1_EditorClass_Buildings
 	{
-		displayName = "Rocks";
+		displayName = "MB A1 Rocks";
+		mapbuilder_displayname = "Rocks";
 	};
 	class MB_A1_EditorClass_Signs : MB_A1_EditorClass_Buildings
 	{
-		displayName = "Signs";
+		displayName = "MB A1 Signs";
+		mapbuilder_displayname = "Signs";
 	};
 };
 class CfgVehicles
@@ -2927,7 +2933,8 @@ class CfgVehicles
 		displayName = "plot_zboreny";
 		model = "ca\buildings\misc\plot_zboreny.p3d";
 	};
-	class MB_A1_plot_zed_drevo1: MB_A1_Buildings
+	//Crashes A3
+	/*class MB_A1_plot_zed_drevo1: MB_A1_Buildings
 	{
 		scope = 2;
 		displayName = "plot_zed_drevo1";
@@ -2956,7 +2963,7 @@ class CfgVehicles
 		scope = 2;
 		displayName = "plot_zed_drevo1_branka";
 		model = "ca\buildings\misc\plot_zed_drevo1_branka.p3d";
-	};
+	};*/
 	class MB_A1_plutek: MB_A1_Buildings
 	{
 		scope = 2;
