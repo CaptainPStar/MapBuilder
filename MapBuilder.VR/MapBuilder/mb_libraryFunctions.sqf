@@ -4,7 +4,7 @@ MB_fnc_loadLibrary = {
 	_cfgVehicleClasses = configFile >> "CfgVehicleClasses";
 	_all = [];
 	
-	_mbLibrary = [];
+	_library = [];
 	_config = [];
 	
 	//Load Objects
@@ -23,14 +23,20 @@ MB_fnc_loadLibrary = {
 			_catDisplayName = getText (configFile >> "CfgVehicleClasses" >> _cur_catName >> "displayname");
 			
 			_mbFilter = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_filter",""] call BIS_fnc_returnConfigEntry;
-			
+			_mbLibrary = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_library",""] call BIS_fnc_returnConfigEntry;
+			_mbLibDisplayName = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_displayname",_catDisplayName] call BIS_fnc_returnConfigEntry;
+			if(_mbLibrary == "") then {
+				_mbLibrary = _mbFilter; //For backwards compability
+			};
+			_mbFilterObjEval = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_objEval","true"] call BIS_fnc_returnConfigEntry;
+
 			_scope = getNumber (configFile >> "CfgVehicles" >> _classname >> "scope");
 
 			_name = getText (configFile >> "CfgVehicles" >> _classname >> "displayname");
 			
 			_model = [(configFile >> "CfgVehicles" >> _classname),"model",""] call BIS_fnc_returnConfigEntry;
 			//I have no idea what I am doing!
-			if ((_scope >= 2) && (_classname != "\access") && _name != "" && _model != "") then
+			if ((_scope >= 1) && (_classname != "\access") && _name != "" && _model != "") then
 			{
 				_name = format["%1 (%2)",_name,_classname];
 				if(_catDisplayName != "") then {
@@ -40,23 +46,27 @@ MB_fnc_loadLibrary = {
 					};
 					((_config select _catIndex) select 1) pushBack [_name,_classname];
 				};
-				if(_mbFilter != "") then {
-					_catIndex = [_mbLibrary,_mbFilter] call MB_fnc_libraryFindName;
-					if(_catIndex == -1) then {
-						_catIndex = _mbLibrary pushBack [_mbFilter,[]];
+				if(_mbLibrary != "") then {
+					private["_eval"];
+					_eval = _classname call compile _mbFilterObjEval;
+					if(_eval) then {
+						_catIndex = [_library,_mbLibrary] call MB_fnc_libraryFindName;
+						if(_catIndex == -1) then {
+							_catIndex = _library pushBack [_mbLibrary,[]];
+						};
+						_mbCat = ((_library select _catIndex) select 1);
+						_catIndex = [_mbCat,_mbLibDisplayName] call MB_fnc_libraryFindName;
+						if(_catIndex == -1) then {
+							_catIndex = _mbCat pushBack [_mbLibDisplayName,[]];
+						};
+						((_mbCat select _catIndex) select 1) pushBack [_name,_classname];
 					};
-					_mbCat = ((_mbLibrary select _catIndex) select 1);
-					_catIndex = [_mbCat,_catDisplayName] call MB_fnc_libraryFindName;
-					if(_catIndex == -1) then {
-						_catIndex = _mbCat pushBack [_catDisplayName,[]];
-					};
-					((_mbCat select _catIndex) select 1) pushBack [_name,_classname];
 				};
 			};
 		};
 	};
 	
-	MB_Library = [["Library",_mbLibrary],["Config (All)",_config]];
+	MB_Library = [["Library",_library],["Config (All)",_config]];
 
 };
 MB_fnc_libraryFindName = {
@@ -179,7 +189,7 @@ MB_fnc_show3DPreview = {
 		MB_3DPreviewObject = objNull;
 	};
 	if(_type != "") then {
-		MB_3DPreviewObject = _type createvehicle [100,100,1000];
+		MB_3DPreviewObject = _type createvehiclelocal [100,100,1000];
 		MB_3DPreviewObject setpos [100,100,1000];
 		MB_3DPreviewCam camSetTarget MB_3DPreviewObject;
 		_size = (sizeOf _type)/2;
