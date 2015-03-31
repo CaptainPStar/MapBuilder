@@ -212,7 +212,7 @@ MB_fnc_updateCam = {
 		_camPos set[0,(_camPos select 0)+_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)+_mod*0.1*cos(MB_CamPos select 1)];
 		// only move in height while LALT is pressed
-		if([DIK_SPACE] call MB_fnc_isPressed) then {
+		if([MB_M] call MB_fnc_ViewIsMouseButtonPressed) then {
 			_camPos set[2,(_camPos select 2)+_mod*0.1*sin(MB_CamPos select 2)];
 		};
 	};
@@ -221,7 +221,7 @@ MB_fnc_updateCam = {
 		_camPos set[0,(_camPos select 0)-_mod*0.1*sin(MB_CamPos select 1)];
 		_camPos set[1,(_camPos select 1)-_mod*0.1*cos(MB_CamPos select 1)];
 		// only move in height while LALT is pressed
-		if([DIK_SPACE] call MB_fnc_isPressed) then {
+		if([MB_M] call MB_fnc_ViewIsMouseButtonPressed) then {
 			_camPos set[2,(_camPos select 2)-_mod*0.1*sin(MB_CamPos select 2)];
 		};
 	};
@@ -246,20 +246,20 @@ MB_fnc_updateCam = {
 	
 	//Look up
 	if([DIK_PGUP] call MB_fnc_isPressed || [DIK_NUMPAD8] call MB_fnc_isPressed) then {
-		MB_CamPos set [2,((MB_CamPos select 2) + 0.5)];
+		MB_CamPos set [2,((MB_CamPos select 2) + 0.75)];
 	};
 	//Look Down
 	if([DIK_PGDN] call MB_fnc_isPressed || [DIK_NUMPAD2] call MB_fnc_isPressed) then {
-		MB_CamPos set [2,((MB_CamPos select 2) - 0.5)];
+		MB_CamPos set [2,((MB_CamPos select 2) - 0.75)];
 	};
 	
 	//Look left
 	if([DIK_NUMPAD4] call MB_fnc_isPressed ) then {
-		MB_CamPos set [1,(MB_CamPos select 1)-0.5];
+		MB_CamPos set [1,(MB_CamPos select 1)-0.75];
 	};
 	//Look right
 	if([DIK_NUMPAD6] call MB_fnc_isPressed ) then {
-		MB_CamPos set [1,(MB_CamPos select 1)+0.5];
+		MB_CamPos set [1,(MB_CamPos select 1)+0.75];
 	};
 	
 	//Center
@@ -288,7 +288,16 @@ MB_fnc_updateCam = {
 		
 	
 };
-["MouseMoved",{_this call MB_fnc_camFreeMove;},{[DIK_SPACE] call MB_fnc_isPressed}] call MB_fnc_addCallback;
+["MouseWheelMove",{_this call MB_fnc_CamZoom;},{true}] call MB_fnc_addCallback;
+MB_fnc_CamZoom = {
+	private["_delta","_camPos"];
+	_delta = _this select 0;
+	_camPos = MB_CamPos select 0;
+	_camPos set[0,(_camPos select 0)+_delta*0.5*sin(MB_CamPos select 1)];
+	_camPos set[1,(_camPos select 1)+_delta*0.5*cos(MB_CamPos select 1)];
+	_camPos set[2,(_camPos select 2)+_delta*0.5*sin(MB_CamPos select 2)];
+};
+["MouseMoved",{_this call MB_fnc_camFreeMove;},{[MB_M] call MB_fnc_ViewIsMouseButtonPressed}] call MB_fnc_addCallback;
 MB_fnc_camFreeMove = {
 	private["_delta","_dx","_dy"];
 	_delta = _this select 0;

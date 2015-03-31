@@ -7,51 +7,53 @@ MB_fnc_Select = {
 	_object = _this select 0;
 	if(!isNull _object) then {
 		if(!(_object in MB_Selected)) then {
-			MB_Selected set [count(MB_Selected),_object];
+			MB_Selected pushBack _object;
 		};
 	};
 };
 MB_fnc_Deselect = {
 	private["_object","_newArray","_corners"];
 	_object = _this select 0;
-	_newArray = [];
-	for "_i" from 0 to (count(MB_Selected)-1) do {
-		if((MB_Selected select _i) != _object) then {
-			_newArray set [count(_newArray),(MB_Selected select _i)];
+	if(!isNull _object) then {
+		_index = MB_Selected find _object;
+		if(_index>=0) then {
+			MB_Selected deleteAt _index;
 		};
-
 	};
-	MB_Selected = _newArray;	
 };
 
 MB_fnc_DeselectAll = {
-	while{count(MB_Selected)>0} do {
-		[(MB_Selected select 0)] call MB_fnc_Deselect;	
-	};
 	MB_Selected = [];
-
 };
 
 //############################
 // Rectangle Selection
 //############################
 MB_SelectionRectangle = [];
+MB_SelectionRectangle_Mutex = false;
 MB_SelectionModeAdd = false; 
 MB_fnc_BeginRectangleDrag = {
 	//systemchat format["Rectdrag at %1",MB_MousePosition];
 	MB_SelectionRectangle = [MB_MousePosition,MB_MousePosition];
 	MB_SelectionModeAdd = (_this select 4);
+	if(!MB_SelectionModeAdd) then {
+		[] call MB_fnc_DeselectAll;
+	};
 };
 
 MB_fnc_UpdateRectangleDrag = {
-	MB_SelectionRectangle set [1,MB_MousePosition];
-	//When Mouse is released outside viewport, first value gets <null>. Don't ask me why.
-	if(!isNil{MB_SelectionRectangle select 0}) then {
-		[MB_SelectionRectangle,MB_SelectionModeAdd] call MB_fnc_SelectInRectangle;
-	} else {
-		MB_SelectionRectangle = [];
+	if(!MB_SelectionRectangle_Mutex) then {
+		MB_SelectionRectangle_Mutex = true;
+		MB_SelectionRectangle set [1,MB_MousePosition];
+		//When Mouse is released outside viewport, first value gets <null>. Don't ask me why.
+		if(!isNil{MB_SelectionRectangle select 0}) then {
+			[MB_SelectionRectangle,MB_SelectionModeAdd] call MB_fnc_SelectInRectangle;
+		} else {
+			MB_SelectionRectangle = [];
+		};
+		//systemchat format["%1",MB_SelectionRectangle];
+		MB_SelectionRectangle_Mutex = false;
 	};
-	//systemchat format["%1",MB_SelectionRectangle];
 };
 MB_fnc_EndRectangleDrag = {
 	MB_SelectionRectangle = [];
@@ -66,7 +68,7 @@ MB_fnc_EndRectangleDrag = {
 
 
 MB_fnc_SelectInRectangle = {
-	private["_edges","_add","_cornerA","_cornerB","_obj","_flag"];
+	private["_edges","_add","_cornerA","_cornerB","_obj","_flag","_opos"];
 	_edges = _this select 0;
 	_add = _this select 1;
 	_cornerA = _edges select 0;
@@ -105,14 +107,49 @@ MB_fnc_SelectInRectangle = {
 	} foreach MB_Objects;
 };
 MB_fnc_getClickedObject = {
-		private["_uX","_uY","_layer","_obj","_objects","_shift","_isSelected"];
+	private["_uX","_uY","_layer","_obj","_objects","_shift","_isSelected"];
 	_uX = _this select 2;
 	_uY = _this select 3;
 	_shift = _this select 4;
 	_obj = objNull;
-	_objects = lineIntersectsWith [getPosASL MBCamera, ATLtoASL screenToWorld [_uX,_uY], objNull, objNull, true];
+	_clickPos =  screenToWorld [_uX,_uY];
+	_castPos = [0,0,0];
+	_objects = [];
+	if(surfaceIsWater _clickPos) then {
+		_campos = getPosASL MBCamera;
+		_castPos = _clickPos;
+		_directionVec = [0,0,0];
+		_from = [0,0,0];
+		if((_campos select 2) > 0) then {
+			_directionVec = _campos vectorFromTo (positionCameraToWorld [0,0,1]); 
+			_objects = lineIntersectsObjs [getPosASL MBCamera, _castPos, objNull, objNull, true, 16];
+			_from = _castPos;
+		} else {
+			_directionVec = _campos vectorFromTo _castPos; 
+			_from = _campos;
+		};
+
+		_to = _from vectorAdd _directionVec;
+
+		
+		while{!terrainIntersectASL[ASLtoATL _from,ASLtoATL _to] && count(_objects)==0 && (_to select 2)<=0} do {
+			_underWaterObj = lineIntersectsObjs [_from, _to, objNull, objNull, true, 1];
+			_from = _to;
+			_to = _to vectorAdd _directionVec;
+			_objects = _underWaterObj;
+			if(count(_underWaterObj)>0) exitwith {
+				_objects = _underWaterObj;
+			};
+		};
+		//_deepth = -((ASLtoATL _clickPos) select 2);
+		//_castPos set[2,_deepth];
+		//terrainIntersect
+	} else {
+		_castPos = ATLtoASL _clickPos;
+		_objects = lineIntersectsObjs [getPosASL MBCamera, _castPos, objNull, objNull, true, 16];
+	};
 	if(count(_objects)>0) then {
-		_obj = _objects select 0;
+		_obj = _objects select (count(_objects)-1);
 	};
 	_obj;
 };

@@ -72,6 +72,9 @@ MB_fnc_Setup = {
 		//MB_IslandSize = -1;
 		MB_IslandSize = 5120;
 	};
+	//Debug Logging
+	"MB_Helper" callExtension format["log|%1;%2;%3",name player,MB_VERSION,worldName];
+	
 	//Fencer
 	MB_FencerDir = 0;
 	MB_FencerPreview = ObjNull;
@@ -94,7 +97,8 @@ MB_fnc_Exit = {
 		["MB_Draw3D", "onEachFrame"] call BIS_fnc_removeStackedEventHandler;
 		//["MB_MapClick", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		(findDisplay 123) displayRemoveAllEventHandlers "MouseMoving";
-		
+		(findDisplay 46) displayRemoveAllEventHandlers "MouseButtonDown";
+		(findDisplay 46) displayRemoveAllEventHandlers "MouseButtonUp";
 		//MBCamera cameraEffect ["Terminate", "BACK"];
 		player switchCamera "Internal";
 		
@@ -122,14 +126,17 @@ MB_fnc_Start = {
 	//["MB_MapClick", "onMapSingleClick", {MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];}, []] call BIS_fnc_addStackedEventHandler;
 	//((findDisplay 123) displayCtrl 170301) onDoubleClick "MBCamera camSetPos [_pos select 0, _pos select 1,getpos MBCamera select 2];";
 	
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonDown","_nil=_this call MB_fnc_MouseDown"];
-	//(findDisplay 123) displayAddEventHandler  ["MouseButtonUp","if(MB_LibraryDrag != """") then {_this call MB_fnc_createObjectByDrag;};"];
+	//Middle Mouse works only in Display 46...
+	(findDisplay 46) displayAddEventHandler  ["MouseButtonDown","if(MB_ViewportHasFocus && (_this select 1)==2) then {_nil=_this call MB_fnc_MouseButtonDownInView;};"];
+	(findDisplay 46) displayAddEventHandler  ["MouseButtonUp","if((_this select 1)==2) then {_nil=_this call MB_fnc_MouseButtonUpInView;};"];
 	//(findDisplay 123) displayAddEventHandler ["MouseMoving","_nil=_this call MB_fnc_MouseMove"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonDown","systemchat format[""MB Down: %1"",_this];"];
 	//(findDisplay 123) displayAddEventHandler ["MouseButtonUp","systemchat format[""MB Up: %1"",_this];"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseMoving","_this call MB_fnc_MouseMove;"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseEnter","[true] call MB_fnc_MouseInView;"];
     ((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseExit","[false] call MB_fnc_MouseInView;"];
+	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseWheelMoveInView;"];
+
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonDown","_this call MB_fnc_MouseButtonDownInView;"];
 	((findDisplay 123) displayCtrl 170001) ctrlSetEventHandler ["MouseButtonUp","_this call MB_fnc_MouseButtonUpInView;"];
 	//(findDisplay 123) displayAddEventHandler ["MouseZChanged","_nil=_this call MB_fnc_MouseZ"];
@@ -142,7 +149,7 @@ MB_fnc_Start = {
 	//[] call MB_fnc_refreshFilters;
 	[MB_Library] call MB_fnc_libraryUpdate;
 	[] call MB_fnc_updateUsed;
-	[] call MB_fnc_disable3DPreview;
+	//[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[] call MB_fnc_hidePresetWindow;
 	[170400] spawn MB_fnc_closeWindow;
@@ -150,6 +157,9 @@ MB_fnc_Start = {
 	[666] spawn MB_fnc_closeWindow;
 	[170700,true] spawn MB_fnc_closeWindow;
 	[170800,true] spawn MB_fnc_closeWindow;
+	[170900,true] spawn MB_fnc_closeWindow;
+	[171000,true] spawn MB_fnc_closeWindow;
+	[171100,true] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	endLoadingScreen;
@@ -198,10 +208,14 @@ MB_fnc_checkVersion = {
 //=========================================
 //= Scene drawing
 //=========================================
-
+MB_3DVectors = [];
 MB_fnc_Draw3D = {
 	{
 		[_x] call MB_fnc_DrawBoundingBox;
+		if((_x getvariable "MB_ObjVar_Scale") != 1) then {
+			[_x,(_x getvariable "MB_ObjVar_Scale"),[1,0,0,1]] call MB_fnc_DrawBoundingBox;
+		};
+		
 	} foreach MB_Selected;
 	
 	{
@@ -243,14 +257,43 @@ MB_fnc_Draw3D = {
 			} foreach _row;
 		} foreach MB_VertexHelpers;
 	};
+	{
+		_start = (_x select 0);
+		_end = (_x select 1);
+		drawLine3D [_start,_end,[0,0,0,1]];
+		_direction = _start vectorFromTo _end;
+		_senkr = _direction vectorCrossProduct [0,0,1];
+		_offset = (_senkr vectorMultiply 0.05);
+		for "_i" from 1 to 10 do {
+			_ostart = _start vectorAdd (_offset vectorMultiply _i);
+			drawLine3D [_ostart,_end,[0,0,0,1]];
+		};
+		for "_i" from 1 to 10 do {
+			_ostart = _start vectorAdd (_offset vectorMultiply -(_i));
+			drawLine3D [_ostart,_end,[0,0,0,1]];
+		};
+		
+	} foreach MB_3DVectors;
+	
 };
+
 MB_fnc_DrawBoundingBox = {
-	_obj = _this select 0;
+	_obj = [_this,0] call bis_fnc_param;
+	_scale = [_this,1,1] call bis_fnc_param;
+	_color = [_this,2,[0,0,1,1]] call bis_fnc_param;
 	_box = boundingBoxReal _obj;
 	//_box = [(_obj modelToWorld _box select 0),(_obj modelToWorld _box select 1)];
 	_vul = _box select 0;
 	_hor = _box select 1;
+	
 	_height = (_hor select 2)-(_vul select 2);
+	_vulH = _vul select 2;
+	_vul = _vul vectorMultiply  _scale;
+	_hor = _hor vectorMultiply  _scale;
+	
+	_height = _height * _scale;
+	_vul set[2,_vulH];
+	_hor set[2,_vulH+_height];
 	_width = (_hor select 1)-(_vul select 1);
 	_length = (_hor select 0)-(_vul select 0);
 
@@ -264,7 +307,6 @@ MB_fnc_DrawBoundingBox = {
 	_hul = [(_hor select 0),(_hor select 1)-_width,(_hor select 2)-_height];
 	
 	_center = [0,0,((_vul select 2))];
-	_color = [0,0,1,1];
 	//Cross
 	//drawLine3D [([_visPos,_vul] call BIS_fnc_vectorAdd),([_visPos,_hor] call BIS_fnc_vectorAdd),_color];
 		
@@ -439,26 +481,6 @@ MB_fnc_DrawBox = {
 //= Helper
 //=========================================
 
-MB_fnc_RotatePos = {
-private ["_centerPos", "_pos", "_dir"];
-private ["_px", "_py", "_mpx", "_mpy", "_ma", "_rpx", "_rpy"];
-
-_centerPos = _this select 0;
-_pos = _this select 1;
-_dir = _this select 2;
-
-    _px = _pos select 0;
-    _py = _pos select 1;
-    _mpx = _centerPos select 0;
-    _mpy = _centerPos select 1;
-    _ma = _dir;
-
-    //Now, rotate point
-    _rpx = ( (_px - _mpx) * cos(_ma) ) + ( (_py - _mpy) * sin(_ma) ) + _mpx;
-    _rpy = (-(_px - _mpx) * sin(_ma) ) + ( (_py - _mpy) * cos(_ma) ) + _mpy;
-
-[_rpx, _rpy, (_pos select 2)]
-};
 
 
 MB_fnc_SetRelPos = {

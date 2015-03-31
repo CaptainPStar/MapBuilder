@@ -48,14 +48,14 @@ MB_fnc_savePreset = {
 			_obj = _x;
 			_type =(typeof _obj);
 			
-			_scale = 1;
-
+		
 			_pos = _obj getvariable "MB_ObjVar_PositionATL";
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";
 			_simulate = _obj getvariable "MB_ObjVar_Simulate";
 			_locked = _obj getvariable "MB_ObjVar_Locked";
+			_scale =  _obj getvariable "MB_ObjVar_Scale";
 			_offset = [0,0,0];
 			if(isNull(_refObj)) then {
 				_refObj = _obj;
@@ -102,7 +102,7 @@ MB_fnc_loadPreset = {
 		_scale=	parseNumber (_object select 8); //Scale
 		//[_pos,_pitch,_bank,_yaw,_simulate,_locked];
 		_simulate = ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170011);
-		MB_CopyPaste pushBack [_type,_offset,[[0,0,0],_pitch,_bank,_dir,_simulate,0]];
+		MB_CopyPaste pushBack [_type,_offset,[[0,0,0],_pitch,_bank,_dir,_simulate,false,_scale]];
 
 		_line = "MB_FileIO" callExtension "readline";
 	};

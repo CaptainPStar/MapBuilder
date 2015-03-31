@@ -1,11 +1,13 @@
-MB_LibraryFavorites = [];
+#include "dik.hpp"
+
+
 MB_fnc_loadLibrary = {
 	disableSerialization;
 	_cats = [];
 	_cfgVehicleClasses = configFile >> "CfgVehicleClasses";
 	_all = [];
 	
-	_mbLibrary = [];
+	_library = [];
 	_config = [];
 	
 	//Load Objects
@@ -24,14 +26,20 @@ MB_fnc_loadLibrary = {
 			_catDisplayName = getText (configFile >> "CfgVehicleClasses" >> _cur_catName >> "displayname");
 			
 			_mbFilter = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_filter",""] call BIS_fnc_returnConfigEntry;
-			
+			_mbLibrary = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_library",""] call BIS_fnc_returnConfigEntry;
+			_mbLibDisplayName = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_displayname",_catDisplayName] call BIS_fnc_returnConfigEntry;
+			if(_mbLibrary == "") then {
+				_mbLibrary = _mbFilter; //For backwards compability
+			};
+			_mbFilterObjEval = [(configFile >> "CfgVehicleClasses" >> _cur_catName),"mapbuilder_objEval","true"] call BIS_fnc_returnConfigEntry;
+
 			_scope = getNumber (configFile >> "CfgVehicles" >> _classname >> "scope");
 
 			_name = getText (configFile >> "CfgVehicles" >> _classname >> "displayname");
 			
 			_model = [(configFile >> "CfgVehicles" >> _classname),"model",""] call BIS_fnc_returnConfigEntry;
 			//I have no idea what I am doing!
-			if ((_scope >= 2) && (_classname != "\access") && _name != "" && _model != "") then
+			if ((_scope >= 1) && (_classname != "\access") && _name != "" && _model != "") then
 			{
 				_name = format["%1 (%2)",_name,_classname];
 				if(_catDisplayName != "") then {
@@ -41,23 +49,27 @@ MB_fnc_loadLibrary = {
 					};
 					((_config select _catIndex) select 1) pushBack [_name,_classname];
 				};
-				if(_mbFilter != "") then {
-					_catIndex = [_mbLibrary,_mbFilter] call MB_fnc_libraryFindName;
-					if(_catIndex == -1) then {
-						_catIndex = _mbLibrary pushBack [_mbFilter,[]];
+				if(_mbLibrary != "") then {
+					private["_eval"];
+					_eval = _classname call compile _mbFilterObjEval;
+					if(_eval) then {
+						_catIndex = [_library,_mbLibrary] call MB_fnc_libraryFindName;
+						if(_catIndex == -1) then {
+							_catIndex = _library pushBack [_mbLibrary,[]];
+						};
+						_mbCat = ((_library select _catIndex) select 1);
+						_catIndex = [_mbCat,_mbLibDisplayName] call MB_fnc_libraryFindName;
+						if(_catIndex == -1) then {
+							_catIndex = _mbCat pushBack [_mbLibDisplayName,[]];
+						};
+						((_mbCat select _catIndex) select 1) pushBack [_name,_classname];
 					};
-					_mbCat = ((_mbLibrary select _catIndex) select 1);
-					_catIndex = [_mbCat,_catDisplayName] call MB_fnc_libraryFindName;
-					if(_catIndex == -1) then {
-						_catIndex = _mbCat pushBack [_catDisplayName,[]];
-					};
-					((_mbCat select _catIndex) select 1) pushBack [_name,_classname];
 				};
 			};
 		};
 	};
 	
-	MB_Library = [["Library",_mbLibrary],["Config (All)",_config]];
+	MB_Library = [["Library",_library],["Config (All)",_config]];
 
 };
 MB_fnc_libraryFindName = {
@@ -110,6 +122,7 @@ MB_fnc_updateUsed = {
 	_ctrl tvSort [ [], false];
 };
 MB_fnc_SelectAllUsed = {
+	private["_display","_ctrl","_class"];
 	disableSerialization;
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrl = _display displayCtrl 170801;
@@ -128,7 +141,7 @@ MB_fnc_SelectAllUsed = {
 
 
 MB_fnc_libraryUpdate = {
-	private["_node","_path","_name","_value","_index","_newPath"];
+	private["_node","_path","_name","_value","_index","_newPath","_ctrl","_display"];
 	disableSerialization;
 	_node = [_this,0,[]] call bis_fnc_param;
 	_path = [_this,1,[]] call bis_fnc_param;
@@ -146,6 +159,13 @@ MB_fnc_libraryUpdate = {
 			tvSetData [170003,_newPath,_value];
 		};
 	} foreach _node;
+	if(count _path >0) then {
+		_display = uinamespace getvariable 'mb_main_dialog';
+		_ctrl = _display displayCtrl 170003;
+		_ctrl tvSort [ _path, false];
+	} else {
+		tvExpand [170003, [0]];
+	};
 };
 MB_LibrarySelect = {
 	private["_data"];
@@ -159,35 +179,42 @@ MB_LibrarySelect = {
 		_lctrl ctrlSetStructuredText parseText format["Selected: %1",_ctrl tvText (tvCurSel _ctrl)];
 		
 		(_display displayCtrl (180000)) ctrlSetModel (getText (configFile >> "CfgVehicles" >> _data >> "model"));
-		[(getText (configFile >> "CfgVehicles" >> _data >> "model"))] call MB_fnc_show3DPreview;
+		[_data] call MB_fnc_show3DPreview;
 	};
 };
 
 MB_3D_PreviewShown = false;
 MB_3D_PreviewRotation = 0;
+MB_3DPreviewCam = objNull;
+MB_3DPreviewObject = objNull;
 MB_fnc_show3DPreview = {
-	private["_model","_display","_ctrl"];
-	disableSerialization;
-	_model = [_this,0,""] call bis_fnc_param;
-	_display = uinamespace getvariable 'mb_main_dialog';
-	_ctrl = _display displayCtrl 180000;
-	if(_model != "") then {
-		_ctrl ctrlSetModel _model;
-		_ctrl ctrlSetModelScale 0.1;
-		_ctrl ctrlShow true;
+	private["_type","_size"];
+	_type = [_this,0,""] call bis_fnc_param;
+	
+	if(isNull MB_3DPreviewCam) then {
+		MB_3DPreviewCam = "camera" camCreate [100,100,1000];  
+		MB_3DPreviewCam cameraEffect ["Internal", "Back", "mbpreviewrtt"];
+	};
+	if(!isNull MB_3DPreviewObject) then {
+		deletevehicle MB_3DPreviewObject;
+		MB_3DPreviewObject = objNull;
+	};
+	if(_type != "") then {
+		MB_3DPreviewObject = _type createvehiclelocal [100,100,1000];
+		MB_3DPreviewObject setpos [100,100,1000];
+		MB_3DPreviewCam camSetTarget MB_3DPreviewObject;
+		_size = (sizeOf _type)/2;
+		MB_3DPreviewCam camSetRelPos [0, _size+2, _size/2];
+		MB_3DPreviewCam camCommit 0;
 		MB_3D_PreviewShown = true;
 	};
-
+	[171100,true] spawn MB_fnc_openWindow;
 };
 MB_fnc_rotate3DPreview = {
-	private["_dirandUp","_display","_ctrl","_dir"];
-	if(MB_3D_PreviewShown) then {
-		disableSerialization;
-		_display = uinamespace getvariable 'mb_main_dialog';
-		_ctrl = _display displayCtrl 180000;
-		_dir = 0;
-		_dirandUp = [30,0,MB_3D_PreviewRotation] call MB_fnc_CalcDirAndUpVector;
-		_ctrl ctrlSetModelDirAndUp _dirandUp;
+	private["_dirandUp","_display"];
+	if(MB_3D_PreviewShown && !isNull MB_3DPreviewObject) then {
+		_dirandUp = [0,0,MB_3D_PreviewRotation] call MB_fnc_CalcDirAndUpVector;
+		MB_3DPreviewObject SetVectorDirAndUp _dirandUp;
 		MB_3D_PreviewRotation = MB_3D_PreviewRotation + 1.0;
 		if(MB_3D_PreviewRotation >=360) then {
 			MB_3D_PreviewRotation = 0;
@@ -198,13 +225,13 @@ MB_fnc_rotate3DPreview = {
 
 
 MB_fnc_disable3DPreview = {
-	disableSerialization;
-	private["_display","_ctrl"];
-	_display = uinamespace getvariable 'mb_main_dialog';
-	_ctrl = _display displayCtrl 180000;
-	_ctrl ctrlShow false;
+	private["_display"];
+	[171100,true] spawn MB_fnc_closeWindow;
+	deletevehicle MB_3DPreviewObject;
+	MB_3DPreviewObject = objNull;
 	MB_3D_PreviewShown = false;
 };
+
 MB_LibraryDrag = "";
 MB_fnc_libraryMousedown = {
 	_ctrl = _this select 0;
@@ -242,4 +269,85 @@ MB_fnc_OpenUsedWindow = {
 MB_fnc_CloseUsedWindow = {
 	[170800,true] spawn MB_fnc_closeWindow;
 
+};
+
+MB_fnc_OpenFavoritesWindow = {
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170900;
+	if(!ctrlShown _ctrl) then {
+		[170900,false] spawn MB_fnc_openWindow;
+		[] call MB_fnc_updateFavorites;
+	} else {
+		[170900,false] spawn MB_fnc_closeWindow;
+	};
+};
+
+MB_fnc_CloseFavoritesWindow = {
+	[170900,true] spawn MB_fnc_closeWindow;
+
+};
+MB_FavoriteObjects = [];
+MB_fnc_AddFavorite = {
+	private["_class"];
+	_class = [_this,0,"UnknownClass"] call bis_fnc_param;
+	if(!(_class in MB_FavoriteObjects)) then {
+			MB_FavoriteObjects pushBack _class;
+	};
+	[] call MB_fnc_updateFavorites;
+};
+
+MB_fnc_RemoveFavorite = {
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170901;
+	_index = MB_FavoriteObjects find (_ctrl tvData (tvCurSel _ctrl));
+	if(_index>=0) then {
+		MB_FavoriteObjects deleteAt _index;
+	};
+	[] call MB_fnc_updateFavorites;
+};
+
+MB_fnc_SelectFavorite = {
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170901;
+	_class = _ctrl tvData(tvCurSel _ctrl);
+	if(_class != "") then {
+		if(!([DIK_LSHIFT] call MB_fnc_isPressed)) then {
+			[] call MB_fnc_DeselectAll;
+		};
+		{
+			if((typeof _x) == _class) then {
+				[_x] call MB_fnc_Select;
+			};
+		} foreach MB_Objects;
+	};
+};
+
+MB_fnc_updateFavorites = {
+	private["_index","_used","_data","_count","_type","_name"];
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	_ctrl = _display displayCtrl 170901;
+
+	tvClear 170901;
+	_used = [];
+	_data = [];
+	{
+		_type = _x;
+		_used pushBack _type;
+		_name = getText (configFile >> "CfgVehicles" >> _type >> "displayname");
+		_data pushback [format["%1",_type],_type];
+
+	} foreach MB_FavoriteObjects;
+	
+	
+	{
+		private["_index"];
+		_index = tvAdd [170901,[],(_x select 0)];
+		tvSetData [170901,[_index],(_x select 1)];
+
+	} foreach _data;
+	_ctrl tvSort [ [], false];
 };
