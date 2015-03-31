@@ -1,1 +1,1 @@
-#define MB_VERSION	"0.7.3"
+#define MB_VERSION	"0.8.0"
