@@ -1,7 +1,7 @@
 Map Builder - Ingame 3D-Editor for terrain creation
 by NeoArmageddon
 www.modfact.net
-Version 0.7 Alpha
+Version 0.8 Alpha
 
 Project Status
 
@@ -20,47 +20,6 @@ Share Alike - If you adapt, or build upon this material, you may distribute the 
 
 
 The author's name and credits of this projects must stay in all adapted works (in scripts and readme-files).
-
-
-
-Installation
-
-Extract the mission archive to your missions-folder (MapBuilder.VR to something like C:\Users\Nickname\Documents\Arma 3 - Other Profiles\Profilename\missions). Rename the folders extension to the island on which you want to use the editor.
-Extract @MapBuilder to your ArmA3-Folder or a subfolder and load it with your favorite method to load mods (launcher, commandline, parameterfile, etc).
-
-You can start the editor while previewing the mission in your action menu.
-
-
-Controls
-
-I tried to stay close to the ArmA default controls.
-
-
-Alt-key: Freelook
-WSAD: Move Camera
-Q and Y or Mousewheel: Move cam up and down.
-
-Mousedoubleclick: Create new object
-Mouse click: Select object under cursor
-Left Mouse: Move objects or draw selection rectangle when nothing is selected
-Right Mouse: Rotate objects
-Ctrl + Right Mouse: Pitch
-Ctrl + Left Mouse: Bank
-Shift + Right Mouse: Rotate objects around mousecursor
-Right Mouse + Left Mouse: Modify height
-Ctrl + R: Reset pitch and bank of an object
-Del: Delete objects
-Ctrl + C: Copy selection
-Ctrl + V: Paste selection
-Escape: Exit editor
-
-Exporting
-
-Exporting multiple files with the same name will overwrite the last export!
-
-Press the export button, enter a file name and click the export specific button. TerrainBuilder, SQF and SQM is supported at the moment.
-TerrainBuilder-exports can be reimport into Terrain Builder by drag&drop the created file directly into the Terrain Builder window. 
-The objecttemplates must be in your objectlibrary before you import the list!
 
 
 
