@@ -1,3 +1,6 @@
+#include "dik.hpp"
+
+
 MB_fnc_loadLibrary = {
 	disableSerialization;
 	_cats = [];
@@ -119,6 +122,7 @@ MB_fnc_updateUsed = {
 	_ctrl tvSort [ [], false];
 };
 MB_fnc_SelectAllUsed = {
+	private["_display","_ctrl","_class"];
 	disableSerialization;
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrl = _display displayCtrl 170801;
@@ -137,7 +141,7 @@ MB_fnc_SelectAllUsed = {
 
 
 MB_fnc_libraryUpdate = {
-	private["_node","_path","_name","_value","_index","_newPath"];
+	private["_node","_path","_name","_value","_index","_newPath","_ctrl","_display"];
 	disableSerialization;
 	_node = [_this,0,[]] call bis_fnc_param;
 	_path = [_this,1,[]] call bis_fnc_param;
@@ -155,6 +159,13 @@ MB_fnc_libraryUpdate = {
 			tvSetData [170003,_newPath,_value];
 		};
 	} foreach _node;
+	if(count _path >0) then {
+		_display = uinamespace getvariable 'mb_main_dialog';
+		_ctrl = _display displayCtrl 170003;
+		_ctrl tvSort [ _path, false];
+	} else {
+		tvExpand [170003, [0]];
+	};
 };
 MB_LibrarySelect = {
 	private["_data"];
