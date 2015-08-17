@@ -1,4 +1,10 @@
 name = "Map Builder";
-actionName = "Map Builder 0.8 Alpha";
+picture = "\MapBuilder\data\mb.paa";
+logo = "\MapBuilder\data\mb.paa";
+logoOver = "\MapBuilder\data\mb_reversed.paa";
+hidePicture = "false";
+hideName = "false";
+actionName = "Website";
 action = "http://www.map-builder.info";
-version = "0.8";
+description = "Map Builder 0.9 Beta";
+version = "0.9";
