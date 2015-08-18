@@ -1,0 +1,20 @@
+MB_ViewportHasFocus = true;
+MB_ViewportLastRMBDown = 0;
+MB_ViewportLastLMBDown = 0;
+MB_ViewportLastMMBDown = 0;
+MB_ViewportLastRMBUp = 0;
+MB_ViewportLastLMBUp = 0;
+MB_ViewportLastMMBUp = 0;
+MB_ClickTime = 0.2;
+MB_DragStartTime = 0.2;
+MB_DblClickTime = 0.3;
+MB_ViewportLMBDrag = false;
+MB_ViewportRMBDrag = false;
+MB_ViewportMMBDrag = false;
+MB_ViewportLastLMBClick = 0;
+
+//["LeftMouseClick",{systemChat format["Click: %1",_this];}] call MB_fnc_addCallback;
+//["LeftMouseClick",{systemChat "A click!";},{!(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+//["LeftMouseClick",{systemChat "A click with shift!";},{(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+//["LeftMouseClick",{systemChat "A click with ctrl!";},{!(_this select 4) && (_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
+//["LeftMouseClick",{systemChat "A click with alt!";},{!(_this select 4) && !(_this select 5) && (_this select 6)}] call MB_fnc_addCallback;

@@ -1,0 +1,10 @@
+disableSerialization;
+	private["_display","_ctrl"];
+	_display = uinamespace getvariable 'mb_main_dialog';
+	(_display displayCtrl 170101) ctrlShow true;
+	(_display displayCtrl 170101) ctrlEnable true;
+	(_display displayCtrl 170102) ctrlShow true;
+	(_display displayCtrl 170102) ctrlEnable true;
+	(_display displayCtrl 170103) ctrlShow true;
+	(_display displayCtrl 170103) ctrlEnable true;
+	MB_PopupOpen = true;

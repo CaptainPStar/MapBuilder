@@ -1,7 +1,7 @@
 name = "Map Builder";
-picture = "\MapBuilder\data\mb.paa";
-logo = "\MapBuilder\data\mb.paa";
-logoOver = "\MapBuilder\data\mb_reversed.paa";
+picture = "\MB\MapBuilder\data\mb.paa";
+logo = "\MB\MapBuilder\data\mb.paa";
+logoOver = "\MB\MapBuilder\data\mb_reversed.paa";
 hidePicture = "false";
 hideName = "false";
 actionName = "Website";

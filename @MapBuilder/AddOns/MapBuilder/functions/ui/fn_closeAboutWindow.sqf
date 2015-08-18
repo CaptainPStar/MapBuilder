@@ -1,0 +1,1 @@
+[170600,false] spawn MB_fnc_closeWindow;

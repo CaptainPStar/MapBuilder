@@ -1,0 +1,10 @@
+private["_viewport","_xp","_yp","_screenDelta","_moveDelta"];
+	_viewport = _this select 0;
+	_xp = (_this select 1);
+	_yp = (_this select 2);
+	MB_LastMouseScreenPosition = MB_MouseScreenPosition;
+	_screenDelta = [_xp-(MB_MouseScreenPosition select 0),_yp-(MB_MouseScreenPosition select 1)];
+	_moveDelta = (screenToWorld [_xp,_yp]) vectorDiff MB_MousePosition;
+	MB_MousePosition = screenToWorld [_xp,_yp];
+	MB_MouseScreenPosition = [_xp,_yp];
+	["MouseMoved",[_screenDelta,_moveDelta]] spawn MB_fnc_dispatchCallbacks;
