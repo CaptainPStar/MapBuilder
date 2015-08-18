@@ -1,5 +1,8 @@
-private["_rotateCenter","_rot","_"];
+private["_rotateCenter","_rot","_mouse"];
 	_rot = _this select 0;
+	_mouse = param[1,true];
+	
+	
 	if(isNull(MB_ClickedObject)) then {
 		_rotateCenter = (MB_Selected select 0) getvariable "MB_ObjVar_PositionATL";
 	} else {
@@ -8,6 +11,9 @@ private["_rotateCenter","_rot","_"];
 	if(([DIK_LSHIFT] call MB_fnc_isPressed)) then {
 		_rotateCenter = MB_ClickedPosition;
 	};	
+	if(!_mouse) then {
+		_rotateCenter = [] call MB_Fnc_calcSelectionCenter;
+	};
 	{
 		private["_dir","_relPos","_pos"];
 		

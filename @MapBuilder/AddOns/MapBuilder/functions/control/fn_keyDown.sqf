@@ -1,5 +1,5 @@
 	#include "\MB\MapBuilder\ui\dik.hpp"
-	private["_handled", "_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt"];
+	private["_handled", "_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt","_factor"];
 	_ctrl = _this select 0;
 	_dikCode = _this select 1;
 	_shift = _this select 2;
@@ -42,6 +42,40 @@
 				[_x] call MB_fnc_AlignObjectToTerrain;
 			};
 		} foreach MB_Selected;
+	};
+	_factor = 1;
+	if([DIK_LSHIFT] call MB_fnc_isPressed) then {
+		_factor = 10;
+	};
+	
+	
+	if(_dikCode == DIK_UP) exitwith {
+		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+			["Up",_factor] call MB_fnc_MoveSelection;
+		} else {
+			["Forward",_factor] call MB_fnc_MoveSelection;
+		};
+	};
+	if(_dikCode == DIK_DOWN) exitwith {
+		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+			["Down",_factor] call MB_fnc_MoveSelection;
+		} else {
+			["Backward",_factor] call MB_fnc_MoveSelection;
+		};
+	};
+	if(_dikCode == DIK_LEFT) exitwith {
+		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+			["RotLeft",_factor] call MB_fnc_MoveSelection;
+		} else {
+			["Left",_factor] call MB_fnc_MoveSelection;
+		};
+	};
+	if(_dikCode == DIK_RIGHT) exitwith {
+		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+			["RotRight",_factor] call MB_fnc_MoveSelection;
+		} else {
+			["Right",_factor] call MB_fnc_MoveSelection;
+		};
 	};
 	
 	_handled;  

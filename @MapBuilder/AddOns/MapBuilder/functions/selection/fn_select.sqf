@@ -5,3 +5,4 @@ private["_object"];
 			MB_Selected pushBack _object;
 		};
 	};
+call MB_fnc_updateSelectedText;

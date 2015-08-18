@@ -9,6 +9,6 @@ private["_vars","_offset"];
 		_pos = _center vectorAdd _offset;
 		_obj = [_type,_pos] call MB_fnc_CreateObject;
 		_vars set[0,_pos];
-		[_obj,_vars] call MB_fnc_setObjectVars;
+		[_obj,_vars] call MB_fnc_setObjVars;
 		[_obj] call MB_fnc_Select;
 	} foreach MB_CopyPaste;

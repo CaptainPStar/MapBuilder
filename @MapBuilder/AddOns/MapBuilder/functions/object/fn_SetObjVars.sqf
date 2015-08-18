@@ -7,7 +7,6 @@ private["_obj","_vars"];
 	_obj setvariable["MB_ObjVar_Pitch",(_vars select 1),false];
 	_obj setvariable["MB_ObjVar_Bank",(_vars select 2),false];
 	_obj setvariable["MB_ObjVar_Yaw",(_vars select 3),false];
-	
 	_obj setvariable["MB_ObjVar_Simulate",(_vars select 4),false];
 	_obj setvariable["MB_ObjVar_Locked",(_vars select 5),false];
 	

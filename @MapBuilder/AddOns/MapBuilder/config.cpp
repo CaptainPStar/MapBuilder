@@ -1,3 +1,5 @@
+#define DEBUG
+
 class CfgPatches
 {
 	class MapBuilder
@@ -126,8 +128,9 @@ class CfgVehicles
 
 #include "\MB\MapBuilder\ui\ui.hpp"
 
-
+#ifndef DEBUG
 class CfgFunctions
 {
 	#include "\MB\MapBuilder\functions\functions.hpp"
 };
+#endif

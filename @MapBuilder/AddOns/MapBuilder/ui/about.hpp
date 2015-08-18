@@ -61,7 +61,7 @@
 			w = MB_WINDOW_GRID_X * 2;
 			h = MB_WINDOW_GRID_Y * 2;
 			color[] = {1,1,1,1};
-			text = "\MapBuilder\data\icon.paa";
+			text = "\MB\MapBuilder\data\icon.paa";
 			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
 		};
 		class MB_Window_About_CurVersionLabel : MB_RscText {

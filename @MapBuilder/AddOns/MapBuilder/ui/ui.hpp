@@ -25,8 +25,8 @@ class MB_Main
 			//onMouseButtonUp = "_this call MB_fnc_MouseUp;";
 			//onMouseButtonDblClick = "_this call MB_fnc_MouseDblClick;";
 			//onMouseZChanged = "_this call MB_fnc_MouseZ;";
-			onKeyDown = "_this call MB_fnc_KeyDown;";
-			onKeyUp = "_this call MB_fnc_KeyUp;false;";
+			onKeyDown = "_this call MB_fnc_KeyDown;true";
+			onKeyUp = "_this call MB_fnc_KeyUp;true";
 			//onMouseExit = "MB_RegisterKeys = false;_this call MB_fnc_resetKeys;[false] call MB_fnc_MouseInView";
 			//onMouseEnter = "MB_RegisterKeys = true;[true] call MB_fnc_MouseInView";
 			//onMouseMoving = "systemchat format[""%1"",_this];";
@@ -81,24 +81,6 @@ class MB_Main
 		//	onLBSelChanged="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been changed
         //    onLBDblClick="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been double clicked
 		//};
-		class ExportButton : MB_RscButton {
-			idc = 170005;
-			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.91)";
-			w = "SafeZoneW * 0.05";
-			h = "SafeZoneH * 0.05";
-			text = "Export";
-			action = "[1] call MB_fnc_togglePopup;";
-		};
-		class SaveToEditorButton : MB_RscButton {
-			idc = 170006;
-			x = "SafeZoneX + (SafeZoneW * 0.87)";
-			y = "SafeZoneY + (SafezoneH * 0.91)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Save/Load Project";
-			action = "[] call MB_fnc_ShowProjects;";
-		};
 		class MB_Icon : MB_RscActiveText {
 			//type = CT_STATIC;
 			style = ST_PICTURE + ST_KEEP_ASPECT_RATIO;
@@ -110,7 +92,7 @@ class MB_Main
 			color[] = {1,1,1,0.9};
 			colorActive[] = {1,1,1,1};
 			colorDisabled[] = {1,1,1,1};
-			text = "\MapBuilder\data\icon.paa";
+			text = "\MB\MapBuilder\data\icon.paa";
 			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
 		};		
 		
@@ -140,15 +122,6 @@ class MB_Main
 			h = "SafeZoneH * 0.025";
 			text = "Fav Objs";
 			action = "[] call MB_fnc_OpenFavoritesWindow;";
-		};
-		class MB_FencerButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.87)";
-			y = "SafeZoneY + (SafezoneH * 0.85)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Fencer";
-			action = "[] call MB_fnc_openFencer;";
 		};
 		class MB_ObjSettingsLabel : MB_RscText {
 			idc = -1;
@@ -182,7 +155,7 @@ class MB_Main
 			y = "SafeZoneY + (SafezoneH * 0.50)";
 			w = "SafeZoneW * 0.1";
 			h = "SafeZoneH * 0.03";
-			text =  "Mode:";
+			text =  "Mouse Mode:";
 		};
 		class MB_ModeSettings : MB_RscToolbox {
 			idc = -1;
@@ -196,19 +169,55 @@ class MB_Main
 			values[] = {0,1};
 			onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;";
 		};
+		class MB_FencerButton : MB_RscButton {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.89)";
+			y = "SafeZoneY + (SafezoneH * 0.80)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Fencer";
+			action = "[] call MB_fnc_openFencer;";
+		};
 		class PresetsButton : MB_RscButton {
 			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.85)";
-			w = "SafeZoneW * 0.05";
+			y = "SafeZoneY + (SafezoneH * 0.80)";
+			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Presets";
 			action = "[] call MB_fnc_showPresetWindow;";
 		};
+		class BrushesButton : MB_RscButton {
+			idc = -1;
+			x = "SafeZoneX + (SafeZoneW * 0.81)";
+			y = "SafeZoneY + (SafezoneH * 0.74)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Brushes";
+			action = "[] call MB_fnc_showBrushWindow;";
+		};
+		class ExportButton : MB_RscButton {
+			idc = 170005;
+			x = "SafeZoneX + (SafeZoneW * 0.81)";
+			y = "SafeZoneY + (SafezoneH * 0.86)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Export";
+			action = "[1] call MB_fnc_togglePopup;";
+		};
+		class SaveToEditorButton : MB_RscButton {
+			idc = 170006;
+			x = "SafeZoneX + (SafeZoneW * 0.89)";
+			y = "SafeZoneY + (SafezoneH * 0.86)";
+			w = "SafeZoneW * 0.07";
+			h = "SafeZoneH * 0.05";
+			text = "Save/Load Project";
+			action = "[] call MB_fnc_ShowProjects;";
+		};
 		class ProjectSettingsButton : MB_RscButton {
 			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.87)";
-			y = "SafeZoneY + (SafezoneH * 0.79)";
+			x = "SafeZoneX + (SafeZoneW * 0.89)";
+			y = "SafeZoneY + (SafezoneH * 0.74)";
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Settings";
@@ -235,7 +244,22 @@ class MB_Main
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
 		};
-		
+		class MB_Taskbar_Position : MB_RscText { //--- Render out.
+			idc = 171011;
+			text = "Position: 0/0/0";
+			x = "SafeZoneX + (SafeZoneW * 0.5)";
+			y = "SafeZoneY + (SafezoneH * 0.97)";
+			w = "SafeZoneW * 0.16";
+			h = "SafeZoneH * 0.03";
+		};
+		class MB_Taskbar_Selected : MB_RscText { //--- Render out.
+			idc = 171012;
+			text = "0 Objects selected";
+			x = "SafeZoneX + (SafeZoneW * 0.7)";
+			y = "SafeZoneY + (SafezoneH * 0.97)";
+			w = "SafeZoneW * 0.08";
+			h = "SafeZoneH * 0.03";
+		};
 		class MB_Taskbar_Dev_Refresh : MB_RscButton {
 			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.05)";
@@ -243,7 +267,7 @@ class MB_Main
 			w = "SafeZoneW * 0.2";
 			h = "SafeZoneH * 0.02";
 			text = "Refresh Config/Scripts";
-			action = "closeDialog 0;[] call MB_fnc_refreshConfig;[] call MB_fnc_Start;";
+			action = "closeDialog 0;[] call MB_fnc_refreshConfig;";
 		};
 		
 		//###################
@@ -477,5 +501,6 @@ class MB_Main
 		#include "favorites.hpp"
 		#include "infopopup.hpp"
 		#include "3dpreview.hpp"
+		#include "brusher.hpp"
 	};
 };

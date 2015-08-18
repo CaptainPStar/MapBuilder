@@ -6,3 +6,4 @@ private["_object","_newArray","_corners"];
 			MB_Selected deleteAt _index;
 		};
 	};
+	call MB_fnc_updateSelectedText;
