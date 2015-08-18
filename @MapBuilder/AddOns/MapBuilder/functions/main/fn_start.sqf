@@ -53,6 +53,7 @@
 	[170900,true] spawn MB_fnc_closeWindow;
 	[171000,true] spawn MB_fnc_closeWindow;
 	[171100,true] spawn MB_fnc_closeWindow;
+	[171200,true] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	endLoadingScreen;

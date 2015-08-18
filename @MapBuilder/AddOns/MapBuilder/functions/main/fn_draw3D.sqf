@@ -2,7 +2,7 @@
 //= Scene drawing
 //=========================================
 //MB_3DVectors = [];
-
+private["_up","_dir","_pos","_scale"];
 
 
 	{
@@ -13,10 +13,20 @@
 		_up = vectorup _x;
 		_dir = vectordir _x;
 		_pos = _x modelToWorld [0,0,0];
-		drawLine3D [_pos,(_pos vectoradd (_up vectorMultiply 5)),[0.25,0.25,1,1]];
-		drawLine3D [_pos,(_pos vectoradd (_dir vectorMultiply 5)),[0.25,1,0.25,1]];
-		drawLine3D [_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply 5)),[1,0.25,0.25,1]];
+		//_scale = (sizeOf (typeof _x))*2;
+		_scale = 0;
+		if(_scale == 0) then {
+			_scale = 4;
+		};
+		//[_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]] call drawLine3DThick;
+		//[_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]] call drawLine3DThick;
+		//[_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]] call drawLine3DThick;
+
 		
+		drawLine3D [_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]];
+		drawLine3D [_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]];
+		drawLine3D [_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]];
+
 		//drawLine3D [_pos,(_pos vectoradd [5,0,0]),[0,0,1,1]];
 		//drawLine3D [_pos,(_pos vectoradd [0,5,0]),[0,1,0,1]];
 		//drawLine3D [_pos,(_pos vectoradd [0,0,5]),[1,0,0,1]];
