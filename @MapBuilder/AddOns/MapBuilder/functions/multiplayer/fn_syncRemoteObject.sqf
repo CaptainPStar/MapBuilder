@@ -10,20 +10,16 @@
 	_create = false;
 	
 	systemChat format["Receiving Sync of %1",_uid];
-
+	_var = format["MB_Object_UID%1",_uid];
 	
-	if((count(MB_Objects)-1)>=_uid) then {
-		if(isNull(MB_Objects select _uid)) then {
-			_create = true;
-		};
-	} else {
+	if(!isNil _var) then {
 		_create = true;
 	};
 	_obj = objNull;
 	if(_create) then {
 		_obj = [_type,_pos,_uid,false] call MB_fnc_CreateObject;
 	} else {
-		_obj = MB_Objects select _uid;
+		_obj = call compile _var;
 	};
 	if(!isNull(_obj)) then {
 		_obj setvariable["MB_ObjVar_PositionATL",_pos,false];

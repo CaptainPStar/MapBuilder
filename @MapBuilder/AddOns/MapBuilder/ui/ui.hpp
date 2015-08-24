@@ -112,7 +112,7 @@ class MB_Main
 			w = "SafeZoneW * 0.06";
 			h = "SafeZoneH * 0.025";
 			text = "Used Objs";
-			action = "[] call MB_fnc_OpenUsedWindow;";
+			action = "[] call MB_fnc_OpenUsedWindow;[] call MB_fnc_updateUsed;";
 		};
 		class FavoritesObjectsButton : MB_RscButton {
 			idc = -1;

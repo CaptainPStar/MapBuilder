@@ -1,6 +1,6 @@
 	private["_obj","_uid","_pos","_pitch","_bank","_yaw","_simulate","_locked","_owner"];
 	_obj = _this select 0;
-	_uid = MB_Objects find _obj;
+	_uid = _obj getvariable "MB_ObjVar_UID";
 	_pos = _obj getvariable "MB_ObjVar_PositionATL";
 	_pitch = _obj getvariable "MB_ObjVar_Pitch";
 	_bank = _obj getvariable "MB_ObjVar_Bank";

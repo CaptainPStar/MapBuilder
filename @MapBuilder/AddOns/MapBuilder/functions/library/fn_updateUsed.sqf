@@ -7,7 +7,9 @@ private["_index","_used","_data","_count","_type","_name"];
 	_used = [];
 	_data = [];
 	{
+		
 		if(!isNull _x) then {
+		systemChat format["%1",_x];
 			if(!(typeof _x in _used)) then {
 				_type = typeof _x;
 				_used pushBack _type;

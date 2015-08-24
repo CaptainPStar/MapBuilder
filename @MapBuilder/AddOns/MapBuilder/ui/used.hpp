@@ -73,10 +73,19 @@
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9 + 0.001;
-			w = MB_WINDOW_GRID_X * 5;
+			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Select objects";
 			action = "[] call MB_fnc_SelectAllUsed;";
+		};
+		class MB_Window_Used_Update : MB_RscButton {
+			idc = -1;
+			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 5;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9 + 0.001;
+			w = MB_WINDOW_GRID_X * 4;
+			h = MB_WINDOW_GRID_Y * 1;
+			text = "Refresh";
+			action = "[] call MB_fnc_updateUsed;";
 		};
 	};
 };

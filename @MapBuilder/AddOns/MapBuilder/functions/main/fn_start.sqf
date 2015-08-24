@@ -72,4 +72,11 @@
 			sleep 1;
 		};
 	};
+	[] spawn {
+		while{dialog} do {
+			//[screenToWorld MB_MousePosition] spawn MB_fnc_colorVertices;
+			["fastloop"] call MB_fnc_dispatchCallbacks;
+			sleep 0.1;
+		};
+	};
 
