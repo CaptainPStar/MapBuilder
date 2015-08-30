@@ -4,9 +4,14 @@
 ["LeftMouseDblClick",{_this spawn MB_fnc_CreateObjectByClick;},{MB_Mode==0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
 
 
+
+
 //############################
 // Object Selection Movement
 //############################
+
+MB_ObjectDrag_Mutex = false;
+
 MB_ObjectMoveSelection = [];
 MB_ObjectMoveHeight = false;
 ["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectDrag;},{MB_Mode==0 && count(MB_Selected)>0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;

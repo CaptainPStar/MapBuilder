@@ -6,9 +6,10 @@ private["_edges","_add","_cornerA","_cornerB","_objs","_flag","_opos"];
 	_objs = [];
 	_objs = [_cornerA,_cornerB,MB_QuadTree] call MB_fnc_QuadTreeQuery;
 	MB_Selected = _objs;
-	//{
-	//	[_x] call mb_fnc_select;
-	//} foreach _objs;
+	{
+		_x setVariable["MB_isSelected",true,false];
+		[_x] call MB_FNC_BBupdate;
+	} foreach _objs;
 	
 //	{
 	//	if(!(_x in _objs)) then {

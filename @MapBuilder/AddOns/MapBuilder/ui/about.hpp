@@ -1,3 +1,5 @@
+#include "\MB\MapBuilder\version.hpp"
+
 //###################
 //	About
 //###################

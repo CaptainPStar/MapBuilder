@@ -1,5 +1,8 @@
 #include "\MB\MapBuilder\ui\dik.hpp"
 private["_mod"];
+	//Update Mouse pos var (so we don't have to rely on mouse move when the cam was moved by a key)
+	MB_MousePosition = screenToWorld MB_MouseScreenPosition;
+
 	// if lshift and any direction key is pressed increase camspeed
 	if(([DIK_LSHIFT] call MB_fnc_isPressed) && ( ([DIK_W] call MB_fnc_isPressed) || ([DIK_S] call MB_fnc_isPressed) || ([DIK_A] call MB_fnc_isPressed) || ([DIK_D] call MB_fnc_isPressed) || ([DIK_Q] call MB_fnc_isPressed) || ([DIK_Z] call MB_fnc_isPressed) )) then {
 		MB_CamSpeed = MB_CamSpeed + 0.1;
@@ -82,14 +85,26 @@ private["_mod"];
 	if((_camPos select 2)<0) then {
 		_camPos set[2,0];
 	};
+	if((MB_CamPos select 1)>=360) then {
+		MB_CamPos set[1,(MB_CamPos select 1)%360];
+	};
+	if((MB_CamPos select 1)<0) then {
+		MB_CamPos set[1,360+(MB_CamPos select 1)%360];
+	};
 	if((MB_CamPos select 2)<-90) then {
 		MB_CamPos set[2,-90];
 	};
 	if((MB_CamPos select 2)>90) then {
 		MB_CamPos set[2,90];
 	};
+	//MBCamera setDir (MB_CamPos select 1);
+	//MBCamera camSetDir [(MB_CamPos select 1),0,0];
+	//[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;	
+	//MBCamera camSetDive (MB_CamPos select 2);
+	_dirNUp = [(MB_CamPos select 2),0,(MB_CamPos select 1)] call MB_fnc_CalcDirAndUpVector;
+	MBCamera setVectorDirAndUp _dirNUp;
+	MBCamera camSetPos [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
+	MBCamera camCommit MB_CamCommit;
 	MB_CamPos set [0,_camPos];
-	MBCamera setDir (MB_CamPos select 1);
-	[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;	
-	MBCamera SetPosATL [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
-	MBCamera camCommit 0;
+	//systemchat format["Real: [%1,%2,%3] : O : %4", getposATL MBCamera,getdir MBCamera,MBCamera call bis_fnc_getPitchBank, MB_CamPos];
+	//diag_log format["Real: %1 : O : %2", getposATL MBCamera, MB_CamPos];

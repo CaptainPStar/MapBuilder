@@ -6,8 +6,8 @@ class CfgPatches
 	{
 		units[] = {};
 		weapons[] = {};
-		requiredVersion = 1.12;
-		requiredAddons[] = {};
+		requiredVersion = 1.50;
+		requiredAddons[] = {"A3_Misc_F_Helpers"};
 		version = "0.9";
 		projectName = "MapBuilder";
 		author = "NeoArmageddon";
@@ -98,6 +98,7 @@ class CfgVehicles
 	class MapBuilder_Module: MapBuilder_ModuleBase
 	{
 		displayName = "Map Builder";
+		author = "NeoArmageddon";
 		function = "mb_fnc_setup";
 		scopeCurator = 1;
 		scope = 2;
@@ -123,6 +124,30 @@ class CfgVehicles
 		displayName = "";
 		function = "";
 		scopeCurator = 1;
+	};
+	class Helper_Base_F;
+	class mb_bounding_box: Helper_Base_F
+	{
+		scope        = 1;
+		displayName  = "Bounding Box";
+		model        = "mb\mapbuilder\data\mb_bounding_box";
+		author = "NeoArmageddon";
+		class AnimationSources
+		{
+			class left
+			{
+				source     = "user";
+				initPhase  = 0;
+				animPeriod = 1; // Hier den wert 0 ausprobieren, schauen ob es dann auch noch funktioniert.
+			};
+			/*
+			class right : left {};
+			class front : left {};
+			class rear : left {};
+			class top : left {};
+			class bottom : left {};
+			*/
+		};
 	};
 };
 

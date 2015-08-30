@@ -1,4 +1,6 @@
 private["_screenDelta","_pitch","_obj","_bank","_yaw","_pos"];
+if(!MB_ObjectDrag_Mutex) then {
+	MB_ObjectDrag_Mutex = true;
 	_screenDelta = _this select 0;
 	{
 		_obj = _x select 0;
@@ -22,4 +24,7 @@ private["_screenDelta","_pitch","_obj","_bank","_yaw","_pos"];
 		_obj setposATL _pos;
 		[_obj,[_pitch,_bank,_yaw]] call MB_fnc_SetPitchBankYaw;
 		_obj setposATL _pos;
+		[_obj] call MB_fnc_BBupdate;
 	} foreach MB_ObjectChangeBankSelection;
+	MB_ObjectDrag_Mutex = false;
+};

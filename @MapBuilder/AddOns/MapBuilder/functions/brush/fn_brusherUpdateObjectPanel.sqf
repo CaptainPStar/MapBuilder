@@ -33,6 +33,9 @@ if(count(_data)>0) then {
 
 	disableSerialization;
 	_display = uinamespace getvariable 'mb_main_dialog';
+	
+	[] call mb_fnc_brusherUpdateObjectList;
+	
 	(_display displayCtrl 171203) ctrlSetText format["%1",(_data select 2)];
 	
 	(_display displayCtrl 171204) ctrlSetText format["%1",(_data select 3)];

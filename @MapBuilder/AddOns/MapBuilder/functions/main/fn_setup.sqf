@@ -18,6 +18,8 @@
 	MB_LastMouseScreenPosition = [0,0];
 	MB_MousePositionDelta = [0,0];
 	MB_CamPos = [[getpos player select 0, getpos player select 1,(getpos player select 2)+2],getdir player,0];//[X,Y,Z],Dir,Dive
+	MB_DefaultCamCommit = 0.05;
+	MB_CamCommit = MB_DefaultCamCommit;
 	MB_Selected = [];
 	MB_SelectedVertices = [];
 	MB_CopyPaste = [];

@@ -4,5 +4,6 @@ private["_vars","_offset"];
 		_vars = [_x] call MB_fnc_getObjectVars;
 		_offset = (_vars select 0) vectorDiff MB_MousePosition;
 		MB_CopyPaste pushBack [typeof _x,_offset,_vars];
+		systemchat format["%1",_vars];
 	} foreach MB_Selected;
 	systemChat format["Selection of %1 objects copied to clipboard.",count(MB_CopyPaste)];

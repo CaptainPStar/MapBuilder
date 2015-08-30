@@ -17,3 +17,4 @@ private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked","_sync"];
 		[_obj] call MB_fnc_syncObject;
 	};
 	[_obj] call MB_fnc_quadTreeUpdate;
+	[_obj] call MB_fnc_BBupdate;

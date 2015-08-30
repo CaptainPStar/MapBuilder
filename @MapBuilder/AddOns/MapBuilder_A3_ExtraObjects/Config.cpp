@@ -189,6 +189,14 @@ class CfgVehicles
 	class SportsGrounds_base_F;
 	class Items_base_F;
 	class Scrapyard_base_F;
+	
+	class VergePost_F: Static
+	{
+		scope = 2;
+		displayName = "VergePost_F";
+		vehicleClass = "MB_A3_SignsF_SignT";
+		model = "a3\signs_f\signT\vergepost_f.p3d";
+	};
 	class t_BroussonetiaP1s_F: Static
 	{
 		scope = 2;

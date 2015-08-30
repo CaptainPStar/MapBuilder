@@ -12,6 +12,8 @@ private["_obj","_class","_pos","_dir","_uid","_var","_sync"];
 	if(!isNil _var) exitwith {
 		systemChat format["Error: Object with ID %1 can't be created. Already exists.",_uid];
 		_uid = -1;
+		_obj = objNull;
+		_obj;
 	};
 
 	if(_uid>=0) then {
@@ -25,6 +27,7 @@ private["_obj","_class","_pos","_dir","_uid","_var","_sync"];
 		_obj setvariable["MB_ObjVar_UID",_uid,false];
 		MB_Objects pushback _obj;
 		[_obj,_sync] call MB_fnc_InitObject;
+		[_obj,true] call MB_fnc_BBupdate;
 	} else {
 		_obj = objNull;
 	};

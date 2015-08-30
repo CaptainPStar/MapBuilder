@@ -1,7 +1,7 @@
 Map Builder - Ingame 3D-Editor for terrain creation
 by NeoArmageddon
 www.modfact.net
-Version 0.8 Alpha
+Version 0.9 Preview 1
 
 Project Status
 
@@ -28,7 +28,7 @@ CypeRevenge - A3 Editor upgrade included in MapBuilder.
 ZeroG - A2 editor upgrade.
 Scruffy - Testing and config stuff.
 MemphisBelle - Testing and config stuff.
-Mondkalb - Showing me how to create dialogs back in the good old times, precisionfix and general advices.
+Mondkalb - Showing me how to create dialogs back in the good old times, precisionfix, bounding box and general advices.
 cyrokrypto - Helping with some UI issues.
 Maikeks - Proofreading every single sentence - twice!
 Bushlurker, Jakerod, M1lkm8n, NigelS, badbenson, Giallustio and all the guys from the map maker skypegroup for discussions, feedback and help. I am doing this for you guys!

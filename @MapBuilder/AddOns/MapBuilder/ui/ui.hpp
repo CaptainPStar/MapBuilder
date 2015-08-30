@@ -221,7 +221,8 @@ class MB_Main
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Settings";
-			action = "[] call MB_fnc_showPresetWindow;";
+			//action = "[] call MB_fnc_showPresetWindow;";
+			action = "";
 		};
 		//###################
 		//	Taskbar

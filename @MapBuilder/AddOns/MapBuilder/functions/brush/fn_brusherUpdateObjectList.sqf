@@ -1,26 +1,20 @@
-private["_display","_ctrl"];
-	disableSerialization;
-	_selectNewest = param[0,false];
+	private["_data"];
 	_display = uinamespace getvariable 'mb_main_dialog';
-
-	_ctrl = _display displayCtrl 171202;
-	tvClear 171202;
-	{
-		_types = (_x select 0);
-		_name = "";
-		{
-			_name = _name + format["%1",_x];
-			if(_forEachIndex<(count(_types)-1)) then {
-			_name = _name + ", ";
-			};
-		} foreach _types;
-		//_model = [(configFile >> "CfgVehicles" >> (_x select 0) ),"model",""] call BIS_fnc_returnConfigEntry;
-		_path = _ctrl tvAdd [[],_name];
-	} foreach MB_CurBrush;
-	if(_selectNewest) then {
-		_ctrl tvSetCurSel [_path];
-	} else {
-		if(count(MB_CurBrush)>0) then {
-			_ctrl tvSetCurSel [0];
+	_path = (tvCurSel (_display displayCtrl 171202));
+	_data = [];
+	_index = 0;
+	if(count(_path)>0) then {
+		_index = _path select 0;
+		if(_index < count(MB_CurBrush)) then {
+			_data = MB_CurBrush select _index;
 		};
-	}
+	};
+	
+	tvClear 171219;
+	{
+		_path = (_display displayCtrl 171219) tvAdd [[],_x];
+	} foreach (_data select 0);
+	
+	if(count(_data select 0)>0) then {
+		(_display displayCtrl 171219) tvSetCurSel [0];
+	};

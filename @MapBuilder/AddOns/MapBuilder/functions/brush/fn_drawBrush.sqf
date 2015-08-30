@@ -23,24 +23,26 @@ private["_dir","_pos","_obj"];
 				_offset = [_rpos,_dir] call MB_fnc_RotateRelPos;
 					
 				_cpos = _pos vectorAdd _offset vectorAdd [2*random(_rndPos select 0)-(_rndPos select 0), 2*random(_rndPos select 1)-(_rndPos select 1), random(_rndPos select 2)];
-				_type = _types select 0;
-				{
-					if(random 100 <= ((_weight select _forEachIndex)*100)) exitWith {
-						_type = _x;
-					};
-				} foreach _types;
-				
+				//_type = _types select 0;
+				//{
+				//	if(random 100 <= ((_weight select _forEachIndex)*100)) exitWith {
+				//		_type = _x;
+				//	};
+				//} foreach _types;
+				_type = _types select floor(random(count(_types)));
 				_obj = [_type,_cpos] call MB_fnc_CreateObject;
 				
-				_obj setvariable["MB_ObjVar_PositionATL",_cpos,false];
-				_obj setvariable["MB_ObjVar_Pitch",(_pitch + 2*(random _rndPitch)-_rndPitch),false];
-				_obj setvariable["MB_ObjVar_Bank",(_bank + 2*(random _rndBank)-_rndBank),false];
-				_obj setvariable["MB_ObjVar_Yaw",_dir+(_yaw + 2*(random _rndDir)-_rndDir),false];
+				if(!isNull _obj) then {
+					_obj setvariable["MB_ObjVar_PositionATL",_cpos,false];
+					_obj setvariable["MB_ObjVar_Pitch",(_pitch + 2*(random _rndPitch)-_rndPitch),false];
+					_obj setvariable["MB_ObjVar_Bank",(_bank + 2*(random _rndBank)-_rndBank),false];
+					_obj setvariable["MB_ObjVar_Yaw",_dir+(_yaw + 2*(random _rndDir)-_rndDir),false];
 
-				
-				_obj setvariable["MB_ObjVar_Scale",(_scale + 2*(random _rndScale)-_rndScale),false];
-				
-				[_obj] call MB_fnc_UpdateObject;
+					
+					_obj setvariable["MB_ObjVar_Scale",(_scale + 2*(random _rndScale)-_rndScale),false];
+					
+					[_obj] call MB_fnc_UpdateObject;
+				};
 			};
 		};
 	

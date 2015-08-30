@@ -4,37 +4,47 @@
 //MB_3DVectors = [];
 private["_up","_dir","_pos","_scale"];
 
+	
+	//{
+	//	[_x] call MB_fnc_DrawBoundingBox;
+	//	if((_x getvariable "MB_ObjVar_Scale") != 1) then {
+	//		[_x,(_x getvariable "MB_ObjVar_Scale"),[1,0,0,1]] call MB_fnc_DrawBoundingBox;
+	//	};
+	//	_up = vectorup _x;
+	//	_dir = vectordir _x;
+	//	_pos = _x modelToWorld [0,0,0];
+	//	//_scale = (sizeOf (typeof _x))*2;
+	//	_scale = 0;
+	//	if(_scale == 0) then {
+	//		_scale = 4;
+	//	};
+	//	//[_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]] call drawLine3DThick;
+	//	//[_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]] call drawLine3DThick;
+	//	//[_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]] call drawLine3DThick;//
 
-	{
-		[_x] call MB_fnc_DrawBoundingBox;
-		if((_x getvariable "MB_ObjVar_Scale") != 1) then {
-			[_x,(_x getvariable "MB_ObjVar_Scale"),[1,0,0,1]] call MB_fnc_DrawBoundingBox;
-		};
-		_up = vectorup _x;
-		_dir = vectordir _x;
-		_pos = _x modelToWorld [0,0,0];
-		//_scale = (sizeOf (typeof _x))*2;
-		_scale = 0;
-		if(_scale == 0) then {
-			_scale = 4;
-		};
-		//[_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]] call drawLine3DThick;
-		//[_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]] call drawLine3DThick;
-		//[_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]] call drawLine3DThick;
-
-		
-		drawLine3D [_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]];
-		drawLine3D [_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]];
-		drawLine3D [_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]];
+	//	
+	//	drawLine3D [_pos,(_pos vectoradd (_up vectorMultiply _scale)),[0,0,1,1]];
+	//	drawLine3D [_pos,(_pos vectoradd (_dir vectorMultiply _scale)),[0,1,0,1]];
+	//	drawLine3D [_pos,(_pos vectoradd ((_dir vectorCrossProduct _up) vectorMultiply _scale)),[1,0,0,1]];
 
 		//drawLine3D [_pos,(_pos vectoradd [5,0,0]),[0,0,1,1]];
 		//drawLine3D [_pos,(_pos vectoradd [0,5,0]),[0,1,0,1]];
 		//drawLine3D [_pos,(_pos vectoradd [0,0,5]),[1,0,0,1]];
-		if(!isNil("RotatedNorth")) then {
-			drawLine3D [_pos,(_pos vectoradd (RotatedNorth vectorMultiply 5)),[0,0,1,1]];
-			drawLine3D [_pos,(_pos vectoradd (RotatedRight vectorMultiply 5)),[0,1,0,1]];
-			//drawLine3D [_pos,(_pos vectoradd (RotatedUp vectorMultiply 5)),[1,0,0,1]];
-		};
+	//	if(!isNil("RotatedNorth")) then {
+	//		drawLine3D [_pos,(_pos vectoradd (RotatedNorth vectorMultiply 5)),[0,0,1,1]];
+	//		drawLine3D [_pos,(_pos vectoradd (RotatedRight vectorMultiply 5)),[0,1,0,1]];
+	//		//drawLine3D [_pos,(_pos vectoradd (RotatedUp vectorMultiply 5)),[1,0,0,1]];
+	//	};
+	
+	{
+		private["_pos","_gpos"];
+
+		_pos = _x modelToWorld [0,0,0];
+		_gpos = +_pos;
+		
+		
+		_gpos set[2,0];
+		drawLine3D [_pos,_gpos,[0,1,0,1]];
 	} foreach MB_Selected;
 	
 	{
@@ -78,18 +88,6 @@ private["_up","_dir","_pos","_scale"];
 	};
 	{
 		_start = (_x select 0);
-		_end = (_x select 1);
-		drawLine3D [_start,_end,[0,0,0,1]];
-		_direction = _start vectorFromTo _end;
-		_senkr = _direction vectorCrossProduct [0,0,1];
-		_offset = (_senkr vectorMultiply 0.05);
-		for "_i" from 1 to 10 do {
-			_ostart = _start vectorAdd (_offset vectorMultiply _i);
-			drawLine3D [_ostart,_end,[0,0,0,1]];
-		};
-		for "_i" from 1 to 10 do {
-			_ostart = _start vectorAdd (_offset vectorMultiply -(_i));
-			drawLine3D [_ostart,_end,[0,0,0,1]];
-		};
-		
+		_end = ((_x select 1) vectorAdd [0,0,0.5]);
+		drawLine3D [_start,_end,[0,1,0,1]];
 	} foreach MB_3DVectors;

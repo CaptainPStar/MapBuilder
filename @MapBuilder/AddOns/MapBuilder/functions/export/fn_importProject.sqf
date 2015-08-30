@@ -28,7 +28,7 @@ private["_filename"];
 				_type = (_arr select 1) select 0;
 				_vars =  (_arr select 1) select 1;
 				_obj = [_type,_vars select 0] call MB_fnc_CreateObject;
-				[_obj,_vars] call MB_fnc_setObjectVars;
+				[_obj,_vars] call MB_fnc_setObjVars;
 			};
 			case "favoriteObj": {
 				//Load a favorited object
