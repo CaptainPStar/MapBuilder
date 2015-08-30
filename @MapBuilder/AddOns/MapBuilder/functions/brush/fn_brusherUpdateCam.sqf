@@ -1,0 +1,1 @@
+MB_CamPos set[0,MB_MousePosition vectorAdd MB_BrushingLookAt];
