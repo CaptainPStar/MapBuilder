@@ -1,4 +1,4 @@
-private["_obj","_class","_pos","_dir","_uid","_var","_sync"];
+private["_obj","_class","_pos","_dir","_uid","_var","_sync","_base","_box"];
 	_class = [_this,0] call bis_fnc_param;
 	_pos = [_this,1] call bis_fnc_param;
 	_uid =  [_this,2,-1] call bis_fnc_param;
@@ -25,6 +25,21 @@ private["_obj","_class","_pos","_dir","_uid","_var","_sync"];
 		_obj setvehiclevarname _var;
 		call compile format["%1 = _obj;",_var];
 		_obj setvariable["MB_ObjVar_UID",_uid,false];
+		
+
+		_box = "mb_bounding_box" createvehiclelocal getpos _obj;
+		_box setvariable["mb_BBattachedObject",_obj,false];
+		_obj setVariable["MB_BoundingBox",_box,false];
+		_box hideObject true;
+
+		_base = "Sign_Sphere100cm_F" createvehiclelocal getpos _obj;
+		_base setObjectTexture [0, "#(rgb,8,8,3)color(0,1,0,1)"];
+		_base setvariable["mb_BBattachedObject",_obj,false];
+		_obj setVariable["MB_BaseHelper",_base,false];
+		_base hideObject true;
+
+		
+		
 		MB_Objects pushback _obj;
 		[_obj,_sync] call MB_fnc_InitObject;
 		[_obj,true] call MB_fnc_BBupdate;

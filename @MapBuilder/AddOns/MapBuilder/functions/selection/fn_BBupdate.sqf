@@ -14,6 +14,9 @@ if(_obj getVariable["MB_isSelected",false]) then {
 } else {
 	_show = false;
 };
+
+
+//BB creation redundant (also in obj creation)
 if(isNull _box) then {
 	_box = "mb_bounding_box" createvehiclelocal getpos _obj;
 	_box setvariable["mb_BBattachedObject",_obj,false];

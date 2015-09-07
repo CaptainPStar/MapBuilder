@@ -203,7 +203,7 @@ class MB_Main
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Export";
-			action = "[1] call MB_fnc_togglePopup;";
+			action = "[1] call MB_fnc_showExportWindow;";
 		};
 		class SaveToEditorButton : MB_RscButton {
 			idc = 170006;
@@ -212,6 +212,7 @@ class MB_Main
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Save/Load Project";
+			//action = "[] call MB_fnc_ShowProjectWindow;";
 			action = "[] call MB_fnc_ShowProjects;";
 		};
 		class ProjectSettingsButton : MB_RscButton {
@@ -305,99 +306,6 @@ class MB_Main
 			h = "SafeZoneH * 0.02";
 			colorBackground[] = {0,0.75,0,0.75};
 			action = "[3,false] call MB_fnc_togglePopup;";
-		};
-		
-		//###################
-		//	Export Popup
-		//###################
-		
-		class Popup_ExportBG : MB_RscBackground {
-			idc = 170101;
-			text = "";
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.3";
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class Popup_ExportHeader : MB_RscBackground {
-			idc = 170102;
-			text = "Export Objects";
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-		};
-		class Popup_ExportHeaderClose : MB_RscActiveText {
-			idc = 170103;
-			text = "X";
-			x = "SafeZoneX + (SafeZoneW * 0.585)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.02";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-			action = "[1,false] call MB_fnc_togglePopup;";
-		};
-		class Popup_ExportHeaderFilenameText : MB_RscText {
-			idc = 170104;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.47)";
-			w = "SafeZoneW * 0.3";
-			h = "SafeZoneH * 0.02";
-			text = "Export Name (Warning: May overwrite existing files!):";
-		};
-		class Popup_ExportHeaderFilename : MB_RscEdit {
-			idc = 170105;
-			text = "";
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.5)";
-			w = "SafeZoneW * 0.2";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-		};
-		class Popup_ExportTBButton : MB_RscButton {
-			idc = 170106;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.6)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Export to TB";
-			action = "[ctrlText 170105] spawn MB_fnc_exportTB;";
-		};
-		class Popup_ExportSQFButton : MB_RscButton {
-			idc = 170107;
-			x = "SafeZoneX + (SafeZoneW * 0.35)";
-			y = "SafeZoneY + (SafezoneH * 0.6)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Export to SQF";
-			action = "[ctrlText 170105] spawn MB_fnc_exportSQF;";
-		};
-		class Popup_ExportSQMButton : MB_RscButton {
-			idc = 170108;
-			x = "SafeZoneX + (SafeZoneW * 0.45)";
-			y = "SafeZoneY + (SafezoneH * 0.6)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Export to SQM";
-			action = "[ctrlText 170105] spawn MB_fnc_exportSQM;";
-		};
-		class Popup_ExportHelptext : MB_RscText {
-			idc = 170109;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.55)";
-			w = "SafeZoneW * 0.3";
-			h = "SafeZoneH * 0.02";
-			text = "Extension is added automatically.";
-		};
-		class Popup_ExportHelptext2 : MB_RscText {
-			idc = 170110;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.57)";
-			w = "SafeZoneW * 0.3";
-			h = "SafeZoneH * 0.02";
-			text = "Exported files can be found in @MapBuilder/export.";
 		};
 		//###################
 		//	Save/load Project
@@ -503,5 +411,7 @@ class MB_Main
 		#include "infopopup.hpp"
 		#include "3dpreview.hpp"
 		#include "brusher.hpp"
+		#include "export.hpp"
+		#include "project.hpp"
 	};
 };

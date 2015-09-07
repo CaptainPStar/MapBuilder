@@ -6,8 +6,9 @@
 	if(!isNil _var) then {
 		_obj = call compile _var;
 		if(!isNull(_obj)) then {
-			MB_Objects deleteAt (MB_Objects find _var);
-			deletevehicle _obj;
+			[_obj,false] call mb_fnc_deleteObject;
+			//MB_Objects deleteAt (MB_Objects find _var);
+			//deletevehicle _obj;
 			systemChat format["Remotedelete of object %1",_uid];
 		};
 	};

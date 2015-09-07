@@ -12,7 +12,7 @@
 	systemChat format["Receiving Sync of %1",_uid];
 	_var = format["MB_Object_UID%1",_uid];
 	
-	if(!isNil _var) then {
+	if(isNil _var) then {
 		_create = true;
 	};
 	_obj = objNull;

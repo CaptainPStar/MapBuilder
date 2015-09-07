@@ -56,6 +56,7 @@
 	[171200,true] spawn MB_fnc_closeWindow;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
+	//["What?"] spawn MB_fnc_showPopupDialog;
 	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
