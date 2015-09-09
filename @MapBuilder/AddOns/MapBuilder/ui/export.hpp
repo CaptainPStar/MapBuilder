@@ -17,10 +17,9 @@ class MB_Window_Export_Group : MB_RscControlsGroup
 			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class MB_Window_Export_Header : MB_RscBackground {
+		class MB_Window_Export_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "Export objects";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 23 + 2 * MB_WINDOW_PADDING_X;
@@ -42,7 +41,6 @@ class MB_Window_Export_Group : MB_RscControlsGroup
 		class MB_Window_Export_X : MB_RscActiveText {
 			idc = -1;
 			text = "X";
-			style = ST_MULTI;
 			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 23;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 1;
@@ -97,10 +95,20 @@ class MB_Window_Export_Group : MB_RscControlsGroup
 			action = "[ctrlText 170105] spawn MB_fnc_exportSQM;";
 			tooptip = "Export current project as mission (missionfolder containing .sqm).";
 		};
+		class MB_Window_Export_TMLButton : MB_RscButton {
+			idc = -1;
+			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 12;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 5 + 0.001  + 0.04;
+			w = MB_WINDOW_GRID_X * 8;
+			h = MB_WINDOW_GRID_Y * 1;
+			text = "Export to TML";
+			action = "[ctrlText 170105] spawn MB_fnc_exportTML;";
+			tooptip = "Export used objectclasses as TB template library. Helpful when exporting to TB.";
+		};
 		class MB_Window_Export_Helptext2 : MB_RscText {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7 + 0.001;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 8 + 0.001;
 			w = MB_WINDOW_GRID_X * 18;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Exported files can be found in @MapBuilder/export.";
