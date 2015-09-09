@@ -21,10 +21,9 @@
 			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class Popup_FencerHeader : MB_RscBackground {
+		class Popup_FencerHeader : MB_RscWindowHeader {
 			idc = -1;
 			text = "Fencer";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 9 + 2 * MB_WINDOW_PADDING_X;
@@ -46,7 +45,6 @@
 		class Popup_FencerHeaderX : MB_RscActiveText {
 			idc = -1;
 			text = "X";
-			style = ST_MULTI;
 			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 9;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 1;

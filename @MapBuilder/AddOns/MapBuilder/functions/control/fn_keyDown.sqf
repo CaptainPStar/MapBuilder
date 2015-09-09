@@ -6,9 +6,10 @@
 	_ctrlKey = _this select 3;
 	_alt = _this select 4;
 	
+
 	if(!MB_RegisterKeys) exitwith {};
 	MB_Keys set[_dikCode,true];
-
+	
 	_handled = true;
 
 	//MBCamera camSetPos [(getpos MBCamera select 0),(getpos MBCamera select 1),(getpos MBCamera select 2)+0.1];
@@ -76,6 +77,13 @@
 		} else {
 			["Right",_factor] call MB_fnc_MoveSelection;
 		};
+	};
+	
+	if(_dikCode == DIK_SLASH) exitwith {
+		[] spawn MB_FNC_ChatToggle;
+	};
+	if(_dikCode == DIK_RETURN) exitwith {
+		[] call MB_FNC_ChatSend;
 	};
 	
 	_handled;  

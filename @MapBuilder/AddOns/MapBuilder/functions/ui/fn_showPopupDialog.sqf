@@ -10,6 +10,7 @@
 	uinamespace setvariable ["MB_popupDialog_status",nil];
 
 	disableSerialization;
+	private["_display","_ctrlText","_ctrlButtonOK","_ctrlButtonCancel","_ehKeyDown"];
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrlText = (_display displayCtrl 171001);
 	_ctrlButtonOK = (_display displayCtrl 171002);
@@ -21,20 +22,16 @@
 	_display displayaddeventhandler ["unload","uinamespace setvariable ['MB_popupDialog_status',false];"];
 	_ehKeyDown = _display displayaddeventhandler ["keydown","if ((_this select 1) == 1) then {uinamespace setvariable ['MB_popupDialog_status',false]; true} else {false}"];
 	
-	[171000,false] spawn MB_fnc_openWindow;
+	[171000,true] call MB_fnc_openWindow;
 	
 	switch(_type) do {
 		case 0: {
 			_ctrlButtonOK ctrlShow true;
-			_ctrlButtonOK ctrlCommit 0;
 			_ctrlButtonCancel ctrlShow true;
-			_ctrlButtonCancel ctrlCommit 0;
 		};
 		case 1: {
 			_ctrlButtonOK ctrlShow true;
-			_ctrlButtonOK ctrlCommit 0;
 			_ctrlButtonCancel ctrlShow false;
-			_ctrlButtonCancel ctrlCommit 0;
 		};
 	};
 	

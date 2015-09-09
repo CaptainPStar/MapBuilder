@@ -45,9 +45,12 @@
 	//[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[] call MB_fnc_hidePresetWindow;
-	[170400] spawn MB_fnc_closeWindow;
-	[170600] spawn MB_fnc_closeWindow;
 	[666] spawn MB_fnc_closeWindow;
+	
+	[170100,true] spawn MB_fnc_closeWindow;
+	[170200,true] spawn MB_fnc_closeWindow;
+	[170400,true] spawn MB_fnc_closeWindow;
+	[170600,true] spawn MB_fnc_closeWindow;
 	[170700,true] spawn MB_fnc_closeWindow;
 	[170800,true] spawn MB_fnc_closeWindow;
 	[170900,true] spawn MB_fnc_closeWindow;
@@ -57,6 +60,7 @@
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	//["What?"] spawn MB_fnc_showPopupDialog;
+	[] call MB_FNC_ChatToggle;
 	endLoadingScreen;
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {

@@ -33,7 +33,7 @@
 				_scale = str (_obj getvariable "MB_ObjVar_Scale");
 					
 				//_yawPitchBankWorld = [vectordir _obj,vectorup _obj] call MB_fnc_CalcEulerAnglesWorld;
-				_yawPitchBankWorld = [vectordir _obj,vectorup _obj] call MB_fnc_CalcEulerAngles;
+				//_yawPitchBankWorld = [vectordir _obj,vectorup _obj] call MB_fnc_CalcEulerAngles;
 				//Split modelname into parts
 				_model = [_model,"\"] call BIS_fnc_splitString;
 				//Extract last part (model.p3d) and split into name and extension
@@ -44,7 +44,7 @@
 				//_name;_x_pos;_y_pos;_yaw;_pitch;_roll;_scale;_z_pos_rel;
 				
 
-				_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_model,(_pos select 0),(_pos select 1),_yawPitchBankWorld select 0,_yawPitchBankWorld select 1,_yawPitchBankWorld select 2,_scale,(_pos select 2)];
+				_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_model,(_pos select 0),(_pos select 1),_yaw,_pitch,_bank,_scale,(_pos select 2)];
 				systemChat ("MB_FileIO" callExtension _string);
 				
 			};

@@ -5,7 +5,7 @@ if(_in) then {
 	//systemChat "Mouse in View";
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_ctrl = _display displayCtrl 170001;
-	ctrlSetFocus _ctrl;
+	//ctrlSetFocus _ctrl;
 	MB_ViewportHasFocus = true;
 } else {
 	//systemChat "Mouse left View";

@@ -19,17 +19,16 @@
 			y = MB_WINDOW_GRID_Y * 1;
 			w = MB_WINDOW_GRID_X * 14 + 2 * MB_WINDOW_PADDING_X;
 			h = MB_WINDOW_GRID_Y * 8 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
+			colorBackground[] = {0.1,0.1,0.1,1};
 		};
-		class MB_Window_Infopopup_Header : MB_RscBackground {
+		class MB_Window_Infopopup_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "Info";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 14 + 2 * MB_WINDOW_PADDING_X;
 			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
+			colorBackground[] = {0,0.75,0,1};
 			onMouseButtonDown = "[_this,171000] call MB_fnc_beginWindowDrag;";
 			onMouseButtonUp = "[_this,171000] call MB_fnc_endWindowDrag;";
 			onMouseMoving = "[_this,171000] call MB_fnc_updateWindowDrag;";

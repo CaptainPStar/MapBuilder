@@ -4,6 +4,7 @@
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_control = _display displayCtrl _idc;
 	_control ctrlshow true;
+	ctrlSetFocus _control;
 	_control ctrlSetFade 0;
 	if(_instant) then {
 		_control ctrlCommit 0;

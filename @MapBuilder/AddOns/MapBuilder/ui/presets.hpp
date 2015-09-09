@@ -21,7 +21,7 @@ class MB_Popup_PresetGroup : MB_RscControlsGroup
 			h = "SafeZoneH * 0.5";
 			colorBackground[] = {0, 0, 0, 0.8};
 		};
-		class MB_Popup_Preset_Header : MB_RscBackground {
+		class MB_Popup_Preset_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "Presets";
 			x = "0";

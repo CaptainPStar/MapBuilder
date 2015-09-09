@@ -7,4 +7,3 @@ private["_object"];
 			[_object] call MB_FNC_BBupdate;
 		};
 	};
-call MB_fnc_updateSelectedText;

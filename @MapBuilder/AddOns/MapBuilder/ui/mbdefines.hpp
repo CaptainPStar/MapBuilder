@@ -100,6 +100,11 @@
 #define MB_BUTTON_CANCEL  2
 #define MB_BUTTON_USER    4
 
+
+#define MB_TEXT_LARGE 0.04
+#define MB_TEXT_SMALL 0.02
+#define MB_TEXT_DEFAULT 0.03
+#define MB_TEXT_FONT "EtelkaMonospacePro"
 class MB_RscText
 {
 	access = 0;
@@ -116,8 +121,9 @@ class MB_RscText
 	style = 0;
 	shadow = 1;
 	colorShadow[] = {0,0,0,0.5};
-	font = "PuristaMedium";
-	SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	font = MB_TEXT_FONT;
+	//SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = MB_TEXT_DEFAULT;
 	linespacing = 1;
 };
 class MB_RscStructuredText
@@ -129,7 +135,7 @@ class MB_RscStructuredText
 	colorText[] = {1,1,1,1};
 	class Attributes
 	{
-		font = "PuristaMedium";
+		font = MB_TEXT_FONT;
 		color = "#ffffff";
 		align = "left";
 		shadow = 1;
@@ -139,7 +145,8 @@ class MB_RscStructuredText
 	h = GUI_GRID_H;
 	w = 0.3;
 	text = "";
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	//size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	size = MB_TEXT_DEFAULT;
 	shadow = 1;
 };
 class MB_RscPicture
@@ -150,7 +157,7 @@ class MB_RscPicture
 	style = ST_PICTURE;
 	colorBackground[] = {0,0,0,0};
 	colorText[] = {1,1,1,1};
-	font = "TahomaB";
+	font = MB_TEXT_FONT;
 	sizeEx = 0;
 	lineSpacing = 0;
 	text = "";
@@ -196,8 +203,9 @@ class MB_RscListBox
 		border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
 	};
 	style = 16;
-	font = "PuristaMedium";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	font = MB_TEXT_FONT;
+	//sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEX = MB_TEXT_DEFAULT;
 	shadow = 0;
 	colorShadow[] = {0,0,0,0.5};
 	color[] = {1,1,1,1};
@@ -220,12 +228,14 @@ class MB_RscActiveText
 	soundEnter[] = {"",0.1,1};
 	soundEscape[] = {"",0.1,1};
 	soundPush[] = {"",0.1,1};
-	font = "PuristaMedium";
+	font = MB_TEXT_FONT;
 	x = 0;
 	y = 0;
 	h = GUI_GRID_H;
 	w = 0.3;
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	//sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	size = MB_TEXT_DEFAULT;
+	sizeEx = MB_TEXT_DEFAULT;
 };
 class MB_IGUIBack
 {
@@ -234,7 +244,7 @@ class MB_IGUIBack
 	style = 128;
 	text = "";
 	colorText[] = {0,0,0,0};
-	font = "PuristaMedium";
+	font = MB_TEXT_FONT;
 	sizeEx = 0;
 	shadow = 0;
 	x = 0.1;
@@ -252,63 +262,27 @@ class MB_IGUIBack
 class MB_RscButton
 {
 	idc = -1;
-	type = 16;
-	style = "0x02 + 0xC0";
-	default = 0;
-	font = "PuristaMedium";
-	shadow = 0;
-	x = 0;
-	y = 0;
-	w = 0.095589;
-	h = 0.039216;
-	textureNoShortcut = "#(argb,8,8,3)color(0,0,0,0)";
-	animTextureNormal = "#(argb,8,8,3)color(1,1,1,1)";
-	animTextureDisabled = "#(argb,8,8,3)color(1,1,1,1)";
-	animTextureOver = "#(argb,8,8,3)color(1,1,1,0.5)";
-	animTextureFocused = "#(argb,8,8,3)color(0,0,0,0.8)";
-	animTexturePressed = "#(argb,8,8,3)color(1,1,1,1)";
-	animTextureDefault = "#(argb,8,8,3)color(0,0,0,0.8)";
-	class HitZone
-	{
-		left = 0;
-		top = 0;
-		right = 0;
-		bottom = 0;
-	};
-	colorFocused[] = {1,1,1,0.5};
-	colorBackgroundFocused[] = {0,0,0,0.8};
-	colorBackground[] = {0,0,0,0.8};
-	colorBackground2[] = {1,1,1,0.5};
-	color[] = {1,1,1,1};
-	color2[] = {1,1,1,1};
-	colorText[] = {1,1,1,1};
-	colorDisabled[] = {1,1,1,0.25};
-	period = 1.2;
-	periodFocus = 1.2;
-	periodOver = 1.2;
-	size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-	class TextPos
-	{
-		left = "0.25 * (((safezoneW / safezoneH) min 1.2) / 40)";
-		top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
-		right = 0.005;
-		bottom = 0;
-	};
-	class Attributes
-	{
-		font = "PuristaMedium";
-		color = "#E5E5E5";
-		align = "center";
-		shadow = "false";
-	};
-	class ShortcutPos
-	{
-		left = "(6.25 * (((safezoneW / safezoneH) min 1.2) / 40)) - 0.0225 - 0.005";
-		top = 0.005;
-		w = 0.0225;
-		h = 0.03;
-	};
+	type = CT_BUTTON;
+	style = ST_CENTER;
+	default = false;
+	font = MB_TEXT_FONT;
+	
+	sizeEx = MB_TEXT_DEFAULT;
+	
+	colorText[] = { 0.9, 0.9, 0.9, 1 };
+	colorFocused[] = { 0.9, 0.9, 0.9, 1 };  // border color for focused state
+	colorDisabled[] = {  0.5, 0.5, 0.5, 0.7 };   // text color for disabled state
+	colorBackground[] = { 0.1, 0.1, 0.1, 0.8 };
+	colorBackgroundDisabled[] = { 0.5, 0.5, 0.5, 0.4 };   // background color for disabled state
+	colorBackgroundActive[] = { 0, 0.75, 0, 0.9 };   // background color for active state
+	
+	offsetX = 0.005;
+	offsetY = 0.005;
+	offsetPressedX = 0.005;
+	offsetPressedY = 0.005;
+	colorShadow[] = { 0, 0, 0, 0.2 };
+	colorBorder[] = { 0, 0, 0, 1 };
+	borderSize = 0;
 	soundEnter[] = 
 	{
 		"\A3\ui_f\data\sound\RscButtonMenu\soundEnter",
@@ -333,6 +307,17 @@ class MB_RscButton
 		0.09,
 		1
 	};
+	x = 0.4; 
+	y = 0.475;
+	w = 0.2; 
+	h = 0.05;
+	text = "";
+	action = "";
+
+	tooltip = ""; // Tooltip text
+	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
 };
 
 class MB_RscEdit
@@ -341,8 +326,9 @@ class MB_RscEdit
 	type = CT_EDIT;
 	canModify = 1;
     style = "0x00 + 0x40"; 
-    font = "PuristaMedium"; 
-    sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    font = MB_TEXT_FONT; 
+    //sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+	sizeEx = MB_TEXT_DEFAULT;
 	shadow = 2;
 	x = 0; 
 	y = 0;
@@ -373,9 +359,10 @@ class MB_RscCheckbox
 	colorTextDisable[] = {0.4,0.4,0.4,1};
 	colorTextSelect[] = {0.2,1,0.2,1};
 	columns = 1;
-	font = "PuristaMedium";
+	font = MB_TEXT_FONT;
 	rows = 1;
-	sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	//sizeEx = "(			(			(			((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+	sizeEx = MB_TEXT_DEFAULT;
 	strings[] = {"UNCHECKED"};
 	tooltipColorBox[] = {1,1,1,1};
 	tooltipColorShade[] = {0,0,0,0.65};
@@ -434,20 +421,20 @@ class MB_RscMapControl
         colorGrid[] = {0.1,0.1,0.1,0.6};
         colorGridMap[] = {0.1,0.1,0.1,0.6};
 		colorText[] = {1,1,1,1};
-		font = "PuristaMedium";
-		sizeEx = 0.02;
-		size = 0.02;
-        fontLabel = "PuristaMedium";
+		font = MB_TEXT_FONT;
+		sizeEx = MB_TEXT_DEFAULT;
+		size = MB_TEXT_DEFAULT;
+        fontLabel = MB_TEXT_FONT;
         sizeExLabel = "(                        (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-        fontGrid = "TahomaB";
+        fontGrid = MB_TEXT_FONT;
         sizeExGrid = 0.02;
-        fontUnits = "TahomaB";
+        fontUnits = MB_TEXT_FONT;
         sizeExUnits = "(                        (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
         fontNames = "EtelkaNarrowMediumPro";
         sizeExNames = "(                        (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8) * 2";
-        fontInfo = "PuristaMedium";
+        fontInfo = MB_TEXT_FONT;
         sizeExInfo = "(                 (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
-        fontLevel = "TahomaB";
+        fontLevel = MB_TEXT_FONT;
         sizeExLevel = 0.02;
         text = "#(argb,8,8,3)color(1,1,1,1)";
         class Legend
@@ -456,7 +443,7 @@ class MB_RscMapControl
                 y = "SafeZoneY + safezoneH - 4.5 *                                      (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
                 w = "10 *                                       (                       ((safezoneW / safezoneH) min 1.2) / 40)";
                 h = "3.5 *                                      (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
-                font = "PuristaMedium";
+                font = MB_TEXT_FONT;
                 sizeEx = "(                     (                       (                       ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
                 colorBackground[] = {1,1,1,0.5};
                 color[] = {0,0,0,1};
@@ -768,8 +755,8 @@ class MB_RscTree {
 	colorMarked[] = {1,0.5,0,0.5}; // Marked item fill color (when multiselectEnabled is 1)
 	colorMarkedSelected[] = {1,0.5,0,1}; // Selected item fill color (when multiselectEnabled is 1)
 
-	sizeEx = 0.02; // Text size
-	font = "TahomaB"; // Font from CfgFontFamilies
+	sizeEx = MB_TEXT_DEFAULT; // Text size
+	font = MB_TEXT_FONT; // Font from CfgFontFamilies
 	shadow = 1; // Shadow (0 - none, 1 - N/A, 2 - black outline)
 	colorText[] = {1,1,1,1}; // Text color
 	colorSelectText[] = {1,1,1,1}; // Selected text color (when multiselectEnabled is 0)
@@ -847,8 +834,8 @@ class _CT_XLISTBOX
 	color[] = {1,1,1,1}; // Arrow color
 	colorActive[] = {1,0.5,0,1}; // Selected arrow color
 
-	sizeEx = 0.03; // Text size
-	font = "TahomaB"; // Font from CfgFontFamilies
+	sizeEx = MB_TEXT_DEFAULT; // Text size
+	font = MB_TEXT_FONT; // Font from CfgFontFamilies
 	shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
 	colorText[] = {1,1,1,1}; // Text color
 	colorSelect[] = {1,0.5,0,1}; // Selected text color
@@ -899,8 +886,8 @@ class _CT_COMBO
 	colorBackground[] = {0.2,0.2,0.2,1}; // Fill color
 	colorSelectBackground[] = {0,0.8,0,0.8}; // Selected item fill color
 
-	sizeEx = 0.03; // Text size
-	font = "TahomaB"; // Font from CfgFontFamilies
+	sizeEx = MB_TEXT_DEFAULT; // Text size
+	font = MB_TEXT_FONT; // Font from CfgFontFamilies
 	shadow = 0; // Shadow (0 - none, 1 - N/A, 2 - black outline)
 	colorText[] = {1,1,1,1}; // Text and frame color
 	colorDisabled[] = {1,1,1,0.5}; // Disabled text color
@@ -1007,11 +994,31 @@ class MB_RscToolbox {
   colorTextDisable[] = {0.4, 0.4, 0.4, 1};
   colorDisable[] = {0.4, 0.4, 0.4, 1};
   colorSelectedBg[] = {0.0, 0.8, 0.0, 1};
-  font = "TahomaB";
-  sizeEx = 0.03;
+  font = MB_TEXT_FONT;
+  sizeEx = MB_TEXT_DEFAULT;
 	
   rows = 3;
   columns = 2;
   strings[] = {"Entry 1","Entry 2","Entry 3","Entry 4","Entry 5","Entry 6"};
   values[] = {1,1,0,1,0,0};
+};
+
+class MB_RscBackground : MB_RscText { //--- Render out.
+	idc = -1;
+	text = "";
+	x = "SafeZoneX + (SafeZoneW * 0.8)";
+	y = "SafeZoneY + (SafezoneH * 0)";
+	w = "SafeZoneW * 0.20";
+	h = "SafeZoneH * 1";
+	colorBackground[] = {0, 0, 0, 0.3};
+};
+class MB_RscWindowHeader : MB_RscBackground { //--- Render out.
+	idc = -1;
+	text = "";
+	style = CT_MUTLI + CT_LEFT + ST_VCENTER;
+	x = "SafeZoneX + (SafeZoneW * 0.8)";
+	y = "SafeZoneY + (SafezoneH * 0)";
+	w = "SafeZoneW * 0.20";
+	h = "SafeZoneH * 1";
+	colorBackground[] = {0, 0, 0, 0.3};
 };

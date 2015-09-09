@@ -8,4 +8,3 @@ private["_object","_newArray","_corners"];
 			[_object] call MB_FNC_BBupdate;
 		};
 	};
-	call MB_fnc_updateSelectedText;

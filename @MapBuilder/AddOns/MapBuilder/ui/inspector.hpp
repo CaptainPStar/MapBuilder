@@ -18,10 +18,9 @@ class MB_Popup_ObjInspectorGroup : MB_RscControlsGroup
 			h = MB_WINDOW_GRID_Y * 17 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class Popup_ObjInspector_Header : MB_RscBackground {
+		class Popup_ObjInspector_Header : MB_RscWindowHeader {
 			idc = 170701;
 			text = "Object Inspector";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 17 + 2 * MB_WINDOW_PADDING_X;

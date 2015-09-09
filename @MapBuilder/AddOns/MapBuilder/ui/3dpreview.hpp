@@ -20,10 +20,9 @@
 			h = MB_WINDOW_GRID_Y * 14 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class MB_Window_3DPreview_Header : MB_RscBackground {
+		class MB_Window_3DPreview_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "3D Preview";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 15 + 2 * MB_WINDOW_PADDING_X;

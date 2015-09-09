@@ -3,30 +3,40 @@ disableSerialization;
 	
 	
 	_parent = (MB_Selected select (count(MB_Selected)-1));
-	_bounding = [_parent] call MB_FNC_FencerCalcBounding;
+	_boundingParent = [_parent] call MB_FNC_FencerCalcBounding;
 	
 	_parentPos = _parent getvariable "MB_ObjVar_PositionATL";
-	_maxWidth = _bounding select 1;
-	_maxLength = _bounding select 0;
+	_ParentMaxWidth = _boundingParent select 1;
+	_ParentMaxLength = _boundingParent select 0;
+	
+	
 	_dir =  _parent getvariable "MB_ObjVar_Yaw";
 	
-	_created = [(typeof _parent),_parentPos] call MB_fnc_CreateObject;
+	_created = [MB_CurClass,_parentPos] call MB_fnc_CreateObject;
 	_created setvariable ["MB_ObjVar_Yaw",_dir,false];
+	
+	_boundingCreated = [_created] call MB_FNC_FencerCalcBounding;
+	
+	_CreatedMaxWidth = _boundingCreated select 1;
+	_CreatedMaxLength = _boundingCreated select 0;
+	
+	
+	
 	
 	_direction = MB_FencerDir;
 		_offset = parseNumber (ctrlText 170410);
 	switch (_direction) do {
 		case 0: {
-			_relPos = [_parent,_created,[0,_maxLength+_offset,0]] call MB_fnc_CalcRelativePosition;
+			_relPos = [_parent,_created,[0,(_CreatedMaxLength+_ParentMaxLength)/2+_offset,0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 1: {
-			_relPos = [_parent,_created,[0,-1*(_maxLength+_offset),0]] call MB_fnc_CalcRelativePosition;
+			_relPos = [_parent,_created,[0,-1*((_CreatedMaxLength+_ParentMaxLength)/2+_offset),0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 2: {
-			_relPos = [_parent,_created,[-1*(_maxWidth+_offset),0,0]] call MB_fnc_CalcRelativePosition;
+			_relPos = [_parent,_created,[-1*((_CreatedMaxWidth+_ParentMaxWidth)/2+_offset),0,0]] call MB_fnc_CalcRelativePosition;
 		};
 		case 3: {
-			_relPos = [_parent,_created,[_maxWidth+_offset,0,0]] call MB_fnc_CalcRelativePosition;
+			_relPos = [_parent,_created,[(_CreatedMaxWidth+_ParentMaxWidth)/2+_offset,0,0]] call MB_fnc_CalcRelativePosition;
 		};
 	};
 

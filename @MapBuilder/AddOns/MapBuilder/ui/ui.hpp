@@ -10,7 +10,6 @@ class MB_Main
 	class controlsBackground {
 		class Rsc_MouseArea : MB_RscText {
 			idc = 170001;
-			style = ST_MULTI;
 			
 			x = "safezoneX";
 			y = "safezoneY";
@@ -44,7 +43,7 @@ class MB_Main
 	};
 	class controls {
 		class RscObject;
-		class MB_RscBackground : MB_RscText { //--- Render out.
+		class MB_MainBackground : MB_RscText { //--- Render out.
 			idc = 170002;
 			text = "";
 			x = "SafeZoneX + (SafeZoneW * 0.8)";
@@ -55,13 +54,13 @@ class MB_Main
 			onMouseExit = "[false] call MB_fnc_MouseInView;";
 			onMouseEnter = "[true] call MB_fnc_MouseInView;";
 		};
-		class listboxA : MB_RscTree {
+		class MB_ObjectLibrary : MB_RscTree {
 			idc = 170003;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
 			y = "SafeZoneY + (SafezoneH * 0.02)";
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.29";
-			sizeEx = 0.03;
+			sizeEx = 0.035;
 			colorBackground[] = {0, 0.8, 0, 0.5};
 			onTreeSelChanged = "_this call MB_fnc_LibrarySelect;";
 			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
@@ -168,6 +167,7 @@ class MB_Main
 			strings[] = {"Objects","Brusher"};
 			values[] = {0,1};
 			onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;";
+			tooltip = "Objects: Select and move objects | Brusher: 'Draw' a dynamic/random set of objects.";
 		};
 		class MB_FencerButton : MB_RscButton {
 			idc = -1;
@@ -212,8 +212,8 @@ class MB_Main
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
 			text = "Save/Load Project";
-			//action = "[] call MB_fnc_ShowProjectWindow;";
-			action = "[] call MB_fnc_ShowProjects;";
+			action = "[] call MB_fnc_ShowProjectWindow;";
+			//action = "[] call MB_fnc_ShowProjects;";
 		};
 		class ProjectSettingsButton : MB_RscButton {
 			idc = -1;
@@ -249,10 +249,19 @@ class MB_Main
 		class MB_Taskbar_Position : MB_RscText { //--- Render out.
 			idc = 171011;
 			text = "Position: 0/0/0";
-			x = "SafeZoneX + (SafeZoneW * 0.5)";
+			x = "SafeZoneX + (SafeZoneW * 0.3)";
 			y = "SafeZoneY + (SafezoneH * 0.97)";
 			w = "SafeZoneW * 0.16";
 			h = "SafeZoneH * 0.03";
+		};
+		class MB_Taskbar_ObjectsTotal : MB_RscText { //--- Render out.
+			idc = 171013;
+			text = "0 Objects";
+			x = "SafeZoneX + (SafeZoneW * 0.5)";
+			y = "SafeZoneY + (SafezoneH * 0.97)";
+			w = "SafeZoneW * 0.08";
+			h = "SafeZoneH * 0.03";
+			toolip = "Blah";
 		};
 		class MB_Taskbar_Selected : MB_RscText { //--- Render out.
 			idc = 171012;
@@ -270,6 +279,16 @@ class MB_Main
 			h = "SafeZoneH * 0.02";
 			text = "Refresh Config/Scripts";
 			action = "closeDialog 0;[] call MB_fnc_refreshConfig;";
+		};
+		class MB_Chatbox : MB_RscEdit {
+			idc = 171014;
+			text = "";
+			x = "SafeZoneX + (SafeZoneW * 0.02)";
+			y = "SafeZoneY + (SafezoneH * 0.9)";
+			w = "SafeZoneW * 0.3";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0,0,0,0.75};
+			onKeyDown = "if((_this select 1) == 28) then {[] spawn MB_FNC_ChatSend;};false;";
 		};
 		
 		//###################
@@ -306,100 +325,6 @@ class MB_Main
 			h = "SafeZoneH * 0.02";
 			colorBackground[] = {0,0.75,0,0.75};
 			action = "[3,false] call MB_fnc_togglePopup;";
-		};
-		//###################
-		//	Save/load Project
-		//###################
-		
-		class Popup_ProjectsBG : MB_RscBackground {
-			idc = 170201;
-			text = "";
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.4";
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class Popup_ProjectsHeader : MB_RscBackground {
-			idc = 170202;
-			text = "Save/Load Projects";
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-		};
-		class Popup_ProjectsHeaderClose : MB_RscActiveText {
-			idc = 170203;
-			text = "X";
-			x = "SafeZoneX + (SafeZoneW * 0.585)";
-			y = "SafeZoneY + (SafezoneH * 0.4)";
-			w = "SafeZoneW * 0.02";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-			action = "[2,false] call MB_fnc_togglePopup;";
-		};
-		class Popup_ProjectsList : MB_RscListBox {
-			idc = 170204;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.45)";
-			w = "SafeZoneW * 0.3";
-			h = "SafeZoneH * 0.2";
-			onLBSelChanged="call MB_fnc_ProjectsPopupSelect;";//--- action/function to call when listbox or combobox has been changed
-            onLBDblClick="call MB_fnc_ProjectsPopupSelect;";//--- action/function to call when listbox or combobox has been double clicked
-		};
-		class Popup_ProjectsFilename : MB_RscEdit {
-			idc = 170205;
-			text = "";
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.68)";
-			w = "SafeZoneW * 0.2";
-			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-		};
-		class Popup_ProjectsSaveButton : MB_RscButton {
-			idc = 170206;
-			x = "SafeZoneX + (SafeZoneW * 0.21)";
-			y = "SafeZoneY + (SafezoneH * 0.72)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Save";
-			action = "[ctrlText 170205] spawn MB_fnc_saveProject;";
-		};
-		class Popup_ProjectsLoadButton : MB_RscButton {
-			idc = 170207;
-			x = "SafeZoneX + (SafeZoneW * 0.39)";
-			y = "SafeZoneY + (SafezoneH * 0.72)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Load";
-			action = "[ctrlText 170205] spawn MB_fnc_loadProject;";
-		};
-		class Popup_ProjectsHelptext : MB_RscText {
-			idc = 170208;
-			x = "SafeZoneX + (SafeZoneW * 0.25)";
-			y = "SafeZoneY + (SafezoneH * 0.42)";
-			w = "SafeZoneW * 0.3";
-			h = "SafeZoneH * 0.02";
-			text = "Existing projects:";
-		};
-		class Popup_ProjectsImportButton : MB_RscButton {
-			idc = 170209;
-			x = "SafeZoneX + (SafeZoneW * 0.30)";
-			y = "SafeZoneY + (SafezoneH * 0.72)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Import";
-			action = "[ctrlText 170205] spawn MB_fnc_importProject;";
-		};
-		class Popup_ProjectsClearButton : MB_RscButton {
-			idc = 170210;
-			x = "SafeZoneX + (SafeZoneW * 0.48)";
-			y = "SafeZoneY + (SafezoneH * 0.72)";
-			w = "SafeZoneW * 0.08";
-			h = "SafeZoneH * 0.03";
-			text = "Clear";
-			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
 		};
 		#include "fencer.hpp"		
 		#include "presets.hpp"

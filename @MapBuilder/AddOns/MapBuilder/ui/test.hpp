@@ -17,10 +17,9 @@ class MB_Popup_TestGroup : MB_RscControlsGroup
 			h = MB_WINDOW_GRID_Y * 11;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class Popup_TestHeader : MB_RscBackground {
+		class Popup_TestHeader : MB_RscWindowHeader {
 			idc = -1;
 			text = "Moveable Window";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 11;

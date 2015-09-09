@@ -47,10 +47,9 @@
 			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class MB_Window_Brusher_Header : MB_RscBackground {
+		class MB_Window_Brusher_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "Brushes";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 47 + 2 * MB_WINDOW_PADDING_X;
@@ -72,7 +71,6 @@
 		class MB_Window_Brusher_X : MB_RscActiveText {
 			idc = -1;
 			text = "X";
-			style = ST_MULTI;
 			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 47;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 1;
@@ -536,7 +534,7 @@
 			w = MB_WINDOW_GRID_X * 2;
 			h = MB_WINDOW_GRID_Y * 1;
 			action = "[] call MB_fnc_brusherAddObject;";
-			tooltip = "Adds the current objecttype to this template.";
+			tooltip = "Add the current objecttype to this template.";
 		};
 		class MB_Window_Brusher_ObjectRemove : MB_RscButton {
 			idc = -1;

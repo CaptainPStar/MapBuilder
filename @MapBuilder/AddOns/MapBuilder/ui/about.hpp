@@ -22,10 +22,9 @@
 			h = MB_WINDOW_GRID_Y * 17 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class MB_Window_About_Header : MB_RscBackground {
+		class MB_Window_About_Header : MB_RscWindowHeader {
 			idc = -1;
 			text = "About Map Builder";
-			style = ST_MULTI;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 17 + 2 * MB_WINDOW_PADDING_X;
@@ -47,7 +46,6 @@
 		class MB_Window_About_X : MB_RscActiveText {
 			idc = -1;
 			text = "X";
-			style = ST_MULTI;
 			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 17;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 1;
