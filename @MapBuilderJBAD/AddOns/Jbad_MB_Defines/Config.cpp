@@ -85,6 +85,12 @@ class CfgVehicleClasses
 		mapbuilder_library = "JBAD";
 		mapbuilder_displayname = "Bushes";
 	};
+	class MB_Jbad_Powerlines
+	{
+		displayName = "Jbad Powerlines";
+		mapbuilder_library = "JBAD";
+		mapbuilder_displayname = "Powerlines";
+	};
 };
 
 class CfgVehicles
@@ -312,6 +318,110 @@ class CfgVehicles
 		vehicleClass = "jbad_Bushes";
 		displayName = "jbad_b_PistaciaL1s";
 		model = "\Jbad_Veg\plants\Bush\jbad_b_PistaciaL1s.p3d";
+	};
+	class MB_Jbad_Powerlines: Static
+	{
+		displayName = "";
+		accuracy = 1000;
+		vehicleClass = "MB_Jbad_Powerlines";
+		model = "";
+		nameSound = "";
+		animated = 0;
+		simulation = "house";
+		cost = 0;
+		armor = 1000;
+		ladders[] = {};
+		placement = "vertical";
+	};
+	class Jbad_PowLine_wire_A_left: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLine_wire_A_left";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLine_wire_A_left.p3d";
+	};
+	class Jbad_PowLine_wire_A_right: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLine_wire_A_right";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLine_wire_A_right.p3d";
+	};
+	class Jbad_PowLine_wire_AB: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLine_wire_AB";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLine_wire_AB.p3d";
+	};
+	class Jbad_PowLine_wire_BB: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLine_wire_BB";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLine_wire_BB.p3d";
+	};
+	class Jbad_PowLineA: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLineA";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLineA.p3d";
+	};
+	class Jbad_PowLineB: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLineB";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLineB.p3d";
+	};
+	class Jbad_PowLines_Conc1: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLines_Conc1";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLines_Conc1.p3d";
+	};
+	class Jbad_PowLines_Conc2: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLines_Conc2";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLines_Conc2.p3d";
+	};
+	class Jbad_PowLines_Conc2A: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLines_Conc2A";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLines_Conc2A.p3d";
+	};
+	class Jbad_PowLines_Conc2L: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLines_Conc2L";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLines_Conc2L.p3d";
+	};
+	class Jbad_PowLines_Transformer1: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_PowLines_Transformer1";
+		model = "\jbad_misc\Misc_Powerline\Jbad_PowLines_Transformer1.p3d";
+	};
+	class Jbad_metalcrate: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_metalcrate";
+		model = "\jbad_misc\Misc_Cases\metalcrate\Jbad_metalcrate.p3d";
+	};
+	class Jbad_metalcase_01: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_metalcase_01";
+		model = "\jbad_misc\Misc_Generalstore\Jbad_metalcase_01.p3d";
+	};
+	class Jbad_metalcase_02: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_metalcase_02";
+		model = "\jbad_misc\Misc_Generalstore\Jbad_metalcase_02.p3d";
+	};
+	class Jbad_rubble_wood_girder: MB_Jbad_Powerlines
+	{
+		scope = 2;
+		displayName = "Jbad_rubble_wood_girder";
+		model = "\Jbad_Structures\mil\proxies\rubble_wood_girder.p3d";
 	};
 };
 //};

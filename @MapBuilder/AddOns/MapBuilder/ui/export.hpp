@@ -1,53 +1,11 @@
-class MB_Window_Export_Group : MB_RscControlsGroup
-{
-	idc = 170100;
-	x = "SafeZoneX + (SafeZoneW * 0.35)";
-	y = "SafeZoneY + (SafezoneH * 0.35)";
-	w = MB_WINDOW_GRID_X * 24 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 10 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class MB_Window_Export_BG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 24 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class MB_Window_Export_Header : MB_RscWindowHeader {
-			idc = -1;
-			text = "Export objects";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 23 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170100] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170100] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170100] call MB_fnc_updateWindowDrag;";
-		};
-		class MB_Window_Export_XBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 23;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class MB_Window_Export_X : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 23;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[170100,true] spawn MB_fnc_closeWindow;";
-		};
-		
+#define IDC 170100
+#define NAME Export
+#define TITLE Export
+BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,10)
+		WINDOW_HEADER(NAME,IDC,TITLE,22)
+		WINDOW_CLOSE(NAME,IDC,23)
+		WINDOW_HELP(NAME,IDC,"Export",22)
+		WINDOW_BACKGROUND(NAME,0,1,24,9)
 		class MB_Window_Export_FilenameText : MB_RscText {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
@@ -105,13 +63,22 @@ class MB_Window_Export_Group : MB_RscControlsGroup
 			action = "[ctrlText 170105] spawn MB_fnc_exportTML;";
 			tooptip = "Export used objectclasses as TB template library. Helpful when exporting to TB.";
 		};
+		class MB_Window_Export_EditorImport : MB_RscButton {
+			idc = -1;
+			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 12;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 6 + 0.001  + 0.06;
+			w = MB_WINDOW_GRID_X * 8;
+			h = MB_WINDOW_GRID_Y * 1;
+			text = "Import Static";
+			action = "[] spawn MB_fnc_importFromEditor;";
+			tooptip = "Import all mission/script placed static objects into MB project.";
+		};
 		class MB_Window_Export_Helptext2 : MB_RscText {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 8 + 0.001;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9 + 0.001;
 			w = MB_WINDOW_GRID_X * 18;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Exported files can be found in @MapBuilder/export.";
 		};
-	};
-};
+END_WINDOW

@@ -2,9 +2,8 @@ private["_filename"];
 //startLoadingScreen ["Loading project..."];
 _filename = [_this,0,"brush"] call bis_fnc_param;
 if(_filename == "") exitWith {systemChat "Error: Can't load a brush without name!";};
-_projectFolder = ("MB_FileIO" callExtension "listfiles|brushes");
-_projects = [_projectFolder,"|"] call BIS_fnc_splitString;
-if((_projects find format["%1.brush",_filename])==-1) exitwith {
+
+if(!(["brushes",format["%1.brush",_filename]] call MB_FNC_FileExists)) exitwith {
 	systemChat "Error: Brush not found!";
 };
 MB_CurBrush = [];
@@ -20,6 +19,10 @@ while{_line != "EOF"} do {
 		case "settings": {
 			MB_BrushWidth = (_arr select 1) select 0;
 			MB_BrushCamFollow  = (_arr select 1) select 1;
+			//if(count((_arr select 1))>2) then { //Legacy check
+			//	MB_BrushCamFollowAngleLock = (_arr select 1) select 2;
+			//};
+			
 		};
 		case "template": {
 			MB_CurBrush pushBack (_arr select 1);

@@ -1,3 +1,4 @@
+#include "\MB\MapBuilder\ui\dik.hpp"
 private["_display","_ctrl","_class"];
 	disableSerialization;
 	_display = uinamespace getvariable 'mb_main_dialog';

@@ -44,12 +44,13 @@
 	[] call MB_fnc_updateUsed;
 	//[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
-	[] call MB_fnc_hidePresetWindow;
+	//[] call MB_fnc_hidePresetWindow;
 	[666] spawn MB_fnc_closeWindow;
 	
 	[170100,true] spawn MB_fnc_closeWindow;
-	[170200,true] spawn MB_fnc_closeWindow;
+	[170200,true] spawn MB_fnc_closeWindow; //Projects
 	[170400,true] spawn MB_fnc_closeWindow;
+	[170500,true] spawn MB_fnc_closeWindow; //Presets
 	[170600,true] spawn MB_fnc_closeWindow;
 	[170700,true] spawn MB_fnc_closeWindow;
 	[170800,true] spawn MB_fnc_closeWindow;
@@ -57,6 +58,7 @@
 	[171000,true] spawn MB_fnc_closeWindow;
 	[171100,true] spawn MB_fnc_closeWindow;
 	[171200,true] spawn MB_fnc_closeWindow;
+	[false] call MB_fnc_toggleMap;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	//["What?"] spawn MB_fnc_showPopupDialog;

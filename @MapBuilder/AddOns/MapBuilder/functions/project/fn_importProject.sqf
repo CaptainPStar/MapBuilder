@@ -1,19 +1,12 @@
 private["_filename"];
-	//startLoadingScreen ["Loading project..."];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Can't load a project without name!";};
-	_projectFolder = ("MB_FileIO" callExtension "listfiles|projects");
-	_projects = [_projectFolder,"|"] call BIS_fnc_splitString;
-	if((_projects find format["%1.mbproj",_filename])==-1) exitwith {
-		//Load old file here
-		if((_projects find format["%1.mbp",_filename])==-1) then {
-			systemChat "Error: Project not found!";
-		} else {
-			systemChat "Loading old project format.";
-			[_filename] spawn MB_fnc_importProjectOld;
-		};
+	
+	if(!(["projects",format["%1.mbproj",_filename]] call MB_FNC_FileExists)) exitwith {
+		systemChat "Error: Project not found!";
 	};
-	[2,false] call MB_fnc_togglePopup;
+
+	startLoadingScreen ["Loading project..."];
 	_path = ("MB_FileIO" callExtension format["open_r|projects\%1.mbproj",_filename]);
 	systemChat format["Opening %1",_path];
 	
@@ -28,7 +21,9 @@ private["_filename"];
 				_type = (_arr select 1) select 0;
 				_vars =  (_arr select 1) select 1;
 				_obj = [_type,_vars select 0] call MB_fnc_CreateObject;
-				[_obj,_vars] call MB_fnc_setObjVars;
+				if(!isNull _obj) then {
+					[_obj,_vars] call MB_fnc_setObjVars;
+				};
 			};
 			case "favoriteObj": {
 				//Load a favorited object
@@ -42,6 +37,7 @@ private["_filename"];
 		//systemchat format["[%1,%2,%3]",parseNumber (_object select 2),parseNumber (_object select 3),parseNumber (_object select 4)];
 		_line = "MB_FileIO" callExtension "readline";
 	};
-	systemChat ("MB_FileIO" callExtension "close");
+	"MB_FileIO" callExtension "close";
 	[] call MB_fnc_updateUsed;
+	endLoadingScreen;
 	systemchat format["Project loaded/imported!"];

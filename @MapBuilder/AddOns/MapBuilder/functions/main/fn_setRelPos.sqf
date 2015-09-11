@@ -7,9 +7,9 @@ private["_parent","_child","_offset","_dir","_localPos","_worldPos","_height"];
 
 
 	//get the anchor position
-	_localPos = [_parent worldToModel (getPosATL _parent),_offset] call BIS_fnc_vectorAdd; //vectorADD
+	_localPos = (_parent worldToModel (getPosATL _parent)) vectorAdd _offset; //vectorADD
 	_worldPos = _parent modelToWorld _localPos;
 	//_worldPos = ATLtoASL _worldPos;
 
-	_child setPosATL [_worldPos select 0,_worldPos select 1, _height];
+	_child setPosATL [_worldPos select 0,_worldPos select 1, _worldPos select 2];
 	//_child setDir ((getDir _parent) + _dir);

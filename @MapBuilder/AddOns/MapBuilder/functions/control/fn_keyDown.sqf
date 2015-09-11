@@ -19,7 +19,11 @@
 		[] call MB_fnc_DeleteSelected;
 	};
 	if(_dikCode == DIK_ESCAPE) exitwith {
-		closeDialog 0;
+		if([] call MB_FNC_mapOpen) then {
+			[false] call MB_fnc_toggleMap;
+		} else {
+			closeDialog 0;
+		};
 	};
 	//if(_dikCode == DIK_T) exitwith {
 		//[] call	MB_fnc_ToggleMode;
@@ -34,7 +38,7 @@
 		[] call MB_fnc_Paste;
 	};
 	if(_dikCode == DIK_M) exitwith {
-		[3] call MB_fnc_togglePopup;
+		[] call MB_fnc_toggleMap;
 	};
 	
 	if([DIK_LCONTROL] call MB_fnc_isPressed && _dikCode == DIK_T) exitwith {
@@ -78,7 +82,24 @@
 			["Right",_factor] call MB_fnc_MoveSelection;
 		};
 	};
-	
+	if(_dikCode == DIK_NUMPAD7) exitwith {
+		["north"] call MB_fnc_applyCamPreset;
+	};
+	if(_dikCode == DIK_NUMPAD9) exitwith {
+		["east"] call MB_fnc_applyCamPreset;
+	};
+	if(_dikCode == DIK_NUMPAD3) exitwith {
+		["south"] call MB_fnc_applyCamPreset;
+	};
+	if(_dikCode == DIK_NUMPAD1) exitwith {
+		["west"] call MB_fnc_applyCamPreset;
+	};
+	if(_dikCode == DIK_NUMPAD5) exitwith {
+		["top"] call MB_fnc_applyCamPreset;
+	};
+	if(_dikCode == DIK_NUMPAD0) exitwith {
+		["45"] call MB_fnc_applyCamPreset;
+	};
 	if(_dikCode == DIK_SLASH) exitwith {
 		[] spawn MB_FNC_ChatToggle;
 	};

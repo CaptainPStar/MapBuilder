@@ -1,9 +1,16 @@
 private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_type","_refObj"];
+_filename = [_this,0,"Unknown_Preset"] call bis_fnc_param;
+if(_filename == "") exitWith {systemChat "Error: Preset needs a name!";endLoadingScreen;};
+
+
+_folder = ["presets"] call mb_fnc_getFolderContent;
+_confirmed = true;
+if(format["%1.mbpre",_filename] in _folder) then {
+	_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
+};
+
+if(_confirmed) then {
 	startLoadingScreen ["Saving preset..."];
-	_filename = [_this,0,"Unknown_Preset"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Preset needs a name!";endLoadingScreen;};
-	MB_ProjectName = _filename;
-	[] call MB_fnc_hidePresetWindow;
 	_path = ("MB_FileIO" callExtension format["open_w|presets\%1.mbpre",_filename]);
 	systemChat format["Opening %1",_path];
 	_count = 0;
@@ -29,8 +36,7 @@ private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_t
 			};
 			_layer = 0;
 			_string = format["write|%1;%2;%3;%4;%5;%6;%7;%8;%9",_layer,_type,(_offset select 0),(_offset select 1),(_offset select 2),_yaw,_pitch,_bank,_scale];
-			systemChat _string;
-			systemChat ("MB_FileIO" callExtension _string);
+			"MB_FileIO" callExtension _string;
 		};
 		_count = _count + 1;
 		//progressLoadingScreen (_count/count(MB_Selected));
@@ -38,3 +44,5 @@ private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_t
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["Preset saved!"];
 	endLoadingScreen;
+	[] call MB_FNC_refreshPresetList;
+};

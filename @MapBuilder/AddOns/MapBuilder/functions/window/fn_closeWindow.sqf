@@ -1,4 +1,3 @@
-
 	disableSerialization;
 	_idc = _this select 0;
 	_instant = [_this,1,true] call bis_fnc_param; 

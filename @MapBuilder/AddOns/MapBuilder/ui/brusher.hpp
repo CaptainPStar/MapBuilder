@@ -1,16 +1,12 @@
-//###################
-//	Infopopup
-//###################
- class MB_Window_Brusher_Group : MB_RscControlsGroup
-{
-	idc = 171200;
-	x = "SafeZoneX + (SafeZoneW * 0.05)";
-	y = "SafeZoneY + (SafezoneH * 0.05)";
-	w = MB_WINDOW_GRID_X * 48 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 30 + 2*MB_WINDOW_PADDING_Y + 0.01;
+#define IDC 171200
+#define NAME Brusher
+#define TITLE Brushes
+BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
+		WINDOW_HEADER(NAME,IDC,TITLE,46)
+		WINDOW_CLOSE(NAME,IDC,47)
+		WINDOW_HELP(NAME,IDC,"Brusher",46)
 
-	class Controls
-	{
+
 		class MB_Window_Brusher_BG1 : MB_RscBackground {
 			idc = -1;
 			text = "";
@@ -47,51 +43,15 @@
 			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.2,0.2,0.2,0.75};
 		};
-		class MB_Window_Brusher_Header : MB_RscWindowHeader {
-			idc = -1;
-			text = "Brushes";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 47 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,171200] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,171200] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,171200] call MB_fnc_updateWindowDrag;";
-		};
-		class MB_Window_Brusher_XBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 47;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class MB_Window_Brusher_X : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 47;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[171200,true] spawn MB_fnc_closeWindow;";
-		};
 		class MB_Window_Brusher_FileLabel : MB_RscText {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 4;
-			h = MB_WINDOW_GRID_Y * 1;
+			WINDOW_POSITION(0,1,4,1)
 			text =  "Brushes:";
 			tooltip = "A list of brushfiles from the 'brushes'-folder.";
 		};
 		class MB_Window_Brusher_FileList : MB_RscTree {
 			idc = 171201;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 2;
-			w = MB_WINDOW_GRID_X * 12;
-			h = MB_WINDOW_GRID_Y * 23;
+			WINDOW_POSITION(0,2,12,23)
 			sizeEx = 0.03;
 			colorBackground[] = {0, 0.8, 0, 0.5};
 			onTreeSelChanged = "call mb_fnc_brusherSelectFile;";
@@ -100,38 +60,26 @@
 		class MB_Window_Brusher_FileNameEdit: MB_RscEdit {
 			idc = 171220;
 			text = "";
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 25;
-			w = MB_WINDOW_GRID_X * 12;
-			h = MB_WINDOW_GRID_Y * 1;
+			WINDOW_POSITION(0,25,12,1)
 			tooltip = "Enter name of a file to load/save.";
 		};
 		class MB_Window_Brusher_LoadButton : MB_RscButton {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 27;
-			w = MB_WINDOW_GRID_X * 4;
-			h = MB_WINDOW_GRID_Y * 1;
+			WINDOW_POSITION(1,27,4,1)
 			text = "Load";
 			action = "[ctrlText 171220] spawn MB_fnc_loadBrush;";
 			tooltip = "Loads a brush from the current selected file.";
 		};
 		class MB_Window_Brusher_SaveButton : MB_RscButton {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 6;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 27;
-			w = MB_WINDOW_GRID_X * 4;
-			h = MB_WINDOW_GRID_Y * 1;
+			WINDOW_POSITION(6,27,4,1)
 			text = "Save";
 			action = "[ctrlText 171220] spawn MB_fnc_saveBrush;";
 			tooltip = "Saves brush to the current selected file or creates new file.";
 		}; 
 		class MB_Window_Brusher_TemplatesLabel : MB_RscText {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 13;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 6;
-			h = MB_WINDOW_GRID_Y * 1;
+			WINDOW_POSITION(13,1,6,1)
 			text =  "Obj. Templates:";
 			//text = "";
 			tooltip = "A template defines an object with specific placements and rnd. values in a brush.";
@@ -159,7 +107,7 @@
 		};
 		class MB_Window_Brusher_TemplateRemove: MB_RscButton {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 20
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 20;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
@@ -169,7 +117,7 @@
 		};
 		class MB_Window_Brusher_TemplateCopy: MB_RscButton {
 			idc = -1;
-			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 26
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 26;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
@@ -253,12 +201,32 @@
 			h = MB_WINDOW_GRID_Y * 1;
 			checked_strings[] = {"Yes"};
 			strings[] = {"No"};
+			tooltip="If 'Yes' the camera will follow the mouse/brush.";
 		};
+		/*class MB_Window_Brusher_Settings_CamFollowAngleLabel: MB_RscText {
+		//	idc = -1;
+		//	x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 39;
+		//	y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
+		//	w = MB_WINDOW_GRID_X * 4;
+		//	h = MB_WINDOW_GRID_Y * 1;
+		//	text =  "Lock Angle:";
+		//	style = 0;
+		//};
+		class MB_Window_Brusher_Settings_CamFollowAngle : MB_RscCheckbox {
+			idc = 171223;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 44;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
+			w = MB_WINDOW_GRID_X * 2;
+			h = MB_WINDOW_GRID_Y * 1;
+			checked_strings[] = {"Yes"};
+			strings[] = {"No"};
+			tooltip="Works in conjunction with 'Cam Follow'. The camera will also maintain the relative angle to brush direction.";
+		};*/
 		class MB_Window_Brusher_ApplySettingsButton : MB_RscButton {
 			idc = -1;
 			text = "Apply";
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 39;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 8;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
 			w = MB_WINDOW_GRID_X * 6;
 			h = MB_WINDOW_GRID_Y * 1;
 			action = "[] call MB_fnc_brusherApplySettings;";
@@ -607,5 +575,4 @@
 			text =  "Hint: ArmA's object creation is slow. Be patient and draw brushes slowly!";
 			style = 0;
 		};
-	};
-};
+END_WINDOW

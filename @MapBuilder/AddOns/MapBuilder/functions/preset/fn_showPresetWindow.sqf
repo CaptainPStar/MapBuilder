@@ -4,20 +4,8 @@ private["_display","_ctrl"];
 	_ctrl = _display displayCtrl 170500;
 	
 	if(!ctrlShown _ctrl) then {
-		_ctrl ctrlShow true;
-		
-		_listbox = _display displayCtrl 170501;
-		_presetFolder = ("MB_FileIO" callExtension "listfiles|presets");
-		_presetFolder = [_presetFolder,"|"] call BIS_fnc_splitString;
-		_presetFolder = _presetFolder - ["."];
-		_presetFolder = _presetFolder - [".."];
-		lbClear _listbox;
-		{
-			_name = [_x,"."] call BIS_fnc_splitString;
-			_index =_listBox lbAdd (_name select 0);
-			_listbox lbSetData [_index, (_name select 0)];
-		} foreach _presetFolder;
-		lbsort _listbox;
+		[170500,false] spawn MB_fnc_openWindow;
+		[] call MB_FNC_refreshPresetList;
 	} else {
-		[] call MB_fnc_hidePresetWindow;
+		[170500,false] spawn MB_fnc_closeWindow;
 	};

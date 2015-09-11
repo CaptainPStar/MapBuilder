@@ -1,53 +1,11 @@
-
-class MB_Popup_ObjInspectorGroup : MB_RscControlsGroup
-{
-	idc = 170700;
-	x = "SafeZoneX + (SafeZoneW * 0.5)";
-	y = "SafeZoneY + (SafezoneH * 0.7)";
-	w = MB_WINDOW_GRID_X * 18 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 18 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class Popup_ObjInspector_BG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 18 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 17 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class Popup_ObjInspector_Header : MB_RscWindowHeader {
-			idc = 170701;
-			text = "Object Inspector";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 17 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170700] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170700] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170700] call MB_fnc_updateWindowDrag;";
-		};
-		class Popup_ObjInspector_HeaderXBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 17;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class Popup_ObjInspector_HeaderX : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 17;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[] call MB_fnc_InspectorClose;";
-		};
+#define IDC 170700
+#define NAME ObjectInspector
+#define TITLE Object Inspector
+BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,18,18)
+		WINDOW_HEADER(NAME,IDC,TITLE,16)
+		WINDOW_CLOSE(NAME,IDC,17)
+		WINDOW_HELP(NAME,IDC,"Object_Inspector",16)
+		WINDOW_BACKGROUND(NAME,0,1,18,17)
 		class Popup_ObjInspector_XPosLabel : MB_RscText {
 			idc = -1;
 			text = "Pos X: ";
@@ -196,5 +154,4 @@ class MB_Popup_ObjInspectorGroup : MB_RscControlsGroup
 			h = MB_WINDOW_GRID_Y * 1;
 			action = "[] call MB_fnc_closeInspector;";
 		};
-	};
-};
+END_WINDOW

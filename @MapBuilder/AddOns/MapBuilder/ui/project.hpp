@@ -1,57 +1,13 @@
-		//###################
-		//	Save/load Project
-		//###################
- class MB_ProjectWindowGroup : MB_RscControlsGroup
-{
-	idc = 170200;
-	x = "SafeZoneX + (SafeZoneW * 0.25)";
-	y = "SafeZoneY + (SafezoneH * 0.3)";
-	w = MB_WINDOW_GRID_X * 28 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 18 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class MB_ProjectWindowBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 28 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 17 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class MB_ProjectWindowHeader : MB_RscWindowHeader {
-			idc = -1;
-			text = "Save/Load Projects";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 27 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170200] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170200] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170200] call MB_fnc_updateWindowDrag;";
-		};
-		class MB_ProjectWindowXBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 27;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class MB_ProjectWindowX : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 27;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[] spawn fn_showProjectWindow;";
-		};
+#define IDC 170200
+#define NAME Project
+#define TITLE Save/Load Projects
+BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
+		WINDOW_HEADER(NAME,IDC,TITLE,26)
+		WINDOW_CLOSE(NAME,IDC,27)
+		WINDOW_HELP(NAME,IDC,"Project_Save_and_Load",26)
+		WINDOW_BACKGROUND(NAME,0,1,28,17)
 		class Popup_ProjectsListLabel : MB_RscText {
-			idc = 170204;
+			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 1;
 			w = MB_WINDOW_GRID_X * 8;
@@ -124,5 +80,4 @@
 			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
 			tooltip = "Clear current project.";
 		};
-	};
-};
+END_WINDOW

@@ -8,18 +8,23 @@ disableSerialization;
 	_parentPos = _parent getvariable "MB_ObjVar_PositionATL";
 	_ParentMaxWidth = _boundingParent select 1;
 	_ParentMaxLength = _boundingParent select 0;
-	
+	_ParentMaxHeight = _boundingParent select 2;
 	
 	_dir =  _parent getvariable "MB_ObjVar_Yaw";
 	
+	
 	_created = [MB_CurClass,_parentPos] call MB_fnc_CreateObject;
 	_created setvariable ["MB_ObjVar_Yaw",_dir,false];
+	_created setvariable ["MB_ObjVar_Bank",(_parent getvariable ["MB_ObjVar_Bank",false]),false];
+	_created setvariable ["MB_ObjVar_Pitch",(_parent getvariable ["MB_ObjVar_Pitch",false]),false];
+	_created setvariable ["MB_ObjVar_Simulate",(_parent getvariable ["MB_ObjVar_Simulate",false]),false];
+	_created setvariable ["MB_ObjVar_Locked",(_parent getvariable ["MB_ObjVar_Locked",false]),false];
 	
 	_boundingCreated = [_created] call MB_FNC_FencerCalcBounding;
 	
 	_CreatedMaxWidth = _boundingCreated select 1;
 	_CreatedMaxLength = _boundingCreated select 0;
-	
+	_CreatedMaxHeight = _boundingCreated select 2;
 	
 	
 	
@@ -38,27 +43,37 @@ disableSerialization;
 		case 3: {
 			_relPos = [_parent,_created,[(_CreatedMaxWidth+_ParentMaxWidth)/2+_offset,0,0]] call MB_fnc_CalcRelativePosition;
 		};
+		case 4: {
+			_relPos = getPosATL _parent;
+			_relPos set[2,(_relPos select 2)+_ParentMaxHeight+_offset];
+		};
+		case 5: {
+			_relPos = getPosATL _parent;
+			_relPos set[2,(_relPos select 2)-_CreatedMaxHeight-_offset];
+		};
 	};
 
-	switch (MB_FencerHeightMode) do {
-		case 0: {
-			//Do Nothing. It is already ATL
-			_relPos set [2,_parentPos select 2];
-			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
-		};
-		case 1: {
-			//Height to Zero
-			_relPos set [2,0];
-			_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
-		};
-		case 2: {
-			//Get the ASL Pos and transform to ATL at new position
-			_relPos set [2,(getposASL _parent) select 2];
-			_created setvariable ["MB_ObjVar_PositionATL",ASLtoATL _relPos,false];
-		};
-
-	};	
-	
+	if(_direction<4) then {
+		switch (MB_FencerHeightMode) do {
+			case 0: {
+				//Do Nothing. It is already ATL
+				_relPos set [2,_parentPos select 2];
+				_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
+			};
+			case 1: {
+				//Height to Zero
+				_relPos set [2,0];
+				_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
+			};
+			case 2: {
+				//Get the ASL Pos and transform to ATL at new position
+				_relPos set [2,(getposASL _parent) select 2];
+				_created setvariable ["MB_ObjVar_PositionATL",ASLtoATL _relPos,false];
+			};
+		};	
+	} else {
+		_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
+	};
 	
 
 	_display = uinamespace getvariable 'mb_main_dialog';

@@ -17,5 +17,5 @@ private["_obj","_direction","_box","_dir","_pos"];
 	_maxHeight = abs ((_p2 select 2) - (_p1 select 2));
 	
 	
-	_return = [_maxLength,_maxWidth];
+	_return = [_maxLength,_maxWidth,_maxHeight];
 	_return;

@@ -11,6 +11,7 @@ private["_obj","_class","_pos","_dir","_uid","_var","_sync","_base","_box"];
 	_var = format["MB_Object_UID%1",_uid];
 	if(!isNil _var) exitwith {
 		systemChat format["Error: Object with ID %1 can't be created. Already exists.",_uid];
+		diag_log format["Error: Object with ID %1 can't be created. Already exists.",_uid];
 		_uid = -1;
 		_obj = objNull;
 		_obj;
@@ -20,6 +21,7 @@ private["_obj","_class","_pos","_dir","_uid","_var","_sync","_base","_box"];
 		_obj = _class createvehiclelocal _pos;
 		if(isNull _obj) exitwith {
 			systemChat "Error creating object!";
+			diag_log format["Error: Creating object of class %1 failed!",_class];
 		};
 		_obj setpos _pos;
 		_obj setvehiclevarname _var;

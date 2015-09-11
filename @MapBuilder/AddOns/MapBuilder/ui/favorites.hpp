@@ -1,55 +1,11 @@
-//###################
-//	Favorites
-//###################
- class MB_Window_Favorites_Group : MB_RscControlsGroup
-{
-	idc = 170900;
-	x = "SafeZoneX + (SafeZoneW * 0.65)";
-	y = "SafeZoneY + (SafezoneH * 0.1)";
-	w = MB_WINDOW_GRID_X * 10 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 10 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class MB_Window_Favorites_BG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 10 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class MB_Window_Favorites_Header : MB_RscWindowHeader {
-			idc = -1;
-			text = "Favorite objects";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 9 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170900] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170900] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170900] call MB_fnc_updateWindowDrag;";
-		};
-		class MB_Window_Favorites_XBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 9;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class MB_Window_Favorites_X : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 9;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[] call MB_fnc_CloseFavoritesWindow;";
-		};
+#define IDC 170900
+#define NAME FavoriteObjects
+#define TITLE Favorite Objects
+BEGIN_WINDOW(IDC,NAME,TITLE,0.65,0.1,10,10)
+		WINDOW_HEADER(NAME,IDC,TITLE,8)
+		WINDOW_CLOSE(NAME,IDC,9)
+		WINDOW_HELP(NAME,IDC,"Favorite_Objects",8)
+		WINDOW_BACKGROUND(NAME,0,1,10,9)
 		class MB_Window_Favorites_List : MB_RscTree {
 			idc = 170901;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
@@ -94,5 +50,4 @@
 			text = "Select";
 			action = "[] call MB_fnc_SelectFavorite;";
 		};
-	};
-};
+END_WINDOW

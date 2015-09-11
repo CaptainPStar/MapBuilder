@@ -1,80 +1,35 @@
-
-//###################
-//	Fencer
-//###################
- class MB_Popup_FencerGroup : MB_RscControlsGroup
-{
-	idc = 170400;
-	x = "SafeZoneX + (SafeZoneW * 0.5)";
-	y = "SafeZoneY + (SafezoneH * 0.7)";
-	w = MB_WINDOW_GRID_X * 10 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 10 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class Popup_FencerBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 10 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 9 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class Popup_FencerHeader : MB_RscWindowHeader {
-			idc = -1;
-			text = "Fencer";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 9 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170400] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170400] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170400] call MB_fnc_updateWindowDrag;";
-		};
-		class Popup_FencerHeaderXBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 9;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class Popup_FencerHeaderX : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 9;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[] call MB_fnc_closeFencer;";
-		};
+#define IDC 170400
+#define NAME Fencer
+#define TITLE Fencer
+BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,14,10)
+		WINDOW_HEADER(NAME,IDC,TITLE,12)
+		WINDOW_CLOSE(NAME,IDC,13)
+		WINDOW_HELP(NAME,IDC,"Fencer",12)
+		WINDOW_BACKGROUND(NAME,0,1,14,9)
 		class Popup_FencerDirLabel : MB_RscText {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 1;
 			w = MB_WINDOW_GRID_X * 3;
 			h = MB_WINDOW_GRID_Y * 1;
-			text = "Dir";
+			text = "Direction";
 		};
-		class Popup_FencerUpButton : MB_RscButton {
+		class Popup_FencerForwardButton : MB_RscButton {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 2;
 			w = MB_WINDOW_GRID_X * 1;
 			h = MB_WINDOW_GRID_Y * 1;
-			text = "U";
+			text = "F";
 			action = "MB_FencerDir = 0;[] call MB_FNC_FencerUpdatePreview;";
 		};
-		class Popup_FencerDownButton : MB_RscButton {
+		class Popup_FencerBackwardButton : MB_RscButton {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 4;
 			w = MB_WINDOW_GRID_X * 1;
 			h = MB_WINDOW_GRID_Y * 1;
-			text = "D";
+			text = "B";
 			action = "MB_FencerDir = 1;[] call MB_FNC_FencerUpdatePreview;";
 		};
 		class Popup_FencerLeftButton : MB_RscButton {
@@ -94,6 +49,18 @@
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "R";
 			action = "MB_FencerDir = 3;[] call MB_FNC_FencerUpdatePreview;";
+		};
+		class Popup_FencerUpButton : MB_RscButton {
+			idc = -1;
+			WINDOW_POSITION(2,2,1,1)
+			text = "U";
+			action = "MB_FencerDir = 4;[] call MB_FNC_FencerUpdatePreview;";
+		};
+		class Popup_FencerDownButton : MB_RscButton {
+			idc = -1;
+			WINDOW_POSITION(2,4,1,1)
+			text = "D";
+			action = "MB_FencerDir = 5;[] call MB_FNC_FencerUpdatePreview;";
 		};
 		class Popup_FencerPlaceButton : MB_RscButton {
 			idc = -1;
@@ -150,5 +117,4 @@
 			checked_strings[] = {"Terrain"};
 			strings[] = {"Flat"};
 		};
-	};
-};
+END_WINDOW

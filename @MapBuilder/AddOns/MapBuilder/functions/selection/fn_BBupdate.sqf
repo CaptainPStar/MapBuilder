@@ -59,7 +59,7 @@ _width = (_hor select 1)-(_vul select 1);
 _length = (_hor select 0)-(_vul select 0);
 _height = (_hor select 2)-(_vul select 2);
 
-_box setpos _center;
+_box setposATL _center;
 _box setVectorDirAndUp [vectorDir _obj, vectorUp _obj];
 
 if(((getPosATL _obj) select 2)>0.5 && _show) then {

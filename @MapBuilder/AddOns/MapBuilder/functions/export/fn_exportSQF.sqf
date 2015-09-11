@@ -1,6 +1,13 @@
-startLoadingScreen ["Exporting scriptfile..."];
-	_filename = [_this,0,"noFilename"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
+_filename = [_this,0,"noFilename"] call bis_fnc_param;
+if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};
+
+_folder = ["export"] call mb_fnc_getFolderContent;
+_confirmed = true;
+if(format["%1.sqf",_filename] in _folder) then {
+	_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
+};
+if(_confirmed) then {
+	startLoadingScreen ["Exporting scriptfile..."];
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqf",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];
@@ -40,3 +47,4 @@ startLoadingScreen ["Exporting scriptfile..."];
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
 	endLoadingScreen;
+};

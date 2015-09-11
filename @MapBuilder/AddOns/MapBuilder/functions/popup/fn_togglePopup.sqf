@@ -1,5 +1,6 @@
 disableSerialization;
-	private["_display","_popup","_show","_index","_control"];
+	private["_display","_popup","_show","_index","_control"];	
+	
 	_display = uinamespace getvariable 'mb_main_dialog';
 	_popup = [_this,0] call bis_fnc_param;
 	_show = [_this,1,""] call bis_fnc_param;
@@ -21,3 +22,4 @@ disableSerialization;
 		_control = _display displayCtrl _index;
 	};
 	MB_PopupStatus set[_popup,_show];
+	

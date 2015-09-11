@@ -1,18 +1,16 @@
-//startLoadingScreen ["Exporting Terrain Builder file..."];
 
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
-	_projFolder = ("MB_FileIO" callExtension "listfiles|export");
-	_projFolder = _projFolder splitString  "|";
-	_projFolder = _projFolder - ["."];
-	_projFolder = _projFolder - [".."];
+		_folder = ["export"] call mb_fnc_getFolderContent;
 	_confirmed = true;
-	if(format["%1.tml",_filename] in _projFolder) then {
+	if(format["%1.tml",_filename] in _folder) then {
 		_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
-	};	
+	};
+		
 	
 	
 	if(_confirmed) then {
+	startLoadingScreen ["Exporting Template Library..."];
 	private["_used","_usedTypes"];
 	_used = [];
 	_usedTypes = [];
@@ -39,7 +37,8 @@
 		private["_model","_boundingBox","_bbMin","_bbMax"];
 		systemChat format["Writing %1",_x];
 		"MB_FileIO" callExtension format["write|<Template>"];
-        "MB_FileIO" callExtension format["write|<Name>%1</Name>",_x];
+		_name = [_x] call MB_fnc_getCanonicalName;
+        "MB_FileIO" callExtension format["write|<Name>%1</Name>",_name];
 		_model = [(configFile >> "CfgVehicles" >> _x),"model",""] call BIS_fnc_returnConfigEntry;
         "MB_FileIO" callExtension format["write|<File>%1</File>",_model];
         "MB_FileIO" callExtension format["write|<Date>22/06/01 12:20:00</Date>"];
@@ -80,5 +79,6 @@
 		"MB_FileIO" callExtension format["write|</Library>"];
 		systemChat ("MB_FileIO" callExtension "close");
 		systemchat format["Templates exported."];
+		endLoadingScreen;
 	};
 	//endLoadingScreen;

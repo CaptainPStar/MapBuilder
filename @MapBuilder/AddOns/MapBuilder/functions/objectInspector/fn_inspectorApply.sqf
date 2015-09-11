@@ -35,5 +35,5 @@ disableSerialization;
 		//_object setvariable["MB_ObjVar_Locked",(_vars select 5),false];
 	};
 	if(_close) then {
-		[] call MB_fnc_closeInspector;
+		[170700,false] spawn MB_fnc_closeWindow;
 	};

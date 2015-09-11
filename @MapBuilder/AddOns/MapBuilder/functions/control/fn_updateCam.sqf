@@ -73,11 +73,6 @@ private["_mod"];
 		MB_CamPos set [1,(MB_CamPos select 1)+0.75];
 	};
 	
-	//Center
-	if([DIK_NUMPAD5] call MB_fnc_isPressed) then {
-		MB_CamPos set [1,0];
-		MB_CamPos set [2,0];
-	};
 	if((MB_CamPos select 1)>360) then {
 		MB_CamPos set[1,(MB_CamPos select 1)-360];
 	};

@@ -1,3 +1,4 @@
+	private["_msg","_type","_return"];
 	_msg = param[0,"No Message"];
 	//_callback = param[1,"MB_PopUp_Confirmed"];
 	_type = param[1,0];
@@ -5,7 +6,7 @@
 	//call compile format["%1 = 0;",_callback];
 
 	//--- Assign button actions
-	
+	[171000,true] call MB_fnc_openWindow;
 	
 	uinamespace setvariable ["MB_popupDialog_status",nil];
 
@@ -22,7 +23,7 @@
 	_display displayaddeventhandler ["unload","uinamespace setvariable ['MB_popupDialog_status',false];"];
 	_ehKeyDown = _display displayaddeventhandler ["keydown","if ((_this select 1) == 1) then {uinamespace setvariable ['MB_popupDialog_status',false]; true} else {false}"];
 	
-	[171000,true] call MB_fnc_openWindow;
+
 	
 	switch(_type) do {
 		case 0: {
@@ -38,9 +39,12 @@
 	
 	
 	
-	waituntil{!isNil {uinamespace getvariable 'MB_popupDialog_status'}};
+	waituntil{sleep 0.1;!isNil {uinamespace getvariable 'MB_popupDialog_status'}};
+	
+	[171000,true] call MB_fnc_closeWindow;
 	
 	_display displayremoveeventhandler ["keydown",_ehKeyDown];
 	
 	_return = uinamespace getvariable 'MB_popupDialog_status';
+	
 	_return;

@@ -1,4 +1,4 @@
-#define DEBUG
+#include "\MB\MapBuilder\include.hpp"
 
 class CfgPatches
 {

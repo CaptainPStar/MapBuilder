@@ -1,5 +1,7 @@
 #include "mbdefines.hpp"
+#include "window.hpp"
 #include "dik.hpp"
+#include "\MB\MapBuilder\include.hpp"
 class MB_Main
 {
 	idd = 123;
@@ -19,6 +21,7 @@ class MB_Main
 			//h = "0";
 			colorBackground[] = {0, 0, 0, 0};
 			text = "";
+			style = ST_MULTI; //NEEDED. Otherwise Handlers wont work! BIS!!!
 			//onMouseMoving = "MB_MouseScreenPosition = [_this select 1,_this select 2];MB_MousePosition=screenToWorld [_this select 1,_this select 2];";
 			//onMouseButtonDown = "_this call MB_fnc_MouseDown;";
 			//onMouseButtonUp = "_this call MB_fnc_MouseUp;";
@@ -42,7 +45,7 @@ class MB_Main
 		//};
 	};
 	class controls {
-		class RscObject;
+		//class RscObject;
 		class MB_MainBackground : MB_RscText { //--- Render out.
 			idc = 170002;
 			text = "";
@@ -51,8 +54,8 @@ class MB_Main
 			w = "SafeZoneW * 0.20";
 			h = "SafeZoneH * 1";
 			colorBackground[] = {0, 0, 0, 0.3};
-			onMouseExit = "[false] call MB_fnc_MouseInView;";
-			onMouseEnter = "[true] call MB_fnc_MouseInView;";
+			onMouseExit = "systemchat ""blub"";[false] call MB_fnc_MouseInView;";
+			onMouseEnter = "systemchat ""blub"";[true] call MB_fnc_MouseInView;";
 		};
 		class MB_ObjectLibrary : MB_RscTree {
 			idc = 170003;
@@ -177,6 +180,7 @@ class MB_Main
 			h = "SafeZoneH * 0.05";
 			text = "Fencer";
 			action = "[] call MB_fnc_openFencer;";
+			tooltip = "Open Fencer - A toll for placing straight lines of objects.";
 		};
 		class PresetsButton : MB_RscButton {
 			idc = -1;
@@ -186,6 +190,7 @@ class MB_Main
 			h = "SafeZoneH * 0.05";
 			text = "Presets";
 			action = "[] call MB_fnc_showPresetWindow;";
+			tooltip = "Presets are small groups of objects, that can be saved, loaded, copied and shared.";
 		};
 		class BrushesButton : MB_RscButton {
 			idc = -1;
@@ -195,6 +200,7 @@ class MB_Main
 			h = "SafeZoneH * 0.05";
 			text = "Brushes";
 			action = "[] call MB_fnc_showBrushWindow;";
+			tooltip = "Brusher is a tool for placing large number of objects in structured or random patterns.";
 		};
 		class ExportButton : MB_RscButton {
 			idc = 170005;
@@ -204,6 +210,7 @@ class MB_Main
 			h = "SafeZoneH * 0.05";
 			text = "Export";
 			action = "[1] call MB_fnc_showExportWindow;";
+			tooltip = "Export objects to various other formats like mission files, Terrain Builder or scripts.";
 		};
 		class SaveToEditorButton : MB_RscButton {
 			idc = 170006;
@@ -211,9 +218,10 @@ class MB_Main
 			y = "SafeZoneY + (SafezoneH * 0.86)";
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
-			text = "Save/Load Project";
+			text = "Save/Load";
 			action = "[] call MB_fnc_ShowProjectWindow;";
 			//action = "[] call MB_fnc_ShowProjects;";
+			tooltip = "Save and load projects.";
 		};
 		class ProjectSettingsButton : MB_RscButton {
 			idc = -1;
@@ -224,6 +232,7 @@ class MB_Main
 			text = "Settings";
 			//action = "[] call MB_fnc_showPresetWindow;";
 			action = "";
+			tooltip = "General Map Builder Settings. Yet unused.";
 		};
 		//###################
 		//	Taskbar
@@ -241,10 +250,27 @@ class MB_Main
 		class MB_Taskbar_Version : MB_RscText { //--- Render out.
 			idc = 171010;
 			text = "Version: 0.0.0";
-			x = "SafeZoneX + (SafeZoneW * 0.92)";
-			y = "SafeZoneY + (SafezoneH * 0.97)";
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.94)";
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
+		};
+		class MB_Taskbar_Website : MB_RscStructuredText { //--- Render out.
+			idc = -1;
+			text = "<a underline='false' href='http://map-builder.info'>Map-Builder.info</a>";
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.97)";
+			w = "SafeZoneW * 0.1";
+			h = "SafeZoneH * 0.03";
+			size = MB_TEXT_LARGE;
+			sizeEx = MB_TEXT_LARGE;
+			class Attributes
+				{
+					font = MB_TEXT_FONT;
+					color = "#ffffff";
+					align = "left";
+					shadow = 0;
+				};
 		};
 		class MB_Taskbar_Position : MB_RscText { //--- Render out.
 			idc = 171011;
@@ -271,6 +297,7 @@ class MB_Main
 			w = "SafeZoneW * 0.08";
 			h = "SafeZoneH * 0.03";
 		};
+#ifdef DEBUG
 		class MB_Taskbar_Dev_Refresh : MB_RscButton {
 			idc = -1;
 			x = "SafeZoneX + (SafeZoneW * 0.05)";
@@ -280,6 +307,7 @@ class MB_Main
 			text = "Refresh Config/Scripts";
 			action = "closeDialog 0;[] call MB_fnc_refreshConfig;";
 		};
+#endif
 		class MB_Chatbox : MB_RscEdit {
 			idc = 171014;
 			text = "";
@@ -300,31 +328,40 @@ class MB_Main
 			idc = 170301;
 			style = 48;
 			type = 101;
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.32)";
-			w = "SafeZoneW * 0.4";
-			h = "SafeZoneH * 0.4";
+			x = "safezoneX";
+			y = "safezoneY + safezoneW * 0.02";
+			w = "safezoneW * 0.8";
+			h = "safezoneH * 0.94";
 			onLoad = "";
 			onMouseButtonDblClick = "_this call MB_fnc_mapDblClickTeleport;";
         };
 		class Popup_MapHeader : MB_RscBackground {
 			idc = 170302;
 			text = "Map";
-			x = "SafeZoneX + (SafeZoneW * 0.2)";
-			y = "SafeZoneY + (SafezoneH * 0.3)";
-			w = "SafeZoneW * 0.4";
+			x = "SafeZoneX";
+			y = "SafeZoneY";
+			w = "SafeZoneW * 0.78";
 			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
+			colorBackground[] = {0,0.75,0,1};
 		};
-		class Popup_MapHeaderClose : MB_RscActiveText {
+		class Popup_MapHeaderCloseBG : MB_RscBackground {
 			idc = 170303;
-			text = "X";
-			x = "SafeZoneX + (SafeZoneW * 0.585)";
-			y = "SafeZoneY + (SafezoneH * 0.3)";
+			text = "";
+			x = "SafeZoneX + (SafeZoneW * 0.78)";
+			y = "SafeZoneY";
 			w = "SafeZoneW * 0.02";
 			h = "SafeZoneH * 0.02";
-			colorBackground[] = {0,0.75,0,0.75};
-			action = "[3,false] call MB_fnc_togglePopup;";
+			colorBackground[] = {0.75,0,0,0.5};
+		};
+		class Popup_MapHeaderClose : MB_RscActiveText {
+			idc = 170304;
+			text = "X";
+			x = "SafeZoneX + (SafeZoneW * 0.78)";
+			y = "SafeZoneY";
+			w = "SafeZoneW * 0.02";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0,0.75,0,1};
+			action = "[] call MB_fnc_toggleMap;";
 		};
 		#include "fencer.hpp"		
 		#include "presets.hpp"

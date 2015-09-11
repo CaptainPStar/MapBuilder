@@ -16,4 +16,4 @@ MB_QuadTree_Node_Capacity = 1;
 //	[_t] call MB_fnc_quadTreeSubdivide;
 //	_t = (_t select 3 select 3);
 //};
-[MB_QuadTree] call MB_fnc_quadTreeDraw;
+//[MB_QuadTree] call MB_fnc_quadTreeDraw;

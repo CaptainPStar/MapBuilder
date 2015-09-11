@@ -1,19 +1,34 @@
-class multiplayer
+class export
 {
-	file = "mb\mapbuilder\functions\multiplayer";
-	class initMultiplayerFunctions {
+	file = "mb\mapbuilder\functions\export";
+	class exactPosition {
 		//recompile = 1;
 	};
-	class remoteDelete {
+	class exportComposition {
 		//recompile = 1;
 	};
-	class syncDelete {
+	class exportSQF {
 		//recompile = 1;
 	};
-	class syncObject {
+	class exportSQM {
 		//recompile = 1;
 	};
-	class syncRemoteObject {
+	class exportTB {
+		//recompile = 1;
+	};
+	class exportTML {
+		//recompile = 1;
+	};
+	class importFromEditor {
+		//recompile = 1;
+	};
+	class initExportFunctions {
+		//recompile = 1;
+	};
+	class roundNumbers {
+		//recompile = 1;
+	};
+	class showExportWindow {
 		//recompile = 1;
 	};
 };
@@ -87,6 +102,37 @@ class brush
 		//recompile = 1;
 	};
 };
+class ui
+{
+	file = "mb\mapbuilder\functions\ui";
+	class chatSend {
+		//recompile = 1;
+	};
+	class ChatToggle {
+		//recompile = 1;
+	};
+	class closeAboutWindow {
+		//recompile = 1;
+	};
+	class initUIFunctions {
+		//recompile = 1;
+	};
+	class openAboutWindow {
+		//recompile = 1;
+	};
+	class SetEditorFocus {
+		//recompile = 1;
+	};
+	class showPopupDialog {
+		//recompile = 1;
+	};
+	class switchMode {
+		//recompile = 1;
+	};
+	class updateTaskBar {
+		//recompile = 1;
+	};
+};
 class map
 {
 	file = "mb\mapbuilder\functions\map";
@@ -96,140 +142,10 @@ class map
 	class mapDblClickTeleport {
 		//recompile = 1;
 	};
-};
-class main
-{
-	file = "mb\mapbuilder\functions\main";
-	class addMBAction {
+	class mapOpen {
 		//recompile = 1;
 	};
-	class checkVersion {
-		//recompile = 1;
-	};
-	class colorVertices {
-		//recompile = 1;
-	};
-	class draw3D {
-		//recompile = 1;
-	};
-	class DrawBoundingBox {
-		//recompile = 1;
-	};
-	class drawBox {
-		//recompile = 1;
-	};
-	class drawLine3DThick {
-		//recompile = 1;
-	};
-	class exit {
-		//recompile = 1;
-	};
-	class setRelPos {
-		//recompile = 1;
-	};
-	class setup {
-		//recompile = 1;
-	};
-	class start {
-		//recompile = 1;
-	};
-};
-class fencer
-{
-	file = "mb\mapbuilder\functions\fencer";
-	class CalcRelativePosition {
-		//recompile = 1;
-	};
-	class closeFencer {
-		//recompile = 1;
-	};
-	class FencerCalcBounding {
-		//recompile = 1;
-	};
-	class FencerDeletePreview {
-		//recompile = 1;
-	};
-	class fencerPlace {
-		//recompile = 1;
-	};
-	class FencerUpdatePreview {
-		//recompile = 1;
-	};
-	class initFencerFunctions {
-		//recompile = 1;
-	};
-	class openFencer {
-		//recompile = 1;
-	};
-};
-class development
-{
-	file = "mb\mapbuilder\functions\development";
-	class refreshConfig {
-		//recompile = 1;
-	};
-};
-class selection
-{
-	file = "mb\mapbuilder\functions\selection";
-	class BBsetSize {
-		//recompile = 1;
-	};
-	class BBupdate {
-		//recompile = 1;
-	};
-	class BeginRectangleDrag {
-		//recompile = 1;
-	};
-	class calcSelectionBox {
-		//recompile = 1;
-	};
-	class calcSelectionCenter {
-		//recompile = 1;
-	};
-	class Copy {
-		//recompile = 1;
-	};
-	class copyObjectsToClipboard {
-		//recompile = 1;
-	};
-	class Deselect {
-		//recompile = 1;
-	};
-	class DeselectAll {
-		//recompile = 1;
-	};
-	class EndRectangleDrag {
-		//recompile = 1;
-	};
-	class getClickedObject {
-		//recompile = 1;
-	};
-	class initSelectionFunctions {
-		//recompile = 1;
-	};
-	class isSelected {
-		//recompile = 1;
-	};
-	class MoveSelection {
-		//recompile = 1;
-	};
-	class Paste {
-		//recompile = 1;
-	};
-	class ReconstructSelection {
-		//recompile = 1;
-	};
-	class select {
-		//recompile = 1;
-	};
-	class SelectInRectangle {
-		//recompile = 1;
-	};
-	class SelectUnderCursor {
-		//recompile = 1;
-	};
-	class UpdateRectangleDrag {
+	class toggleMap {
 		//recompile = 1;
 	};
 };
@@ -255,22 +171,31 @@ class window
 		//recompile = 1;
 	};
 };
-class hook
+class view
 {
-	file = "mb\mapbuilder\functions\hook";
-	class addCallback {
+	file = "mb\mapbuilder\functions\view";
+	class initViewFunctions {
 		//recompile = 1;
 	};
-	class dispatchCallbacks {
+	class MouseButtonClick {
 		//recompile = 1;
 	};
-	class initHookFunctions {
+	class MouseButtonDblClick {
 		//recompile = 1;
 	};
-	class removeAllCallbacks {
+	class MouseButtonDownInView {
 		//recompile = 1;
 	};
-	class removeCallback {
+	class MouseButtonUpInView {
+		//recompile = 1;
+	};
+	class MouseInView {
+		//recompile = 1;
+	};
+	class MouseWheelMoveInView {
+		//recompile = 1;
+	};
+	class ViewIsMouseButtonPressed {
 		//recompile = 1;
 	};
 };
@@ -355,6 +280,9 @@ class object
 	class EndObjectYawDrag {
 		//recompile = 1;
 	};
+	class getCanonicalName {
+		//recompile = 1;
+	};
 	class getObjectVars {
 		//recompile = 1;
 	};
@@ -413,171 +341,6 @@ class object
 		//recompile = 1;
 	};
 };
-class export
-{
-	file = "mb\mapbuilder\functions\export";
-	class autosave {
-		//recompile = 1;
-	};
-	class clearProject {
-		//recompile = 1;
-	};
-	class exactPosition {
-		//recompile = 1;
-	};
-	class exportComposition {
-		//recompile = 1;
-	};
-	class exportSQF {
-		//recompile = 1;
-	};
-	class exportSQM {
-		//recompile = 1;
-	};
-	class exportTB {
-		//recompile = 1;
-	};
-	class exportTML {
-		//recompile = 1;
-	};
-	class import {
-		//recompile = 1;
-	};
-	class importFromEditor {
-		//recompile = 1;
-	};
-	class importProject {
-		//recompile = 1;
-	};
-	class importProjectOld {
-		//recompile = 1;
-	};
-	class initExportFunctions {
-		//recompile = 1;
-	};
-	class loadProject {
-		//recompile = 1;
-	};
-	class loadProjectOld {
-		//recompile = 1;
-	};
-	class loadStoreArr {
-		//recompile = 1;
-	};
-	class resetProject {
-		//recompile = 1;
-	};
-	class roundNumbers {
-		//recompile = 1;
-	};
-	class saveProject {
-		//recompile = 1;
-	};
-	class saveProjectOld {
-		//recompile = 1;
-	};
-	class showExportWindow {
-		//recompile = 1;
-	};
-	class toStoreArr {
-		//recompile = 1;
-	};
-};
-class view
-{
-	file = "mb\mapbuilder\functions\view";
-	class initViewFunctions {
-		//recompile = 1;
-	};
-	class MouseButtonClick {
-		//recompile = 1;
-	};
-	class MouseButtonDblClick {
-		//recompile = 1;
-	};
-	class MouseButtonDownInView {
-		//recompile = 1;
-	};
-	class MouseButtonUpInView {
-		//recompile = 1;
-	};
-	class MouseInView {
-		//recompile = 1;
-	};
-	class MouseWheelMoveInView {
-		//recompile = 1;
-	};
-	class ViewIsMouseButtonPressed {
-		//recompile = 1;
-	};
-};
-class popup
-{
-	file = "mb\mapbuilder\functions\popup";
-	class hideExport {
-		//recompile = 1;
-	};
-	class initPopupFunctions {
-		//recompile = 1;
-	};
-	class popupShown {
-		//recompile = 1;
-	};
-	class ProjectsPopupSelect {
-		//recompile = 1;
-	};
-	class ShowExport {
-		//recompile = 1;
-	};
-	class ShowProjects {
-		//recompile = 1;
-	};
-	class togglePopup {
-		//recompile = 1;
-	};
-};
-class helper
-{
-	file = "mb\mapbuilder\functions\helper";
-	class inBoundary {
-		//recompile = 1;
-	};
-	class isBoundaryIntersect {
-		//recompile = 1;
-	};
-};
-class objectInspector
-{
-	file = "mb\mapbuilder\functions\objectInspector";
-	class initObjectInspectorFunctions {
-		//recompile = 1;
-	};
-	class InspectObject {
-		//recompile = 1;
-	};
-	class inspectorApply {
-		//recompile = 1;
-	};
-	class InspectorClose {
-		//recompile = 1;
-	};
-	class InspectorFill {
-		//recompile = 1;
-	};
-	class InspectorPreview {
-		//recompile = 1;
-	};
-	class InspectorRefresh {
-		//recompile = 1;
-	};
-};
-class masker
-{
-	file = "mb\mapbuilder\functions\masker";
-	class initMaskerFunctions {
-		//recompile = 1;
-	};
-};
 class quadtree
 {
 	file = "mb\mapbuilder\functions\quadtree";
@@ -603,85 +366,143 @@ class quadtree
 		//recompile = 1;
 	};
 };
-class ui
+class control
 {
-	file = "mb\mapbuilder\functions\ui";
-	class chatSend {
+	file = "mb\mapbuilder\functions\control";
+	class applyCamPreset {
 		//recompile = 1;
 	};
-	class ChatToggle {
+	class camFreeMove {
 		//recompile = 1;
 	};
-	class closeAboutWindow {
+	class camZoom {
 		//recompile = 1;
 	};
-	class initUIFunctions {
+	class initControlFunctions {
 		//recompile = 1;
 	};
-	class openAboutWindow {
+	class isMousePressed {
 		//recompile = 1;
 	};
-	class SetEditorFocus {
+	class isPressed {
 		//recompile = 1;
 	};
-	class showPopupDialog {
+	class keyDown {
 		//recompile = 1;
 	};
-	class switchMode {
+	class keyUp {
 		//recompile = 1;
 	};
-	class updateTaskBar {
+	class mouseClick {
+		//recompile = 1;
+	};
+	class mouseDblClick {
+		//recompile = 1;
+	};
+	class mouseDown {
+		//recompile = 1;
+	};
+	class mouseMove {
+		//recompile = 1;
+	};
+	class mouseUp {
+		//recompile = 1;
+	};
+	class mouseZ {
+		//recompile = 1;
+	};
+	class resetKeys {
+		//recompile = 1;
+	};
+	class updateCam {
 		//recompile = 1;
 	};
 };
-class preset
+class io
 {
-	file = "mb\mapbuilder\functions\preset";
-	class hidePresetWindow {
+	file = "mb\mapbuilder\functions\io";
+	class fileExists {
 		//recompile = 1;
 	};
-	class initPresetFunctions {
-		//recompile = 1;
-	};
-	class loadPreset {
-		//recompile = 1;
-	};
-	class PresetSelect {
-		//recompile = 1;
-	};
-	class savePreset {
-		//recompile = 1;
-	};
-	class showPresetWindow {
+	class getFolderContent {
 		//recompile = 1;
 	};
 };
 class project
 {
 	file = "mb\mapbuilder\functions\project";
+	class autosave {
+		//recompile = 1;
+	};
+	class clearProject {
+		//recompile = 1;
+	};
+	class importProject {
+		//recompile = 1;
+	};
 	class initProjectFunctions {
+		//recompile = 1;
+	};
+	class loadProject {
+		//recompile = 1;
+	};
+	class ProjectsPopupSelect {
+		//recompile = 1;
+	};
+	class resetProject {
+		//recompile = 1;
+	};
+	class saveProject {
 		//recompile = 1;
 	};
 	class showProjectWindow {
 		//recompile = 1;
 	};
 };
-class matrix
+class popup
 {
-	file = "mb\mapbuilder\functions\matrix";
-	class createMatrix {
+	file = "mb\mapbuilder\functions\popup";
+	class hideExport {
 		//recompile = 1;
 	};
-	class createRotationMatrix {
+	class initPopupFunctions {
 		//recompile = 1;
 	};
-	class initMatrixFunctions {
+	class popupShown {
 		//recompile = 1;
 	};
-	class multiplyMatrices {
+	class ShowProjects {
 		//recompile = 1;
 	};
-	class rotateVector3D {
+	class togglePopup {
+		//recompile = 1;
+	};
+};
+class fencer
+{
+	file = "mb\mapbuilder\functions\fencer";
+	class CalcRelativePosition {
+		//recompile = 1;
+	};
+	class closeFencer {
+		//recompile = 1;
+	};
+	class FencerCalcBounding {
+		//recompile = 1;
+	};
+	class FencerDeletePreview {
+		//recompile = 1;
+	};
+	class fencerPlace {
+		//recompile = 1;
+	};
+	class FencerUpdatePreview {
+		//recompile = 1;
+	};
+	class initFencerFunctions {
+		//recompile = 1;
+	};
+	class openFencer {
 		//recompile = 1;
 	};
 };
@@ -749,52 +570,238 @@ class library
 		//recompile = 1;
 	};
 };
-class control
+class matrix
 {
-	file = "mb\mapbuilder\functions\control";
-	class camFreeMove {
+	file = "mb\mapbuilder\functions\matrix";
+	class createMatrix {
 		//recompile = 1;
 	};
-	class camZoom {
+	class createRotationMatrix {
 		//recompile = 1;
 	};
-	class initControlFunctions {
+	class initMatrixFunctions {
 		//recompile = 1;
 	};
-	class isMousePressed {
+	class multiplyMatrices {
 		//recompile = 1;
 	};
-	class isPressed {
+	class rotateVector3D {
 		//recompile = 1;
 	};
-	class keyDown {
+};
+class multiplayer
+{
+	file = "mb\mapbuilder\functions\multiplayer";
+	class initMultiplayerFunctions {
 		//recompile = 1;
 	};
-	class keyUp {
+	class remoteDelete {
 		//recompile = 1;
 	};
-	class mouseClick {
+	class syncDelete {
 		//recompile = 1;
 	};
-	class mouseDblClick {
+	class syncObject {
 		//recompile = 1;
 	};
-	class mouseDown {
+	class syncRemoteObject {
 		//recompile = 1;
 	};
-	class mouseMove {
+};
+class helper
+{
+	file = "mb\mapbuilder\functions\helper";
+	class inBoundary {
 		//recompile = 1;
 	};
-	class mouseUp {
+	class isBoundaryIntersect {
 		//recompile = 1;
 	};
-	class mouseZ {
+	class loadStoreArr {
 		//recompile = 1;
 	};
-	class resetKeys {
+	class toStoreArr {
 		//recompile = 1;
 	};
-	class updateCam {
+};
+class masker
+{
+	file = "mb\mapbuilder\functions\masker";
+	class initMaskerFunctions {
+		//recompile = 1;
+	};
+};
+class selection
+{
+	file = "mb\mapbuilder\functions\selection";
+	class BBsetSize {
+		//recompile = 1;
+	};
+	class BBupdate {
+		//recompile = 1;
+	};
+	class BeginRectangleDrag {
+		//recompile = 1;
+	};
+	class calcSelectionBox {
+		//recompile = 1;
+	};
+	class calcSelectionCenter {
+		//recompile = 1;
+	};
+	class Copy {
+		//recompile = 1;
+	};
+	class copyObjectsToClipboard {
+		//recompile = 1;
+	};
+	class Deselect {
+		//recompile = 1;
+	};
+	class DeselectAll {
+		//recompile = 1;
+	};
+	class EndRectangleDrag {
+		//recompile = 1;
+	};
+	class getClickedObject {
+		//recompile = 1;
+	};
+	class initSelectionFunctions {
+		//recompile = 1;
+	};
+	class isSelected {
+		//recompile = 1;
+	};
+	class MoveSelection {
+		//recompile = 1;
+	};
+	class Paste {
+		//recompile = 1;
+	};
+	class ReconstructSelection {
+		//recompile = 1;
+	};
+	class select {
+		//recompile = 1;
+	};
+	class SelectInRectangle {
+		//recompile = 1;
+	};
+	class SelectUnderCursor {
+		//recompile = 1;
+	};
+	class UpdateRectangleDrag {
+		//recompile = 1;
+	};
+};
+class hook
+{
+	file = "mb\mapbuilder\functions\hook";
+	class addCallback {
+		//recompile = 1;
+	};
+	class dispatchCallbacks {
+		//recompile = 1;
+	};
+	class initHookFunctions {
+		//recompile = 1;
+	};
+	class removeAllCallbacks {
+		//recompile = 1;
+	};
+	class removeCallback {
+		//recompile = 1;
+	};
+};
+class preset
+{
+	file = "mb\mapbuilder\functions\preset";
+	class initPresetFunctions {
+		//recompile = 1;
+	};
+	class loadPreset {
+		//recompile = 1;
+	};
+	class PresetSelect {
+		//recompile = 1;
+	};
+	class refreshPresetList {
+		//recompile = 1;
+	};
+	class savePreset {
+		//recompile = 1;
+	};
+	class showPresetWindow {
+		//recompile = 1;
+	};
+};
+class main
+{
+	file = "mb\mapbuilder\functions\main";
+	class addMBAction {
+		//recompile = 1;
+	};
+	class checkVersion {
+		//recompile = 1;
+	};
+	class colorVertices {
+		//recompile = 1;
+	};
+	class draw3D {
+		//recompile = 1;
+	};
+	class DrawBoundingBox {
+		//recompile = 1;
+	};
+	class drawBox {
+		//recompile = 1;
+	};
+	class drawLine3DThick {
+		//recompile = 1;
+	};
+	class exit {
+		//recompile = 1;
+	};
+	class setRelPos {
+		//recompile = 1;
+	};
+	class setup {
+		//recompile = 1;
+	};
+	class start {
+		//recompile = 1;
+	};
+};
+class development
+{
+	file = "mb\mapbuilder\functions\development";
+	class refreshConfig {
+		//recompile = 1;
+	};
+};
+class objectInspector
+{
+	file = "mb\mapbuilder\functions\objectInspector";
+	class initObjectInspectorFunctions {
+		//recompile = 1;
+	};
+	class InspectObject {
+		//recompile = 1;
+	};
+	class inspectorApply {
+		//recompile = 1;
+	};
+	class InspectorClose {
+		//recompile = 1;
+	};
+	class InspectorFill {
+		//recompile = 1;
+	};
+	class InspectorPreview {
+		//recompile = 1;
+	};
+	class InspectorRefresh {
 		//recompile = 1;
 	};
 };

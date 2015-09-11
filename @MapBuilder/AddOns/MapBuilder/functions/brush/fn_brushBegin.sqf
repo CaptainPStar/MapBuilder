@@ -1,6 +1,9 @@
 if(!MB_Brushing) then {
 	MB_Brushing = true;
 	MB_BrushingLookAt = (MB_CamPos select 0) vectorDiff MB_MousePosition;
+	MB_BrushCamAngle = 0;
+	MB_BrushDirection = 0;
+	MB_NodesDrawn = 0;
 	if(MB_BrushCamFollow) then {
 		MB_CamCommit = 0.5;
 	};

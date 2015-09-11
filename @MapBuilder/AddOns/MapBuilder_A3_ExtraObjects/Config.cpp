@@ -149,6 +149,16 @@ class CfgVehicleClasses
 		displayName = "MB A3 SignsF SignM";
 		mapbuilder_displayname = "Signs (M)";
 	};
+	class MB_Runway : MB_A3_Trees
+	{
+		displayName = "MB A3 Runway";
+		mapbuilder_displayname = "Runway";
+	};
+	class MB_Runway_Lights : MB_A3_Trees
+	{
+		displayName = "MB A3 Runway Lights";
+		mapbuilder_displayname = "Runway Lights";
+	};
 };
 
 class CfgVehicles
@@ -686,5 +696,305 @@ class CfgVehicles
 		displayName = "W_sharpStones_erosion";
 		vehicleClass = "MB_A3_Rocks_Water";
 		model = "a3\rocks_f\water\W_sharpStones_erosion.p3d";
+	};
+	class MB_Cype_Runway: Static
+	{
+		displayName = "";
+		accuracy = 1000;
+		vehicleClass = "MB_Runway";
+		model = "";
+		simulation = "house";
+		cost = 0;
+		armor = 1000;
+		ladders[] = {};
+		placement = "vertical";
+	};
+	class MB_Cype_Light: Static
+	{
+		displayName = "";
+		accuracy = 1000;
+		vehicleClass = "MB_Runway_Lights";
+		model = "";
+		simulation = "house";
+		cost = 0;
+		armor = 1000;
+		ladders[] = {};
+		placement = "vertical";
+	};
+	class MB_Land_NavigLight: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "$STR_A3_cfgVehicles_Land_NavigLight0";
+		model = "\A3\Roads_F\Runway\RunwayLights\NavigLight.p3d";
+	};
+	class MB_Land_Flush_Light_green_F: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "Flush_Light_green";
+		model = "\A3\Roads_F\Runway\RunwayLights\Flush_Light_green_F.p3d";
+	};
+	class MB_Land_Flush_Light_red_F: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "Flush_Light_red";
+		model = "\A3\Roads_F\Runway\RunwayLights\Flush_Light_red_F.p3d";
+	};
+	class MB_Land_Flush_Light_yellow_F: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "Flush_Light_yellow";
+		model = "\A3\Roads_F\Runway\RunwayLights\Flush_Light_yellow_F.p3d";
+	};
+	class MB_Land_NavigLight_3_F: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "NavigLight_3";
+		model = "\A3\Roads_F\Runway\RunwayLights\NavigLight_3_F.p3d";
+	};
+	class MB_Land_runway_edgelight: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_edgelight";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_edgelight.p3d";
+	};
+	class MB_Land_runway_edgelight_blue_F: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_edgelight_blue_F";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_edgelight_blue_F.p3d";
+	};
+	class MB_Land_runway_PAPI: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_PAPI";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_PAPI.p3d";
+	};
+	class MB_Land_runway_PAPI_2: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_PAPI_2";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_PAPI_2.p3d";
+	};
+	class MB_Land_runway_PAPI_3: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_PAPI_3";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_PAPI_3.p3d";
+	};
+	class MB_Land_runway_PAPI_4: MB_Cype_Light
+	{
+		scope = 2;
+		displayName = "runway_PAPI_4";
+		model = "\A3\Roads_F\Runway\RunwayLights\runway_PAPI_4.p3d";
+	};
+	class MB_Land_Line_curve_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Line_curve_F";
+		model = "\A3\Roads_F\Runway\Line_curve_F.p3d";
+	};
+	class MB_Land_Line_curve_long_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Line_curve_long_F";
+		model = "\A3\Roads_F\Runway\Line_curve_long_F.p3d";
+	};
+	class MB_Land_Line_long_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Line_long_F";
+		model = "\A3\Roads_F\Runway\Line_long_F.p3d";
+	};
+		class MB_Land_Line_short_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Line_short_F";
+		model = "\A3\Roads_F\Runway\Line_short_F.p3d";
+	};
+	class MB_Land_runway_beton_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Runway_Beton_F";
+		model = "\A3\Roads_F\Runway\runway_beton_F.p3d";
+	};
+	class MB_Land_runway_end02_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_end02_F";
+		model = "\A3\Roads_F\Runway\runway_end02_F.p3d";
+	};
+	class MB_Land_runway_end04_FF: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_end04_F";
+		model = "\A3\Roads_F\Runway\runway_end04_F.p3d";
+	};
+	class MB_Land_runway_end06_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_end06_F";
+		model = "\A3\Roads_F\Runway\runway_end06_F.p3d";
+	};
+	class MB_Land_runway_end22_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_end22_F";
+		model = "\A3\Roads_F\Runway\runway_end22_F.p3d";
+	};
+	class MB_Land_runway_end26_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_end26_F";
+		model = "\A3\Roads_F\Runway\runway_end26_F.p3d";
+	};
+		class MB_Land_runway_Left_end22_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_Left_end22_F";
+		model = "\A3\Roads_F\Runway\runway_Left_end22_F.p3d";
+	};
+	class MB_Land_runway_Left_secondary_end04_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_Left_secondary_end04_F";
+		model = "\A3\Roads_F\Runway\runway_Left_secondary_end04_F.p3d";
+	};
+	class MB_Land_runway_main_40_2Lines_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_main_40_2Lines_F";
+		model = "\A3\Roads_F\Runway\runway_main_40_2Lines_F.p3d";
+	};
+	class MB_Land_runway_main_40_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_main_40_F";
+		model = "\A3\Roads_F\Runway\runway_main_40_F.p3d";
+	};
+	class MB_Land_runway_main_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_main_F";
+		model = "\A3\Roads_F\Runway\runway_main_F.p3d";
+	};
+	class MB_Land_runway_Right_end04_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_Right_end04_F";
+		model = "\A3\Roads_F\Runway\runway_Right_end04_F.p3d";
+	};
+	class MB_Land_runway_Right_secondary_end22_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_Right_secondary_end22_F";
+		model = "\A3\Roads_F\Runway\runway_Right_secondary_end22_F.p3d";
+	};
+	class MB_Land_runway_secondary_40_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_40_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_40_F.p3d";
+	};
+		class MB_Land_runway_secondary_end04_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_end04_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_end04_F.p3d";
+	};
+	class MB_Land_runway_secondary_end22_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_end22_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_end22_F.p3d";
+	};
+	class MB_Land_runway_secondary_SkidMark_1_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_SkidMark_1_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_SkidMark_1_F.p3d";
+	};
+	class MB_Land_runway_secondary_SkidMark_2_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_SkidMark_2_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_SkidMark_2_F.p3d";
+	};
+	class MB_Land_runway_secondary_SkidMark_3_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_secondary_SkidMark_3_F";
+		model = "\A3\Roads_F\Runway\runway_secondary_SkidMark_3_F.p3d";
+	};
+	class MB_Land_runway_SkidMark_1_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_SkidMark_1_F";
+		model = "\A3\Roads_F\Runway\runway_SkidMark_1_F.p3d";
+	};
+	class MB_Land_runway_SkidMark_2_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_SkidMark_2_F";
+		model = "\A3\Roads_F\Runway\runway_SkidMark_2_F.p3d";
+	};
+		class MB_Land_runway_SkidMark_3_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_SkidMark_3_F";
+		model = "\A3\Roads_F\Runway\runway_SkidMark_3_F.p3d";
+	};
+	class MB_Land_runway_SkidMark_noLInes_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "runway_SkidMark_noLInes_F";
+		model = "\A3\Roads_F\Runway\runway_SkidMark_noLInes_F.p3d";
+	};
+	class MB_Land_Track_north01_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_north01_F";
+		model = "\A3\Roads_F\Runway\Track_north01_F.p3d";
+	};
+	class MB_Land_Track_north02_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_north02_F";
+		model = "\A3\Roads_F\Runway\Track_north02_F.p3d";
+	};
+	class MB_Land_Track_north03_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_north03_F";
+		model = "\A3\Roads_F\Runway\Track_north03_F.p3d";
+	};
+	class MB_Land_Track_south01_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_south01_F";
+		model = "\A3\Roads_F\Runway\Track_south01_F.p3d";
+	};
+	class MB_Land_Track_south02_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_south02_F";
+		model = "\A3\Roads_F\Runway\Track_south02_F.p3d";
+	};
+	class MB_Land_Track_south03_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_south03_F";
+		model = "\A3\Roads_F\Runway\Track_south03_F.p3d";
+	};
+	class MB_Land_Track_south04_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_south04_F";
+		model = "\A3\Roads_F\Runway\Track_south04_F.p3d";
+	};
+	class MB_Land_Track_south05_F: MB_Cype_Runway
+	{
+		scope = 2;
+		displayName = "Track_south05_F";
+		model = "\A3\Roads_F\Runway\Track_south05_F.p3d";
 	};
 };

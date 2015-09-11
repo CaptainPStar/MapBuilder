@@ -36,6 +36,6 @@ _SE = [_p3,_p6,[],[]];
 
 _tree set[3,[_NW,_NE,_SW,_SE]];
 
-[_tree] call MB_fnc_quadTreeDraw;
+//[_tree] call MB_fnc_quadTreeDraw;
 
 

@@ -1,6 +1,14 @@
-startLoadingScreen ["Exporting mission..."];
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
-	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";endLoadingScreen;};
+	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};
+	
+	_folder = ["export"] call mb_fnc_getFolderContent;
+	_confirmed = true;
+	if(format["%1.sqm",_filename] in _folder) then {
+		_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
+	};
+		
+	if(_confirmed) then {
+	startLoadingScreen ["Exporting mission..."];
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqm",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];
@@ -71,3 +79,5 @@ startLoadingScreen ["Exporting mission..."];
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["%1 objects exported to %2.",_count,_path];
 	endLoadingScreen;
+	};
+	

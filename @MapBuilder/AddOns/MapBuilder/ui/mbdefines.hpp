@@ -104,10 +104,10 @@
 #define MB_TEXT_LARGE 0.04
 #define MB_TEXT_SMALL 0.02
 #define MB_TEXT_DEFAULT 0.03
-#define MB_TEXT_FONT "EtelkaMonospacePro"
+#define MB_TEXT_FONT "EtelkaNarrowMediumPro"
+#define MB_TEXT_FONT_TITLE "EtelkaMonospaceProBold"
 class MB_RscText
 {
-	access = 0;
 	type = 0;
 	idc = -1;
 	colorBackground[] = {0,0,0,0};
@@ -128,7 +128,6 @@ class MB_RscText
 };
 class MB_RscStructuredText
 {
-	access = 0;
 	type = 13;
 	idc = -1;
 	style = 0;
@@ -147,11 +146,11 @@ class MB_RscStructuredText
 	text = "";
 	//size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
 	size = MB_TEXT_DEFAULT;
+	sizeEx = MB_TEXT_DEFAULT;
 	shadow = 1;
 };
 class MB_RscPicture
 {
-	access = 0;
 	type = 0;
 	idc = -1;
 	style = ST_PICTURE;
@@ -170,7 +169,6 @@ class MB_RscPicture
 };
 class MB_RscListBox
 {
-	access = 0;
 	type = 5;
 	w = 0.4;
 	h = 0.4;
@@ -217,10 +215,9 @@ class MB_RscListBox
 };
 class MB_RscActiveText
 {
-	access = 0;
 	type = 11;
 	style = 0;
-	color[] = {1,1,1,0.7};
+	color[] = {1,1,1,1};
 	colorActive[] = {1,1,1,1};
 	colorDisabled[] = {1,1,1,1};
 	colorText[] = {1,1,1,0.7};
@@ -263,11 +260,11 @@ class MB_RscButton
 {
 	idc = -1;
 	type = CT_BUTTON;
-	style = ST_CENTER;
+	style = ST_CENTER + ST_MULTI;
 	default = false;
 	font = MB_TEXT_FONT;
 	
-	sizeEx = MB_TEXT_DEFAULT;
+	sizeEx = MB_TEXT_LARGE;
 	
 	colorText[] = { 0.9, 0.9, 0.9, 1 };
 	colorFocused[] = { 0.9, 0.9, 0.9, 1 };  // border color for focused state
@@ -315,9 +312,9 @@ class MB_RscButton
 	action = "";
 
 	tooltip = ""; // Tooltip text
-	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
-	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
-	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+	//tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	//tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	//tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
 };
 
 class MB_RscEdit
@@ -948,7 +945,10 @@ class MB_RscControlsGroup
 	type = CT_CONTROLS_GROUP;
 	idc = -1;
 	style = ST_MULTI;
-        x = 0;     y = 0; w = 1; h = 1;
+    x = 0;     
+	y = 0; 
+	w = 1; 
+	h = 1;
 	shadow=0;
 	class VScrollbar 
 	{
@@ -1006,16 +1006,6 @@ class MB_RscToolbox {
 class MB_RscBackground : MB_RscText { //--- Render out.
 	idc = -1;
 	text = "";
-	x = "SafeZoneX + (SafeZoneW * 0.8)";
-	y = "SafeZoneY + (SafezoneH * 0)";
-	w = "SafeZoneW * 0.20";
-	h = "SafeZoneH * 1";
-	colorBackground[] = {0, 0, 0, 0.3};
-};
-class MB_RscWindowHeader : MB_RscBackground { //--- Render out.
-	idc = -1;
-	text = "";
-	style = CT_MUTLI + CT_LEFT + ST_VCENTER;
 	x = "SafeZoneX + (SafeZoneW * 0.8)";
 	y = "SafeZoneY + (SafezoneH * 0)";
 	w = "SafeZoneW * 0.20";

@@ -1,57 +1,11 @@
 #include "\MB\MapBuilder\version.hpp"
-
-//###################
-//	About
-//###################
- class MB_Window_About : MB_RscControlsGroup
-{
-	idc = 170600;
-	x = "SafeZoneX + (SafeZoneW * 0.3)";
-	y = "SafeZoneY + (SafezoneH * 0.2)";
-	w = MB_WINDOW_GRID_X * 18 + 2*MB_WINDOW_PADDING_X + 0.01;
-	h = MB_WINDOW_GRID_Y * 18 + 2*MB_WINDOW_PADDING_Y + 0.01;
-
-	class Controls
-	{
-		class MB_Window_About_BG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 1;
-			w = MB_WINDOW_GRID_X * 18 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 17 +  2 * MB_WINDOW_PADDING_Y;
-			colorBackground[] = {0.2,0.2,0.2,0.75};
-		};
-		class MB_Window_About_Header : MB_RscWindowHeader {
-			idc = -1;
-			text = "About Map Builder";
-			x = MB_WINDOW_GRID_X * 0;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 17 + 2 * MB_WINDOW_PADDING_X;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0,0.75,0,0.75};
-			onMouseButtonDown = "[_this,170600] call MB_fnc_beginWindowDrag;";
-			onMouseButtonUp = "[_this,170600] call MB_fnc_endWindowDrag;";
-			onMouseMoving = "[_this,170600] call MB_fnc_updateWindowDrag;";
-		};
-		class PMB_Window_About_XBG : MB_RscBackground {
-			idc = -1;
-			text = "";
-			x = 2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 17;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			colorBackground[] = {0.75,0,0,0.75};
-		};
-		class MB_Window_About_X : MB_RscActiveText {
-			idc = -1;
-			text = "X";
-			x =  2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 17;
-			y = MB_WINDOW_GRID_Y * 0;
-			w = MB_WINDOW_GRID_X * 1;
-			h = MB_WINDOW_GRID_Y * 1;
-			action = "[170600,false] spawn MB_fnc_closeWindow;";
-		};
+#define IDC 170600
+#define NAME About
+#define TITLE About Map Builder
+BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.2,18,18)
+		WINDOW_HEADER(NAME,IDC,TITLE,17)
+		WINDOW_CLOSE(NAME,IDC,17)
+		WINDOW_BACKGROUND(NAME,0,1,18,17)
 		class MB_Window_About_Icon : MB_RscText {
 			//type = CT_STATIC;
 			style = ST_PICTURE + ST_KEEP_ASPECT_RATIO;
@@ -112,8 +66,4 @@
 			w = MB_WINDOW_GRID_X * 18;
 			h = MB_WINDOW_GRID_Y * 13;
 		};
-		
-		
-		
-	};
-};
+END_WINDOW
