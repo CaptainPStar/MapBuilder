@@ -7,9 +7,7 @@ private["_projFolder","_filename","_confirmed"];
 	_confirmed = true;
 	if(format["%1.txt",_filename] in _projFolder) then {
 		_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
-		systemchat format["%1 in %2",_filename+".txt",_projFolder];
 	} else {
-		systemchat format["%1 not in %2",_filename+".txt",_projFolder];
 	};
 	if(_confirmed) then {
 		startLoadingScreen ["Exporting to Terrain Builder"];
@@ -43,7 +41,7 @@ private["_projFolder","_filename","_confirmed"];
 				
 
 				_string = format["write|""%1"";%2;%3;%4;%5;%6;%7;%8",_name,(_pos select 0),(_pos select 1),_yaw,_pitch,_bank,_scale,(_pos select 2)];
-				//systemChat ("MB_FileIO" callExtension _string);
+				"MB_FileIO" callExtension _string;
 				
 			};
 			_count = _count + 1;

@@ -33,13 +33,13 @@ if(_confirmed) then {
 			
 			_dirAndUp = [_pitch,_bank,_yaw] call MB_fnc_CalcDirAndUpVector;
 			_string = format["write|_obj = ""%1"" createvehicle [%2,%3,%4];",_type,_pos select 0,_pos select 1,_pos select 2];
-			systemChat ("MB_FileIO" callExtension _string);
+			"MB_FileIO" callExtension _string;
 			_string = format["write|_obj setposATL [%1,%2,%3];",_pos select 0,_pos select 1,_pos select 2];
-			systemChat ("MB_FileIO" callExtension _string);
+			"MB_FileIO" callExtension _string;
 			_string = format["write|_obj setVectorDirAndUp %1;",_dirAndUp];
-			systemChat ("MB_FileIO" callExtension _string);
+			"MB_FileIO" callExtension _string;
 			_string = format["write|_obj setposATL [%1,%2,%3];",_pos select 0,_pos select 1,_pos select 2];
-			systemChat ("MB_FileIO" callExtension _string);
+			"MB_FileIO" callExtension _string;
 		};
 		_count = _count + 1;
 		progressLoadingScreen (_count/count(MB_Objects));

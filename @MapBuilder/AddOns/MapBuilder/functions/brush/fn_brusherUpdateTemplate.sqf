@@ -1,4 +1,8 @@
-private["_data","_path"];
+private["_data","_path","_display"];
+	disableSerialization;
+	_display = uinamespace getvariable 'mb_main_dialog';
+	
+
 _ctrl = _display displayCtrl 171202;
 _path = (tvCurSel 171202);
 _data = [];
@@ -32,9 +36,6 @@ if(count(_data)>0) then {
 	// 171217 Random Bank
 	// 171218 Random Scale	
 
-	disableSerialization;
-	_display = uinamespace getvariable 'mb_main_dialog';
-	
 	// 171203 Probability
 	_value = parseNumber ctrlText(_display displayCtrl 171203);
 	if(_value > 1) then {
