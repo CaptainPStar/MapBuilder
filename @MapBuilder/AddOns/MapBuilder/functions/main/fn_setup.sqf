@@ -30,35 +30,35 @@
 	MB_ClickedPosition = [];
 	MB_ProjectName = "";
 	MB_3DVectors = [];
-	//MB_DataSource = "Array"; 
+	//MB_DataSource = "Array";
 	//MB_Modes = ["Object","Polygon"];
 	MB_Mode = -1;
 	MB_DebugLines = [];
 	MB_RegisterKeys = true;
-	
+
 	MB_CurVersionNum = 0;
 	MB_NewVersionNum = 0;
 	MB_CurVersion = "Unknown";
 	MB_NewVersion = "Unknown";
 
-	
+
 	MB_SelectedPolyline = [];
-	MB_PopupOpen = false; 
-	
+	MB_PopupOpen = false;
+
 	//MB_ObjectListNames = [];
 	//MB_ObjectLists = []; //Ob
-	
+
 	MB_LibraryFavorites = [];
 	MB_LibraryInUse = [];
-	
+
 	MB_Objects = []; //All placed objects
-	
+
 	//MB safe variables
 	if(isNil("MB_NUID")) then {
 		MB_NUID = 0;
 		publicVariable "MB_NUID";
 	};
-	
+
 	//ProjectSettings
 	if(isNil("MB_IslandGridSize")) then {
 		//MB_IslandGridSize = -1;
@@ -70,17 +70,22 @@
 	};
 	//Debug Logging
 	"MB_Helper" callExtension format["log|%1;%2;%3",name player,MB_VERSION,worldName];
-	
+
 	//Fencer
 	MB_FencerDir = 0;
 	MB_FencerPreview = ObjNull;
-	
+
 	//Autosave
 	MB_autosaveInterval = -1;
 	MB_nextProjectAutosave = time + MB_autosaveInterval;
-	
+
+	//terrainbuilder import hash
+	MB_importTB_P3D = [];
+	MB_importTB_ClassName = [];
+
 	//Bootstrap all variables:
 	call mb_fnc_initHookFunctions; //Must be first
+	call mb_fnc_initImportTBHashFunctions;
 	call mb_fnc_initBrushFunctions;
 	call mb_fnc_initControlFunctions;
 	call mb_fnc_initExportFunctions;

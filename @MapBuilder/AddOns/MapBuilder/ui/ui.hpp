@@ -8,11 +8,11 @@ class MB_Main
 	movingenable = false;
 	onLoad = "uiNamespace setVariable ['mb_main_dialog', (_this select 0)];";
 	onUnload = "call MB_fnc_Exit;";
-	
+
 	class controlsBackground {
 		class Rsc_MouseArea : MB_RscText {
 			idc = 170001;
-			
+
 			x = "safezoneX";
 			y = "safezoneY";
 			w = "safezoneW * 0.8";
@@ -96,8 +96,8 @@ class MB_Main
 			colorDisabled[] = {1,1,1,1};
 			text = "\MB\MapBuilder\data\icon.paa";
 			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
-		};		
-		
+		};
+
 		class MB_SelectedTemplate : MB_RscStructuredText {
 			idc = 170007;
 
@@ -237,7 +237,7 @@ class MB_Main
 		//###################
 		//	Taskbar
 		//###################
-		
+
 		class MB_Taskbar : MB_RscText { //--- Render out.
 			idc = 171009;
 			text = "";
@@ -318,8 +318,52 @@ class MB_Main
 			colorBackground[] = {0,0,0,0.75};
 			onKeyDown = "if((_this select 1) == 28) then {[] spawn MB_FNC_ChatSend;};false;";
 		};
-		#include "map.hpp"
-		#include "fencer.hpp"		
+
+		//###################
+		//	Map Popup
+		//###################
+
+		class MB_Map : MB_RscMapControl
+        {
+			idc = 170301;
+			style = 48;
+			type = 101;
+			x = "safezoneX";
+			y = "safezoneY + safezoneW * 0.02";
+			w = "safezoneW * 0.8";
+			h = "safezoneH * 0.94";
+			onLoad = "";
+			onMouseButtonDblClick = "_this call MB_fnc_mapDblClickTeleport;";
+        };
+		class Popup_MapHeader : MB_RscBackground {
+			idc = 170302;
+			text = "Map";
+			x = "SafeZoneX";
+			y = "SafeZoneY";
+			w = "SafeZoneW * 0.78";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0,0.75,0,1};
+		};
+		class Popup_MapHeaderCloseBG : MB_RscBackground {
+			idc = 170303;
+			text = "";
+			x = "SafeZoneX + (SafeZoneW * 0.78)";
+			y = "SafeZoneY";
+			w = "SafeZoneW * 0.02";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0.75,0,0,0.5};
+		};
+		class Popup_MapHeaderClose : MB_RscActiveText {
+			idc = 170304;
+			text = "X";
+			x = "SafeZoneX + (SafeZoneW * 0.78)";
+			y = "SafeZoneY";
+			w = "SafeZoneW * 0.02";
+			h = "SafeZoneH * 0.02";
+			colorBackground[] = {0,0.75,0,1};
+			action = "[] call MB_fnc_toggleMap;";
+		};
+		#include "fencer.hpp"
 		#include "presets.hpp"
 		#include "test.hpp"
 		#include "about.hpp"
