@@ -12,7 +12,7 @@ private["_filename"];
 	
 	_line = "MB_FileIO" callExtension "readline";
 	while{_line != "EOF"} do {
-		private["_obj","_type","_layer","_pos","_dir","_pitch","_bank","_scale"];
+		private["_obj","_type","_layer","_pos","_dir","_pitch","_bank","_scale","_exactPos"];
 		_arr = [_line] call MB_fnc_loadStoreArr;
 		_lineType = (_arr select 0);
 		switch (_lineType) do {
@@ -23,6 +23,10 @@ private["_filename"];
 				_obj = [_type,_vars select 0] call MB_fnc_CreateObject;
 				if(!isNull _obj) then {
 					[_obj,_vars] call MB_fnc_setObjVars;
+					if(count((_arr select 1)) > 2) then {
+						_exactPos =  (_arr select 1) select 2;
+						[_obj,_exactPos] call MB_FNC_SetExactPosition;
+					};
 				};
 			};
 			case "favoriteObj": {

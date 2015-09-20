@@ -369,11 +369,11 @@ class MB_RscCheckbox
 	x = 0;
 	y = 0;
 };
-class MB_RscMapControl
-{
-       access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
-			idc = CT_MAP; // Control identification (without it, the control won't be displayed)
-			type = CT_MAP_MAIN; // Type
+	class MB_RscMap
+		{
+			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+			idc = -1; // Control identification (without it, the control won't be displayed)
+			type = CT_MAP; // Type
 			style = ST_PICTURE; // Style
 			default = 0; // Control selected by default (only one within a display can be used)
 			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
@@ -383,7 +383,7 @@ class MB_RscMapControl
 			w = 10 * GUI_GRID_CENTER_W; // Width
 			h = 6 * GUI_GRID_CENTER_H; // Height
 
-			sizeEx = MB_TEXT_DEFAULT; // Text size
+			sizeEx = GUI_GRID_CENTER_H; // Text size
 			font = MB_TEXT_FONT; // Font from CfgFontFamilies
 			colorText[] = {0,0,0,1}; // Text color
 
@@ -396,7 +396,7 @@ class MB_RscMapControl
 
 			// Rendering density coefficients
 			ptsPerSquareSea =	5;	// seas
-			ptsPerSquareTxt =	8;	// textures
+			ptsPerSquareTxt =	20;	// textures
 			ptsPerSquareCLn =	10;	// count-lines
 			ptsPerSquareExp =	10;	// exposure
 			ptsPerSquareCost =	10;	// cost
@@ -411,11 +411,11 @@ class MB_RscMapControl
 			scaleMax = 1.0; // Max map scale (i.e., min zoom)
 			scaleDefault = 0.16; // Default scale
 
-			alphaFadeStartScale = 0.001; // Scale at which satellite map starts appearing
-			alphaFadeEndScale = 0.001; // Scale at which satellite map is fully rendered
-			maxSatelliteAlpha = 1.0; // Maximum alpha of satellite map
-			//text = "\ca\ui\data\map_background2_co.paa"; //TODO
-			text = "#(argb,8,8,3)color(1,1,1,1,co)";
+			alphaFadeStartScale = 0.1; // Scale at which satellite map starts appearing
+			alphaFadeEndScale = 0.01; // Scale at which satellite map is fully rendered
+			maxSatelliteAlpha = 0.85; // Maximum alpha of satellite map
+
+			text = "#(argb,8,8,3)color(1,1,1,1)"; // Fill texture
 			colorBackground[] = {1,1,1,1}; // Fill color
 
 			colorOutside[] = {0,0,0,1}; // Color outside of the terrain area (not sued when procedural terrain is enabled)
@@ -442,25 +442,25 @@ class MB_RscMapControl
 			colorGrid[] = {0.1,0.1,0.1,0.6}; // Grid coordinate color
 			colorGridMap[] = {0.1,0.1,0.1,0.6}; // Grid line color
 
-			fontLabel = GUI_FONT_NORMAL; // Tooltip font from CfgFontFamilies
+			fontLabel = MB_TEXT_FONT; // Tooltip font from CfgFontFamilies
 			sizeExLabel = GUI_GRID_CENTER_H * 0.5; // Tooltip font size
 
-			fontGrid = GUI_FONT_SYSTEM; // Grid coordinate font from CfgFontFamilies
+			fontGrid = MB_TEXT_FONT; // Grid coordinate font from CfgFontFamilies
 			sizeExGrid = GUI_GRID_CENTER_H * 0.5; // Grid coordinate font size
 
-			fontUnits = GUI_FONT_SYSTEM; // Selected group member font from CfgFontFamilies
+			fontUnits = MB_TEXT_FONT; // Selected group member font from CfgFontFamilies
 			sizeExUnits = GUI_GRID_CENTER_H * 0.5; // Selected group member font size
 
-			fontNames = GUI_FONT_NARROW; // Marker font from CfgFontFamilies
+			fontNames = MB_TEXT_FONT; // Marker font from CfgFontFamilies
 			sizeExNames = GUI_GRID_CENTER_H * 0.5; // Marker font size
 
-			fontInfo = GUI_FONT_NORMAL; // Unknown?
+			fontInfo = MB_TEXT_FONT; // Unknown?
 			sizeExInfo = GUI_GRID_CENTER_H * 0.5; // Unknown?
 
-			fontLevel = GUI_FONT_SYSTEM; // Elevation number font
+			fontLevel = MB_TEXT_FONT; // Elevation number font
 			sizeExLevel = GUI_GRID_CENTER_H * 0.5; // Elevation number font size
 
-			showCountourInterval = 2; // Show Legend
+			showCountourInterval = 1; // Show Legend
 
 			class Task
 			{
@@ -543,7 +543,59 @@ class MB_RscMapControl
 			onMouseHolding = "";
 
 			onDraw = "";
-};
+		};
+		class MB_RscMapMain: MB_RscMap
+		{
+			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+			idc = -1; // Control identification (without it, the control won't be displayed)
+			type = CT_MAP_MAIN; // Type
+			style = ST_PICTURE; // Style
+			default = 0; // Control selected by default (only one within a display can be used)
+			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+
+			x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+			y = 8 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+			w = 10 * GUI_GRID_CENTER_W; // Width
+			h = 6 * GUI_GRID_CENTER_H; // Height
+
+			tooltip = ""; // Tooltip text
+			tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+			tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+			tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+
+			showCountourInterval = 1; // Show Legend
+
+			class Legend
+			{
+				x = 30 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+				y = 9 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+				w = 8 * GUI_GRID_CENTER_W; // Width
+				h = 4 * GUI_GRID_CENTER_H; // Height
+
+				colorBackground[] = {1,1,1,1}; // Fill color
+				
+				font = MB_TEXT_FONT; // Font from CfgFontFamilies
+				sizeEx = 0.8 * GUI_GRID_CENTER_H; // Text size
+				color[] = {0,0,0,1}; // Text color
+				
+			};
+
+			onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
+			onDestroy = "systemChat str ['onDestroy',_this]; false";
+			onSetFocus = "systemChat str ['onSetFocus',_this]; false";
+			onKillFocus = "systemChat str ['onKillFocus',_this]; false";
+			onKeyDown = "systemChat str ['onKeyDown',_this]; false";
+			onKeyUp = "systemChat str ['onKeyUp',_this]; false";
+			onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
+			onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
+			onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
+			onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
+			onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+			onMouseMoving = "";
+			onMouseHolding = "";
+
+			onDraw = "";
+		};
 class MB_RscTree {
 	access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
 	idc = CT_TREE; // Control identification (without it, the control won't be displayed)

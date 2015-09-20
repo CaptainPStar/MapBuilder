@@ -30,7 +30,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			w = MB_WINDOW_GRID_X * 8;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to TB";
-			action = "[ctrlText 170105] spawn MB_fnc_exportTB;";
+			action = "[ctrlText 170105, (ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170106))] spawn MB_fnc_exportTB;";
 			tooptip = "Export current project as objectlist (.txt) that can be added to Terrain Builder.";
 		};
 		class MB_Window_Export_SQFButton : MB_RscButton {
@@ -61,7 +61,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to TML";
 			action = "[ctrlText 170105] spawn MB_fnc_exportTML;";
-			tooptip = "Export used objectclasses as TB template library. Helpful when exporting to TB.";
+			tooptip = "Export used objectclasses as TB template library. Helpful when exporting to TB. Highly experimental!";
 		};
 		class MB_Window_Export_EditorImport : MB_RscButton {
 			idc = -1;
@@ -90,5 +90,23 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			w = MB_WINDOW_GRID_X * 18;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Exported files can be found in @MapBuilder/export.";
+		};
+		class MB_Window_Export_Helptext3 : MB_RscText {
+			idc = -1;
+			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 8 + 0.001;
+			w = MB_WINDOW_GRID_X * 4;
+			h = MB_WINDOW_GRID_Y * 0.5;
+			text = "TB Names:";
+		};
+		class MB_Window_Export_TBMode : MB_RscCheckbox {
+			idc = 170106;
+			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 5;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 8 + 0.001;
+			w = MB_WINDOW_GRID_X * 2;
+			h = MB_WINDOW_GRID_Y * 1;
+			checked_strings[] = {"Class"};
+			strings[] = {"P3D"};
+			tooltip = "Export P3D or Classnames in TB Exports (Classnames work in conjunction with TML export).";
 		};
 END_WINDOW

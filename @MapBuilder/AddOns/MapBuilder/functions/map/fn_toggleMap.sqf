@@ -12,8 +12,7 @@ if(_show) then {
 	(_display displayCtrl 170301) ctrlShow true;
 	ctrlSetFocus (_display displayCtrl 170301);
 	(_display displayCtrl 170301) ctrlEnable true;
-	_map  = [(configFile >> "CfgWorlds" >> worldName),"pictureShot","#(argb,8,8,3)color(1,1,1,1)"] call BIS_fnc_returnConfigEntry;
-	systemchat _map;
+	(_display displayCtrl 170301) mapCenterOnCamera false;
 	//(_display displayCtrl 170301) ctrlSetText _map;
 } else {
 	(_display displayCtrl 170301) ctrlShow false;

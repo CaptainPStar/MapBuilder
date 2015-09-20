@@ -15,12 +15,16 @@ if(_confirmed) then {
 	systemChat format["Opening %1",_path];
 	MB_ProjectName = _filename;
 	{
+		private["_obj","_type","_exactPos","_vars"];
 		if(!isNull(_x)) then {
 			_obj = _x;
 			_type = typeof _obj;
 			_vars = [_obj] call MB_fnc_getObjectVars;
+			//[_pos,_pitch,_bank,_yaw,_simulate,_locked,_scale]
 			
-			_string = ["object",[_type,_vars]] call MB_fnc_toStoreArr;
+			_exactPos = [_obj] call MB_fnc_getExactPosition;
+			
+			_string = format["[""object"",[%1,%2,%3]]",str _type,_vars,_exactPos];
 			
 			"MB_FileIO" callExtension format["write|%1",_string];
 		};

@@ -1,13 +1,15 @@
 //startLoadingScreen ["Exporting Terrain Builder file..."];
-private["_projFolder","_filename","_confirmed"];
+private["_projFolder","_filename","_confirmed","_useClassnames"];
 	["Due to inconsistence between A3 and TB pitch and bank will not be exported.",1] call MB_fnc_showPopupDialog;
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
+	_useClassnames = [_this,1,true] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};
 	_projFolder = ["export"] call mb_fnc_getFolderContent;
 	_confirmed = true;
 	if(format["%1.txt",_filename] in _projFolder) then {
 		_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
 	} else {
+
 	};
 	if(_confirmed) then {
 		startLoadingScreen ["Exporting to Terrain Builder"];
@@ -22,8 +24,17 @@ private["_projFolder","_filename","_confirmed"];
 			if(!isNull(_x)) then {
 				_obj = _x;
 				
-				_name = [_obj] call MB_fnc_getCanonicalName;
-				
+				if(_useClassnames) then {
+					_name = [_obj] call MB_fnc_getCanonicalName;
+				} else {
+					_name = getText (configFile >> "CfgVehicles" >> (typeof _obj) >> "model");
+					_name = toLower(_name);
+					_name = _name splitString  "\";
+					//Extract last part (model.p3d) and split into name and extension
+					_name = (_name select (count(_name)-1)) splitString  ".";
+					//Use extension
+					_name = _name select 0;
+					};
 				
 				
 				_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_exactPosition;
