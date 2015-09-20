@@ -126,7 +126,7 @@ class CfgVehicles
 		scopeCurator = 1;
 	};
 	class Helper_Base_F;
-	class mb_bounding_box: Helper_Base_F
+	class MB_Bounding_Box: Helper_Base_F
 	{
 		scope        = 1;
 		displayName  = "Bounding Box";
@@ -147,6 +147,27 @@ class CfgVehicles
 			class top : left {};
 			class bottom : left {};
 			*/
+		};
+	};
+	class MB_Plane: Helper_Base_F
+	{
+		scope        = 1;
+		displayName  = "MB Plane";
+		model        = "mb\mapbuilder\data\mb_plane";
+		author = "NeoArmageddon";
+		class AnimationSources
+		{
+			class left
+			{
+				source     = "user";
+				initPhase  = 0;
+				animPeriod = 1; // Hier den wert 0 ausprobieren, schauen ob es dann auch noch funktioniert.
+			};
+			class right : left {};
+			class front : left {};
+			class rear : left {};
+			class top : left {};
+			class bottom : left {};
 		};
 	};
 };
