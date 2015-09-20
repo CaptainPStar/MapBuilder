@@ -203,16 +203,16 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			strings[] = {"No"};
 			tooltip="If 'Yes' the camera will follow the mouse/brush.";
 		};
-		/*class MB_Window_Brusher_Settings_CamFollowAngleLabel: MB_RscText {
-		//	idc = -1;
-		//	x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 39;
-		//	y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
-		//	w = MB_WINDOW_GRID_X * 4;
-		//	h = MB_WINDOW_GRID_Y * 1;
-		//	text =  "Lock Angle:";
-		//	style = 0;
-		//};
-		class MB_Window_Brusher_Settings_CamFollowAngle : MB_RscCheckbox {
+		class MB_Window_Brusher_Settings_DrawStraightLabel: MB_RscText {
+			idc = -1;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 39;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
+			w = MB_WINDOW_GRID_X * 4;
+			h = MB_WINDOW_GRID_Y * 1;
+			text =  "Straight:";
+			style = 0;
+		};
+		class MB_Window_Brusher_Settings_DrawStraight : MB_RscCheckbox {
 			idc = 171223;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 44;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 7;
@@ -220,8 +220,8 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			h = MB_WINDOW_GRID_Y * 1;
 			checked_strings[] = {"Yes"};
 			strings[] = {"No"};
-			tooltip="Works in conjunction with 'Cam Follow'. The camera will also maintain the relative angle to brush direction.";
-		};*/
+			tooltip="If enabled, the brush direction is locked after the first node resulting in perfectly straight lines.";
+		};
 		class MB_Window_Brusher_ApplySettingsButton : MB_RscButton {
 			idc = -1;
 			text = "Apply";

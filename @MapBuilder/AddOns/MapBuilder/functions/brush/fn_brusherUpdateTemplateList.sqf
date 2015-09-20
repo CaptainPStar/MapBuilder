@@ -7,6 +7,7 @@ private["_display","_ctrl"];
 	
 	(_display displayCtrl 171221) ctrlSetText format["%1",MB_BrushWidth];
 	(_display displayCtrl 171222) ctrlSetChecked MB_BrushCamFollow;
+	(_display displayCtrl 171223) ctrlSetChecked MB_BrusherLockDir;
 	if(_select == "Cur") then {
 		_path = tvCurSel _ctrl;
 	};

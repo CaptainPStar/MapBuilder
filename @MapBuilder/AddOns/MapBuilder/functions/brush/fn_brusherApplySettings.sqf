@@ -5,4 +5,5 @@ private["_data","_path"];
 
 	MB_BrushWidth = parseNumber ctrlText(_display displayCtrl 171221);
 	MB_BrushCamFollow = ctrlChecked (_display displayCtrl 171222);
+	MB_BrusherLockDir = ctrlChecked (_display displayCtrl 171223);
 	//MB_BrushCamFollowAngleLock = ctrlChecked (_display displayCtrl 171223);

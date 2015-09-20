@@ -16,7 +16,7 @@ private["_filename"];
 	systemChat format["Opening %1",_path];
 
 	
-	_string = ["settings",[MB_BrushWidth,MB_BrushCamFollow]] call MB_fnc_toStoreArr;
+	_string = ["settings",[MB_BrushWidth,MB_BrushCamFollow,MB_BrusherLockDir]] call MB_fnc_toStoreArr;
 	"MB_FileIO" callExtension format["write|%1",_string];
 	{
 		_string = ["template",_x] call MB_fnc_toStoreArr;

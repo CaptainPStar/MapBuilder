@@ -19,9 +19,11 @@ while{_line != "EOF"} do {
 		case "settings": {
 			MB_BrushWidth = (_arr select 1) select 0;
 			MB_BrushCamFollow  = (_arr select 1) select 1;
-			//if(count((_arr select 1))>2) then { //Legacy check
-			//	MB_BrushCamFollowAngleLock = (_arr select 1) select 2;
-			//};
+			if(count((_arr select 1))>2) then { //Legacy check
+				MB_BrusherLockDir = (_arr select 1) select 2;
+			} else {
+				MB_BrusherLockDir = false;
+			};
 			
 		};
 		case "template": {

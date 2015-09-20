@@ -1,5 +1,6 @@
-private["_data","_path"];
+private["_display","_ctrl","_index","_data","_path"];
 disableSerialization;
+_display = uinamespace getvariable 'mb_main_dialog';
 _ctrl = _display displayCtrl 171202;
 _path = (tvCurSel 171202);
 _data = [];

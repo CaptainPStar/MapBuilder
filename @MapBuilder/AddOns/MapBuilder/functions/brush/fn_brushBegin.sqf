@@ -4,6 +4,8 @@ if(!MB_Brushing) then {
 	MB_BrushCamAngle = 0;
 	MB_BrushDirection = 0;
 	MB_NodesDrawn = 0;
+	MB_BrusherDir = 0;
+	MB_BrusherLastReferenceNode = +MB_MousePosition;
 	if(MB_BrushCamFollow) then {
 		MB_CamCommit = 0.5;
 	};

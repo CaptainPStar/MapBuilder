@@ -11,7 +11,8 @@ MB_BrushHelper = objNull;
 MB_BrushCamFollow = false;
 MB_BrushCamFollowAngleLock = false;
 MB_BrusherNodesToDraw = [];
-
+MB_BrusherLockDir = true;
+MB_BrusherDir = 0;
 MB_CurBrush = [];
 //MB_CurBrush pushBack [type,chance,count,relpos,dir,pitch,bank,scale,randompos,randomdir,randompitch,randombank,randomscale];
 //MB_CurBrush pushBack [["b_FicusC2s_F"],[1],0.7,1,[0,0,0],0,0,0,1,[4,4,0],360,5,5,0.2];
