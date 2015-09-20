@@ -87,7 +87,7 @@ private["_up","_dir","_pos","_scale"];
 		} foreach MB_VertexHelpers;
 	};
 	{
-		_start = (_x select 0);
+		_start = (_x select 0) vectorAdd [0,0,0.5];
 		_end = ((_x select 1) vectorAdd [0,0,0.5]);
 		drawLine3D [_start,_end,[0,1,0,1]];
 	} foreach MB_3DVectors;

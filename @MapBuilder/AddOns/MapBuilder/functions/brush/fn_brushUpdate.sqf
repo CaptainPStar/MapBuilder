@@ -46,7 +46,7 @@ if(MB_NodesDrawn == 0) then {
 			MB_NodesDrawn = MB_NodesDrawn + 1;
 		} else {
 			MB_3DVectors = [[+MB_BrushLastNode,+_mpos]];
-			MB_BrushPoint setposATL _mpos;
+			MB_BrushPoint setposATL (_mpos vectorAdd [0,0,0.5]);
 			_vector = MB_BrushLastNode vectorFromTo _mpos;
 			_dir = (_vector select 0) atan2 (_vector select 1);
 			MB_BrushPoint setdir _dir;
