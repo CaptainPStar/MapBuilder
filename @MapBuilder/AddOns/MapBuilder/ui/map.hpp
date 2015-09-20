@@ -16,7 +16,7 @@ class MB_Map : MB_RscMapMain
 	
 	onSetFocus = "false";
 	onKillFocus = "false";
-	onKeyDown = "systemchat ""blub"";_this call MB_fnc_KeyDown;true";
+	onKeyDown = "_this call MB_fnc_KeyDown;true";
 	onKeyUp = "false";
 	onMouseButtonDown = "false";
 	onMouseButtonUp = "false";

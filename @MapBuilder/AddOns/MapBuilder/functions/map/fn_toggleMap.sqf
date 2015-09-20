@@ -2,7 +2,6 @@ disableSerialization;
 private["_display","_open","_show"];
 _open = [] call MB_FNC_mapOpen;
 _show = param[0,!(_open)];
-systemchat format["%1",_show];
 _display = uinamespace getvariable 'mb_main_dialog';
 
 if(_show) then {
