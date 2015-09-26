@@ -4,8 +4,8 @@ class MB_Map : MB_RscMapMain
 	idc = 170301;
 	x = "safezoneX";
 	y = "safezoneY";
-	w = "safezoneW * 0.8";
-	h = "safezoneH * 0.97";
+	w = "safezoneW * 1";
+	h = "safezoneH * 1";
 	
 	alphaFadeStartScale = 1.1; // Scale at which satellite map starts appearing
 	alphaFadeEndScale = 1.1; // Scale at which satellite map is fully rendered

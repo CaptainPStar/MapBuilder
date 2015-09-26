@@ -2,6 +2,9 @@
 #include "window.hpp"
 #include "dik.hpp"
 #include "\MB\MapBuilder\include.hpp"
+
+
+
 class MB_Main
 {
 	idd = 123;
@@ -45,6 +48,7 @@ class MB_Main
 		//};
 	};
 	class controls {
+		#include "map.hpp"
 		//class RscObject;
 		class MB_MainBackground : MB_RscText { //--- Render out.
 			idc = 170002;
@@ -54,8 +58,8 @@ class MB_Main
 			w = "SafeZoneW * 0.20";
 			h = "SafeZoneH * 1";
 			colorBackground[] = {0, 0, 0, 0.3};
-			onMouseExit = "systemchat ""blub"";[false] call MB_fnc_MouseInView;";
-			onMouseEnter = "systemchat ""blub"";[true] call MB_fnc_MouseInView;";
+			onMouseExit = "[false] call MB_fnc_MouseInView;";
+			onMouseEnter = "[true] call MB_fnc_MouseInView;";
 		};
 		class MB_ObjectLibrary : MB_RscTree {
 			idc = 170003;
@@ -336,6 +340,5 @@ class MB_Main
 		#include "brusher.hpp"
 		#include "export.hpp"
 		#include "project.hpp"
-		#include "map.hpp"
 	};
 };
