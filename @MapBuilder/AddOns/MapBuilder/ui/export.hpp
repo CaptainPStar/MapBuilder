@@ -31,7 +31,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to TB";
 			action = "[ctrlText 170105, (ctrlChecked ((uinamespace getvariable 'mb_main_dialog') displayCtrl 170106))] spawn MB_fnc_exportTB;";
-			tooptip = "Export current project as objectlist (.txt) that can be added to Terrain Builder.";
+			tooltip = "Export current project as objectlist (.txt) that can be added to Terrain Builder.";
 		};
 		class MB_Window_Export_SQFButton : MB_RscButton {
 			idc = -1;
@@ -41,7 +41,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to SQF";
 			action = "[ctrlText 170105] spawn MB_fnc_exportSQF;";
-			tooptip = "Export current project as SQF script that can be called in missions by a trigger or script.";
+			tooltip = "Export current project as SQF script that can be called in missions by a trigger or script.";
 		};
 		class MB_Window_Export_SQMButton : MB_RscButton {
 			idc = -1;
@@ -51,7 +51,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to SQM";
 			action = "[ctrlText 170105] spawn MB_fnc_exportSQM;";
-			tooptip = "Export current project as mission (missionfolder containing .sqm).";
+			tooltip = "Export current project as mission (missionfolder containing .sqm).";
 		};
 		class MB_Window_Export_TMLButton : MB_RscButton {
 			idc = -1;
@@ -61,7 +61,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Export to TML";
 			action = "[ctrlText 170105] spawn MB_fnc_exportTML;";
-			tooptip = "Export used objectclasses as TB template library. Helpful when exporting to TB. Highly experimental!";
+			tooltip = "Export used objectclasses as TB template library. Helpful when exporting to TB. Highly experimental!";
 		};
 		class MB_Window_Export_EditorImport : MB_RscButton {
 			idc = -1;
@@ -71,7 +71,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Import Static";
 			action = "[] spawn MB_fnc_importFromEditor;";
-			tooptip = "Import all mission/script placed static objects into MB project.";
+			tooltip = "Import all mission/script placed static objects into MB project.";
 		};
 		class MB_Window_Export_TBImport : MB_RscButton {
 			idc = -1;
@@ -81,7 +81,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Import TB File";
 			action = "[ctrlText 170105] spawn MB_fnc_importFromTB;";
-			tooptip = "Import TB exported (txt) objects into MB project.";
+			tooltip = "Import TB exported (txt) objects into MB project. Files must be in @MapBuilder/import folder.";
 		};
 		class MB_Window_Export_Helptext2 : MB_RscText {
 			idc = -1;

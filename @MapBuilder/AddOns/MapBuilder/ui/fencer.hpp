@@ -22,6 +22,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "F";
 			action = "MB_FencerDir = 0;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Forward";
 		};
 		class Popup_FencerBackwardButton : MB_RscButton {
 			idc = -1;
@@ -31,6 +32,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "B";
 			action = "MB_FencerDir = 1;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Backward";
 		};
 		class Popup_FencerLeftButton : MB_RscButton {
 			idc = -1;
@@ -40,6 +42,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "L";
 			action = "MB_FencerDir = 2;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Left";
 		};
 		class Popup_FencerRightButton : MB_RscButton {
 			idc = -1;
@@ -49,18 +52,21 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "R";
 			action = "MB_FencerDir = 3;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Right";
 		};
 		class Popup_FencerUpButton : MB_RscButton {
 			idc = -1;
 			WINDOW_POSITION(2,2,1,1)
 			text = "U";
 			action = "MB_FencerDir = 4;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Stack top";
 		};
 		class Popup_FencerDownButton : MB_RscButton {
 			idc = -1;
 			WINDOW_POSITION(2,4,1,1)
 			text = "D";
 			action = "MB_FencerDir = 5;[] call MB_FNC_FencerUpdatePreview;";
+			tooltip = "Stack bottom";
 		};
 		class Popup_FencerPlaceButton : MB_RscButton {
 			idc = -1;
@@ -99,6 +105,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			strings[] = {"ATL","GND","CST"};
 			values[] = {0,1,2};
 			onToolBoxSelChanged = "MB_FencerHeightMode = (_this select 1);";
+			tooltip = "ATL: Keep relative height above terrain.\nGND: Place always on ground.\nCST: Keep constant height above sealevel (for bridges, etc).";
 		};
 		class Popup_FencerTerrainModeLabel : MB_RscText {
 			idc = -1;
@@ -133,6 +140,6 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 			h = MB_WINDOW_GRID_Y * 1;
 			checked_strings[] = {"Library"};
 			strings[] = {"Repeat"};
-			tooltop = "Repeat selected object or place object from library.";
+			tooltip = "Repeat selected object or place object from library.";
 		};
 END_WINDOW
