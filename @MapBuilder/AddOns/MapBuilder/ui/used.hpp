@@ -14,7 +14,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.01,0.1,10,10)
 			h = MB_WINDOW_GRID_Y * 8;
 			sizeEx = 0.03;
 			colorBackground[] = {0, 0.8, 0, 0.5};
-			onTreeSelChanged = "_this call MB_LibrarySelect;";
+			onTreeSelChanged = "_this call MB_FNC_LibrarySelect;";
 			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
 			//onMouseButtonDown = "_this call MB_fnc_libraryMousedown;";
 			//onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
@@ -30,9 +30,10 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.01,0.1,10,10)
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Select objects";
+			sizeEx = MB_TEXT_DEFAULT;
 			action = "[] call MB_fnc_SelectAllUsed;";
 		};
-		class MB_Window_Used_Update : MB_RscButton {
+		class MB_Window_Used_Update : MB_Window_Used_Select {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 5;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9 + 0.001;
