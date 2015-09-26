@@ -11,3 +11,13 @@
 		player switchCamera "Internal";
 		
 		player enableSimulation true;
+		
+		//Reenable DevInfo:
+		if ((productVersion select 4) != "Stable") then
+		{
+			disableSerialization;
+			_display = findDisplay 46; 
+			_control = _display displayctrl 11400;     
+			_control ctrlsetfade 0;     
+			_control ctrlcommit 0;
+		};

@@ -7,9 +7,9 @@ class CfgPatches
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 1.50;
-		requiredAddons[] = {"A3_Misc_F_Helpers"};
+		requiredAddons[] = {"A3_Misc_F_Helpers","A3_UI_F"};
 		version = "0.9";
-		projectName = "MapBuilder";
+		projectName = "Map Builder";
 		author = "NeoArmageddon";
 	};
 };
@@ -102,11 +102,18 @@ class CfgVehicles
 		function = "mb_fnc_setup";
 		scopeCurator = 1;
 		scope = 2;
-		class Arguments: ArgumentsBaseUnits
+		class Arguments
 		{
 			// Arguments shared by specific module type (have to be mentioned in order to be placed on top)
 			//class Units: Units {};
 			// Module specific arguments
+			class Autostart
+  			{
+				displayName = "Autostart"; // Argument label
+				description = "Start Map Builder interface when mission starts."; // Tooltip description
+				typeName = "BOOL"; // Value type, can be "NUMBER", "STRING" or "BOOL"
+				defaultValue = 1;
+			};
 		};
 		class ModuleDescription: ModuleDescription
 		{

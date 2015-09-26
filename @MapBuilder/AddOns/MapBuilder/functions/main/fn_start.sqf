@@ -2,6 +2,17 @@
 //* Start Function
 //* Starts MB dialog and camera
 //***************************************
+	//Disable DevInfo:
+	if ((productVersion select 4) != "Stable") then
+	{
+		disableSerialization;
+		private["_display","_control"];
+		_display = findDisplay 46; 
+		_control = _display displayctrl 11400;     
+		_control ctrlsetfade 1;     
+		_control ctrlcommit 0;
+	};
+
 
 	startLoadingScreen ["Starting MapBuilder..."];
 	MBDialog = createDialog "MB_Main";
@@ -86,4 +97,3 @@
 			sleep 0.1;
 		};
 	};
-

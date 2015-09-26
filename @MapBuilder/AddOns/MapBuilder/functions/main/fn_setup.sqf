@@ -5,6 +5,9 @@
 //* Setup Function
 //* Creates all global variables
 //***************************************
+private["_logic"];
+_logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
+
 	MB_Keys = [];
 	for "_i" from 0 to 255 do {
 		MB_Keys set [_i,false];
@@ -110,3 +113,11 @@
 	//["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
+	
+	if(!isNull _logic) then {
+		private["_autostart"];
+		_autostart = _logic getvariable "Autostart";
+		if(_autostart) then {
+			[] spawn MB_fnc_Start;
+		};
+	};
