@@ -1,6 +1,7 @@
 private["_data"];
 	_ctrl = _this select 0;
 	_data = _ctrl tvData (tvCurSel _ctrl);
+	systemchat format["%1",_data];
 	if(_data != "") then {
 		MB_CurClass = _data;
 		disableSerialization;

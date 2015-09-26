@@ -12,7 +12,6 @@ if(!ctrlShown _ctrl) then {
 		_projectsFiles = [_projectFolder,"|"] call BIS_fnc_splitString;
 		_projectsFiles = _projectsFiles - ["."];
 		_projectsFiles = _projectsFiles - [".."];
-		systemchat format["%1",_projectsFiles];
 		lbClear _listbox;
 		{
 			_name = [_x,"."] call BIS_fnc_splitString;

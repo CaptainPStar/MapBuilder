@@ -528,17 +528,17 @@ class MB_RscCheckbox
 			class Tourism: Waypoint{};
 			class ViewTower: Waypoint{};
 
-			onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-			onDestroy = "systemChat str ['onDestroy',_this]; false";
-			onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-			onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-			onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-			onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-			onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-			onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-			onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-			onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-			onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+			onCanDestroy = "";
+			onDestroy = "";
+			onSetFocus = "";
+			onKillFocus = "";
+			onKeyDown = "";
+			onKeyUp = "";
+			onMouseButtonDown = "";
+			onMouseButtonUp = "";
+			onMouseButtonClick = "";
+			onMouseButtonDblClick = "";
+			onMouseZChanged = "";
 			onMouseMoving = "";
 			onMouseHolding = "";
 
@@ -580,17 +580,17 @@ class MB_RscCheckbox
 				
 			};
 
-			onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-			onDestroy = "systemChat str ['onDestroy',_this]; false";
-			onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-			onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-			onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-			onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-			onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-			onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-			onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-			onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-			onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+			onCanDestroy = "";
+			onDestroy = "";
+			onSetFocus = "";
+			onKillFocus = "";
+			onKeyDown = "";
+			onKeyUp = "";
+			onMouseButtonDown = "";
+			onMouseButtonUp = "";
+			onMouseButtonClick = "";
+			onMouseButtonDblClick = "";
+			onMouseZChanged = "";
 			onMouseMoving = "";
 			onMouseHolding = "";
 
@@ -713,22 +713,22 @@ class _CT_XLISTBOX
 
 	soundSelect[] = {"\A3\ui_f\data\sound\RscListbox\soundSelect",0.09,1}; // Sound played when an item is selected
 
-	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-	onDestroy = "systemChat str ['onDestroy',_this]; false";
-	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onCanDestroy = "true";
+	onDestroy = "false";
+	onSetFocus = "false";
+	onKillFocus = "false";
+	onKeyDown = "false";
+	onKeyUp = "false";
+	onMouseButtonDown = "false";
+	onMouseButtonUp = "false";
+	onMouseButtonClick = "false";
+	onMouseButtonDblClick = "false";
+	onMouseZChanged = "false";
 	onMouseMoving = "";
 	onMouseHolding = "";
 
-	onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
-	onLBDblClick = "systemChat str ['onLBDblClick',_this]; false";
+	onLBSelChanged = "false";
+	onLBDblClick = "false";
 };
 class _CT_COMBO
 {
@@ -788,21 +788,21 @@ class _CT_COMBO
 		color[] = {1,1,1,1}; // Scrollbar color
 	};
 
-	onCanDestroy = "systemChat str ['onCanDestroy',_this]; true";
-	onDestroy = "systemChat str ['onDestroy',_this]; false";
-	onSetFocus = "systemChat str ['onSetFocus',_this]; false";
-	onKillFocus = "systemChat str ['onKillFocus',_this]; false";
-	onKeyDown = "systemChat str ['onKeyDown',_this]; false";
-	onKeyUp = "systemChat str ['onKeyUp',_this]; false";
-	onMouseButtonDown = "systemChat str ['onMouseButtonDown',_this]; false";
-	onMouseButtonUp = "systemChat str ['onMouseButtonUp',_this]; false";
-	onMouseButtonClick = "systemChat str ['onMouseButtonClick',_this]; false";
-	onMouseButtonDblClick = "systemChat str ['onMouseButtonDblClick',_this]; false";
-	onMouseZChanged = "systemChat str ['onMouseZChanged',_this]; false";
+	onCanDestroy = "";
+	onDestroy = "";
+	onSetFocus = "";
+	onKillFocus = "";
+	onKeyDown = "";
+	onKeyUp = "";
+	onMouseButtonDown = "";
+	onMouseButtonUp = "";
+	onMouseButtonClick = "";
+	onMouseButtonDblClick = "";
+	onMouseZChanged = "";
 	onMouseMoving = "";
 	onMouseHolding = "";
 
-	onLBSelChanged = "systemChat str ['onLBSelChanged',_this]; false";
+	onLBSelChanged = "false";
 };
 class MB_RscControlsGroup  
 {
@@ -875,4 +875,36 @@ class MB_RscBackground : MB_RscText { //--- Render out.
 	w = "SafeZoneW * 0.20";
 	h = "SafeZoneH * 1";
 	colorBackground[] = {0, 0, 0, 0.3};
+};
+
+class MB_Menu: MB_RscText
+{
+	type = 46;
+	font = "PuristaMedium";
+	colorBorder[] = {0,0,0,0};
+	colorBackground[] = {0,0,0,1};
+	colorText[] = {1,1,1,1};
+	colorSelect[] = {0,0,0,1};
+	colorSelectBackground[] = {1,0.5,0,1};
+	colorDisabled[] = {1,1,1,0.25};
+	colorPicture[] = {1,1,1,1};
+	colorPictureSelect[] = {0,0,0,1};
+	colorPictureDisabled[] = {1,1,1,0.5};
+	//arrow = "\a3\3DEN\Data\Controls\ctrlMenu\arrow_ca.paa";
+	rowHeight = 0;
+	itemSpacingW = 0.01;
+	itemSpacingH = 0.01;
+	//pictureCheckboxEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureCheckboxEnabled_ca.paa";
+	pictureCheckboxDisabled = "#(argb,8,8,3)color(0,0,0,0)";
+	//pictureRadioEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureRadioEnabled_ca.paa";
+	pictureRadioDisabled = "#(argb,8,8,3)color(0,0,0,0)";
+};
+class MB_MenuStrip: MB_Menu
+{
+	type = 47;
+	colorStripBackground[] = {0,0,0,1};
+	colorStripText[] = {1,1,1,1};
+	colorStripSelect[] = {0,0,0,1};
+	colorStripSelectBackground[] = {1,0.5,0,1};
+	colorStripDisabled[] = {1,1,1,0.25};
 };

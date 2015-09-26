@@ -15,7 +15,6 @@
 	
 	if(count(_objects)>0) then {
 		_obj = (_objects select (count(_objects)-1)) select 2;
-		systemchat format["%1",_obj];
 		if(!isNull (_obj getvariable ["mb_BBattachedObject",objNull])) then {
 			_obj = _obj getvariable "mb_BBattachedObject";
 		};
