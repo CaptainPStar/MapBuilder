@@ -1,11 +1,11 @@
 #define IDC 170400
 #define NAME Fencer
 #define TITLE Fencer
-BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,14,10)
+BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
 		WINDOW_HEADER(NAME,IDC,TITLE,12)
 		WINDOW_CLOSE(NAME,IDC,13)
 		WINDOW_HELP(NAME,IDC,"Fencer",12)
-		WINDOW_BACKGROUND(NAME,0,1,14,9)
+		WINDOW_BACKGROUND(NAME,0,1,14,11)
 		class Popup_FencerDirLabel : MB_RscText {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
@@ -65,7 +65,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,14,10)
 		class Popup_FencerPlaceButton : MB_RscButton {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 7;
-			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 11;
 			w = MB_WINDOW_GRID_X * 3;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Place";
@@ -116,5 +116,23 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,14,10)
 			h = MB_WINDOW_GRID_Y * 1;
 			checked_strings[] = {"Terrain"};
 			strings[] = {"Flat"};
+		};
+		class Popup_FencerObjModeLabel : MB_RscText {
+			idc = -1;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
+			w = MB_WINDOW_GRID_X * 5;
+			h = MB_WINDOW_GRID_Y * 1;
+			text = "Obj. Source:";
+		};
+		class Popup_FencerObjMode : MB_RscCheckbox {
+			idc = 170412;
+			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 5;
+			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 9;
+			w = MB_WINDOW_GRID_X * 3;
+			h = MB_WINDOW_GRID_Y * 1;
+			checked_strings[] = {"Library"};
+			strings[] = {"Repeat"};
+			tooltop = "Repeat selected object or place object from library.";
 		};
 END_WINDOW

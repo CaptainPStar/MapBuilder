@@ -1,6 +1,8 @@
 disableSerialization;
-	private["_parent","_direction","_bbr","_dir","_fpos","_relPos"];
+	private["_parent","_direction","_bbr","_dir","_fpos","_relPos","_class","_display","_ctrl"];
 	
+	_display = uinamespace getvariable 'mb_main_dialog';
+
 	
 	_parent = (MB_Selected select (count(MB_Selected)-1));
 	_boundingParent = [_parent] call MB_FNC_FencerCalcBounding;
@@ -12,8 +14,16 @@ disableSerialization;
 	
 	_dir =  _parent getvariable "MB_ObjVar_Yaw";
 	
-	
-	_created = [MB_CurClass,_parentPos] call MB_fnc_CreateObject;
+	_ctrl = _display displayCtrl 170412;
+	if(count(MB_Selected)>0) then {
+		_class = typeof (MB_Selected select ((count MB_Selected)-1));
+	} else {
+		_class = MB_CurClass;
+	};
+	if(ctrlChecked _ctrl) then {
+		_class = MB_CurClass;
+	};
+	_created = [_class,_parentPos] call MB_fnc_CreateObject;
 	_created setvariable ["MB_ObjVar_Yaw",_dir,false];
 	_created setvariable ["MB_ObjVar_Bank",(_parent getvariable ["MB_ObjVar_Bank",false]),false];
 	_created setvariable ["MB_ObjVar_Pitch",(_parent getvariable ["MB_ObjVar_Pitch",false]),false];
@@ -75,9 +85,7 @@ disableSerialization;
 		_created setvariable ["MB_ObjVar_PositionATL",_relPos,false];
 	};
 	
-
-	_display = uinamespace getvariable 'mb_main_dialog';
-	_ctrl = _display displayCtrl 170411;
+	_ctrl = _display displayCtrl 170412;
 	if(ctrlChecked _ctrl) then {
 		[_created] call MB_fnc_AlignObjectToTerrain;
 	};
