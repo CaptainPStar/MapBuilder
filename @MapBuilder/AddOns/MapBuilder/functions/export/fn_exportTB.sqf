@@ -37,7 +37,7 @@ private["_projFolder","_filename","_confirmed","_useClassnames"];
 					};
 				
 				
-				_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_exactPosition;
+				_pos = [_obj,[_mapframeX,_mapframeY]] call MB_fnc_getExactPosition;
 				_pitch = str (_obj getvariable "MB_ObjVar_Pitch");
 				_bank = str (_obj getvariable "MB_ObjVar_Bank");
 				_yaw = str (_obj getvariable "MB_ObjVar_Yaw");

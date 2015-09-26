@@ -25,7 +25,7 @@ if(_confirmed) then {
 			_type = (typeof _obj);
 			_obj = _x;
 			
-			_pos = [_obj,[0,0]] call MB_fnc_exactPosition;
+			_pos = [_obj,[0,0]] call MB_fnc_getExactPosition;
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";

@@ -16,7 +16,7 @@ _filename = [_this,0,"noFilename"] call bis_fnc_param;
 			_type = (typeof _obj);
 
 			
-			_pos = [_obj,[0,0]] call MB_fnc_exactPosition;
+			_pos = [_obj,[0,0]] call MB_fnc_getExactPosition;
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
 			_yaw = _obj getvariable "MB_ObjVar_Yaw";
