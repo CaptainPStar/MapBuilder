@@ -908,3 +908,14 @@ class MB_MenuStrip: MB_Menu
 	colorStripSelectBackground[] = {1,0.5,0,1};
 	colorStripDisabled[] = {1,1,1,0.25};
 };
+
+class MB_RscProgress
+{
+	x = "SafeZoneX + (SafeZoneW * 0)";
+	y = "SafeZoneY + (SafezoneH * 0.95)";
+	w = "SafeZoneW * 1.0";
+	h = "SafeZoneH * 0.05";
+	texture = "#(argb,8,8,3)color(0,1,0,0.75)";
+	colorFrame[] = {0,0,0,0};
+	colorBar[] = {1,1,1,1};
+};
