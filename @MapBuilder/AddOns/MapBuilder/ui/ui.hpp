@@ -323,10 +323,6 @@ class MB_Main
 			onKeyDown = "if((_this select 1) == 28) then {[] spawn MB_FNC_ChatSend;};false;";
 		};
 
-		//###################
-		//	Map Popup
-		//###################
-
 		
 		#include "fencer.hpp"
 		#include "presets.hpp"
@@ -340,5 +336,12 @@ class MB_Main
 		#include "brusher.hpp"
 		#include "export.hpp"
 		#include "project.hpp"
+
+	};
+	class Objects
+	{
+		//#include "gizmo.hpp"
 	};
 };
+#include "loadingscreen.hpp"
+
