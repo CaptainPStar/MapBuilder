@@ -14,8 +14,8 @@
 	};
 
 
-	startLoadingScreen ["Starting MapBuilder..."];
-	MBDialog = createDialog "MB_Main";
+	startLoadingScreen ["Starting MapBuilder...","MB_LoadingScreen"];
+	MBDialog = createDialog "MapBuilder_Interface";
 	[1,false] call MB_fnc_togglePopup;
 	[2,false] call MB_fnc_togglePopup;
 	[3,false] call MB_fnc_togglePopup;
@@ -56,7 +56,7 @@
 	//[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	//[] call MB_fnc_hidePresetWindow;
-	[666] spawn MB_fnc_closeWindow;
+	/*[666] spawn MB_fnc_closeWindow;
 	
 	[170100,true] spawn MB_fnc_closeWindow;
 	[170200,true] spawn MB_fnc_closeWindow; //Projects
@@ -68,13 +68,21 @@
 	[170900,true] spawn MB_fnc_closeWindow;
 	[171000,true] spawn MB_fnc_closeWindow;
 	[171100,true] spawn MB_fnc_closeWindow;
-	[171200,true] spawn MB_fnc_closeWindow;
-	[false] call MB_fnc_toggleMap;
+	[171200,true] spawn MB_fnc_closeWindow;*/
+	//[false] call MB_fnc_toggleMap;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
 	//["What?"] spawn MB_fnc_showPopupDialog;
 	[] call MB_FNC_ChatToggle;
 	endLoadingScreen;
+	
+	private["_toolbar"];
+	_toolbar = [];
+	_toolbar pushBack ["Test",[["Blah"],["Blub"],["MB rulez"],["Gold"]]];
+	_toolbar pushBack ["Test2",[["Blah2"],["Blub2"],["MB rulez2"],["Gold2"]]];
+	_toolbar pushBack ["Numbers",[["1"],["2"],["3"],["4"],["5"],["6"],["7"],["8"],["9"]]];
+	_toolbar call MBGUI_FNC_CreateTopbar;
+	
 	//[] call MB_Listbox_Categories_Refresh;
 	[] spawn {
 		while{dialog} do {

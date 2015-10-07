@@ -10,7 +10,7 @@
 	
 	
 	if(_confirmed) then {
-	startLoadingScreen ["Exporting Template Library..."];
+	startLoadingScreen ["Exporting Template Library...","MB_LoadingScreen"];
 	private["_used","_usedTypes"];
 	_used = [];
 	_usedTypes = [];

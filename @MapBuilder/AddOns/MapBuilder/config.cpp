@@ -179,11 +179,12 @@ class CfgVehicles
 	};
 };
 
-#include "\MB\MapBuilder\ui\ui.hpp"
+#include "\MB\MapBuilder\gui\gui.hpp"
 
 #ifndef DEBUG
 class CfgFunctions
 {
 	#include "\MB\MapBuilder\functions\functions.hpp"
+	#include "\MB\MapBuilder\gui\functions\functions.hpp"
 };
 #endif

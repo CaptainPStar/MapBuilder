@@ -1,4 +1,4 @@
-startLoadingScreen ["Resetting project..."];
+startLoadingScreen ["Resetting project...","MB_LoadingScreen"];
 private["_objectsToDelete","_percent","_objectCount"];
 _objectsToDelete = +MB_Objects;
 _percent = 0;

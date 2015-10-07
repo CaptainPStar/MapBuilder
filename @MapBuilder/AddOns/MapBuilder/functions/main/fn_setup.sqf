@@ -116,7 +116,7 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	
 	if(!isNull _logic) then {
 		private["_autostart"];
-		_autostart = _logic getvariable "Autostart";
+		_autostart = _logic getvariable ["Autostart",false];
 		if(_autostart) then {
 			[] spawn MB_fnc_Start;
 		};

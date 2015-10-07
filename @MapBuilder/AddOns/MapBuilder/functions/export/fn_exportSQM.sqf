@@ -8,7 +8,7 @@
 	};
 		
 	if(_confirmed) then {
-	startLoadingScreen ["Exporting mission..."];
+	startLoadingScreen ["Exporting mission...","MB_LoadingScreen"];
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqm",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];
