@@ -10,7 +10,7 @@ if(format["%1.mbproj",_filename] in _folder) then {
 };
 
 if(_confirmed) then {
-	startLoadingScreen ["Saving project..."];
+	startLoadingScreen [format["Saving project to %1.mbproj",_filename],"MB_LoadingScreen"];
 	_path = ("MB_FileIO" callExtension format["open_w|projects\%1.mbproj",_filename]);
 	systemChat format["Opening %1",_path];
 	MB_ProjectName = _filename;

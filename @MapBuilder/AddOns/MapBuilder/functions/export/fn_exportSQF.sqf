@@ -7,7 +7,7 @@ if(format["%1.sqf",_filename] in _folder) then {
 	_confirmed = ["File with this name already exists. Overwrite?",0] call MB_fnc_showPopupDialog;
 };
 if(_confirmed) then {
-	startLoadingScreen ["Exporting scriptfile..."];
+	startLoadingScreen ["Exporting scriptfile...","MB_LoadingScreen"];
 	_path = ("MB_FileIO" callExtension format["open_w|export\%1.sqf",_filename]);
 	systemChat format["Opening %1",_path];
 	private["_number","_digits","_acc"];

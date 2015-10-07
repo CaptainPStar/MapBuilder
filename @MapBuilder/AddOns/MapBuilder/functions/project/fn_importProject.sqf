@@ -6,7 +6,7 @@ private["_filename"];
 		systemChat "Error: Project not found!";
 	};
 
-	startLoadingScreen ["Loading project..."];
+	startLoadingScreen [format["Loading project from %1.mbproj",_filename],"MB_LoadingScreen"];
 	_path = ("MB_FileIO" callExtension format["open_r|projects\%1.mbproj",_filename]);
 	systemChat format["Opening %1",_path];
 	

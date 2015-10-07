@@ -12,7 +12,7 @@ private["_projFolder","_filename","_confirmed","_useClassnames"];
 
 	};
 	if(_confirmed) then {
-		startLoadingScreen ["Exporting to Terrain Builder"];
+		startLoadingScreen ["Exporting to Terrain Builder","MB_LoadingScreen"];
 		_path = ("MB_FileIO" callExtension format["open_w|export\%1.txt",_filename]);
 		
 		systemChat format["Opening %1",_path];
