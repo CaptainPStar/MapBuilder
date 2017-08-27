@@ -15,4 +15,5 @@ if(_show) then {
 	//(_display displayCtrl 170301) ctrlSetText _map;
 } else {
 	(_display displayCtrl 170301) ctrlShow false;
+	[] call MB_fnc_SetEditorFocus;
 };
