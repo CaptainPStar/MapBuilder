@@ -69,6 +69,7 @@
 	[171000,true] spawn MB_fnc_closeWindow;
 	[171100,true] spawn MB_fnc_closeWindow;
 	[171200,true] spawn MB_fnc_closeWindow;
+	[171300,true] spawn MB_fnc_closeWindow;
 	//[false] call MB_fnc_toggleMap;
 	[0] call MB_fnc_switchMode;
 	[] call MB_fnc_checkVersion;
