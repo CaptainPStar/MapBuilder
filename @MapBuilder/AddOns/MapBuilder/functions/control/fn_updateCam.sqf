@@ -12,9 +12,9 @@ private["_mod"];
 	};
 	
 	if(([DIK_LALT] call MB_fnc_isPressed)) then {
-		MB_CamSpeed = 200;
+		MB_CamSpeed = 30;
 	} else {
-		MB_CamSpeed = MB_CamSpeed max 0.8 min 50.0;
+		MB_CamSpeed = MB_CamSpeed max 0.8 min 10.0;
 	};
 	_mod = MB_CamSpeed;
 	_camPos = MB_CamPos select 0;
