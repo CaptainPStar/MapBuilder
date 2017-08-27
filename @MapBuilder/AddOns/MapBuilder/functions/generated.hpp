@@ -441,6 +441,16 @@ class helper
 		//recompile = 1;
 	};
 };
+class help
+{
+	file = "mb\mapbuilder\functions\help";
+	class closeHelpWindow {
+		//recompile = 1;
+	};
+	class openHelpWindow {
+		//recompile = 1;
+	};
+};
 class ui
 {
 	file = "mb\mapbuilder\functions\ui";
