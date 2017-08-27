@@ -579,6 +579,9 @@ class selection
 	class SelectUnderCursor {
 		//recompile = 1;
 	};
+	class DeselectUnderCursor {
+		//recompile = 1;
+	};
 	class UpdateRectangleDrag {
 		//recompile = 1;
 	};
@@ -623,9 +626,6 @@ class control
 		//recompile = 1;
 	};
 	class mouseUp {
-		//recompile = 1;
-	};
-	class mouseZ {
 		//recompile = 1;
 	};
 	class resetKeys {
@@ -675,6 +675,9 @@ class object
 		//recompile = 1;
 	};
 	class ChangeHeightSelected {
+		//recompile = 1;
+	};
+	class ChangeHeightSelectedByMouseWheel {
 		//recompile = 1;
 	};
 	class ChangePitchBankSelected {
