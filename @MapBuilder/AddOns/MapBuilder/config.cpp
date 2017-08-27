@@ -8,7 +8,7 @@ class CfgPatches
 		weapons[] = {};
 		requiredVersion = 1.50;
 		requiredAddons[] = {"A3_Misc_F_Helpers","A3_UI_F"};
-		version = "0.9";
+		version = "0.9.1";
 		projectName = "Map Builder";
 		author = "NeoArmageddon";
 	};
