@@ -99,8 +99,8 @@
 #define MB_TEXT_LARGE 0.04
 #define MB_TEXT_SMALL 0.02
 #define MB_TEXT_DEFAULT 0.03
-#define MB_TEXT_FONT "EtelkaNarrowMediumPro"
-#define MB_TEXT_FONT_TITLE "EtelkaMonospaceProBold"
+#define MB_TEXT_FONT "RobotoCondensed"
+#define MB_TEXT_FONT_TITLE "RobotoCondensedBold"
 
 class RscText;
 class MB_RscText : RscText
