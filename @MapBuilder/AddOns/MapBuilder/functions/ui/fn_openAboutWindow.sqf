@@ -14,4 +14,4 @@ disableSerialization;
 	_credits = _display displayCtrl 170603;
 	_credits ctrlSetStructuredText parseText "Map Builder is developed by Dennis 'NeoArmageddon' Meyer<br /><br />
 	Special thanks to:<br />
-	Jona, CypeRevenge, ZeroG, Scruffy, MemphisBelle, Mondkalb, cyrokrypto, Maikeks ,Bushlurker, Jakerod, M1lkm8n, NigelS, badbenson, Giallustio, Kerkkoh and all I forgot!";
+	Jona, CypeRevenge, ZeroG, Scruffy, MemphisBelle, Mondkalb, cyrokrypto, Maikeks ,Bushlurker, Jakerod, M1lkm8n, NigelS, badbenson, Giallustio, Kerkkoh, Snake Man and all I forgot!";
