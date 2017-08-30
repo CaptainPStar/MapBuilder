@@ -441,6 +441,16 @@ class helper
 		//recompile = 1;
 	};
 };
+class help
+{
+	file = "mb\mapbuilder\functions\help";
+	class closeHelpWindow {
+		//recompile = 1;
+	};
+	class openHelpWindow {
+		//recompile = 1;
+	};
+};
 class ui
 {
 	file = "mb\mapbuilder\functions\ui";
@@ -579,6 +589,9 @@ class selection
 	class SelectUnderCursor {
 		//recompile = 1;
 	};
+	class DeselectUnderCursor {
+		//recompile = 1;
+	};
 	class UpdateRectangleDrag {
 		//recompile = 1;
 	};
@@ -623,9 +636,6 @@ class control
 		//recompile = 1;
 	};
 	class mouseUp {
-		//recompile = 1;
-	};
-	class mouseZ {
 		//recompile = 1;
 	};
 	class resetKeys {
@@ -675,6 +685,9 @@ class object
 		//recompile = 1;
 	};
 	class ChangeHeightSelected {
+		//recompile = 1;
+	};
+	class ChangeHeightSelectedByMouseWheel {
 		//recompile = 1;
 	};
 	class ChangePitchBankSelected {

@@ -233,10 +233,10 @@ class MB_Main
 			y = "SafeZoneY + (SafezoneH * 0.74)";
 			w = "SafeZoneW * 0.07";
 			h = "SafeZoneH * 0.05";
-			text = "Settings";
+			text = "Help";
 			//action = "[] call MB_fnc_showPresetWindow;";
-			action = "";
-			tooltip = "General Map Builder Settings. Yet unused.";
+			action = "[] call MB_fnc_OpenHelpWindow;";
+			tooltip = "Opens the MapBuilder help window.";
 		};
 		//###################
 		//	Taskbar
@@ -336,7 +336,7 @@ class MB_Main
 		#include "brusher.hpp"
 		#include "export.hpp"
 		#include "project.hpp"
-
+		#include "help.hpp"
 	};
 	class Objects
 	{

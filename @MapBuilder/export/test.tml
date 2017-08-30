@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<Library name="test MB TPLs" shape="elipse" default_fill="-8355712" default_outline="-1" tex="0">
+<Template>
+<Name>land_hbarrier_3_f_mb</Name>
+<File>\A3\Structures_F\Mil\Fortification\HBarrier_3_F.p3d</File>
+<Date>22/06/01 12:20:00</Date>
+<Archive></Archive>
+<Fill>-11513776</Fill>
+<Outline>-16777216</Outline>
+<Scale>1.000000</Scale>
+<Hash>1785904081</Hash>
+<ScaleRandMin>0.000000</ScaleRandMin>
+<ScaleRandMax>0.000000</ScaleRandMax>
+<YawRandMin>0.000000</YawRandMin>
+<YawRandMax>0.000000</YawRandMax>
+<PitchRandMin>0.000000</PitchRandMin>
+<PitchRandMax>0.000000</PitchRandMax>
+<RollRandMin>0.000000</RollRandMin>
+<RollRandMax>0.000000</RollRandMax>
+<TexLLU>0.000000</TexLLU>
+<TexLLV>0.000000</TexLLV>
+<TexURU>1.000000</TexURU>
+<TexURV>1.000000</TexURV>
+<BBRadius>1</BBRadius>
+<BBHScale>1</BBHScale>
+<AutoCenter>1</AutoCenter>
+<XShift>-0.000000</XShift>
+<YShift>-0.000000</YShift>
+<ZShift>-0.000000</ZShift>
+<Height>0.000000</Height>
+<BoundingMin X="-1.77688" Y="-0.816658" Z="-0.880623" />
+<BoundingMax X="1.77688" Y="0.816658" Z="0.880623" />
+<BoundingCenter X="0.0" Y="0.0" Z="0.0" />
+<Placement></Placement>
+</Template>
+</Library>

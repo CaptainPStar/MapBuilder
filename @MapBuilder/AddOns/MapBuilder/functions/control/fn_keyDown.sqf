@@ -49,34 +49,34 @@
 		} foreach MB_Selected;
 	};
 	_factor = 1;
-	if([DIK_LSHIFT] call MB_fnc_isPressed) then {
+	if([DIK_LCONTROL] call MB_fnc_isPressed) then {
 		_factor = 10;
 	};
 	
 	
 	if(_dikCode == DIK_UP) exitwith {
-		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+		if([DIK_LALT] call MB_fnc_isPressed) then {
 			["Up",_factor] call MB_fnc_MoveSelection;
 		} else {
 			["Forward",_factor] call MB_fnc_MoveSelection;
 		};
 	};
 	if(_dikCode == DIK_DOWN) exitwith {
-		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+		if([DIK_LALT] call MB_fnc_isPressed) then {
 			["Down",_factor] call MB_fnc_MoveSelection;
 		} else {
 			["Backward",_factor] call MB_fnc_MoveSelection;
 		};
 	};
 	if(_dikCode == DIK_LEFT) exitwith {
-		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+		if([DIK_LSHIFT] call MB_fnc_isPressed) then {
 			["RotLeft",_factor] call MB_fnc_MoveSelection;
 		} else {
 			["Left",_factor] call MB_fnc_MoveSelection;
 		};
 	};
 	if(_dikCode == DIK_RIGHT) exitwith {
-		if([DIK_LCONTROL] call MB_fnc_isPressed) then {
+		if([DIK_LSHIFT] call MB_fnc_isPressed) then {
 			["RotRight",_factor] call MB_fnc_MoveSelection;
 		} else {
 			["Right",_factor] call MB_fnc_MoveSelection;

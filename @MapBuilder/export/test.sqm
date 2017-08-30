@@ -1,0 +1,49 @@
+version=12;
+class Mission {
+addOns[]= {};
+addOnsAuto[]= {};
+class Intel{};
+class Vehicles {
+items=2;
+class Item0 {
+position[]={1765.478149,0,5682.475098};
+azimut=0;
+offsetY=0;
+id=0;
+side="EMPTY";
+vehicle="Land_HBarrier_3_F";
+skill=0.6;
+init="this setVectorDirAndUp [[0,1,0],[0,0,1]];this setposATL [1765.478149,5682.475098,0];";
+};
+class Item1 {
+position[]={1771.236694,0,5684.520508};
+azimut=0;
+offsetY=0;
+id=1;
+side="EMPTY";
+vehicle="Land_HBarrier_3_F";
+skill=0.6;
+init="this setVectorDirAndUp [[0,1,0],[0,0,1]];this setposATL [1771.236694,5684.520508,0];";
+};
+};
+};
+class Intro {
+addOns[]={};
+addOnsAuto[]={};
+randomSeed=2744005;
+class Intel{};
+};
+class OutroWin
+{
+addOns[]={};
+addOnsAuto[]={};
+randomSeed=2744005;
+class Intel{};
+};
+class OutroLoose
+{
+addOns[]={};
+addOnsAuto[]={};
+randomSeed=2744005;
+class Intel{};
+};

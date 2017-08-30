@@ -1,7 +1,7 @@
 private["_yaw","_obj","_pos"];
 	
 
-if((_this select 4)) then {
+if((_this select 5)) then {
 	MB_ObjectChangeYawRotationCenter = MB_MousePosition;
 } else {
 	if(isNull(MB_ClickedObject)) then {

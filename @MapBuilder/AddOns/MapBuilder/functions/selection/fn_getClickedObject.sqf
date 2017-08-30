@@ -7,16 +7,24 @@
 	_objects = [];
 	
 	
+	
 	_objects = lineIntersectsSurfaces [
 		AGLToASL positionCameraToWorld [0,0,0], 
 		AGLToASL _clickPos, 
 		MBCamera
 	];
+
 	
 	if(count(_objects)>0) then {
 		_obj = (_objects select (count(_objects)-1)) select 2;
 		if(!isNull (_obj getvariable ["mb_BBattachedObject",objNull])) then {
 			_obj = _obj getvariable "mb_BBattachedObject";
 		};
+	};
+	
+	 //_obj = cursorObject;
+	 //systemchat str _obj;
+	if(!isNull (_obj getvariable ["mb_BBattachedObject",objNull])) then {
+			_obj = _obj getvariable "mb_BBattachedObject";
 	};
 	_obj;

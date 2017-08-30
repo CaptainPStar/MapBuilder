@@ -100,6 +100,25 @@ class MB_Window_##_N_##_Header : MB_RscWindowHeader { \
 			h = __EVAL(MB_WINDOW_GRID_Y * 1); \
 			action = __EVAL("[" + str _IDC_ + ",true] spawn MB_fnc_closeWindow"); \
 		};
+#define WINDOW_CLOSE_CUSTOM(_NAME_,_IDC_,_X_,_ACTION_) \
+		class MB_Window_##_NAME_##_XBG : MB_RscBackground { \
+			idc = -1; \
+			text = ""; \
+			x = __EVAL(2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * _X_); \
+			y = __EVAL(MB_WINDOW_GRID_Y * 0); \
+			w = __EVAL(MB_WINDOW_GRID_X * 1); \
+			h = __EVAL(MB_WINDOW_GRID_Y * 1); \
+			colorBackground[] = {0.75,0,0,0.75}; \
+		}; \
+		class MB_Window_##_NAME_##_X : MB_RscActiveText { \
+			idc = -1; \
+			text = "X"; \
+			x = __EVAL(2*MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * _X_); \
+			y = __EVAL(MB_WINDOW_GRID_Y * 0); \
+			w = __EVAL(MB_WINDOW_GRID_X * 1); \
+			h = __EVAL(MB_WINDOW_GRID_Y * 1); \
+			action = ##_ACTION_##; \
+		};
 #define WINDOW_HELP(_NAME_,_IDC_,_LNK_,_X_) \
 class MB_Window_Brusher_HelpBG : MB_Window_HelpBG { \
 			idc = -1; \

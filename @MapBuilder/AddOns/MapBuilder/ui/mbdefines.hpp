@@ -29,12 +29,18 @@
 #define CT_CONTEXT_MENU     14
 #define CT_CONTROLS_GROUP   15
 #define CT_SHORTCUTBUTTON   16
+#define CT_HITZONES         17
+#define CT_VEHICLETOGGLES   18
+#define CT_CONTROLS_TABLE   19
 #define CT_XKEYDESC         40
 #define CT_XBUTTON          41
 #define CT_XLISTBOX         42
 #define CT_XSLIDER          43
 #define CT_XCOMBO           44
 #define CT_ANIMATED_TEXTURE 45
+#define CT_MENU             46
+#define CT_MENU_STRIP       47
+#define CT_CHECKBOX         77
 #define CT_OBJECT           80
 #define CT_OBJECT_ZOOM      81
 #define CT_OBJECT_CONTAINER 82
@@ -44,19 +50,17 @@
 #define CT_MAP              100
 #define CT_MAP_MAIN         101
 #define CT_LISTNBOX         102
+#define CT_ITEMSLOT         103
+#define CT_LISTNBOX_CHECKABLE 104
+#define CT_VEHICLE_DIRECTION 105
 
 // Static styles
-#define ST_POS            0x0F
-#define ST_HPOS           0x03
-#define ST_VPOS           0x0C
 #define ST_LEFT           0x00
 #define ST_RIGHT          0x01
 #define ST_CENTER         0x02
 #define ST_DOWN           0x04
 #define ST_UP             0x08
 #define ST_VCENTER        0x0C
-
-#define ST_TYPE           0xF0
 #define ST_SINGLE         0x00
 #define ST_MULTI          0x10
 #define ST_TITLE_BAR      0x20
@@ -69,29 +73,20 @@
 #define ST_TILE_PICTURE   0x90
 #define ST_WITH_RECT      0xA0
 #define ST_LINE           0xB0
-
-#define ST_SHADOW         0x100
-#define ST_NO_RECT        0x200
-#define ST_KEEP_ASPECT_RATIO  0x800
-
+#define ST_UPPERCASE      0xC0
+#define ST_LOWERCASE      0xD0
+#define ST_ADDITIONAL_INFO    0x0F00
+#define ST_SHADOW             0x0100
+#define ST_NO_RECT            0x0200
+#define ST_KEEP_ASPECT_RATIO  0x0800
 #define ST_TITLE          ST_TITLE_BAR + ST_CENTER
-
-// Slider styles
-#define SL_DIR            0x400
 #define SL_VERT           0
 #define SL_HORZ           0x400
-
 #define SL_TEXTURES       0x10
-
-// progress bar 
 #define ST_VERTICAL       0x01
 #define ST_HORIZONTAL     0
-
-// Listbox styles
 #define LB_TEXTURES       0x10
 #define LB_MULTI          0x20
-
-// Tree styles
 #define TR_SHOWROOT       1
 #define TR_AUTOCOLLAPSE   2
 
@@ -104,9 +99,11 @@
 #define MB_TEXT_LARGE 0.04
 #define MB_TEXT_SMALL 0.02
 #define MB_TEXT_DEFAULT 0.03
-#define MB_TEXT_FONT "EtelkaNarrowMediumPro"
-#define MB_TEXT_FONT_TITLE "EtelkaMonospaceProBold"
-class MB_RscText
+#define MB_TEXT_FONT "RobotoCondensed"
+#define MB_TEXT_FONT_TITLE "RobotoCondensedBold"
+
+class RscText;
+class MB_RscText : RscText
 {
 	type = 0;
 	idc = -1;
@@ -126,7 +123,8 @@ class MB_RscText
 	sizeEx = MB_TEXT_DEFAULT;
 	linespacing = 1;
 };
-class MB_RscStructuredText
+class RscStructuredText;
+class MB_RscStructuredText : RscStructuredText
 {
 	type = 13;
 	idc = -1;
@@ -149,7 +147,8 @@ class MB_RscStructuredText
 	sizeEx = MB_TEXT_DEFAULT;
 	shadow = 1;
 };
-class MB_RscPicture
+class RscPicture;
+class MB_RscPicture : RscPicture
 {
 	type = 0;
 	idc = -1;
@@ -167,7 +166,8 @@ class MB_RscPicture
 	w = 0.2;
 	h = 0.15;
 };
-class MB_RscListBox
+class RscListBox;
+class MB_RscListBox : RscListBox
 {
 	type = 5;
 	w = 0.4;
@@ -213,7 +213,8 @@ class MB_RscListBox
 	autoScrollDelay = 5;
 	autoScrollRewind = 0;
 };
-class MB_RscActiveText
+class RscActiveText;
+class MB_RscActiveText : RscActiveText
 {
 	type = 11;
 	style = 0;
@@ -234,7 +235,8 @@ class MB_RscActiveText
 	size = MB_TEXT_DEFAULT;
 	sizeEx = MB_TEXT_DEFAULT;
 };
-class MB_IGUIBack
+class IGUIBack;
+class MB_IGUIBack : IGUIBack
 {
 	type = 0;
 	idc = 124;
@@ -256,7 +258,9 @@ class MB_IGUIBack
 		"(profilenamespace getvariable ['IGUI_BCG_RGB_A',0.8])"
 	};
 };
-class MB_RscButton
+
+class RscButton;
+class MB_RscButton : RscButton
 {
 	idc = -1;
 	type = CT_BUTTON;
@@ -316,8 +320,8 @@ class MB_RscButton
 	//tooltipColorText[] = {1,1,1,1}; // Tooltip text color
 	//tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
 };
-
-class MB_RscEdit
+class RscEdit;
+class MB_RscEdit : RscEdit
 { 
 	idc = -1;
 	type = CT_EDIT;
@@ -341,7 +345,8 @@ class MB_RscEdit
 	colorDisabled[] = {1,1,1,0.25};
 	autocomplete = ""; 
 };  
-class MB_RscCheckbox
+class RscCheckbox;
+class MB_RscCheckbox : RscCheckbox
 { 
 	idc = -1;
 	style = 0;
@@ -369,234 +374,237 @@ class MB_RscCheckbox
 	x = 0;
 	y = 0;
 };
-	class MB_RscMap
+class RscMap;
+class MB_RscMap : RscMap
+{
+	access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+	idc = -1; // Control identification (without it, the control won't be displayed)
+	type = CT_MAP; // Type
+	style = ST_PICTURE; // Style
+	default = 0; // Control selected by default (only one within a display can be used)
+	blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+
+	x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+	y = 1 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+	w = 10 * GUI_GRID_CENTER_W; // Width
+	h = 6 * GUI_GRID_CENTER_H; // Height
+
+	sizeEx = GUI_GRID_CENTER_H; // Text size
+	font = MB_TEXT_FONT; // Font from CfgFontFamilies
+	colorText[] = {0,0,0,1}; // Text color
+
+	tooltip = ""; // Tooltip text
+	tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+	tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+	tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+
+	moveOnEdges = 1; // Move map when cursor is near its edge. Discontinued.
+
+	// Rendering density coefficients
+	ptsPerSquareSea =	5;	// seas
+	ptsPerSquareTxt =	20;	// textures
+	ptsPerSquareCLn =	10;	// count-lines
+	ptsPerSquareExp =	10;	// exposure
+	ptsPerSquareCost =	10;	// cost
+
+	// Rendering thresholds
+	ptsPerSquareFor =	9;	// forests
+	ptsPerSquareForEdge =	9;	// forest edges
+	ptsPerSquareRoad =	6;	// roads
+	ptsPerSquareObj =	9;	// other objects
+
+	scaleMin = 0.001; // Min map scale (i.e., max zoom)
+	scaleMax = 1.0; // Max map scale (i.e., min zoom)
+	scaleDefault = 0.16; // Default scale
+
+	alphaFadeStartScale = 0.1; // Scale at which satellite map starts appearing
+	alphaFadeEndScale = 0.01; // Scale at which satellite map is fully rendered
+	maxSatelliteAlpha = 0.85; // Maximum alpha of satellite map
+
+	text = "#(argb,8,8,3)color(1,1,1,1)"; // Fill texture
+	colorBackground[] = {1,1,1,1}; // Fill color
+
+	colorOutside[] = {0,0,0,1}; // Color outside of the terrain area (not sued when procedural terrain is enabled)
+	colorSea[] = {0.4,0.6,0.8,0.5}; // Sea color
+	colorForest[] = {0.6,0.8,0.4,0.5}; // Forest color
+	colorForestBorder[] = {0.6,0.8,0.4,1}; // Forest border color
+	colorRocks[] = {0,0,0,0.3}; // Rocks color
+	colorRocksBorder[] = {0,0,0,1}; // Rocks border color
+	colorLevels[] = {0.3,0.2,0.1,0.5}; // Elevation number color
+	colorMainCountlines[] = {0.6,0.4,0.2,0.5}; // Main countline color (every 5th)
+	colorCountlines[] = {0.6,0.4,0.2,0.3}; // Countline color
+	colorMainCountlinesWater[] = {0.5,0.6,0.7,0.6}; // Main water countline color (every 5th)
+	colorCountlinesWater[] = {0.5,0.6,0.7,0.3}; // Water countline color
+	colorPowerLines[] = {0.1,0.1,0.1,1}; // Power lines color
+	colorRailWay[] = {0.8,0.2,0,1}; // Railway color
+	colorNames[] = {1.1,0.1,1.1,0.9}; // Unknown?
+	colorInactive[] = {1,1,0,0.5}; // Unknown?
+	colorTracks[] = {0.8,0.8,0.7,0.2}; // Small road border color
+	colorTracksFill[] = {0.8,0.7,0.7,1}; // Small road color
+	colorRoads[] = {0.7,0.7,0.7,1}; // Medium road border color
+	colorRoadsFill[] = {1,1,1,1}; // Medium road color
+	colorMainRoads[] = {0.9,0.5,0.3,1}; // Large road border color
+	colorMainRoadsFill[] = {1,0.6,0.4,1}; // Large road color
+	colorGrid[] = {0.1,0.1,0.1,0.6}; // Grid coordinate color
+	colorGridMap[] = {0.1,0.1,0.1,0.6}; // Grid line color
+
+	fontLabel = MB_TEXT_FONT; // Tooltip font from CfgFontFamilies
+	sizeExLabel = GUI_GRID_CENTER_H * 0.5; // Tooltip font size
+
+	fontGrid = MB_TEXT_FONT; // Grid coordinate font from CfgFontFamilies
+	sizeExGrid = GUI_GRID_CENTER_H * 0.5; // Grid coordinate font size
+
+	fontUnits = MB_TEXT_FONT; // Selected group member font from CfgFontFamilies
+	sizeExUnits = GUI_GRID_CENTER_H * 0.5; // Selected group member font size
+
+	fontNames = MB_TEXT_FONT; // Marker font from CfgFontFamilies
+	sizeExNames = GUI_GRID_CENTER_H * 0.5; // Marker font size
+
+	fontInfo = MB_TEXT_FONT; // Unknown?
+	sizeExInfo = GUI_GRID_CENTER_H * 0.5; // Unknown?
+
+	fontLevel = MB_TEXT_FONT; // Elevation number font
+	sizeExLevel = GUI_GRID_CENTER_H * 0.5; // Elevation number font size
+
+	showCountourInterval = 1; // Show Legend
+
+	class Task
+	{
+		icon = "#(argb,8,8,3)color(1,1,1,1)";
+		color[] = {1,1,0,1};
+
+		iconCreated = "#(argb,8,8,3)color(1,1,1,1)";
+		colorCreated[] = {0,0,0,1};
+
+		iconCanceled = "#(argb,8,8,3)color(1,1,1,1)";
+		colorCanceled[] = {0,0,0,0.5};
+
+		iconDone = "#(argb,8,8,3)color(1,1,1,1)";
+		colorDone[] = {0,1,0,1};
+
+		iconFailed = "#(argb,8,8,3)color(1,1,1,1)";
+		colorFailed[] = {1,0,0,1};
+
+		size = 8;
+		importance = 1; // Required, but not used
+		coefMin = 1; // Required, but not used
+		coefMax = 1; // Required, but not used
+	};
+	class ActiveMarker
+	{
+		color[] = {0,0,0,1}; // Icon color
+		size = 2; // Size in pixels
+	};
+	class Waypoint
+	{
+		coefMax = 1; // Minimum size coefficient
+		coefMin = 4; // Maximum size coefficient
+		color[] = {0,0,0,1}; // Icon color
+		icon = "#(argb,8,8,3)color(0,0,0,1)"; // Icon texture
+		importance = 1; // Drawing importance (when multiple icons are close together, the one with larger importance is prioritized)
+		size = 2; // Size in pixels
+	};
+	class WaypointCompleted: Waypoint{};
+	class CustomMark: Waypoint{};
+	class Command: Waypoint{};
+	class Bush: Waypoint{};
+	class Rock: Waypoint{};
+	class SmallTree: Waypoint{};
+	class Tree: Waypoint{};
+	class BusStop: Waypoint{};
+	class FuelStation: Waypoint{};
+	class Hospital: Waypoint{};
+	class Church: Waypoint{};
+	class Lighthouse: Waypoint{};
+	class Power: Waypoint{};
+	class PowerSolar: Waypoint{};
+	class PowerWave: Waypoint{};
+	class PowerWind: Waypoint{};
+	class Quay: Waypoint{};
+	class Transmitter: Waypoint{};
+	class Watertower: Waypoint{};
+	class Cross: Waypoint{};
+	class Chapel: Waypoint{};
+	class Shipwreck: Waypoint{};
+	class Bunker: Waypoint{};
+	class Fortress: Waypoint{};
+	class Fountain: Waypoint{};
+	class Ruin: Waypoint{};
+	class Stack: Waypoint{};
+	class Tourism: Waypoint{};
+	class ViewTower: Waypoint{};
+
+	onCanDestroy = "";
+	onDestroy = "";
+	onSetFocus = "";
+	onKillFocus = "";
+	onKeyDown = "";
+	onKeyUp = "";
+	onMouseButtonDown = "";
+	onMouseButtonUp = "";
+	onMouseButtonClick = "";
+	onMouseButtonDblClick = "";
+	onMouseZChanged = "";
+	onMouseMoving = "";
+	onMouseHolding = "";
+
+	onDraw = "";
+};
+class MB_RscMapMain: MB_RscMap
+{
+		access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
+		idc = -1; // Control identification (without it, the control won't be displayed)
+		type = CT_MAP_MAIN; // Type
+		style = ST_PICTURE; // Style
+		default = 0; // Control selected by default (only one within a display can be used)
+		blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+
+		x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+		y = 8 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+		w = 10 * GUI_GRID_CENTER_W; // Width
+		h = 6 * GUI_GRID_CENTER_H; // Height
+
+		tooltip = ""; // Tooltip text
+		tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
+		tooltipColorText[] = {1,1,1,1}; // Tooltip text color
+		tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
+
+		showCountourInterval = 1; // Show Legend
+
+		class Legend
 		{
-			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
-			idc = -1; // Control identification (without it, the control won't be displayed)
-			type = CT_MAP; // Type
-			style = ST_PICTURE; // Style
-			default = 0; // Control selected by default (only one within a display can be used)
-			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
+			x = 30 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
+			y = 9 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
+			w = 8 * GUI_GRID_CENTER_W; // Width
+			h = 4 * GUI_GRID_CENTER_H; // Height
 
-			x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
-			y = 1 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
-			w = 10 * GUI_GRID_CENTER_W; // Width
-			h = 6 * GUI_GRID_CENTER_H; // Height
-
-			sizeEx = GUI_GRID_CENTER_H; // Text size
-			font = MB_TEXT_FONT; // Font from CfgFontFamilies
-			colorText[] = {0,0,0,1}; // Text color
-
-			tooltip = ""; // Tooltip text
-			tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
-			tooltipColorText[] = {1,1,1,1}; // Tooltip text color
-			tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
-
-			moveOnEdges = 1; // Move map when cursor is near its edge. Discontinued.
-
-			// Rendering density coefficients
-			ptsPerSquareSea =	5;	// seas
-			ptsPerSquareTxt =	20;	// textures
-			ptsPerSquareCLn =	10;	// count-lines
-			ptsPerSquareExp =	10;	// exposure
-			ptsPerSquareCost =	10;	// cost
-
-			// Rendering thresholds
-			ptsPerSquareFor =	9;	// forests
-			ptsPerSquareForEdge =	9;	// forest edges
-			ptsPerSquareRoad =	6;	// roads
-			ptsPerSquareObj =	9;	// other objects
-
-			scaleMin = 0.001; // Min map scale (i.e., max zoom)
-			scaleMax = 1.0; // Max map scale (i.e., min zoom)
-			scaleDefault = 0.16; // Default scale
-
-			alphaFadeStartScale = 0.1; // Scale at which satellite map starts appearing
-			alphaFadeEndScale = 0.01; // Scale at which satellite map is fully rendered
-			maxSatelliteAlpha = 0.85; // Maximum alpha of satellite map
-
-			text = "#(argb,8,8,3)color(1,1,1,1)"; // Fill texture
 			colorBackground[] = {1,1,1,1}; // Fill color
-
-			colorOutside[] = {0,0,0,1}; // Color outside of the terrain area (not sued when procedural terrain is enabled)
-			colorSea[] = {0.4,0.6,0.8,0.5}; // Sea color
-			colorForest[] = {0.6,0.8,0.4,0.5}; // Forest color
-			colorForestBorder[] = {0.6,0.8,0.4,1}; // Forest border color
-			colorRocks[] = {0,0,0,0.3}; // Rocks color
-			colorRocksBorder[] = {0,0,0,1}; // Rocks border color
-			colorLevels[] = {0.3,0.2,0.1,0.5}; // Elevation number color
-			colorMainCountlines[] = {0.6,0.4,0.2,0.5}; // Main countline color (every 5th)
-			colorCountlines[] = {0.6,0.4,0.2,0.3}; // Countline color
-			colorMainCountlinesWater[] = {0.5,0.6,0.7,0.6}; // Main water countline color (every 5th)
-			colorCountlinesWater[] = {0.5,0.6,0.7,0.3}; // Water countline color
-			colorPowerLines[] = {0.1,0.1,0.1,1}; // Power lines color
-			colorRailWay[] = {0.8,0.2,0,1}; // Railway color
-			colorNames[] = {1.1,0.1,1.1,0.9}; // Unknown?
-			colorInactive[] = {1,1,0,0.5}; // Unknown?
-			colorTracks[] = {0.8,0.8,0.7,0.2}; // Small road border color
-			colorTracksFill[] = {0.8,0.7,0.7,1}; // Small road color
-			colorRoads[] = {0.7,0.7,0.7,1}; // Medium road border color
-			colorRoadsFill[] = {1,1,1,1}; // Medium road color
-			colorMainRoads[] = {0.9,0.5,0.3,1}; // Large road border color
-			colorMainRoadsFill[] = {1,0.6,0.4,1}; // Large road color
-			colorGrid[] = {0.1,0.1,0.1,0.6}; // Grid coordinate color
-			colorGridMap[] = {0.1,0.1,0.1,0.6}; // Grid line color
-
-			fontLabel = MB_TEXT_FONT; // Tooltip font from CfgFontFamilies
-			sizeExLabel = GUI_GRID_CENTER_H * 0.5; // Tooltip font size
-
-			fontGrid = MB_TEXT_FONT; // Grid coordinate font from CfgFontFamilies
-			sizeExGrid = GUI_GRID_CENTER_H * 0.5; // Grid coordinate font size
-
-			fontUnits = MB_TEXT_FONT; // Selected group member font from CfgFontFamilies
-			sizeExUnits = GUI_GRID_CENTER_H * 0.5; // Selected group member font size
-
-			fontNames = MB_TEXT_FONT; // Marker font from CfgFontFamilies
-			sizeExNames = GUI_GRID_CENTER_H * 0.5; // Marker font size
-
-			fontInfo = MB_TEXT_FONT; // Unknown?
-			sizeExInfo = GUI_GRID_CENTER_H * 0.5; // Unknown?
-
-			fontLevel = MB_TEXT_FONT; // Elevation number font
-			sizeExLevel = GUI_GRID_CENTER_H * 0.5; // Elevation number font size
-
-			showCountourInterval = 1; // Show Legend
-
-			class Task
-			{
-				icon = "#(argb,8,8,3)color(1,1,1,1)";
-				color[] = {1,1,0,1};
-
-				iconCreated = "#(argb,8,8,3)color(1,1,1,1)";
-				colorCreated[] = {0,0,0,1};
-
-				iconCanceled = "#(argb,8,8,3)color(1,1,1,1)";
-				colorCanceled[] = {0,0,0,0.5};
-
-				iconDone = "#(argb,8,8,3)color(1,1,1,1)";
-				colorDone[] = {0,1,0,1};
-
-				iconFailed = "#(argb,8,8,3)color(1,1,1,1)";
-				colorFailed[] = {1,0,0,1};
-
-				size = 8;
-				importance = 1; // Required, but not used
-				coefMin = 1; // Required, but not used
-				coefMax = 1; // Required, but not used
-			};
-			class ActiveMarker
-			{
-				color[] = {0,0,0,1}; // Icon color
-				size = 2; // Size in pixels
-			};
-			class Waypoint
-			{
-				coefMax = 1; // Minimum size coefficient
-				coefMin = 4; // Maximum size coefficient
-				color[] = {0,0,0,1}; // Icon color
-				icon = "#(argb,8,8,3)color(0,0,0,1)"; // Icon texture
-				importance = 1; // Drawing importance (when multiple icons are close together, the one with larger importance is prioritized)
-				size = 2; // Size in pixels
-			};
-			class WaypointCompleted: Waypoint{};
-			class CustomMark: Waypoint{};
-			class Command: Waypoint{};
-			class Bush: Waypoint{};
-			class Rock: Waypoint{};
-			class SmallTree: Waypoint{};
-			class Tree: Waypoint{};
-			class BusStop: Waypoint{};
-			class FuelStation: Waypoint{};
-			class Hospital: Waypoint{};
-			class Church: Waypoint{};
-			class Lighthouse: Waypoint{};
-			class Power: Waypoint{};
-			class PowerSolar: Waypoint{};
-			class PowerWave: Waypoint{};
-			class PowerWind: Waypoint{};
-			class Quay: Waypoint{};
-			class Transmitter: Waypoint{};
-			class Watertower: Waypoint{};
-			class Cross: Waypoint{};
-			class Chapel: Waypoint{};
-			class Shipwreck: Waypoint{};
-			class Bunker: Waypoint{};
-			class Fortress: Waypoint{};
-			class Fountain: Waypoint{};
-			class Ruin: Waypoint{};
-			class Stack: Waypoint{};
-			class Tourism: Waypoint{};
-			class ViewTower: Waypoint{};
-
-			onCanDestroy = "";
-			onDestroy = "";
-			onSetFocus = "";
-			onKillFocus = "";
-			onKeyDown = "";
-			onKeyUp = "";
-			onMouseButtonDown = "";
-			onMouseButtonUp = "";
-			onMouseButtonClick = "";
-			onMouseButtonDblClick = "";
-			onMouseZChanged = "";
-			onMouseMoving = "";
-			onMouseHolding = "";
-
-			onDraw = "";
+			
+			font = MB_TEXT_FONT; // Font from CfgFontFamilies
+			sizeEx = 0.8 * GUI_GRID_CENTER_H; // Text size
+			color[] = {0,0,0,1}; // Text color
+			
 		};
-		class MB_RscMapMain: MB_RscMap
-		{
-			access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
-			idc = -1; // Control identification (without it, the control won't be displayed)
-			type = CT_MAP_MAIN; // Type
-			style = ST_PICTURE; // Style
-			default = 0; // Control selected by default (only one within a display can be used)
-			blinkingPeriod = 0; // Time in which control will fade out and back in. Use 0 to disable the effect.
 
-			x = 29 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
-			y = 8 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
-			w = 10 * GUI_GRID_CENTER_W; // Width
-			h = 6 * GUI_GRID_CENTER_H; // Height
+		onCanDestroy = "";
+		onDestroy = "";
+		onSetFocus = "";
+		onKillFocus = "";
+		onKeyDown = "";
+		onKeyUp = "";
+		onMouseButtonDown = "";
+		onMouseButtonUp = "";
+		onMouseButtonClick = "";
+		onMouseButtonDblClick = "";
+		onMouseZChanged = "";
+		onMouseMoving = "";
+		onMouseHolding = "";
 
-			tooltip = ""; // Tooltip text
-			tooltipColorShade[] = {0,0,0,1}; // Tooltip background color
-			tooltipColorText[] = {1,1,1,1}; // Tooltip text color
-			tooltipColorBox[] = {1,1,1,1}; // Tooltip frame color
-
-			showCountourInterval = 1; // Show Legend
-
-			class Legend
-			{
-				x = 30 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X; // Horizontal coordinates
-				y = 9 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y; // Vertical coordinates
-				w = 8 * GUI_GRID_CENTER_W; // Width
-				h = 4 * GUI_GRID_CENTER_H; // Height
-
-				colorBackground[] = {1,1,1,1}; // Fill color
-				
-				font = MB_TEXT_FONT; // Font from CfgFontFamilies
-				sizeEx = 0.8 * GUI_GRID_CENTER_H; // Text size
-				color[] = {0,0,0,1}; // Text color
-				
-			};
-
-			onCanDestroy = "";
-			onDestroy = "";
-			onSetFocus = "";
-			onKillFocus = "";
-			onKeyDown = "";
-			onKeyUp = "";
-			onMouseButtonDown = "";
-			onMouseButtonUp = "";
-			onMouseButtonClick = "";
-			onMouseButtonDblClick = "";
-			onMouseZChanged = "";
-			onMouseMoving = "";
-			onMouseHolding = "";
-
-			onDraw = "";
-		};
-class MB_RscTree {
+		onDraw = "";
+	};
+	
+class RscTree;
+class MB_RscTree : RscTree {
 	access = 0; // Control access (0 - ReadAndWrite, 1 - ReadAndCreate, 2 - ReadOnly, 3 - ReadOnlyVerified)
 	idc = CT_TREE; // Control identification (without it, the control won't be displayed)
 	type = CT_TREE; // Type is 12

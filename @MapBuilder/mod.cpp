@@ -6,5 +6,5 @@ hidePicture = "false";
 hideName = "false";
 actionName = "Website";
 action = "http://www.map-builder.info";
-description = "Map Builder 0.9 Beta";
-version = "0.9";
+description = "Map Builder 0.9.1";
+version = "0.9.1";
