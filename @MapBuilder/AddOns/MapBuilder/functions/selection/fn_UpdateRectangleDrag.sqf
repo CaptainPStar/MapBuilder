@@ -1,7 +1,7 @@
 if(!MB_SelectionRectangle_Mutex) then {
 		MB_SelectionRectangle_Mutex = true;
 		//Only update of not more than 50 obj are already selected and rectangle is getting bigger
-		if(count(MB_Selected)>50 
+		if(count(MB_Selected)>500 
 		&& ((MB_SelectionRectangle select 0) vectorDistanceSqr MB_MousePosition) > ((MB_SelectionRectangle select 0) vectorDistanceSqr ((MB_SelectionRectangle select 1)))) then {
 			systemChat "Max selected objects reached.";
 		} else {
