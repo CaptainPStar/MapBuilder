@@ -17,6 +17,6 @@ private["_obj","_pos","_pitch","_bank","_yaw","_simulate","_locked","_sync"];
 		if(isMultiplayer && _sync) then {
 			[_obj] call MB_fnc_syncObject;
 		};
-		[_obj] call MB_fnc_quadTreeUpdate;
+		//[_obj] call MB_fnc_quadTreeUpdate;
 		[_obj] call MB_fnc_BBupdate;
 	};
