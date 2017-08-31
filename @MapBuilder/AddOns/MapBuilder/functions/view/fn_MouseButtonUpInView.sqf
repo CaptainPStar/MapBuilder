@@ -5,6 +5,7 @@ switch ((_this select 1)) do {
 			MB_ViewportLastLMBUp = diag_tickTime;
 			if((MB_ViewportLastLMBUp-MB_ViewportLastLMBDown)<=MB_ClickTime) then {
 				//_this spawn MB_fnc_MouseButtonClick;
+				["LeftMouseButtonReleased",_this] spawn MB_fnc_dispatchCallbacks;
 			};	
 			if(MB_ViewportLMBDrag) then {
 				MB_ViewportLMBDrag = false;
@@ -17,6 +18,7 @@ switch ((_this select 1)) do {
 			MB_ViewportLastRMBUp = diag_tickTime;
 			if((MB_ViewportLastRMBUp-MB_ViewportLastRMBDown)<=MB_ClickTime) then {
 				//_this spawn MB_fnc_MouseButtonClick;
+				["RightMouseButtonReleased",_this] spawn MB_fnc_dispatchCallbacks;
 			};	
 			if(MB_ViewportRMBDrag) then {
 				MB_ViewportRMBDrag = false;
@@ -29,6 +31,7 @@ switch ((_this select 1)) do {
 			MB_ViewportLastMMBUp = diag_tickTime;
 			if((MB_ViewportLastMMBUp-MB_ViewportLastMMBDown)<=MB_ClickTime) then {
 				//_this spawn MB_fnc_MouseButtonClick;
+				["MiddleMouseButtonReleased",_this] spawn MB_fnc_dispatchCallbacks;
 			};	
 			if(MB_ViewportMMBDrag) then {
 				MB_ViewportMMBDrag = false;
