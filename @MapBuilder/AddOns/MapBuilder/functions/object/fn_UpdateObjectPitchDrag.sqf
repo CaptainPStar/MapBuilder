@@ -10,11 +10,11 @@ if(!MB_ObjectDrag_Mutex) then {
 		_pitch = (_pitch + (_screenDelta select 0)*100);
 
 		
-		if(_pitch>180) then {
-			_pitch = 180;
+		if(_pitch>360) then {
+			_pitch = 360;
 		};
-		if(_pitch<-180) then {
-			_pitch = -180;
+		if(_pitch<0) then {
+			_pitch = 0;
 		};
 		
 		_yaw = _obj getvariable "MB_ObjVar_Yaw";

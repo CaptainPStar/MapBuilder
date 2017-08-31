@@ -1,6 +1,6 @@
 //startLoadingScreen ["Exporting Terrain Builder file..."];
 private["_projFolder","_filename","_confirmed","_useClassnames"];
-	["Due to inconsistence between A3 and TB pitch and bank will not be exported.",1] call MB_fnc_showPopupDialog;
+	//["Due to inconsistence between A3 and TB pitch and bank will not be exported.",1] call MB_fnc_showPopupDialog;
 	_filename = [_this,0,"noFilename"] call bis_fnc_param;
 	_useClassnames = [_this,1,true] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Export needs a name!";};

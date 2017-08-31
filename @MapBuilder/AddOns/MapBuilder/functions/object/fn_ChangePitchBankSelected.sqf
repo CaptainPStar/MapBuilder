@@ -8,17 +8,17 @@ private["_dx","_dy","_obj","_pitch","_bank"];
 
 		_pitch = _pitch+_dy;
 		_bank = _bank +_dx; 
-		if(_pitch>180) then {
-			_pitch = 180;
+		if(_pitch>360) then {
+			_pitch = 0;
 		};
-		if(_bank>180) then {
-			_bank = 180;
+		if(_bank>360) then {
+			_bank = 0;
 		};
-		if(_pitch<-180) then {
-			_pitch = -180;
+		if(_pitch<0) then {
+			_pitch = 0;
 		};
-		if(_bank<-180) then {
-			_bank = -180;
+		if(_bank<0) then {
+			_bank = 0;
 		};
 		
 		_obj setvariable["MB_ObjVar_Pitch",_pitch,false];
