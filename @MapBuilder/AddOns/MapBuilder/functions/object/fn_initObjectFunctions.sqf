@@ -33,7 +33,7 @@ MB_ObjectMoveHeight = false;
 MB_ObjectChangeYawSelection = [];
 MB_ObjectChangeYawRotationCenter = [];
 MB_UpdateObjectYawLock = false;
-["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectYawDrag;},{MB_Mode==0 && count(MB_Selected)>0 && (_this select 4) && !(_this select 6)}] call MB_fnc_addCallback;
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectYawDrag;},{MB_Mode==0 && count(MB_Selected)>0 && (_this select 4)&& !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;
 ["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectYawDrag;},{MB_Mode==0 && count(MB_ObjectChangeYawSelection)>0}] call MB_fnc_addCallback;
 ["MouseMoved",{_this spawn MB_fnc_UpdateObjectYawDrag;},{MB_Mode==0 && count(MB_ObjectChangeYawSelection)>0}] call MB_fnc_addCallback;
 
@@ -44,12 +44,12 @@ MB_UpdateObjectYawLock = false;
 MB_ObjectChangePitchSelection = [];
 MB_ObjectChangeBankSelection = [];
 
-/*["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectPitchDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  !(_this select 4) && !(_this select 6) && (_this select 5)}] call MB_fnc_addCallback;
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectPitchDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  (_this select 4) && !(_this select 6) && (_this select 5)}] call MB_fnc_addCallback;
 ["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectPitchDrag;},{MB_Mode==0 && count(MB_ObjectChangePitchSelection)>0}] call MB_fnc_addCallback;
 ["MouseMoved",{_this spawn MB_fnc_UpdateObjectPitchDrag;},{MB_Mode==0 && count(MB_ObjectChangePitchSelection)>0}] call MB_fnc_addCallback;
-["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectBankDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  !(_this select 4) && !(_this select 6) && (_this select 5)}] call MB_fnc_addCallback;
+["BeginLeftMBDrag",{_this spawn MB_fnc_BeginObjectBankDrag;},{MB_Mode==0 && count(MB_Selected)>0  &&  !(_this select 4) && (_this select 6) && (_this select 5)}] call MB_fnc_addCallback;
 ["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectBankDrag;},{MB_Mode==0 && count(MB_ObjectChangeBankSelection)>0}] call MB_fnc_addCallback;
-["MouseMoved",{_this spawn MB_fnc_UpdateObjectBankDrag;},{MB_Mode==0 && count(MB_ObjectChangeBankSelection)>0}] call MB_fnc_addCallback;*/
+["MouseMoved",{_this spawn MB_fnc_UpdateObjectBankDrag;},{MB_Mode==0 && count(MB_ObjectChangeBankSelection)>0}] call MB_fnc_addCallback;
 //############################
 // Object Selection Bank
 //############################
