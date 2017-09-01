@@ -74,14 +74,14 @@ class CfgVehicles
 		author = "NeoArmageddon";
 		vehicleClass = "Modules";
 		category = "MapBuilder_Faction";
-		subCategory = "MapBuilder";		
+		subCategory = "MapBuilder";
 		side = 7;
-		
+
 		scope = 1;
 		scopeCurator = 1;
-		
+
 		icon =  "\MB\MapBuilder\data\mapbuilder_mapicon.paa";
-		
+
 		displayName = "MB Modules";
 		function = "";
 		functionPriority = 10;
@@ -179,6 +179,8 @@ class CfgVehicles
 	};
 };
 #include "\MB\MapBuilder\ui\ui.hpp"
+#include "\MB\MapBuilder\ui\uiNew.hpp"
+#include "\MB\MapBuilder\ui\uiNewLayout.hpp"
 //#include "\MB\MapBuilder\gui\gui.hpp"
 
 #ifndef DEBUG
