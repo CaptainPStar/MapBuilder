@@ -50,51 +50,235 @@ class MB_Main
 	class controls {
 		#include "map.hpp"
 		//class RscObject;
+		class MB_MainMenuStrip: MB_MenuStrip
+		{
+			x = "SafeZoneX + (SafeZoneW * 0.03)";
+			y = "SafeZoneY + (SafezoneH * 0)";
+			w = "SafeZoneW * 0.97";
+			h = "SafeZoneH * 0.02";
+			class Items
+			{
+				items[] = {"Project","Objects","Tools","Help"};
+				class Project
+				{
+					text = "Project";
+					items[] = {"ProjectSaveLoad","Export"};
+					data = "";
+					value = 1;
+				};
+				class ProjectSaveLoad
+				{
+					text = "Save/Load";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_ShowProjectWindow;";
+					//opensNewWindow = 1;
+				};
+				class Export
+				{
+					text = "Export";
+					data = "";
+					shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[1] call MB_fnc_showExportWindow;";
+					//opensNewWindow = 1;
+				};
+				class Objects
+				{
+					text = "Objects";
+					items[] = {"ManageLibrary","Favorites","UsedObjects"};
+					data = "";
+					value = 1;
+				};
+				class ManageLibrary
+				{
+					text = "Manage Library";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "systemchat ""Unimplemented"";";
+					//opensNewWindow = 1;
+				};
+				class Favorites
+				{
+					text = "Favorites";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_openFavoritesWindow;";
+					//opensNewWindow = 1;
+				};
+				class UsedObjects
+				{
+					text = "Used Objects";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_OpenUsedWindow;[] call MB_fnc_updateUsed;";
+					//opensNewWindow = 1;
+				};
+				class Tools
+				{
+					text = "Tools";
+					items[] = {"Brusher","Fencer","Presets"};
+					data = "";
+					value = 1;
+				};
+				class Brusher
+				{
+					text = "Brusher";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_showBrushWindow;";
+					//opensNewWindow = 1;
+				};
+				class Fencer
+				{
+					text = "Fencer";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_openFencer;";
+					//opensNewWindow = 1;
+				};
+				class Presets
+				{
+					text = "Presets";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[] call MB_fnc_showPresetWindow;";
+					//opensNewWindow = 1;
+				};
+				class Help
+				{
+					text = "Help";
+					items[] = {"About","OnlineHelp","Test"};
+					data = "";
+					value = 1;
+				};
+				class About
+				{
+					text = "About";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					action = "[170600,false] spawn MB_fnc_openAboutWindow;";
+					//opensNewWindow = 1;
+				};
+				class OnlineHelp
+				{
+					text = "Online Doku";
+					data = "";
+					//shortcuts[] = {"512 + 0x31"};
+					//picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+					//action = "[] call MB_fnc_OpenHelpWindow;";
+					picture = "\a3\3DEN\Data\Controls\ctrlMenu\link_ca.paa";
+					weblink = "http://wiki.map-builder.info";
+					//opensNewWindow = 1;
+				};
+				class Test
+				{
+					text = "Test";
+					data = "TestData";
+					type = "CheckBox";
+					default = "true";
+				};
+			};
+		};
+		class Toolbar: MB_RscControlsGroupNoScrollbars
+		{
+			idc = 1000;
+			x = "safezoneX";
+			y = "safezoneY + 		5 * (pixelH * pixelGrid * 	0.50)";
+			w = "safezoneW";
+			h = "(	5 + 2) * (pixelH * pixelGrid * 	0.50)";
+			class Controls
+			{
+				class ToolbarBackground: MB_Static
+				{
+					idc = 1001;
+					colorBackground[] = {0.2,0.2,0.2,1};
+					x = 0;
+					y = 0;
+					w = "safezoneW";
+					h = "0.4";
+				};
+				class File: MB_RscControlsGroupNoScrollbars
+				{
+					idc = 1002;
+					x = 0;
+					y = "0";
+					w = "0.1";
+					h = "0.1";
+					class Controls
+					{
+						class New: MB_RscButtonToolbar
+						{
+							idc = 1006;
+							action = "systemchat ""blub"";";
+							text = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\new_ca.paa";
+							tooltip = "TOOLTIP!";
+							//onLoad = "['showShortcut','MissionNew',_this] call bis_fnc_3DENInterface;";
+							x = "0.1";
+							y = 0.1;
+							h = "0.1";
+							w = "0.1";
+						};
+					};
+				};
+			};
+		};
 		class MB_MainBackground : MB_RscText { //--- Render out.
 			idc = 170002;
 			text = "";
-			x = "SafeZoneX + (SafeZoneW * 0.8)";
-			y = "SafeZoneY + (SafezoneH * 0)";
-			w = "SafeZoneW * 0.20";
-			h = "SafeZoneH * 1";
+			x = "SafeZoneX + (SafeZoneW * 0.82)";
+			y = "SafeZoneY + (SafezoneH * 0.02)";
+			w = "SafeZoneW * 0.19";
+			h = "SafeZoneH * 0.95";
 			colorBackground[] = {0, 0, 0, 0.3};
 			onMouseExit = "[false] call MB_fnc_MouseInView;";
 			onMouseEnter = "[true] call MB_fnc_MouseInView;";
 		};
+		//delete MB_ObjectLibrary;
 		class MB_ObjectLibrary : MB_RscTree {
+			idc = 170003;
+			x = "SafeZoneX + (SafeZoneW * 0.83)";
+			y = "SafeZoneY + (SafezoneH * 0.06)";
+			w = "SafeZoneW * 0.16";
+			h = "SafeZoneH * 0.7";
+			sizeEx = 0.035;
+			colorBackground[] = {0, 0.8, 0, 0.5};
+			onTreeSelChanged = "_this call MB_fnc_LibrarySelect;";
+			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
+			onMouseButtonDown = "";
+			onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
+			onTreeLButtonDown = "_this call MB_fnc_libraryMousedown;";
+			onLBDrag = "systemchat ""Drag!"";";
+			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
+            //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
+		};
+		/*class MB_ObjectLibrary : MB_RscListBox {
 			idc = 170003;
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
 			y = "SafeZoneY + (SafezoneH * 0.02)";
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.29";
 			sizeEx = 0.035;
-			colorBackground[] = {0, 0.8, 0, 0.5};
-			onTreeSelChanged = "_this call MB_fnc_LibrarySelect;";
-			onMouseExit = "[] call MB_fnc_disable3DPreview; false";
-			//onMouseButtonDown = "_this call MB_fnc_libraryMousedown;";
-			//onMouseButtonUp = "_this call MB_fnc_libraryMouseup;";
-			//onTreeLButtonDown = "_this call MB_fnc_libraryMousedown;";
-			//onLBDrag = "systemchat ""Drag!"";";
-			//onLBSelChanged="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been changed
-            //onLBDblClick="call MB_Listbox_Objects_Refresh;";//--- action/function to call when listbox or combobox has been double clicked
-		};
-		//class listboxB : listboxA {
-		//	idc = 170004;
-		//	x = "SafeZoneX + (SafeZoneW * 0.81)";
-		//	y = "SafeZoneY + (SafezoneH * 0.31)";
-		//	w = "SafeZoneW * 0.18";
-		//	h = "SafeZoneH * 0.29";
-		//	onLBSelChanged="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been changed
-        //    onLBDblClick="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been double clicked
-		//};
+			onLBDrag = "systemchat ""Drag!"";";
+			//onLBSelChanged="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been changed
+            //onLBDblClick="call MB_Listbox_Objects_SetCur;";//--- action/function to call when listbox or combobox has been double clicked
+		};*/
 		class MB_Icon : MB_RscActiveText {
 			//type = CT_STATIC;
 			style = ST_PICTURE + ST_KEEP_ASPECT_RATIO;
 			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.01)";
-			y = "SafeZoneY + (SafezoneH * 0.01)";
-			w = "0.08";
-			h = "0.09";
+			x = "SafeZoneX + (SafeZoneW * 0.0)";
+			y = "SafeZoneY + (SafezoneH * 0.0)";
+			w = "0.06";
+			h = "0.06";
 			color[] = {1,1,1,0.9};
 			colorActive[] = {1,1,1,1};
 			colorDisabled[] = {1,1,1,1};
@@ -102,7 +286,7 @@ class MB_Main
 			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
 		};
 
-		class MB_SelectedTemplate : MB_RscStructuredText {
+		/*class MB_SelectedTemplate : MB_RscStructuredText {
 			idc = 170007;
 
 			x = "SafeZoneX + (SafeZoneW * 0.81)";
@@ -110,24 +294,6 @@ class MB_Main
 			w = "SafeZoneW * 0.18";
 			h = "SafeZoneH * 0.08";
 			text =  "Selected: None";
-		};
-		class UsedObjectsButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.32)";
-			w = "SafeZoneW * 0.06";
-			h = "SafeZoneH * 0.025";
-			text = "Used Objs";
-			action = "[] call MB_fnc_OpenUsedWindow;[] call MB_fnc_updateUsed;";
-		};
-		class FavoritesObjectsButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.88)";
-			y = "SafeZoneY + (SafezoneH * 0.32)";
-			w = "SafeZoneW * 0.06";
-			h = "SafeZoneH * 0.025";
-			text = "Fav Objs";
-			action = "[] call MB_fnc_OpenFavoritesWindow;";
 		};
 		class MB_ObjSettingsLabel : MB_RscText {
 			idc = -1;
@@ -175,69 +341,8 @@ class MB_Main
 			values[] = {0,1};
 			onToolBoxSelChanged = "[(_this select 1)] call MB_fnc_switchMode;";
 			tooltip = "Objects: Select and move objects | Brusher: 'Draw' a dynamic/random set of objects.";
-		};
-		class MB_FencerButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.89)";
-			y = "SafeZoneY + (SafezoneH * 0.80)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Fencer";
-			action = "[] call MB_fnc_openFencer;";
-			tooltip = "Open Fencer - A toll for placing straight lines of objects.";
-		};
-		class PresetsButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.80)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Presets";
-			action = "[] call MB_fnc_showPresetWindow;";
-			tooltip = "Presets are small groups of objects, that can be saved, loaded, copied and shared.";
-		};
-		class BrushesButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.74)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Brushes";
-			action = "[] call MB_fnc_showBrushWindow;";
-			tooltip = "Brusher is a tool for placing large number of objects in structured or random patterns.";
-		};
-		class ExportButton : MB_RscButton {
-			idc = 170005;
-			x = "SafeZoneX + (SafeZoneW * 0.81)";
-			y = "SafeZoneY + (SafezoneH * 0.86)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Export";
-			action = "[1] call MB_fnc_showExportWindow;";
-			tooltip = "Export objects to various other formats like mission files, Terrain Builder or scripts.";
-		};
-		class SaveToEditorButton : MB_RscButton {
-			idc = 170006;
-			x = "SafeZoneX + (SafeZoneW * 0.89)";
-			y = "SafeZoneY + (SafezoneH * 0.86)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Save/Load";
-			action = "[] call MB_fnc_ShowProjectWindow;";
-			//action = "[] call MB_fnc_ShowProjects;";
-			tooltip = "Save and load projects.";
-		};
-		class ProjectSettingsButton : MB_RscButton {
-			idc = -1;
-			x = "SafeZoneX + (SafeZoneW * 0.89)";
-			y = "SafeZoneY + (SafezoneH * 0.74)";
-			w = "SafeZoneW * 0.07";
-			h = "SafeZoneH * 0.05";
-			text = "Help";
-			//action = "[] call MB_fnc_showPresetWindow;";
-			action = "[] call MB_fnc_OpenHelpWindow;";
-			tooltip = "Opens the MapBuilder help window.";
-		};
+		};*/
+		
 		//###################
 		//	Taskbar
 		//###################
@@ -247,7 +352,7 @@ class MB_Main
 			text = "";
 			x = "SafeZoneX + (SafeZoneW * 0)";
 			y = "SafeZoneY + (SafezoneH * 0.97)";
-			w = "SafeZoneW * 0.80";
+			w = "SafeZoneW * 1.0";
 			h = "SafeZoneH * 0.03";
 			colorBackground[] = {0, 0, 0, 0.3};
 		};

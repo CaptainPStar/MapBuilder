@@ -123,6 +123,38 @@ class MB_RscText : RscText
 	sizeEx = MB_TEXT_DEFAULT;
 	linespacing = 1;
 };
+class MB_Static: MB_RscText
+{
+	type = 0;
+	colorBackground[] = {0,0,0,0};
+	text = "";
+	lineSpacing = 1;
+	fixedWidth = 0;
+	colorText[] = {1,1,1,1};
+	colorShadow[] = {0,0,0,1};
+	moving = 0;
+	autoplay = 0;
+	loops = 0;
+	tileW = 1;
+	tileH = 1;
+	onCanDestroy = "";
+	onDestroy = "";
+	onMouseEnter = "";
+	onMouseExit = "";
+	onSetFocus = "";
+	onKillFocus = "";
+	onKeyDown = "";
+	onKeyUp = "";
+	onMouseButtonDown = "";
+	onMouseButtonUp = "";
+	onMouseButtonClick = "";
+	onMouseButtonDblClick = "";
+	onMouseZChanged = "";
+	onMouseMoving = "";
+	onMouseHolding = "";
+	onVideoStopped = "";
+};
+
 class RscStructuredText;
 class MB_RscStructuredText : RscStructuredText
 {
@@ -888,7 +920,7 @@ class MB_RscBackground : MB_RscText { //--- Render out.
 class MB_Menu: MB_RscText
 {
 	type = 46;
-	font = "PuristaMedium";
+	font = MB_TEXT_FONT_TITLE;
 	colorBorder[] = {0,0,0,0};
 	colorBackground[] = {0,0,0,1};
 	colorText[] = {1,1,1,1};
@@ -898,13 +930,13 @@ class MB_Menu: MB_RscText
 	colorPicture[] = {1,1,1,1};
 	colorPictureSelect[] = {0,0,0,1};
 	colorPictureDisabled[] = {1,1,1,0.5};
-	//arrow = "\a3\3DEN\Data\Controls\ctrlMenu\arrow_ca.paa";
+	arrow = "\a3\3DEN\Data\Controls\ctrlMenu\arrow_ca.paa";
 	rowHeight = 0;
 	itemSpacingW = 0.01;
 	itemSpacingH = 0.01;
-	//pictureCheckboxEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureCheckboxEnabled_ca.paa";
+	pictureCheckboxEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureCheckboxEnabled_ca.paa";
 	pictureCheckboxDisabled = "#(argb,8,8,3)color(0,0,0,0)";
-	//pictureRadioEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureRadioEnabled_ca.paa";
+	pictureRadioEnabled = "\a3\3DEN\Data\Controls\CtrlMenu\pictureRadioEnabled_ca.paa";
 	pictureRadioDisabled = "#(argb,8,8,3)color(0,0,0,0)";
 };
 class MB_MenuStrip: MB_Menu
@@ -926,4 +958,40 @@ class MB_RscProgress
 	texture = "#(argb,8,8,3)color(0,1,0,0.75)";
 	colorFrame[] = {0,0,0,0};
 	colorBar[] = {1,1,1,1};
+};
+
+class MB_RscControlsGroupNoScrollbars: MB_RscControlsGroup
+{
+	class VScrollbar: VScrollBar
+	{
+		width = 0;
+	};
+	class HScrollbar: HScrollBar
+	{
+		height = 0;
+	};
+};
+class MB_RscControlsGroupNoHScrollbars: MB_RscControlsGroup
+{
+	class HScrollbar: HScrollBar
+	{
+		height = 0;
+	};
+};
+class MB_RscControlsGroupNoVScrollbars: MB_RscControlsGroup
+{
+	class VScrollbar: VScrollBar
+	{
+		width = 0;
+	};
+};
+
+class MB_RscButtonPictureKeepAspect: MB_RscButton
+{
+	style = "0x02 + 0x30 + 0x800";
+};
+class MB_RscButtonToolbar: MB_RscButtonPictureKeepAspect
+{
+	colorBackground[] = {0,0,0,0};
+	colorBackgroundDisabled[] = {0,0,0,0};
 };

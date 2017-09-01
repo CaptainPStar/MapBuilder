@@ -22,6 +22,6 @@ private["_obj","_pos","_yaw","_pitch","_bank","_simulate","_locked","_sync"];
 	
 	_obj setvariable["MB_ObjVar_Scale",1,false];
 	
-	[_obj,MB_QuadTree] call MB_fnc_quadTreeInsert;
+	//[_obj,MB_QuadTree] call MB_fnc_quadTreeInsert;
 	
 	[_obj,_sync] call MB_fnc_UpdateObject;

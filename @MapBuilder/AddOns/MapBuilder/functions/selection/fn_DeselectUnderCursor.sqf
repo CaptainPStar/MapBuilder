@@ -7,7 +7,7 @@ private["_uX","_uY","_layer","_obj","_pos","_opos","_objects","_shift","_isSelec
 		if((_obj in MB_Objects)) then {
 			_isSelected = [_obj] call MB_fnc_isSelected;
 			if(!_isSelected) then {
-				//[_obj] call MB_fnc_Select;
+				[] call MB_fnc_DeselectAll;
 			} else {
 				[_obj] call MB_fnc_Deselect;
 			};

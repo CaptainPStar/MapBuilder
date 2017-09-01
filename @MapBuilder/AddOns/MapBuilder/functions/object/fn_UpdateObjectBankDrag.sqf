@@ -8,11 +8,11 @@ if(!MB_ObjectDrag_Mutex) then {
 
 		_bank = (_bank + (_screenDelta select 1)*100);
 		
-		if(_bank>180) then {
-			_bank = 180;
+		if(_bank>360) then {
+			_bank = 360;
 		};
-		if(_bank<-180) then {
-			_bank = -180;
+		if(_bank<0) then {
+			_bank = 0;
 		};
 		
 		
