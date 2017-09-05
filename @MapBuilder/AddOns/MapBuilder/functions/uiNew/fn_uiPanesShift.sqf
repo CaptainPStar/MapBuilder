@@ -17,18 +17,18 @@ if (_paneIndex == -1) exitWith {
 };
 
 // -- Nothing to adjust when this is the last panel
-if ((count _paneCtrl - 1) <= _paneIndex) exitWith { 0 };
+if ((count _children - 1) <= _paneIndex) exitWith { 0 };
 
-(ctrlPosition _sidebarCtrl) params ["", "_yPos", "", "_ySize"];
+(ctrlPosition _paneCtrl) params ["", "_yPos", "", "_ySize"];
 private _animateTime = ["ui.setting.animateTime", 0] call MB_fnc_uiGetSetting;
 private _posY = _yPos + _ySize;
 
-for "_i" from (_paneIndex + 1) to (count _paneCtrl - 1) do {
+for "_i" from (_paneIndex + 1) to (count _children - 1) do {
     private _paneBelow = (_children select _i);
     private _paneBelowPos = (ctrlPosition _paneBelow);
     _paneBelowPos set [1, _posY];
-    _paneBelowPos ctrlSetPosition _paneBelowPos;
-    _paneBelowPos ctrlCommit _animateTime;
+    _paneBelow ctrlSetPosition _paneBelowPos;
+    _paneBelow ctrlCommit _animateTime;
     _posY = _posY + (_paneBelowPos select 3);
 };
 

@@ -3,11 +3,12 @@
     Author:         Adanteh
     Description:    Loads the library
 */
+#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
 
-params ["_libraryCtrl"];
+params ["_paneCtrl", "_yPos", "_"];
 
+private _libraryCtrl = _paneCtrl controlsGroupCtrl __IDC_LIBRARY_TVIEW;
 private _libraryData = +(MB_LIBRARY);
-
 uiNamespace setVariable ["MB_UI_MainLibrary", _libraryCtrl];
 
 _fnc_addItem = {
@@ -24,7 +25,7 @@ _fnc_addItem = {
     		_libraryCtrl tvSetData [_newPath, ""];
     		[_value,_newPath] call _fnc_addItem;
     	};
-    	if (_value isEqualType []) then {
+    	if (_value isEqualType "") then {
     		_libraryCtrl tvSetData [_newPath, _value];
     	};
         nil;
@@ -33,7 +34,7 @@ _fnc_addItem = {
     if (count _path > 0) then {
     	_libraryCtrl tvSort [_path, false];
     } else {
-    	tvExpand [_libraryCtrl, [0]];
+    	_libraryCtrl tvExpand [0];
     };
 };
 

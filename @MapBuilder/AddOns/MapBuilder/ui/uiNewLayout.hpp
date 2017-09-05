@@ -8,12 +8,12 @@ class MapBuilder {
 
       class Library {
         title = "Library";
-        type = "MB_LibraryViewer";
+        type = "MB_PaneLibraryViewer";
       };
 
       class Favorites {
-        title = "Library";
-        type = "MB_CorePane";
+        title = "Favorites";
+        type = "MB_EmptyPane";
       };
     };
   };

@@ -117,7 +117,8 @@ def build_da_pbo(addonbuilder, foldertopack):
                 cmd.append("-prefix="+pboprefix_path)
 
             try:
-                subprocess.call(cmd)
+                FNULL = open(os.devnull, 'w')
+                subprocess.call(cmd, stdout=FNULL, stderr=subprocess.STDOUT)
             except:
                 print("Module not successfully built.")
                 raise

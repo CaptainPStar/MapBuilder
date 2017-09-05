@@ -179,8 +179,9 @@ class CfgVehicles
 	};
 };
 #include "\MB\MapBuilder\ui\ui.hpp"
-#include "\MB\MapBuilder\ui\uiNew.hpp"
+#include "\MB\MapBuilder\ui\uiNewElements.hpp"
 #include "\MB\MapBuilder\ui\uiNewLayout.hpp"
+#include "\MB\MapBuilder\ui\uiNew.hpp"
 //#include "\MB\MapBuilder\gui\gui.hpp"
 
 #ifndef DEBUG
