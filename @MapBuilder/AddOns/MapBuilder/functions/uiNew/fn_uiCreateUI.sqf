@@ -16,9 +16,11 @@ diag_mergeConfigFile ["B:\Arma\Frontline\MapBuilder\@MapBuilder\AddOns\MapBuilde
 } count (uiNamespace getVariable ["MB_UI_Sidebars", []]);
 
 "MB_fnc_uiLoadPanes" call bis_fnc_recompile;
-"MB_fnc_uiPaneToggle" call bis_fnc_recompile;
-"MB_fnc_uiAdjustContentCtrl" call bis_fnc_recompile;
-"MB_fnc_uiLoadLibrary" call bis_fnc_recompile;
+"MB_fnc_uiPanesShift" call BIS_fnc_recompile;
+"MB_fnc_uiPaneResize" call BIS_fnc_recompile;
+"MB_fnc_uiPaneDrag" call BIS_fnc_recompile;
+
+// { [["ui.setting", _x, "sizeY"], 50 * (pixelH * pixelGrid * 0.5)] call MB_fnc_uiSetSetting; nil  } count ["Library", "Favorites"];
 
 (findDisplay 46) createDisplay "MB_GUI_Window";
 private _display = __GUI_WINDOW;

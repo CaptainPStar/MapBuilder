@@ -14,7 +14,7 @@ if (_ctrl getVariable ["checkbypass", false]) exitWith {
 
 private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _ctrl);
 private _collapsed = _paneCtrl getVariable ["collapsed", false];
-private _flying = _paneCtrl getVariable ["flying", false];
+private _floating = _paneCtrl getVariable ["floating", false];
 private _openingPane = _collapsed;
 
 private _paneID = _paneCtrl getVariable ["id", ""];
@@ -40,7 +40,6 @@ if (_code != "") then {
 
 _paneCtrl setVariable ["collapsed", !_openingPane];
 [["ui.setting", _paneID, "collapsed"], !_openingPane] call MB_fnc_uiSetSetting;
-"MB_fnc_uiPanesShift" call BIS_fnc_recompile;
-if !(_flying) then {
+if !(_floating) then {
     [_paneCtrl] call MB_fnc_uiPanesShift;
 };

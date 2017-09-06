@@ -1,7 +1,7 @@
 /*
-    Function:       MB_fnc_uiPaneDrag
+    Function:       MB_fnc_uiPaneResize
     Author:         Adanteh
-    Description:    Handles the dragging of panes. Will change order if within the sidebar, will make it a seperate window if without
+    Description:    Resizes the pane. If it's a floating pane, allow both X and Y transformation. Else only Y
 */
 #include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
 
@@ -15,11 +15,9 @@ switch (toLower _mode) do {
 
         if (_floating) exitWith { false }; // -- Needs implementation
 
-        private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
-        private _contentPosReal = [_contentCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
+        private _contentPosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
 
-        // -- Some work arounds for Z-order shenanigans.
         private _resizeHandle = ([_contentPosReal] spawn {
             disableSerialization;
             params ["_contentPosReal"];

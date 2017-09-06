@@ -41,11 +41,15 @@ private _allPanes = [];
         default { [0, 0, 0, 0] };
     };
 
+    private _backgroundCtrl = __GUI_WINDOW ctrlCreate ["MB_CoreSidebarBG", __IDC_SIDEBAR_BG]; // -- Dont want this to scroll
     private _sidebarCtrl = __GUI_WINDOW ctrlCreate ["MB_CoreSidebar", (__IDC_SIDEBAR_BASEIDC + _forEachIndex)];
     private _yPos = 0;
     private _children = [];
     _sidebarCtrl ctrlSetPosition _sidebarPosition;
     _sidebarCtrl ctrlCommit 0;
+
+    _backgroundCtrl ctrlSetPosition _sidebarPosition;
+    _backgroundCtrl ctrlCommit 0;
 
     {
         _x params ["_paneID", "_paneTitle", ["_paneCtrlClass", "MB_CorePane"]];
@@ -56,7 +60,7 @@ private _allPanes = [];
         _paneCtrl ctrlSetPosition [0, _yPos];
         _paneCtrl ctrlCommit 0;
 
-        // TODO: Support for flying panes (detach from sidebar, save position on screen)
+        // TODO: Support for floating panes (detach from sidebar, save position on screen)
         if !(_collapsed) then {
             _contentHeight = [["ui.setting", _paneID, "sizeY"], 0] call MB_fnc_uiGetSetting;
             [_contentCtrl, _contentHeight] call MB_fnc_uiAdjustContentCtrl;
@@ -73,7 +77,7 @@ private _allPanes = [];
         };
 
         _paneCtrl setVariable ["collapsed", _collapsed];
-        _paneCtrl setVariable ["flying", false];
+        _paneCtrl setVariable ["floating", false];
         _paneCtrl setVariable ["parent", _sidebarCtrl];
         _paneCtrl setVariable ["id", _paneID];
 
@@ -91,5 +95,7 @@ private _allPanes = [];
 } forEach _barsToProcess;
 uiNamespace setVariable ["MB_UI_Sidebars", _bars];
 uiNamespace setVariable ["MB_UI_AllPanes", _allPanes];
+
+(__GUI_WINDOW displayCtrl __IDC_OVERLAYGROUP) ctrlShow false;
 
 true;

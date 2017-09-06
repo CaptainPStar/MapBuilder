@@ -36,7 +36,6 @@ _classesToAdjust append ("true" configClasses (configFile >> (ctrlClassName _con
 
 
         _contentPos set [1, _sizeY - _hOffset];
-        systemChat str [configName _x, _contentPos];
         _contentCtrl ctrlSetPosition _contentPos;
         _contentCtrl ctrlCommit 0;
     };
