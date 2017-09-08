@@ -31,15 +31,14 @@ private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
 [_contentCtrl, _ySize] call MB_fnc_uiAdjustContentCtrl;
 
 // -- Run some extra fancy code (Makes it easier to extend mapBuilder)
-private _paneCtrlClass = ctrlClassName _paneCtrl;
-private _code = getText (configFile >> _paneCtrlClass >> "MapBuilder" >> "collapseCode");
+private _code = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "onCollapse");
 if (_code != "") then {
     _code = compile _code;
     _return = [_paneCtrl] call _code;
 };
 
 _paneCtrl setVariable ["collapsed", !_openingPane];
-[["ui.setting", _paneID, "collapsed"], !_openingPane] call MB_fnc_uiSetSetting;
+[["ui.setting", _paneID, "collapsed"], parsenumber (!_openingPane)] call MB_fnc_uiSetSetting;
 if !(_floating) then {
     [_paneCtrl] call MB_fnc_uiPanesShift;
 };

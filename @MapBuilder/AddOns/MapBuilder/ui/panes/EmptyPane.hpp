@@ -7,11 +7,6 @@ class MB_EmptyPane: ctrlControlsGroupNoHScrollbars {
   h = 0;
   MB_hAdjust = 1;
 
-  class MapBuilder {
-    initCode = "";
-    collapseCode = "";
-  };
-
   class controls {
     class Background: MB_CtrlPaneBackground { };
     class Resizer: MB_CtrlResizer { };

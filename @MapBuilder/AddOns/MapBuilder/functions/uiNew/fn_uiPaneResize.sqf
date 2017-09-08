@@ -17,6 +17,7 @@ switch (toLower _mode) do {
 
         private _contentPosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
+        private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
 
         private _resizeHandle = ([_contentPosReal] spawn {
             disableSerialization;
@@ -42,8 +43,6 @@ switch (toLower _mode) do {
         terminate _handle;
         private _contentCtrl = uiNamespace getVariable ["MB_ResizingTarget", controlNull];
         private _newHeight = (ctrlPosition _contentCtrl) select 3;
-
-        ctrlDelete _resizeFrame;
 
         uiNamespace setVariable ["MB_ResizingHandle", nil];
         uiNamespace setVariable ["MB_ResizingTarget", nil];

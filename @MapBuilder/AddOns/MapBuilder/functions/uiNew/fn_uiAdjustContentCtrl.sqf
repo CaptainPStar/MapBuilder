@@ -17,6 +17,8 @@ _classesToAdjust append ("true" configClasses (configFile >> (ctrlClassName _con
 {
     private _idc = getNumber (_x >> "idc");
 
+    // TODO: Do the X scaling!
+
     // -- Adjust the Y position for the content (If the pane height changes, then position should change)
     // -- This can be used to keep items stuck to the bottom of the content pane
     if (getNumber (_x >> "MB_yAdjust") > 0) then {

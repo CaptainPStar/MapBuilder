@@ -6,56 +6,132 @@
 #include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
 
 params ["_ctrl", ["_mode", "start"]];
+private _return = true;
 
 switch (toLower _mode) do {
     case "start": {
         private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _ctrl);
-        private _collapsed = _paneCtrl getVariable ["collapsed", false];
         private _floating = _paneCtrl getVariable ["floating", false];
 
-        if (_floating) exitWith { false }; // -- Needs implementation
-
-        private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
-        private _contentPosReal = [_contentCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
+        private _panePos = ctrlPosition _paneCtrl;
+        private _panePosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
 
-        // -- Some work arounds for Z-order shenanigans.
-        private _resizeHandle = ([_contentPosReal] spawn {
-            disableSerialization;
-            params ["_contentPosReal"];
 
-            // TOOD: Replace by perFrame
-            // TODO: Create button up and button down framework
+        private _offsetRelative = [
+            (getMousePosition select 0) - (_panePos select 0),
+            (getMousePosition select 1) - (_panePos select 1)
+        ];
+
+        private _offsetReal = [
+            (getMousePosition select 0) - (_panePosReal select 0),
+            (getMousePosition select 1) - (_panePosReal select 1)
+        ];
+
+        private _offsetDetach = [
+            (_panePosReal select 2) / 3,
+            0
+        ];
+
+        private _paneTempCtrl = if (_floating) then {
+            _paneCtrl;
+        } else {
+            [_paneCtrl, "createclone"] call MB_fnc_uiPaneDrag;
+        };
+
+        // -- Some work arounds for Z-order shenanigans.
+        private _resizeHandle = ([_paneCtrl, _paneTempCtrl, _offsetReal, _offsetRelative, _offsetDetach, _panePos] spawn {
+            disableSerialization;
+            params ["_paneCtrl", "_paneTempCtrl", "_offsetReal", "_offsetRelative", "_offsetDetach", "_panePos"];
+
+            private _sidebarPos = [(uiNamespace getVariable ["MB_UI_Sidebars", []]) select 0] call MB_fnc_getCtrlPositionReal;
             while { !(isNull (__GUI_WINDOW)) } do {
-                private _newPos = (getMousePosition select 1) - (_contentPosReal select 1);
-                [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), (_newPos)] call MB_fnc_uiAdjustContentCtrl;
+
+                // -- The current position of the top left corner on the screen (Use this to set position)
+                private _positionToSet = [
+                    (getMousePosition select 0) - (_offsetReal select 0),
+                    (getMousePosition select 1) - (_offsetReal select 1)
+                ];
+
+                // -- If more than one third left of the pane is outside the bar, detach it
+                private _positionDetachCheck = [
+                    (_positionToSet select 0) + (_offsetDetach select 0),
+                    (_positionToSet select 1) + (_offsetDetach select 1)
+                ];
+
+                // -- Figure out if we should be attaching to a sidepanel.
+                //if (_paneCtrl getVariable ["allowAttaching", false]) then { };
+                private _floating = !([_positionDetachCheck, _sidebarPos] call MB_fnc_uiPosInPos);
+                if !(_floating) then {
+                    _positionToSet = [
+                        (_panePos select 0),
+                        (getMousePosition select 1) - (_offsetRelative select 1)
+                    ];
+                    _paneCtrl ctrlSetPosition _positionToSet;
+                    _paneCtrl ctrlCommit 0;
+                    _paneTempCtrl ctrlShow false;
+                } else {
+                    _paneCtrl ctrlSetPosition [_panePos select 0, _panePos select 1];
+                    _paneCtrl ctrlCommit 0;
+                    _paneTempCtrl ctrlSetPosition _positionToSet;
+                    _paneTempCtrl ctrlCommit 0;
+                    _paneTempCtrl ctrlShow true;
+                };
+
+                uiNamespace setVariable ["MB_MovingFloating", _floating];
                 uiSleep 0.1;
             };
         });
 
-        uiNamespace setVariable ["MB_ResizingHandle", _resizeHandle];
-        uiNamespace setVariable ["MB_ResizingTarget", _contentCtrl];
+        uiNamespace setVariable ["MB_MovingHandle", _resizeHandle];
+        uiNamespace setVariable ["MB_MovingTarget", _paneTempCtrl];
+        uiNamespace setVariable ["MB_MovingReal", _paneCtrl];
+    };
+
+    case "createclone": {
+        private _paneTempCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", -1];
+        private _contentCtrl = __GUI_WINDOW ctrlCreate [ctrlClassName _ctrl, __IDC_PANE_CONTENT, _paneTempCtrl];
+        (_paneTempCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT) ctrlSetText (ctrlText (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT));
+        _paneTempCtrl ctrlShow false;
+        _return = _paneTempCtrl;
     };
 
     case "end": {
-        private _handle = uiNamespace getVariable "MB_ResizingHandle";
+        private _handle = uiNamespace getVariable "MB_MovingHandle";
         if (isNil "_handle") exitWith { };
 
         terminate _handle;
-        private _contentCtrl = uiNamespace getVariable ["MB_ResizingTarget", controlNull];
-        private _newHeight = (ctrlPosition _contentCtrl) select 3;
 
-        ctrlDelete _resizeFrame;
+        private _floating = uiNamespace getVariable ["MB_MovingFloating", false];
+        private _paneTempCtrl = uiNamespace getVariable ["MB_MovingTarget", controlNull];
+        private _paneCtrl = uiNamespace getVariable ["MB_MovingReal", controlNull];
+        private _position = (ctrlPosition _paneTempCtrl);
 
-        uiNamespace setVariable ["MB_ResizingHandle", nil];
-        uiNamespace setVariable ["MB_ResizingTarget", nil];
-        private _paneCtrl = ctrlParentControlsGroup _contentCtrl;
+        uiNamespace setVariable ["MB_MovingHandle", nil];
+        uiNamespace setVariable ["MB_MovingTarget", nil];
+        uiNamespace setVariable ["MB_MovingReal", nil];
         private _paneID = _paneCtrl getVariable ["id", ""];
 
-        [_paneCtrl] call MB_fnc_uiPanesShift;
-        [["ui.setting", _paneID, "sizeY"], _newHeight] call MB_fnc_uiSetSetting;
+        if (_paneTempCtrl != _paneCtrl) then {
+            ctrlDelete _paneTempCtrl;
+            _paneCtrl ctrlShow true;
+        };
+
+
+
+        [["ui.setting", _paneID, "floating"], parseNumber _floating] call MB_fnc_uiSetSetting;
+
+        if !(_floating) then {
+            [["ui.setting", _paneID, "sidebar"], "right"] call MB_fnc_uiSetSetting;
+            //[_paneCtrl] call MB_fnc_uiPanesShift;
+        } else {
+            hint "FLOAT RELEASE";
+            [_paneCtrl] call MB_fnc_uiRemovePaneFromSidebar;
+            [["ui.setting", _paneID, "posX"], (_position select 0)] call MB_fnc_uiSetSetting;
+            [["ui.setting", _paneID, "posY"], (_position select 1)] call MB_fnc_uiSetSetting;
+        };
     };
 
 };
 
-true
+_return

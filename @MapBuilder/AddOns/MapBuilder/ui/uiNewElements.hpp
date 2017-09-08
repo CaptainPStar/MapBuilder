@@ -89,6 +89,3 @@ class MB_CtrlPaneBackground: ctrlStaticBackground {
     colorBackground[] = {0, 0.5, 1, 0.5};
     MB_hAdjust = 1;
 };
-
-#include "panes\EmptyPane.hpp"
-#include "panes\LibraryViewer.hpp"

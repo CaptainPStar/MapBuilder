@@ -6,7 +6,6 @@
 
 params ["_settingToSet", "_value"];
 
-if (isNil "_value") exitWith { };
 if (_settingToSet isEqualType []) then {
     _settingToSet = _settingToSet joinString ".";
 };

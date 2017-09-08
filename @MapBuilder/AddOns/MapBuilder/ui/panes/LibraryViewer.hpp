@@ -7,11 +7,6 @@ class MB_PaneLibraryViewer: ctrlControlsGroupNoHScrollbars {
   h = 0;
   MB_hAdjust = 1;
 
-  class MapBuilder {
-    initCode = "_this call MB_fnc_uiLoadLibrary";
-    collapseCode = "";
-  };
-
   class controls {
     class Background: MB_CtrlPaneBackground { };
     class LibrarySearch: ctrlEdit {

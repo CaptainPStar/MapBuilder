@@ -15,9 +15,16 @@ class ctrlTree;
 #include "controls\resizer.hpp"
 #include "controls\paneToggle.hpp"
 #include "controls\dragHandle.hpp"
+#include "controls\paneButton.hpp"
 
 #include "uiNewElements.hpp"
 #include "uiNewLayout.hpp"
+
+#include "panes\EmptyPane.hpp"
+#include "panes\MissingPane.hpp"
+#include "panes\LibraryViewer.hpp"
+#include "panes\Favorites.hpp"
+#include "panes\UsedObjects.hpp"
 
 class MB_GUI_Window {
     idd = 1000;
