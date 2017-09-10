@@ -13,10 +13,7 @@ class ctrlTree;
 #include "mbdefinesNew.hpp"
 
 #include "controls\resizer.hpp"
-#include "controls\paneToggle.hpp"
-#include "controls\dragHandle.hpp"
 #include "controls\paneButton.hpp"
-
 #include "uiNewElements.hpp"
 #include "uiNewLayout.hpp"
 

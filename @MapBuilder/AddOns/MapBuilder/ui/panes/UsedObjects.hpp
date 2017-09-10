@@ -6,6 +6,7 @@ class MB_PaneUsedObjects: ctrlControlsGroupNoHScrollbars {
   w = __GUI_PANE_W;
   h = (15 * GRID_H);
   MB_hAdjust = 1;
+  MB_wAdjust = 1;
 
   class controls {
     class Background: MB_CtrlPaneBackground { };

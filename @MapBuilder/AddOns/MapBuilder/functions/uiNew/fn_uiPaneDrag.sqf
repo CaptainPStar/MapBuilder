@@ -33,10 +33,11 @@ switch (toLower _mode) do {
             0
         ];
 
+        // -- If the pane is currently in a sidebar, we need to make a temporary pane so we can move it outside the sidebar on screen
         private _paneTempCtrl = if (_floating) then {
             _paneCtrl;
         } else {
-            [_paneCtrl, "createclone"] call MB_fnc_uiPaneDrag;
+            [_paneCtrl, "createdragger"] call MB_fnc_uiPaneDrag;
         };
 
         // -- Some work arounds for Z-order shenanigans.
@@ -44,6 +45,7 @@ switch (toLower _mode) do {
             disableSerialization;
             params ["_paneCtrl", "_paneTempCtrl", "_offsetReal", "_offsetRelative", "_offsetDetach", "_panePos"];
 
+            // TOOD: This only supports one sidebar now, make a general "posInSidebar" function that will return index if it's within one
             private _sidebarPos = [(uiNamespace getVariable ["MB_UI_Sidebars", []]) select 0] call MB_fnc_getCtrlPositionReal;
             while { !(isNull (__GUI_WINDOW)) } do {
 
@@ -88,7 +90,7 @@ switch (toLower _mode) do {
         uiNamespace setVariable ["MB_MovingReal", _paneCtrl];
     };
 
-    case "createclone": {
+    case "createdragger": {
         private _paneTempCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", -1];
         private _contentCtrl = __GUI_WINDOW ctrlCreate [ctrlClassName _ctrl, __IDC_PANE_CONTENT, _paneTempCtrl];
         (_paneTempCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT) ctrlSetText (ctrlText (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT));
@@ -110,26 +112,24 @@ switch (toLower _mode) do {
         uiNamespace setVariable ["MB_MovingHandle", nil];
         uiNamespace setVariable ["MB_MovingTarget", nil];
         uiNamespace setVariable ["MB_MovingReal", nil];
-        private _paneID = _paneCtrl getVariable ["id", ""];
 
         if (_paneTempCtrl != _paneCtrl) then {
             ctrlDelete _paneTempCtrl;
             _paneCtrl ctrlShow true;
         };
 
-
-
-        [["ui.setting", _paneID, "floating"], parseNumber _floating] call MB_fnc_uiSetSetting;
-
-        if !(_floating) then {
-            [["ui.setting", _paneID, "sidebar"], "right"] call MB_fnc_uiSetSetting;
-            //[_paneCtrl] call MB_fnc_uiPanesShift;
-        } else {
-            hint "FLOAT RELEASE";
-            [_paneCtrl] call MB_fnc_uiRemovePaneFromSidebar;
+        if (_floating) then {
             [["ui.setting", _paneID, "posX"], (_position select 0)] call MB_fnc_uiSetSetting;
             [["ui.setting", _paneID, "posY"], (_position select 1)] call MB_fnc_uiSetSetting;
+        } else {
+
         };
+
+        // -- If the pane was not floating and now is, or vice versa than remake it
+        if (_floating isEqualTo (_paneCtrl getVariable ["floating", false])) then {
+            [_paneCtrl] call MB_fnc_uiPaneFloatToggle;
+        };
+
     };
 
 };

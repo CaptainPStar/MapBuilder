@@ -5,16 +5,14 @@
 */
 #include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
 
-params ["_paneID"];
+params ["_closeCtrl"];
+
+private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _closeCtrl);
+private _paneID = _paneCtrl getVariable ["id", ""];
+ctrlDelete _paneCtrl;
 
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
-private _paneIndex = _currentPanes find (toLower _paneID);
-if (_paneIndex == -1) exitWith { // -- Already closed
-    0
-};
-
-private _paneCtrl = _currentPanes select _paneIndex;
-[_paneCtrl] call MB_fnc_uiRemovePaneFromSidebar;
-ctrlDelete _paneCtrl;
+_currentPanes deleteAt (_currentPanes find (toLower _paneID));
+uiNamespace setVariable ["MB_allPanes", _currentPanes];
 
 [["ui.setting", _paneID, "enabled"], 0] call MB_fnc_uiSetSetting;

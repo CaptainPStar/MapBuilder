@@ -5,26 +5,53 @@
 */
 #include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
 
-params ["_paneID", ["_forceOpen", false]];
+params ["_paneID", ["_forceOpen", false], ["_replace", false]];
 
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
 private _paneIndex = _currentPanes find (toLower _paneID);
-if (_paneIndex != -1) exitWith { // -- Already open
+if ((_paneIndex != -1) && !_replace) exitWith { // -- Already open
     0
 };
 
+private _replaceCtrl = controlNull;
 private _paneCount = count _currentPanes;
+if (_replace) then {
+    _replaceCtrl = (uiNamespace getVariable [format ["MB_pane%1", _paneID], controlNull]);
+    _paneCount = _paneIndex;
+    ctrlDelete _replaceCtrl;
+};
+
+
+private _paneCtrlClass = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "type");
+if ((_paneCtrlClass == "") || !(isClass (configFile >> _paneCtrlClass))) then {
+    _paneCtrlClass = "MB_MissingPane";
+};
+
+
 private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_uiGetSetting) > 0;
 
 // -- Makes either a 'floating' window not attached that you can freely move, or a preset size on in a sidebar
-private "_paneCtrl";
+private ["_paneCtrl", "_contentWidth"];
+private _contentWidth = = [["ui.setting", _paneID, "sizeX"], nil] call MB_fnc_uiGetSetting;
+if (isNil "_contentWidth") then {
+    _contentWidth = getNumber (configFile >> _paneCtrlClass >> "w");
+    [["ui.setting", _paneID, "sizeY"], _contentWidth] call MB_fnc_uiSetSetting;
+};
+
 if (_floating) then {
     _paneCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", __IDC_PANE_BASEIDC + (_paneCount * __IDC_PANE_IDC)];
     private _posX = [["ui.setting", _paneID, "posX"], 0] call MB_fnc_uiGetSetting;
     private _posY = [["ui.setting", _paneID, "posY"], 0] call MB_fnc_uiGetSetting;
-    private _sizeX = [["ui.setting", _paneID, "sizeX"], 0] call MB_fnc_uiGetSetting;
     _paneCtrl ctrlSetPosition [_posX, _posY];
     _panectrl ctrlCommit 0;
+
+    // -- If we're allowed to close this window (and it's floating) create a close button
+
+    private _cantClose = ([["ui.setting", _paneID, "cantClose"], "cfg"] call MB_fnc_uiGetSetting) == 0);
+    if (_cantClose) then {
+        (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlEnable false;
+        (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlShow false;
+    };
 } else {
 
     // -- Creates a pane within a sidebar, if sidebar doesn't exist yet, create it now
@@ -43,34 +70,36 @@ if (_floating) then {
         ((_lastChildPos select 1) + (_lastChildPos select 3));
     };
 
+
+    _contentWidth = (ctrlPosition _sidebarCtrl) select 2;
+
     _paneCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", __IDC_PANE_BASEIDC + (_paneCount * __IDC_PANE_IDC), _sidebarCtrl];
     _paneCtrl ctrlSetPosition [0, _yPos];
     _paneCtrl ctrlCommit 0;
+
+    // -- Hide the close button in sidebar
+    (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlEnable false;
+    (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlShow false;
 
     // -- Set as child
     _paneCtrl setVariable ["parent", _sidebarCtrl];
     _sidebarChildren pushBack _paneCtrl;
     _sidebarCtrl setVariable ["children", _sidebarChildren];
-
-    _children pushBack _paneCtrl;
 };
 
 // -- Create the content for this control
-private _paneCtrlClass = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "type");
-if !(isClass (configFile >> _paneCtrlClass)) then {
-    _paneCtrlClass = "MB_MissingPane";
-};
-
 private _contentCtrl = __GUI_WINDOW ctrlCreate [_paneCtrlClass, __IDC_PANE_CONTENT, _paneCtrl];
 private _collapsed = !_forceOpen && { ([["ui.setting", _paneID, "collapsed"], "cfg"] call MB_fnc_uiGetSetting) > 0; };
+private _contentHeight = 0;
 if !(_collapsed) then {
     _contentHeight = [["ui.setting", _paneID, "sizeY"], nil] call MB_fnc_uiGetSetting;
     if (isNil "_contentHeight") then {
         _contentHeight = getNumber (configFile >> _paneCtrlClass >> "h");
         [["ui.setting", _paneID, "sizeY"], _contentHeight] call MB_fnc_uiSetSetting;
     };
-    [_contentCtrl, _contentHeight] call MB_fnc_uiAdjustContentCtrl;
 };
+
+[_contentCtrl, _contentHeight, _contentWidth] call MB_fnc_uiAdjustContentCtrl;
 
 private _paneTitle = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "title");
 (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TOGGLE) cbSetChecked _collapsed;
@@ -81,7 +110,8 @@ _paneCtrl setVariable ["collapsed", _collapsed];
 _paneCtrl setVariable ["floating", _floating];
 _paneCtrl setVariable ["id", _paneID];
 
-_currentPanes pushBack (toLower _paneID);
+_currentPanes pushBackUnique (toLower _paneID);
+uiNamespace setVariable [format ["MB_pane%1", _paneID], _paneCtrl];
 uiNamespace setVariable ["MB_allPanes", _currentPanes];
 
 [["ui.setting", _paneID, "enabled"], 1] call MB_fnc_uiSetSetting;
@@ -90,7 +120,7 @@ uiNamespace setVariable ["MB_allPanes", _currentPanes];
 private _code = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "onLoad");;
 if (_code != "") then {
     _code = compile _code;
-    [_paneCtrl, _yPos] call _code;
+    [_paneCtrl] call _code;
 };
 
 _paneCtrl

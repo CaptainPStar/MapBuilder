@@ -13,27 +13,29 @@ switch (toLower _mode) do {
         private _collapsed = _paneCtrl getVariable ["collapsed", false];
         private _floating = _paneCtrl getVariable ["floating", false];
 
-        if (_floating) exitWith { false }; // -- Needs implementation
-
         private _contentPosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
         private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
 
-        private _resizeHandle = ([_contentPosReal] spawn {
+        private _adjustX = _floating; // -- Only adjust width if not attached to a sidebar
+        uiNamespace setVariable ["MB_ResizingTarget", _contentCtrl];
+        private _resizeHandle = ([_contentPosReal, _adjustX] spawn {
             disableSerialization;
-            params ["_contentPosReal"];
+            params ["_contentPosReal", "_adjustX"];
 
             // TOOD: Replace by perFrame
             // TODO: Create button up and button down framework
             while { !(isNull (__GUI_WINDOW)) } do {
-                private _newPos = (getMousePosition select 1) - (_contentPosReal select 1);
-                [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), (_newPos)] call MB_fnc_uiAdjustContentCtrl;
+                private _sizeY = (getMousePosition select 1) - (_contentPosReal select 1);
+                private _sizeX = [-1, (getMousePosition select 0) - (_contentPosReal select 0)] select _adjustX;
+
+                [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), _sizeY, _sizeX] call MB_fnc_uiAdjustContentCtrl;
                 uiSleep 0.1;
             };
         });
 
         uiNamespace setVariable ["MB_ResizingHandle", _resizeHandle];
-        uiNamespace setVariable ["MB_ResizingTarget", _contentCtrl];
+
     };
 
     case "end": {
