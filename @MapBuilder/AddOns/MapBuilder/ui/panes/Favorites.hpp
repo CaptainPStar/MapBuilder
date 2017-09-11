@@ -7,7 +7,8 @@ class MB_PaneFavorites: ctrlControlsGroupNoHScrollbars {
   h = 0;
   MB_hAdjust = 1;
   MB_wAdjust = 1;
-  MB_wMin = (3 * __GUI_PANE_BUTTONWIDE_W);
+  MB_wMin = 40 * GRID_W;
+  MB_hMin = 30 * GRID_H;
 
   class controls {
     class Background: MB_CtrlPaneBackground { };
@@ -18,9 +19,12 @@ class MB_PaneFavorites: ctrlControlsGroupNoHScrollbars {
       h = (20 * GRID_H);
       w = __GUI_PANE_CONTENT_W;
       colorBackground[] = __COLOR_BACKGROUND_ALT;
+      colorBorder[] = {0, 0, 0, 0};
 
+      MB_wAdjust = 1;
+      MB_wOffset = 2 * __GUI_PANE_CONTENT_X;
       MB_hAdjust = 1;
-      MB_hOffset = (__GUI_PANE_CONTENT_Y + __GUI_PANE_BUTTON_H);
+      MB_hOffset = (3 * __GUI_PANE_CONTENT_Y + __GUI_PANE_BUTTON_H);
     };
 
     class FavoritesAdd : MB_CtrlPaneButton {
@@ -31,28 +35,33 @@ class MB_PaneFavorites: ctrlControlsGroupNoHScrollbars {
 			text = "Add";
 			action = "[MB_CurClass] call MB_fnc_AddFavorite;";
 
+      MB_xAdjust = 0;
       MB_yAdjust = 1;
-      MB_yOffset = __GUI_PANE_BUTTON_H;      
+      MB_wAdjust = 0;
+      MB_hAdjust = 0;
+      MB_yOffset = __GUI_PANE_BUTTON_H + __GUI_PANE_CONTENT_Y;
 		};
 
 		class FavoritesRemove: FavoritesAdd {
       idc = __IDC_FAVORITES_REMOVE;
-			x =  __GUI_PANE_CONTENT_X + (1 * __GUI_PANE_BUTTONWIDE_W);
+			x =  (2 * __GUI_PANE_CONTENT_X) + (1 * __GUI_PANE_BUTTONWIDE_W);
 			text = "Remove";
 			action = "[] call MB_fnc_RemoveFavorite;";
-
-      MB_xAdjust = 1;
-      MB_xOffset = "1/3";
+      MB_xAdjust = 0;
+      MB_yAdjust = 1;
+      MB_wAdjust = 0;
+      MB_hAdjust = 0;
 		};
 
 		class FavoritesSelect: FavoritesAdd {
       idc = __IDC_FAVORITES_SELECT;
-			x =  __GUI_PANE_CONTENT_X + (2 * __GUI_PANE_BUTTONWIDE_W);
+			x =  (3 * __GUI_PANE_CONTENT_X) + (2 * __GUI_PANE_BUTTONWIDE_W);
 			text = "Select";
 			action = "[] call MB_fnc_SelectFavorite;";
-
-      MB_xAdjust = 1;
-      MB_xOffset = "2/3";
+      MB_xAdjust = 0;
+      MB_yAdjust = 1;
+      MB_wAdjust = 0;
+      MB_hAdjust = 0;
 		};
 
     class Resizer: MB_CtrlResizer { };

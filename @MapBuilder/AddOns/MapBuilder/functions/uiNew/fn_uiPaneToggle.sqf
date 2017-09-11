@@ -40,5 +40,5 @@ if (_code != "") then {
 _paneCtrl setVariable ["collapsed", !_openingPane];
 [["ui.setting", _paneID, "collapsed"], parsenumber (!_openingPane)] call MB_fnc_uiSetSetting;
 if !(_floating) then {
-    [_paneCtrl] call MB_fnc_uiPanesShift;
+    [_paneCtrl getVariable ["parent", controlNull]] call MB_fnc_uiPanesShift;
 };

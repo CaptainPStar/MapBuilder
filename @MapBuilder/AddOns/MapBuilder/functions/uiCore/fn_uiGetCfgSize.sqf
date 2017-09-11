@@ -4,8 +4,7 @@
     Description:    Gets config entry and makes it a number to use for ctrlPosition
 */
 
-params ["_cfgOffset"];
-private _return = 0;
+params ["_cfgOffset", ["_return", 0]];
 if (isText _cfgOffset) then {
     _return = call compile (getText _cfgOffset);
 } else {

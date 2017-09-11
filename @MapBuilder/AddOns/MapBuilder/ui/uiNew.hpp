@@ -9,6 +9,7 @@ class ctrlCheckbox;
 class ctrlToolboxPictureKeepAspect;
 class ctrlEdit;
 class ctrlTree;
+class RscTextMulti;
 
 #include "mbdefinesNew.hpp"
 

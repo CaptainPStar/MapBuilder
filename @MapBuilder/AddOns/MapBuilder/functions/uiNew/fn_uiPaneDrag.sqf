@@ -12,11 +12,9 @@ switch (toLower _mode) do {
     case "start": {
         private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _ctrl);
         private _floating = _paneCtrl getVariable ["floating", false];
-
         private _panePos = ctrlPosition _paneCtrl;
         private _panePosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
-
 
         private _offsetRelative = [
             (getMousePosition select 0) - (_panePos select 0),
@@ -59,19 +57,22 @@ switch (toLower _mode) do {
                 private _positionDetachCheck = [
                     (_positionToSet select 0) + (_offsetDetach select 0),
                     (_positionToSet select 1) + (_offsetDetach select 1)
-                ];
+            ];
 
                 // -- Figure out if we should be attaching to a sidepanel.
                 //if (_paneCtrl getVariable ["allowAttaching", false]) then { };
                 private _floating = !([_positionDetachCheck, _sidebarPos] call MB_fnc_uiPosInPos);
                 if !(_floating) then {
-                    _positionToSet = [
-                        (_panePos select 0),
-                        (getMousePosition select 1) - (_offsetRelative select 1)
-                    ];
+                    if (_paneCtrl != _paneTempCtrl) then {
+                        _paneTempCtrl ctrlShow false;
+                        _positionToSet = [
+                            (_panePos select 0),
+                            (getMousePosition select 1) - (_offsetRelative select 1)
+                        ];
+                    };
+
                     _paneCtrl ctrlSetPosition _positionToSet;
                     _paneCtrl ctrlCommit 0;
-                    _paneTempCtrl ctrlShow false;
                 } else {
                     _paneCtrl ctrlSetPosition [_panePos select 0, _panePos select 1];
                     _paneCtrl ctrlCommit 0;
@@ -92,8 +93,7 @@ switch (toLower _mode) do {
 
     case "createdragger": {
         private _paneTempCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", -1];
-        private _contentCtrl = __GUI_WINDOW ctrlCreate [ctrlClassName _ctrl, __IDC_PANE_CONTENT, _paneTempCtrl];
-        (_paneTempCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT) ctrlSetText (ctrlText (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT));
+        (_paneTempCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT) ctrlSetText (ctrlText (_ctrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT));
         _paneTempCtrl ctrlShow false;
         _return = _paneTempCtrl;
     };
@@ -118,20 +118,20 @@ switch (toLower _mode) do {
             _paneCtrl ctrlShow true;
         };
 
+        // -- If the pane was not floating and now is, or vice versa than remake it
+        private _toggle = !(_floating isEqualTo (_paneCtrl getVariable ["floating", false]));
         if (_floating) then {
+            private _paneID = _paneCtrl getVariable ["id", ""];
             [["ui.setting", _paneID, "posX"], (_position select 0)] call MB_fnc_uiSetSetting;
             [["ui.setting", _paneID, "posY"], (_position select 1)] call MB_fnc_uiSetSetting;
+        };
+
+        if (_toggle) then {
+            _paneCtrl = [_paneCtrl] call MB_fnc_uiPaneFloatToggle;
         } else {
-
+            [_paneCtrl getVariable ["parent", controlNull]] call MB_fnc_uiPanesShift;
         };
-
-        // -- If the pane was not floating and now is, or vice versa than remake it
-        if (_floating isEqualTo (_paneCtrl getVariable ["floating", false])) then {
-            [_paneCtrl] call MB_fnc_uiPaneFloatToggle;
-        };
-
     };
-
 };
 
 _return

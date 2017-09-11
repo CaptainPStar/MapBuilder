@@ -9,10 +9,12 @@ params ["_closeCtrl"];
 
 private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _closeCtrl);
 private _paneID = _paneCtrl getVariable ["id", ""];
-ctrlDelete _paneCtrl;
+//ctrlDelete _paneCtrl;
 
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
-_currentPanes deleteAt (_currentPanes find (toLower _paneID));
+_currentPanes deleteAt (_currentPanes find _paneID);
 uiNamespace setVariable ["MB_allPanes", _currentPanes];
 
 [["ui.setting", _paneID, "enabled"], 0] call MB_fnc_uiSetSetting;
+
+true;

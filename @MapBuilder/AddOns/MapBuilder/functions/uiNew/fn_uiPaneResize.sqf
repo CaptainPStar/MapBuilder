@@ -24,7 +24,6 @@ switch (toLower _mode) do {
             params ["_contentPosReal", "_adjustX"];
 
             // TOOD: Replace by perFrame
-            // TODO: Create button up and button down framework
             while { !(isNull (__GUI_WINDOW)) } do {
                 private _sizeY = (getMousePosition select 1) - (_contentPosReal select 1);
                 private _sizeX = [-1, (getMousePosition select 0) - (_contentPosReal select 0)] select _adjustX;
@@ -44,15 +43,19 @@ switch (toLower _mode) do {
 
         terminate _handle;
         private _contentCtrl = uiNamespace getVariable ["MB_ResizingTarget", controlNull];
-        private _newHeight = (ctrlPosition _contentCtrl) select 3;
+        private _sizeX = (ctrlPosition _contentCtrl) select 2;
+        private _sizeY = (ctrlPosition _contentCtrl) select 3;
+
 
         uiNamespace setVariable ["MB_ResizingHandle", nil];
         uiNamespace setVariable ["MB_ResizingTarget", nil];
         private _paneCtrl = ctrlParentControlsGroup _contentCtrl;
         private _paneID = _paneCtrl getVariable ["id", ""];
 
-        [_paneCtrl] call MB_fnc_uiPanesShift;
-        [["ui.setting", _paneID, "sizeY"], _newHeight] call MB_fnc_uiSetSetting;
+        [_paneCtrl getVariable ["parent", controlNull]] call MB_fnc_uiPanesShift;
+
+        [["ui.setting", _paneID, "sizeX"], _sizeX] call MB_fnc_uiSetSetting;
+        [["ui.setting", _paneID, "sizeY"], _sizeY] call MB_fnc_uiSetSetting;
     };
 
 };

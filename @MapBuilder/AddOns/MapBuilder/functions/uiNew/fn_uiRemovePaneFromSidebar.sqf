@@ -10,9 +10,9 @@ params ["_paneCtrl"];
 private _paneParent = _paneCtrl getVariable ["parent", controlNull];
 if !(isNull _paneParent) then {
     private _children = _paneParent getVariable ["children", []];
-    _children deleteAt (_children find _paneID);
-    _paneParent setVariable ["children", []];
+    _children deleteAt (_children find _paneCtrl);
+    _paneParent setVariable ["children", _children];
     _paneCtrl setVariable ["parent", controlNull];
 };
 
-ctrlDelete _paneCtrl;
+// _paneCtrl ctrlShow false;

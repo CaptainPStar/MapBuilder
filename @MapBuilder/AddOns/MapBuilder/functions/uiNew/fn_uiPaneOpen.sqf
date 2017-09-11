@@ -7,8 +7,9 @@
 
 params ["_paneID", ["_forceOpen", false], ["_replace", false]];
 
+_paneID = toLower _paneID;
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
-private _paneIndex = _currentPanes find (toLower _paneID);
+private _paneIndex = _currentPanes find _paneID;
 if ((_paneIndex != -1) && !_replace) exitWith { // -- Already open
     0
 };
@@ -18,7 +19,7 @@ private _paneCount = count _currentPanes;
 if (_replace) then {
     _replaceCtrl = (uiNamespace getVariable [format ["MB_pane%1", _paneID], controlNull]);
     _paneCount = _paneIndex;
-    ctrlDelete _replaceCtrl;
+    _replaceCtrl ctrlShow false;
 };
 
 
@@ -32,7 +33,7 @@ private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_ui
 
 // -- Makes either a 'floating' window not attached that you can freely move, or a preset size on in a sidebar
 private ["_paneCtrl", "_contentWidth"];
-private _contentWidth = = [["ui.setting", _paneID, "sizeX"], nil] call MB_fnc_uiGetSetting;
+private _contentWidth = [["ui.setting", _paneID, "sizeX"], nil] call MB_fnc_uiGetSetting;
 if (isNil "_contentWidth") then {
     _contentWidth = getNumber (configFile >> _paneCtrlClass >> "w");
     [["ui.setting", _paneID, "sizeY"], _contentWidth] call MB_fnc_uiSetSetting;
@@ -47,7 +48,7 @@ if (_floating) then {
 
     // -- If we're allowed to close this window (and it's floating) create a close button
 
-    private _cantClose = ([["ui.setting", _paneID, "cantClose"], "cfg"] call MB_fnc_uiGetSetting) == 0);
+    private _cantClose = ([["ui.setting", _paneID, "cantClose"], "cfg"] call MB_fnc_uiGetSetting) == 0;
     if (_cantClose) then {
         (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlEnable false;
         (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlShow false;
@@ -110,8 +111,8 @@ _paneCtrl setVariable ["collapsed", _collapsed];
 _paneCtrl setVariable ["floating", _floating];
 _paneCtrl setVariable ["id", _paneID];
 
-_currentPanes pushBackUnique (toLower _paneID);
-uiNamespace setVariable [format ["MB_pane%1", _paneID], _paneCtrl];
+_currentPanes pushBackUnique _paneID;
+uiNamespace setVariable ["MB_pane" + _paneID, _paneCtrl];
 uiNamespace setVariable ["MB_allPanes", _currentPanes];
 
 [["ui.setting", _paneID, "enabled"], 1] call MB_fnc_uiSetSetting;

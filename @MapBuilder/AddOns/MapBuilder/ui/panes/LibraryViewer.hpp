@@ -6,6 +6,9 @@ class MB_PaneLibraryViewer: ctrlControlsGroupNoHScrollbars {
   w = __GUI_PANE_W;
   h = 0;
   MB_hAdjust = 1;
+  MB_wAdjust = 1;
+  MB_wMin = 40 * GRID_W;
+  MB_hMin = 30 * GRID_H;
 
   class controls {
     class Background: MB_CtrlPaneBackground { };
@@ -15,8 +18,12 @@ class MB_PaneLibraryViewer: ctrlControlsGroupNoHScrollbars {
       y = __GUI_PANE_CONTENT_Y;
       h = (5 * GRID_H);
       w = __GUI_PANE_CONTENT_W;
-      colorBackground[] = {0, 0, 1, 0.5};
+      colorBackground[] = __COLOR_BACKGROUND_ALT;
+      colorBorder[] = {0, 0, 0, 0};
 
+      MB_wAdjust = 1;
+      MB_wOffset = 2 * __GUI_PANE_CONTENT_X;
+      MB_hAdjust = 0;
       MB_yAdjust = 0;
     };
 
@@ -28,7 +35,10 @@ class MB_PaneLibraryViewer: ctrlControlsGroupNoHScrollbars {
       h = (20 * GRID_H);
       w = __GUI_PANE_CONTENT_W;
       colorBackground[] = __COLOR_BACKGROUND_ALT;
+      colorBorder[] = {0, 0, 0, 0};
 
+      MB_wAdjust = 1;
+      MB_wOffset = 2 * __GUI_PANE_CONTENT_X;
       MB_hAdjust = 1;
       MB_hOffset = (__GUI_PANE_CONTENT_Y + (7 * GRID_H));
     };

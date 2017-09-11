@@ -6,7 +6,7 @@ class MB_ContentBackground: ctrlStaticBackground {
   y = 0;
   w = __GUI_PANE_W;
   h = 0;
-  colorBackground[] = __COLOR_BACKGROUND_BASE;
+  colorBackground[] = __COLOR_BACKGROUND_SIDEBAR;
 };
 
 class MB_CoreSidebar: ctrlControlsGroupNoHScrollbars {
@@ -24,7 +24,7 @@ class MB_CoreSidebarBG: ctrlStaticBackground {
   y = 0;
   w = __GUI_PANE_W;
   h = safeZoneH;
-  colorBackground[] = __COLOR_BACKGROUND_BASE;
+  colorBackground[] = __COLOR_BACKGROUND_SIDEBAR;
 };
 
 class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
@@ -42,7 +42,7 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       y = 0;
       w = safeZoneW;
       h = __GUI_PANE_HEADER_H;
-      colorBackground[] = {1, 1, 0, 0.5};//__COLOR_BACKGROUND_HEADER;
+      colorBackground[] = __COLOR_BACKGROUND_HEADER;
 
       MB_wAdjust = 1;
     };
@@ -73,9 +73,10 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       x = __GUI_PANE_BUTTON_W;
       y = 0;
       w = (__GUI_PANE_W - (2 * __GUI_PANE_BUTTON_W));
-      h = __GUI_PANE_BUTTON_H
-      colorBackground[] = {0, 0.5, 1, 0.5};
-
+      h = __GUI_PANE_BUTTON_H;
+      colorBackground[] = {0, 0.5, 1, 0};
+      shadow = 0;
+      sizeEx = 0.03;
       MB_wAdjust = 1;
       MB_wOffset = (2 * __GUI_PANE_BUTTON_W);
     };
@@ -86,7 +87,7 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       y = 0;
       w = __GUI_PANE_BUTTON_W;
       h = __GUI_PANE_BUTTON_H;
-      colorBackground[] = {0.88, 0.95, 0.1, 0.5};
+      colorBackground[] = {0.88, 0.95, 0.1, 0};
       onMouseButtonClick = "[_this select 0] call MB_fnc_uiPaneClose;";
       text = "\mb\mapBuilder\data\icons\handle.paa";
       tooltip = "Close";
@@ -99,7 +100,8 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
     class MB_CtrlDragHandle: MB_CtrlCloseButton {
       idc = __IDC_PANE_HEADER_HANDLE;
       x = __GUI_PANE_W - __GUI_PANE_BUTTON_W;
-      colorBackground[] = {0.2, 0.64, 0.31, 0.5};
+      colorBackground[] = {0.2, 0.64, 0.31, 0};
+      onMouseButtonClick = "";
       onMouseButtonDown = "[_this select 0, 'start'] call MB_fnc_uiPaneDrag;";
       onMouseButtonUp = "[_this select 0, 'end'] call MB_fnc_uiPaneDrag;";
       text = "\mb\mapBuilder\data\icons\handle.paa";
@@ -120,7 +122,7 @@ class MB_CorePane: ctrlControlsGroupNoScrollbars {
 
   class Controls {
     // -- Top bar, that allows you opening and closing the pane
-    class Header: MB_CoreHeader { };
+    class MB_CoreHeader: MB_CoreHeader { };
 
   };
 };
@@ -131,7 +133,7 @@ class MB_CtrlPaneBackground: ctrlStaticBackground {
     y = 0;
     w = __GUI_PANE_W;
     h = 0;
-    colorBackground[] = {0, 0.5, 1, 0.5};
+    colorBackground[] = __COLOR_BACKGROUND_CONTENT;
     MB_hAdjust = 1;
     MB_wAdjust = 1;
 };

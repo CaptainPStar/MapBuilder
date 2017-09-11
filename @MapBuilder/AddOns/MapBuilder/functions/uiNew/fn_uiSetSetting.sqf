@@ -2,6 +2,7 @@
     Function:       MB_fnc_uiSetSetting
     Author:         Adanteh
     Description:    Sets a UI setting to the UI settings file
+    Example:        [["ui.setting", 'library', "enabled"], 0] call MB_fnc_uiSetSetting;
 */
 
 params ["_settingToSet", "_value"];

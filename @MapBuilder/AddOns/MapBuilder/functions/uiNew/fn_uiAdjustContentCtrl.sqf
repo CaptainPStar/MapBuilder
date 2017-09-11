@@ -12,56 +12,69 @@ params ["_contentCtrl", ["_sizeY", -1], ["_sizeX", -1]];
 private _paneCtrl = ctrlParentControlsGroup _contentCtrl;
 _panePos = ctrlPosition _paneCtrl;
 
+private _headerCtrl = (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER);
+private _headerCfg = configFile >> (ctrlClassName _headerCtrl);
 private _classesToAdjust = [configFile >> (ctrlClassName _contentCtrl)];
 _classesToAdjust append ("true" configClasses (configFile >> (ctrlClassName _contentCtrl) >> "Controls"));
-_classesToAdjust pushBack (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER);
-_classesToAdjust append  ("true" configClasses (configFile >> (ctrlClassName _headerCtrl) >> "Controls"));
+_classesToAdjust pushBack _headerCfg;
+_classesToAdjust append  ("true" configClasses (_headerCfg >> "Controls"));
+
+// -- Minimum sizes
+if (_sizeY != 0) then { // -- Exception for collapsing
+    if (_sizeX != -1) then {
+        private _minX = [((_classesToAdjust select 0) >> "MB_wMin"), -1] call MB_fnc_uiGetCfgSize;
+        if ((_minX != -1) && { _minX > _sizeX }) then { _sizeX = _minX }; // -- Minimum W size
+    };
+    if (_sizeY != -1) then {
+        private _minY = [((_classesToAdjust select 0) >> "MB_wMin"), -1] call MB_fnc_uiGetCfgSize;
+        if ((_minY != -1) && { _minY > _sizeY }) exitWith { _sizeY = _minY }; // -- Minimum H size
+    };
+};
 
 {
     private _idc = getNumber (_x >> "idc");
-    private _contentCtrl = _contentCtrl controlsGroupCtrl _idc;
-    private _contentPos = ctrlPosition _contentCtrl;
+    private _subCtrl = _paneCtrl controlsGroupCtrl _idc;
+    private _subCtrlPos = ctrlPosition _subCtrl;
 
     // -- Adjust X size first, because the required height might change based on this
     if (_sizeX != -1) then {
-        if ((isNumber (_x >> "MB_wMin")) && { (getNumber (_x >> "MB_wMin")) >= _sizeX  }) exitWith { }; // -- Minimum W size
-
-
         if (getNumber (_x >> "MB_xAdjust") > 0) then {
             private _offset = [(_x >> "MB_xOffset")] call MB_fnc_uiGetCfgSize;
-            _contentPos set [0, _sizeX - _offset];
+            _subCtrlPos set [0, _sizeX - _offset];
         };
+
 
         // -- Adjust the width for the subelement
         if (getNumber (_x >> "MB_wAdjust") > 0) then {
             private _offset = [(_x >> "MB_wOffset")] call MB_fnc_uiGetCfgSize;
-            _contentPos set [2, _sizeX - _offset];
+            _subCtrlPos set [2, _sizeX - _offset];
         };
     };
 
     if (_sizeY == -1) exitWith { };
-    if ((isNumber (_x >> "MB_hMin")) && { (getNumber (_x >> "MB_hMin")) >= _sizeY  }) exitWith { }; // -- Minimum H size
     // -- Adjust the Y position for the content (If the pane height changes, then position should change)
     if (getNumber (_x >> "MB_yAdjust") > 0) then {
         private _offset = [(_x >> "MB_yOffset")] call MB_fnc_uiGetCfgSize;
-        _contentPos set [1, _ySize - _offset];
+        _subCtrlPos set [1, _sizeY - _offset];
     };
 
     // -- Adjust the height for content (If the pane size changes, then the height should change?)
     if (getNumber (_x >> "MB_hAdjust") > 0) then {
         private _offset = [(_x >> "MB_hOffset")] call MB_fnc_uiGetCfgSize;
-        _contentPos set [3, _ySize - _offset];
+        _subCtrlPos set [3, _sizeY - _offset];
     };
 
-    _contentCtrl ctrlSetPosition _contentPos;
-    _contentCtrl ctrlCommit 0;
-
+    _subCtrl ctrlSetPosition _subCtrlPos;
+    _subCtrl ctrlCommit 0;
 } forEach _classesToAdjust;
 
-
-
 // -- Adjust the parent
-_panePos set [3, __GUI_PANE_HEADER_H + _sizeY];
+if (_sizeX != -1) then {
+    _panePos set [2, _sizeX];
+};
+if (_sizeY != -1) then {
+    _panePos set [3, __GUI_PANE_HEADER_H + _sizeY];
+};
 _paneCtrl ctrlSetPosition _panePos;
 _paneCtrl ctrlCommit 0;
 

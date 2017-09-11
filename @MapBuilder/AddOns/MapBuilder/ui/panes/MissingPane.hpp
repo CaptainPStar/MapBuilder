@@ -6,11 +6,14 @@ class MB_MissingPane: ctrlControlsGroupNoHScrollbars {
   w = __GUI_PANE_W;
   h = 15 * GRID_H;
   MB_hAdjust = 1;
+  MB_wAdjust = 1;
+  MB_wMin = 40 * GRID_W;
+  MB_hMin = 40 * GRID_H;
 
   class controls {
     class Background: MB_CtrlPaneBackground { };
 
-    class Text: RscText {
+    class Text: RscTextMulti {
       idc = __IDC_PANE_CONTENT_DEFAULT;
       x = 0;
       y = 0;
@@ -18,6 +21,8 @@ class MB_MissingPane: ctrlControlsGroupNoHScrollbars {
       w = 20 * __GUI_PANE_W;
       text = "This window has a non-existant 'type' entry within Mapbuilder>>Panes config";
       MB_hAdjust = 1;
+      MB_wAdjust = 1;
+      MB_hOffset = __GUI_PANE_BUTTON_H;
     };
 
     class Resizer: MB_CtrlResizer { };

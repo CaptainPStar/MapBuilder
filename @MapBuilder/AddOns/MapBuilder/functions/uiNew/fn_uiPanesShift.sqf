@@ -6,45 +6,33 @@
                     it'll reorder them and save for future usage. It'll also make sure it snaps to the last position
 */
 
-params ["_paneCtrl"];
-
-private _sidebarCtrl = _paneCtrl getVariable ["parent", controlNull];
-if (isNull _sidebarCtrl) exitWith { 0 };
-
+params ["_sidebarCtrl"];
+if (isNull _sidebarCtrl) exitWith { controlNull };
 private _children = _sidebarCtrl getVariable ["children", []];
-private _paneIndex = _children find _paneCtrl;
-if (_paneIndex == -1) exitWith {
-    ["Pane has missing data. Please reload the UI", "error"] call MB_fnc_uiLogOutput;
-    1
-};
+if (count _children == 0) exitWith { controlNull };
 
-// -- When this is the last panel, shift it up to the bottom of the preceding pane
-private _childrenCount = count _children;
-if ((_childrenCount - 1) <= _paneIndex) exitWith {
-    private _currentPos = ctrlPosition _sidebarCtrl;
-    if (_paneIndex > 0) then {
-        private _previousChildPos = ctrlPosition (_childen select (_paneIndex - 1));
-        _currentPos set [1, (_previousChildPos select 1) + (_previousChildPos select 3)];
-    } else {
-        _currentPos set [1, 0];
+// --   Sorts panes by Y coordinate
+private _sortArray = [];
+{
+    private _childCtrl = _x;
+    if !(isNull _childCtrl) then {
+        private _childY = (ctrlPosition _childCtrl) select 1;
+        _sortArray pushBack [_childY, _childCtrl];
     };
-    _paneCtrl ctrlSetPosition _currentPos;
-    _paneCtrl ctrlCommit 0;
-};
+} forEach _children;
+_sortArray sort true;
+_children = _sortArray apply { _x select 1 };
 
+// -- Adjust all the panes to connect to it's preceding bottom
 
-// -- When there are panes below it, shift them so they connect to the bottom of the adjusted one
-(ctrlPosition _paneCtrl) params ["", "_yPos", "", "_ySize"];
-private _animateTime = ["ui.setting.animateTime", 0] call MB_fnc_uiGetSetting;
-private _posY = _yPos + _ySize;
-
-for "_i" from (_paneIndex + 1) to (_childrenCount - 1) do {
-    private _paneBelow = (_children select _i);
-    private _paneBelowPos = (ctrlPosition _paneBelow);
-    _paneBelowPos set [1, _posY];
-    _paneBelow ctrlSetPosition _paneBelowPos;
-    _paneBelow ctrlCommit _animateTime;
-    _posY = _posY + (_paneBelowPos select 3);
-};
-
-0;
+private _posY = 0;
+{
+    private _childPos = ctrlPosition _x;
+    _childPos set [1, _posY];
+    _x ctrlSetPosition _childPos;
+    _x ctrlCommit 0;
+    _posY = (_childPos select 1) + (_childPos select 3);
+    [["ui.setting", (_x getVariable ["id", ""]), "order"], _forEachIndex] call MB_fnc_uiSetSetting;
+} forEach _children;
+_sidebarCtrl setVariable ["children", _children];
+_sidebarCtrl;
