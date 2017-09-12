@@ -19,5 +19,5 @@ class MB_CtrlResizer: ctrlButtonPictureKeepAspect {
   offsetPressedY = 0;
   onMouseButtonDown = "[_this select 0, 'start'] call MB_fnc_uiPaneResize;";
   onMouseButtonUp = "[_this select 0, 'end'] call MB_fnc_uiPaneResize;";
-  text = "\mb\mapBuilder\data\icons\resizer.paa";
+  text = "\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_up_ca.paa";
 };

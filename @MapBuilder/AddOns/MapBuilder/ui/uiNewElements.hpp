@@ -54,16 +54,16 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       y = 0;
       w = __GUI_PANE_BUTTON_W;
       h = __GUI_PANE_BUTTON_H;
-      textureChecked="\a3\ui_f\data\gui\rsccommon\rsctree\hiddentexture_ca.paa";
-      textureUnchecked="\a3\ui_f\data\gui\rsccommon\rsctree\expandedtexture_ca.paa";
-      textureFocusedChecked="\a3\ui_f\data\gui\rsccommon\rsctree\hiddentexture_ca.paa";
-      textureFocusedUnchecked="\a3\ui_f\data\gui\rsccommon\rsctree\expandedtexture_ca.paa";
-      textureHoverChecked="\a3\ui_f\data\gui\rsccommon\rsctree\hiddentexture_ca.paa";
-      textureHoverUnchecked="\a3\ui_f\data\gui\rsccommon\rsctree\expandedtexture_ca.paa";
-      texturePressedChecked="\a3\ui_f\data\gui\rsccommon\rsctree\hiddentexture_ca.paa";
-      texturePressedUnchecked="\a3\ui_f\data\gui\rsccommon\rsctree\expandedtexture_ca.paa";
-      textureDisabledChecked="\a3\ui_f\data\gui\rsccommon\rsctree\hiddentexture_ca.paa";
-      textureDisabledUnchecked="\a3\ui_f\data\gui\rsccommon\rsctree\expandedtexture_ca.paa";
+      textureChecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_right_ca.paa";
+      textureUnchecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_down_ca.paa";
+      textureFocusedChecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_right_ca.paa";
+      textureFocusedUnchecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_down_ca.paa";
+      textureHoverChecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_right_ca.paa";
+      textureHoverUnchecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_down_ca.paa";
+      texturePressedChecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_right_ca.paa";
+      texturePressedUnchecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_down_ca.paa";
+      textureDisabledChecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_right_ca.paa";
+      textureDisabledUnchecked="\mb\mapBuilder\data\icons\hardware\32_keyboard_arrow_down_ca.paa";
       onCheckedChanged = "[(_this select 0)] call MB_fnc_uiPaneToggle";
     };
 
@@ -89,7 +89,7 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       h = __GUI_PANE_BUTTON_H;
       colorBackground[] = {0.88, 0.95, 0.1, 0};
       onMouseButtonClick = "[_this select 0] call MB_fnc_uiPaneClose;";
-      text = "\mb\mapBuilder\data\icons\handle.paa";
+      text = "\mb\mapBuilder\data\icons\content\32_clear_ca.paa";
       tooltip = "Close";
 
       MB_xAdjust = 1;
@@ -104,7 +104,7 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       onMouseButtonClick = "";
       onMouseButtonDown = "[_this select 0, 'start'] call MB_fnc_uiPaneDrag;";
       onMouseButtonUp = "[_this select 0, 'end'] call MB_fnc_uiPaneDrag;";
-      text = "\mb\mapBuilder\data\icons\handle.paa";
+      text = "\mb\mapBuilder\data\icons\editor\32_drag_handle_ca.paa";
       tooltip = "Drag";
 
       MB_xAdjust = 1;

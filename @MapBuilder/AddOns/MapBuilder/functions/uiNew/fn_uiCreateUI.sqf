@@ -10,7 +10,7 @@ if !(isNull __GUI_WINDOW) then {
     __GUI_WINDOW closeDisplay 0;
 };
 
-diag_mergeConfigFile ["B:\Arma\Frontline\MapBuilder\@MapBuilder\AddOns\MapBuilder\config.cpp"];
+//diag_mergeConfigFile ["B:\Arma\Frontline\MapBuilder\@MapBuilder\AddOns\MapBuilder\config.cpp"];
 {
     ctrlDelete _x;
     nil;
@@ -31,6 +31,7 @@ uiNamespace setVariable ["MB_sidebarLeft", nil];
 "MB_fnc_uiPaneOpen" call BIS_fnc_recompile;
 "MB_fnc_uiPaneFloatToggle" call BIS_fnc_recompile;
 "MB_fnc_uiPaneToggle" call BIS_fnc_recompile;
+"MB_fnc_uiPaneClose" call BIS_fnc_recompile;
 
 // { [["ui.setting", _x, "sizeY"], 50 * (pixelH * pixelGrid * 0.5)] call MB_fnc_uiSetSetting; nil  } count ["Library", "Favorites"];
 
