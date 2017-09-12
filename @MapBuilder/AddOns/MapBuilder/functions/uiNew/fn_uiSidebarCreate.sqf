@@ -3,13 +3,13 @@
     Author:         Adanteh
     Description:    Creates a sidebar to attach panes to
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_sidebarTarget"];
 
 private _sidebarPosition = switch (toLower _sidebarTarget) do {
     case "right": {
-        [safeZoneX + safeZoneW - __GUI_PANE_W, safeZoneY, __GUI_PANE_W, safeZoneH];
+        [safeZoneX + safeZoneW - __GUI_PANE_W, safeZoneY + (safeZoneH * 0.04), __GUI_PANE_W, safeZoneH * 0.93];
     };
     case "left": {
         [safeZoneX, safeZoneY, __GUI_PANE_W, safeZoneH];

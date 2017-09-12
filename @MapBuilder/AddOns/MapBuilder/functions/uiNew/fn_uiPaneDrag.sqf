@@ -3,7 +3,7 @@
     Author:         Adanteh
     Description:    Handles the dragging of panes. Will change order if within the sidebar, will make it a seperate window if without
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_ctrl", ["_mode", "start"]];
 private _return = true;

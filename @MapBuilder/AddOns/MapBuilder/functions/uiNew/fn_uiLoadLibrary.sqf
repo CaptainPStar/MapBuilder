@@ -3,9 +3,9 @@
     Author:         Adanteh
     Description:    Loads the library
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
-params ["_paneCtrl", "_yPos", "_"];
+params ["_paneCtrl"];
 
 private _libraryCtrl = _paneCtrl controlsGroupCtrl __IDC_LIBRARY_TVIEW;
 private _libraryData = +(MB_LIBRARY);

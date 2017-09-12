@@ -3,11 +3,15 @@
     Author:         Adanteh
     Description:    Closes a pane/window with some stuff
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_closeCtrl"];
 
 private _paneCtrl = ctrlParentControlsGroup (ctrlParentControlsGroup _closeCtrl);
+
+if (true) exitWith {
+    hint "Closing not supported, because ctrlDelete makes the game crash";
+};
 //ctrlDelete _paneCtrl;
 
 private _paneID = _paneCtrl getVariable ["id", ""];

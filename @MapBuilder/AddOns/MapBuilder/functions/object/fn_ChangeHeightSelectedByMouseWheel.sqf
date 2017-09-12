@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 private["_delta","_camPos"];
 _delta = _this select 0;
 if(_delta > 0) then {

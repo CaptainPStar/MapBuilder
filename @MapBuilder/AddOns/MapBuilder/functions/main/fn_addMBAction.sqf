@@ -9,7 +9,7 @@ if(_EHIdx>=0) then {
 	player removeEventHandler ["Respawn", _EHIdx];
 };
 
-_adc = player addaction["Map Builder",MB_fnc_Start];
+_adc = player addaction["Map Builder", { _this call MB_fnc_Start }];
 _EHIdx = player addEventHandler ["Respawn", {_this call mb_fnc_addMBAction;}];
 
 player setvariable["MapBuilder_Action",_adc];

@@ -3,7 +3,7 @@
     Author:         Adanteh
     Description:    Opens/closes one of the UI panes
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_ctrl"];
 

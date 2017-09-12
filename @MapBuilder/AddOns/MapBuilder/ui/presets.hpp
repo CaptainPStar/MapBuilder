@@ -2,10 +2,6 @@
 #define NAME Presets
 #define TITLE Presets
 BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,20,12)
-		WINDOW_HEADER(NAME,IDC,TITLE,18)
-		WINDOW_CLOSE(NAME,IDC,19)
-		WINDOW_HELP(NAME,IDC,"Presets",18)
-		WINDOW_BACKGROUND(NAME,0,1,20,11)
 		class MB_Popup_Preset_Helptext : MB_RscText {
 			idc = -1;
 			WINDOW_POSITION(0,1,6,1)

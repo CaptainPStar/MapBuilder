@@ -2,11 +2,6 @@
 #define NAME Brusher
 #define TITLE Brushes
 BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
-		WINDOW_HEADER(NAME,IDC,TITLE,46)
-		WINDOW_CLOSE(NAME,IDC,47)
-		WINDOW_HELP(NAME,IDC,"Brusher",46)
-
-
 		class MB_Window_Brusher_BG1 : MB_RscBackground {
 			idc = -1;
 			text = "";
@@ -76,7 +71,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			text = "Save";
 			action = "[ctrlText 171220] spawn MB_fnc_saveBrush;";
 			tooltip = "Saves brush to the current selected file or creates new file.";
-		}; 
+		};
 		class MB_Window_Brusher_TemplatesLabel : MB_RscText {
 			idc = -1;
 			WINDOW_POSITION(13,1,6,1)
@@ -315,7 +310,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 19;
 			w = MB_WINDOW_GRID_X * 2;
 			h = MB_WINDOW_GRID_Y * 1;
-			tooltip = "Objects rotation. 0° points in brushdirection (green arrow).";
+			tooltip = "Objects rotation. 0ï¿½ points in brushdirection (green arrow).";
 		};
 		class MB_Window_Brusher_ObjectPitchLabel : MB_RscText {
 			idc = -1;
@@ -368,7 +363,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			h = MB_WINDOW_GRID_Y * 1;
 			tooltip = "Objects scale.";
 		};
-		
+
 		class MB_Window_Brusher_ObjectRandomOffsetLabel : MB_RscText {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 26;
@@ -482,7 +477,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			action = "[] call MB_fnc_brusherUpdateTemplate;";
 			tooltip = "Save all changes to template (does not save to file!)";
 		};
-		
+
 		class MB_Window_Brusher_ObjectsList : MB_RscTree {
 			idc = 171219;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 39;
@@ -575,4 +570,5 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			text =  "Hint: ArmA's object creation is slow. Be patient and draw brushes slowly!";
 			style = 0;
 		};
+
 END_WINDOW

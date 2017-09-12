@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 
 private["_ctrl","_change"];
 _ctrl = [_this,0] call bis_fnc_param;

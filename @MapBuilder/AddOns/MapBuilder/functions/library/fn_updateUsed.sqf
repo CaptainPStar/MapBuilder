@@ -7,7 +7,7 @@ private["_index","_used","_data","_count","_type","_name"];
 	_used = [];
 	_data = [];
 	{
-		
+
 		if(!isNull _x) then {
 			if(!(typeof _x in _used)) then {
 				_type = typeof _x;
@@ -23,8 +23,8 @@ private["_index","_used","_data","_count","_type","_name"];
 			};
 		};
 	} foreach MB_Objects;
-	
-	
+
+
 	{
 		private["_index"];
 		_index = tvAdd [170801,[],(_x select 0)];

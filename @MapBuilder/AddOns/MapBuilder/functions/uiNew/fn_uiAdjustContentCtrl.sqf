@@ -4,7 +4,7 @@
     Description:    Adjusts the content ctrl height in most common way. X and Y positions don't change when resizing controls, so no need to change it
     Example:        [_contentCtrl, 0, -1] call MB_fnc_uiAdjustContentCtrl;
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_contentCtrl", ["_sizeY", -1], ["_sizeX", -1]];
 

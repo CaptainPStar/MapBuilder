@@ -2,10 +2,6 @@
 #define NAME Fencer
 #define TITLE Fencer
 BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.65,14,12)
-		WINDOW_HEADER(NAME,IDC,TITLE,12)
-		WINDOW_CLOSE_CUSTOM(NAME,IDC,13,"[] call MB_FNC_CloseFencer;")
-		WINDOW_HELP(NAME,IDC,"Fencer",12)
-		WINDOW_BACKGROUND(NAME,0,1,14,11)
 		class Popup_FencerDirLabel : MB_RscText {
 			idc = -1;
 			x = MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;

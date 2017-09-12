@@ -1,10 +1,11 @@
 class MB_CtrlPaneButton: RscButton {
+  idc = __IDC_BUTTON_1;
   x = 0;
   y = 0;
   w = __GUI_PANE_BUTTON_W;
   h = __GUI_PANE_BUTTON_H;
   text = "";
-  font = __FONTLIGHT;
+  font = MB_TEXT_FONT;
   style = 0;
   sizeEx = 0.03;
   shadow = 0;
@@ -13,4 +14,7 @@ class MB_CtrlPaneButton: RscButton {
   colorFocused[] = __COLOR_BUTTON_BG_FOCUS;
   colorText[] = __COLOR_BUTTON_TEXT;
   period = 0;
+
+  MB_yAdjust = 1;
+  MB_yOffset = __GUI_PANE_BUTTON_H + __GUI_PANE_CONTENT_Y;
 };

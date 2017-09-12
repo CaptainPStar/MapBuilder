@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 private["_mod"];
 	//Update Mouse pos var (so we don't have to rely on mouse move when the cam was moved by a key)
 	MB_MousePosition = screenToWorld MB_MouseScreenPosition;

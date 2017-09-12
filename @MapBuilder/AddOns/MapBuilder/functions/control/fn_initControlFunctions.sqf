@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 MB_CamSpeed = 1.0;
 
 //Move camera but only when no object is dragged in height

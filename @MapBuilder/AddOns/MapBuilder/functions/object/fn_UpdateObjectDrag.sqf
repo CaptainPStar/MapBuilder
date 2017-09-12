@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 private["_center","_screenDelta","_obj","_pos","_offset"];
 
 if(!MB_ObjectDrag_Mutex) then {

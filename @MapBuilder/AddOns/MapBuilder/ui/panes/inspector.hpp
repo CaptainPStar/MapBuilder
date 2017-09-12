@@ -2,10 +2,6 @@
 #define NAME ObjectInspector
 #define TITLE Object Inspector
 BEGIN_WINDOW(IDC,NAME,TITLE,0.5,0.7,18,18)
-		WINDOW_HEADER(NAME,IDC,TITLE,16)
-		WINDOW_CLOSE(NAME,IDC,17)
-		WINDOW_HELP(NAME,IDC,"Object_Inspector",16)
-		WINDOW_BACKGROUND(NAME,0,1,18,17)
 		class Popup_ObjInspector_XPosLabel : MB_RscText {
 			idc = -1;
 			text = "Pos X: ";

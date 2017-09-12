@@ -1,24 +1,39 @@
 
-class MB_PaneUsedObjects: ctrlControlsGroupNoHScrollbars {
-  idc = __IDC_PANE_CONTENT;
-  x = 0;
-  y = __GUI_PANE_HEADER_H;
-  w = __GUI_PANE_W;
-  h = (15 * GRID_H);
-  MB_hAdjust = 1;
-  MB_wAdjust = 1;
-
-  class controls {
+class MB_PaneUsedObjects: MB_CoreContent {
+  class Controls: Controls {
     class Background: MB_CtrlPaneBackground { };
+    
+    class MB_Window_Used_List: RscTree {
+      idc = __IDC_USEDOBJECT;
+      x = __GUI_PANE_CONTENT_X;
+      y = __GUI_PANE_CONTENT_Y;
+      w = __GUI_PANE_CONTENT_W;
+      h = (40 * GRID_H);
+      sizeEx = 0.03;
+      colorBackground[] = __COLOR_BACKGROUND_ALT;
+      onTreeSelChanged = "_this call MB_FNC_LibrarySelect;";
+      onMouseExit = "false";
 
-    class Text: RscText {
-      idc = __IDC_PANE_CONTENT_DEFAULT;
-      x = 0;
-      y = 0;
-      h = 15 * GRID_H;
-      w = 20 * __GUI_PANE_W;
-      text = "WIP USED OBJECTS LIST";
+      MB_wAdjust = 1;
+      MB_wOffset = 2 * __GUI_PANE_CONTENT_X;
       MB_hAdjust = 1;
+      MB_hOffset = (3 * __GUI_PANE_CONTENT_Y + __GUI_PANE_BUTTON_H);
+    };
+
+    class Button1 : MB_CtrlPaneButton {
+      idc = __IDC_BUTTON_1;
+			x = __GUI_PANE_CONTENT_X;
+			y = __GUI_PANE_CONTENT_Y + (20 * GRID_H);
+      w = __GUI_PANE_BUTTONWIDE_W;
+			text = "Select";
+			action = "[MB_CurClass] call MB_fnc_SelectAllUsed;";
+		};
+
+    class Button2: Button1 {
+      idc = __IDC_BUTTON_2;
+      x =  (2 * __GUI_PANE_CONTENT_X) + (1 * __GUI_PANE_BUTTONWIDE_W);
+      text = "Refresh";
+      action = "[] call MB_fnc_updateUsed;";
     };
 
     class Resizer: MB_CtrlResizer { };

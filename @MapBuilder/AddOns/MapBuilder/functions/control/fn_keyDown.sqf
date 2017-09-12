@@ -1,4 +1,4 @@
-	#include "\MB\MapBuilder\ui\dik.hpp"
+	#include "\MB\MapBuilder\ui\includes\dik.hpp"
 	private["_handled", "_ctrl", "_dikCode", "_shift", "_ctrlKey", "_alt","_factor"];
 	_ctrl = _this select 0;
 	_dikCode = _this select 1;

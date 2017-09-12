@@ -1,17 +1,9 @@
 
-class MB_PaneLibraryViewer: ctrlControlsGroupNoHScrollbars {
-  idc = __IDC_PANE_CONTENT;
-  x = 0;
-  y = __GUI_PANE_HEADER_H;
-  w = __GUI_PANE_W;
-  h = 0;
-  MB_hAdjust = 1;
-  MB_wAdjust = 1;
-  MB_wMin = 40 * GRID_W;
-  MB_hMin = 30 * GRID_H;
+class MB_PaneLibraryViewer: MB_CoreContent {
 
-  class controls {
+  class controls: controls {
     class Background: MB_CtrlPaneBackground { };
+
     class LibrarySearch: ctrlEdit {
       idc = __IDC_LIBRARY_TVIEW_SEARCH;
       x = __GUI_PANE_CONTENT_X;

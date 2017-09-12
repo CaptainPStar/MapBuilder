@@ -1,13 +1,36 @@
+#define GUI_GRID_X	(0.028)
+#define GUI_GRID_Y	(0.043)
+#define GUI_GRID_W	(0.025)
+#define GUI_GRID_H	(0.04)
+#define GUI_GRID_WAbs	(1)
+#define GUI_GRID_HAbs	(1)
+
+#define MB_WINDOW_GRID_X (0.032)
+#define MB_WINDOW_GRID_Y (0.040)
+
+#define MB_WINDOW_PADDING_X (0.01)
+#define MB_WINDOW_PADDING_Y (0.01)
+
+// MessageBox styles
+#define MB_BUTTON_OK      1
+#define MB_BUTTON_CANCEL  2
+#define MB_BUTTON_USER    4
+
+#define MB_TEXT_LARGE 0.04
+#define MB_TEXT_SMALL 0.02
+#define MB_TEXT_DEFAULT 0.03
+#define MB_TEXT_FONT "RobotoCondensed"
+#define MB_TEXT_FONT_TITLE "RobotoCondensedBold"
+
+
 #define pixelScale 0.5
-
-
 #define GRID_W (pixelW * pixelGrid * pixelScale)
 #define GRID_H (pixelH * pixelGrid * pixelScale)
 #define CENTER_X	((getResolution select 2) * 0.5 * pixelW)
 #define CENTER_Y	((getResolution select 3) * 0.5 * pixelH)
 
 // Variables
-#define __GUI_WINDOW (uiNamespace getVariable ['MB_UI_Window', displayNull])
+#define __GUI_WINDOW (uiNamespace getVariable ['mb_main_dialog', displayNull])
 
 // SIZES
 #define __GUI_PANE_W (80 * GRID_W)
@@ -28,6 +51,7 @@
 #define __IDC_PANE_HEADER_TEXT 13
 #define __IDC_PANE_HEADER_HANDLE 14
 #define __IDC_PANE_HEADER_CLOSE 15
+#define __IDC_PANE_HEADER_HELP 16
 #define __IDC_PANE_CONTENT 20
 #define __IDC_PANE_CONTENT_BG 21
 #define __IDC_PANE_CONTENT_RESIZE 22
@@ -44,10 +68,21 @@
 #define __IDC_OVERLAYGROUP 41
 #define __IDC_RESIZER 42
 
+// IDC.
+#define __IDC_BUTTON_1 170902
+#define __IDC_BUTTON_2 170903
+#define __IDC_BUTTON_3 170904
+#define __IDC_ELEMENT_1 172001
+#define __IDC_ELEMENT_2 172002
+#define __IDC_ELEMENT_3 172003
+#define __IDC_ELEMENT_4 172004
+#define __IDC_ELEMENT_5 172005
+#define __IDC_ELEMENT_6 172006
+
 #define __IDC_FAVORITES 170901
-#define __IDC_FAVORITES_ADD 170902
-#define __IDC_FAVORITES_REMOVE 170903
-#define __IDC_FAVORITES_SELECT 170904
+#define __IDC_USEDOBJECT 170801
+
+
 
 // COLORS
 #define __COLOR_BACKGROUND_SIDEBAR {46/255, 46/255, 46/255, 1}
@@ -63,8 +98,3 @@
 #define __COLOR_BUTTON_TEXT {0.749, 0.749, 0.749, 1}
 #define __COLOR_BUTTON_TEXT_ACCENT {0, 0, 0, 1}
 #define __COLOR_BUTTON_TEXT_DISABLED {0.25, 0.25, 0.25, 1}
-
-// FONT
-#define __FONTLIGHT   "RobotoCondensedLight"
-#define __FONTMED     "RobotoCondensed"
-#define __FONTBOLD    "RobotoCondensedBold"

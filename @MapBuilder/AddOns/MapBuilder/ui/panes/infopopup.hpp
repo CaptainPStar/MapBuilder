@@ -21,9 +21,11 @@
 			h = MB_WINDOW_GRID_Y * 8 +  2 * MB_WINDOW_PADDING_Y;
 			colorBackground[] = {0.1,0.1,0.1,1};
 		};
-		class MB_Window_Infopopup_Header : MB_RscWindowHeader {
+		class MB_Window_Infopopup_Header : MB_RscText {
 			idc = -1;
 			text = "Info";
+      style = ST_MULTI;
+      font = MB_TEXT_FONT_TITLE;
 			x = MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_GRID_Y * 0;
 			w = MB_WINDOW_GRID_X * 14 + 2 * MB_WINDOW_PADDING_X;
@@ -59,5 +61,6 @@
 			text = "Cancel";
 			action = "[171000,true] call MB_fnc_closeWindow;";
 		};
+    class Resizer: MB_CtrlResizer { };
 	};
 };

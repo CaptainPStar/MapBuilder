@@ -1,4 +1,4 @@
-#include "\MB\MapBuilder\ui\dik.hpp"
+#include "\MB\MapBuilder\ui\includes\dik.hpp"
 //["onMouseUp","MB_fnc_createObjectByDrag",{MB_LibraryDrag != ""}] call MB_fnc_addCallback;
 //4:Shift 5:Ctrl 6:Alt
 ["LeftMouseDblClick",{_this spawn MB_fnc_CreateObjectByClick;},{MB_Mode==0 && !(_this select 4) && !(_this select 5) && !(_this select 6)}] call MB_fnc_addCallback;

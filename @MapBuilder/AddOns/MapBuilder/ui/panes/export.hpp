@@ -2,10 +2,6 @@
 #define NAME Export
 #define TITLE Export
 BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,24,13)
-		WINDOW_HEADER(NAME,IDC,TITLE,22)
-		WINDOW_CLOSE(NAME,IDC,23)
-		WINDOW_HELP(NAME,IDC,"Export",22)
-		WINDOW_BACKGROUND(NAME,0,1,24,12)
 		class MB_Window_Export_FilenameText : MB_RscText {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 1;

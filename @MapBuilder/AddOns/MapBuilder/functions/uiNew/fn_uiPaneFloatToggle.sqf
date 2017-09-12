@@ -7,7 +7,7 @@
                     For attached panes, we need to change the width to that of a sidebar
                     When detaching panes we need to change to their last width when they were floating
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_paneCtrl"];
 

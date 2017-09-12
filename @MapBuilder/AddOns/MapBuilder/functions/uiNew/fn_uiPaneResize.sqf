@@ -3,7 +3,7 @@
     Author:         Adanteh
     Description:    Resizes the pane. If it's a floating pane, allow both X and Y transformation. Else only Y
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_ctrl", ["_mode", "start"]];
 

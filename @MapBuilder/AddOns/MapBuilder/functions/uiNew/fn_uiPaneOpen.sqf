@@ -3,7 +3,7 @@
     Author:         Adanteh
     Description:    Opens up a pane/window with some stuff
 */
-#include "\mb\MapBuilder\ui\mbdefinesNew.hpp"
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 params ["_paneID", ["_forceOpen", false], ["_replace", false]];
 
@@ -36,7 +36,7 @@ private ["_paneCtrl", "_contentWidth"];
 private _contentWidth = [["ui.setting", _paneID, "sizeX"], nil] call MB_fnc_uiGetSetting;
 if (isNil "_contentWidth") then {
     _contentWidth = getNumber (configFile >> _paneCtrlClass >> "w");
-    [["ui.setting", _paneID, "sizeY"], _contentWidth] call MB_fnc_uiSetSetting;
+    [["ui.setting", _paneID, "sizeX"], _contentWidth] call MB_fnc_uiSetSetting;
 };
 
 if (_floating) then {
@@ -100,6 +100,7 @@ if !(_collapsed) then {
     };
 };
 
+systemChat str [_contentHeight, _contentWidth];
 [_contentCtrl, _contentHeight, _contentWidth] call MB_fnc_uiAdjustContentCtrl;
 
 private _paneTitle = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "title");

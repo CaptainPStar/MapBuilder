@@ -11,7 +11,12 @@ if (_settingToSet isEqualType []) then {
     _settingToSet = _settingToSet joinString ".";
 };
 
-profileNamespace setVariable [_settingToSet, _value];
+if (isNil "_value") then {
+    profileNamespace setVariable [_settingToSet, nil];
+} else {
+    profileNamespace setVariable [_settingToSet, _value];
+};
+
 saveProfileNamespace;
 
 0;

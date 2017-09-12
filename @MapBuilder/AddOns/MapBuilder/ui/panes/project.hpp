@@ -2,10 +2,6 @@
 #define NAME Project
 #define TITLE Save/Load Projects
 BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
-		WINDOW_HEADER(NAME,IDC,TITLE,26)
-		WINDOW_CLOSE(NAME,IDC,27)
-		WINDOW_HELP(NAME,IDC,"Project_Save_and_Load",26)
-		WINDOW_BACKGROUND(NAME,0,1,28,17)
 		class Popup_ProjectsListLabel : MB_RscText {
 			idc = -1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;

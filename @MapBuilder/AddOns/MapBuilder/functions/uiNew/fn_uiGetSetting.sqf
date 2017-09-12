@@ -5,27 +5,30 @@
 */
 
 // TODO: IMO This should be written in files with IO, preferably in Json type stuff
-params ["_settingToGet", "_defaultReturn"];
+params ["_settingToGet", ["_return", 0]];
 
 if (_settingToGet isEqualType []) then {
     _settingToGet = _settingToGet joinString ".";
 };
 
-private _return = profileNamespace getVariable _settingToGet;
-if (isNil "_return") then {
+private _value = profileNamespace getVariable _settingToGet;
+if (isNil "_value") then {
 
     // -- Special handling for UI pane config classes. If profile value does not exist, get the default value out of our UI configs
-    if (_defaultReturn isEqualTo "cfg") then {
+    if (_return isEqualTo "cfg") then {
         private _class = _settingToGet splitString ".";
         private _cfg = (configFile >> "MapBuilder" >> "Panes" >> (_class select 2) >> (_class select 3));
         _return = call {
             if (isNumber _cfg) exitWith { getNumber _cfg };
             if (isText _cfg) exitWith { getText _cfg };
             if (isArray _cfg) exitWith { getArray _cfg };
-            nil;
+            0;
         };
     } else {
-        _return = _defaultReturn;
+        _return = 0;
     };
+} else {
+    _return = _value;
 };
+
 _return;

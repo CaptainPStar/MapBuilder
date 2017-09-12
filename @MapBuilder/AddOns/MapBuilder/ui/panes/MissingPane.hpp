@@ -1,16 +1,7 @@
 
-class MB_MissingPane: ctrlControlsGroupNoHScrollbars {
-  idc = __IDC_PANE_CONTENT;
-  x = 0;
-  y = __GUI_PANE_HEADER_H;
-  w = __GUI_PANE_W;
-  h = 15 * GRID_H;
-  MB_hAdjust = 1;
-  MB_wAdjust = 1;
-  MB_wMin = 40 * GRID_W;
-  MB_hMin = 40 * GRID_H;
+class MB_MissingPane: MB_CoreContent {
 
-  class controls {
+  class controls: controls {
     class Background: MB_CtrlPaneBackground { };
 
     class Text: RscTextMulti {
