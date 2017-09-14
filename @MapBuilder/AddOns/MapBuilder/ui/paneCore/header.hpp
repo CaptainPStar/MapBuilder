@@ -38,26 +38,27 @@ class MB_CoreHeader: ctrlControlsGroupNoScrollbars {
       colorBackground[] = {0, 0, 0, 0};
     };
 
-    class HelpButton: HeaderButton {
+    class HelpButton: MB_RscStructuredText {
       idc = __IDC_PANE_HEADER_HELP;
       x = __GUI_PANE_BUTTON_W;
-      text = "\mb\mapBuilder\data\icons\action\32_help_ca.paa";
+      w = __GUI_PANE_BUTTON_W;
+      h = __GUI_PANE_BUTTON_W;
+      y = 0;
       onMouseButtonClick = "[_this select 0] call MB_fnc_uiPaneHelp;";
       tooltip = "Help";
+      text = "<img image='\mb\mapBuilder\data\icons\action\32_help_ca.paa' />";
+      style = ST_CENTER + ST_VCENTER;
+      class Attributes {
+        font = MB_TEXT_FONT;
+        color = "#ffffff";
+        align = "center";
+        valign = "middle";
+        shadow = 0;
+      };
     };
 
     /*class MB_Window_Help : MB_RscStructuredText {
-    	idc = -1;
-    	text = "?";
-    	style = ST_CENTER + ST_VCENTER;
-    	class Attributes
-    	{
-    		font = MB_TEXT_FONT;
-    		color = "#ffffff";
-    		align = "center";
-    		valign = "middle";
-    		shadow = 0;
-    	};
+
     };*/
 
     class Title: RscText {

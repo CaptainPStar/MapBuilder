@@ -24,8 +24,6 @@ if (isNil "_value") then {
             if (isArray _cfg) exitWith { getArray _cfg };
             0;
         };
-    } else {
-        _return = 0;
     };
 } else {
     _return = _value;

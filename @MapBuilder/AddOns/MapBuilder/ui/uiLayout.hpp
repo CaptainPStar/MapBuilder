@@ -15,6 +15,7 @@ class MapBuilder {
       onLoad = ""; // Code to run whenever the window of this type is opened/created
       onCollapse = ""; // Code to run whenever window is toggled open/close
       onUnload = "";
+      helpurl = "";
     };
 
     class Library: Default {
@@ -46,6 +47,7 @@ class MapBuilder {
       type = "MB_PaneUsedObjects";
       collapsed = 1;
       enabled = 1;
+      helpurl = "Used_Objects";
 
       onLoad = "_this call MB_fnc_updateUsed";
     };
@@ -77,11 +79,13 @@ class MapBuilder {
     class Export: about {
       title = "Export";
       type = "MB_Window_Export_Group";
+      helpurl = "Export";
     };
 
     class Fencer: about {
       title = "Fencer";
       type = "MB_Window_Fencer_Group";
+      helpurl = "Fencer";
     };
 
     class Help: about {
@@ -92,6 +96,7 @@ class MapBuilder {
     class ObjectInspector: about {
       title = "Object Inspector";
       type = "MB_Window_ObjectInspector_Group";
+      helpurl = "Object_Inspector";
     };
 
     class Masker: about {
@@ -102,10 +107,14 @@ class MapBuilder {
     class Project: about {
       title = "Project";
       type = "MB_Window_Project_Group";
+      helpurl = "Project_Save_and_Load";
     };
 
-
-
+    class Presets: about {
+      title = "Presets";
+      type = "";
+      helpurl = "Presets";
+    };
 
 
     class Uwotmate: Default {

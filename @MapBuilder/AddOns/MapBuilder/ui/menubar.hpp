@@ -7,7 +7,7 @@ class MB_MainMenuStrip: MB_MenuStrip
   class Items
   {
     class default { };
-    items[] = {"Project","Objects","Tools","Help"};
+    items[] = {"Project","Objects","Tools","Settings", "Help"};
     class Project
     {
       text = "Project";
@@ -80,7 +80,7 @@ class MB_MainMenuStrip: MB_MenuStrip
       data = "";
       //shortcuts[] = {"512 + 0x31"};
       //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
-      action = "[] call MB_fnc_showBrushWindow;";
+      action = "['brusher', true] call MB_fnc_uiPaneOpen;";
       //opensNewWindow = 1;
     };
     class Fencer
@@ -99,6 +99,22 @@ class MB_MainMenuStrip: MB_MenuStrip
       //shortcuts[] = {"512 + 0x31"};
       //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
       action = "['preset', true] call MB_fnc_uiPaneOpen;";
+      //opensNewWindow = 1;
+    };
+    class Settings
+    {
+      text = "Settings";
+      items[] = {"Camera"};
+      data = "";
+      value = 1;
+    };
+    class Camera
+    {
+      text = "Camera";
+      data = "";
+      //shortcuts[] = {"512 + 0x31"};
+      picture = "\mb\mapBuilder\data\icons\image\32_photo_camera_ca.paa";
+      action = "['show', 'camera'] call MB_fnc_settingsWindow;";
       //opensNewWindow = 1;
     };
     class Help

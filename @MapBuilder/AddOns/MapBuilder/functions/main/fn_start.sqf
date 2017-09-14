@@ -3,6 +3,8 @@
 //* Starts MB dialog and camera
 //***************************************
 	//Disable DevInfo:
+
+
 	if ((productVersion select 4) != "Stable") then
 	{
 		disableSerialization;
@@ -24,6 +26,9 @@
 	// [1,false] call MB_fnc_togglePopup;
 	// [2,false] call MB_fnc_togglePopup;
 	// [3,false] call MB_fnc_togglePopup;
+
+	MB_CameraSpeedModifier = ["camera.speedmodifier", 1] call MB_fnc_uiGetSetting;
+	MB_CameraEasing = ["camera.easing", true] call MB_fnc_uiGetSetting;
 
 	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";

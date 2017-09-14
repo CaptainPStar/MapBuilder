@@ -11,6 +11,7 @@ _paneID = toLower _paneID;
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
 private _paneIndex = _currentPanes find _paneID;
 if ((_paneIndex != -1) && !_replace) exitWith { // -- Already open
+    (uiNamespace getVariable ["MB_pane" + _paneID, controlNull]) ctrlShow true;
     0
 };
 
@@ -20,16 +21,13 @@ if (_replace) then {
     _replaceCtrl = (uiNamespace getVariable [format ["MB_pane%1", _paneID], controlNull]);
     _paneCount = _paneIndex;
     _replaceCtrl ctrlShow false;
+    // ctrlDelete _replaceCtrl; // Crashes game. NO idea why
 };
-
 
 private _paneCtrlClass = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "type");
 if ((_paneCtrlClass == "") || !(isClass (configFile >> _paneCtrlClass))) then {
     _paneCtrlClass = "MB_MissingPane";
 };
-
-
-private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_uiGetSetting) > 0;
 
 // -- Makes either a 'floating' window not attached that you can freely move, or a preset size on in a sidebar
 private ["_paneCtrl", "_contentWidth"];
@@ -39,6 +37,7 @@ if (isNil "_contentWidth") then {
     [["ui.setting", _paneID, "sizeX"], _contentWidth] call MB_fnc_uiSetSetting;
 };
 
+private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_uiGetSetting) > 0;
 if (_floating) then {
     _paneCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", __IDC_PANE_BASEIDC + (_paneCount * __IDC_PANE_IDC)];
     private _posX = [["ui.setting", _paneID, "posX"], 0] call MB_fnc_uiGetSetting;
@@ -86,6 +85,16 @@ if (_floating) then {
     _paneCtrl setVariable ["parent", _sidebarCtrl];
     _sidebarChildren pushBack _paneCtrl;
     _sidebarCtrl setVariable ["children", _sidebarChildren];
+};
+
+private _header = _paneCtrl controlsGroupCtrl __IDC_PANE_HEADER;
+private _helpURL = ([["ui.setting", _paneID, "helpurl"], "cfg"] call MB_fnc_uiGetSetting);
+if (_helpURL != "") then {
+    private _text = format ["<a href='http:\\wiki.map-builder.info/w/%1'><img image='\mb\mapBuilder\data\icons\action\32_help_ca.paa' /></a>", _helpURL];
+    (_header controlsGroupCtrl __IDC_PANE_HEADER_HELP) ctrlSetStructuredText (parseText _text);
+} else {
+    (_header controlsGroupCtrl __IDC_PANE_HEADER_HELP) ctrlSetStructuredText (parseText "");
+    (_header controlsGroupCtrl __IDC_PANE_HEADER_HELP) ctrlShow false;
 };
 
 // -- Create the content for this control

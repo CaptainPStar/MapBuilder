@@ -7,7 +7,6 @@
 
 #define MB_WINDOW_GRID_X (0.032)
 #define MB_WINDOW_GRID_Y (0.040)
-
 #define MB_WINDOW_PADDING_X (0.01)
 #define MB_WINDOW_PADDING_Y (0.01)
 
@@ -21,7 +20,7 @@
 #define MB_TEXT_DEFAULT 0.03
 #define MB_TEXT_FONT "RobotoCondensed"
 #define MB_TEXT_FONT_TITLE "RobotoCondensedBold"
-
+#define MB_TEXT_MONO "RobotoCondensed"
 
 #define pixelScale 0.5
 #define GRID_W (pixelW * pixelGrid * pixelScale)
@@ -29,20 +28,38 @@
 #define CENTER_X	((getResolution select 2) * 0.5 * pixelW)
 #define CENTER_Y	((getResolution select 3) * 0.5 * pixelH)
 
+#define __GUI_GRIDX(var1) ((GRID_W * 4) * var1)
+#define __GUI_GRIDY(var1) ((GRID_H * 4) * var1)
+
 // Variables
 #define __GUI_WINDOW (uiNamespace getVariable ['mb_main_dialog', displayNull])
 
 // SIZES
 #define __GUI_PANE_W (80 * GRID_W)
-#define __GUI_PANE_HEADER_H (6 * GRID_H)
-#define __GUI_PANE_BUTTON_H (6 * GRID_H)
-#define __GUI_PANE_BUTTON_W (6 * GRID_W)
-#define __GUI_PANE_BUTTONWIDE_W (12 * GRID_W)
+#define __GUI_PANE_HEADER_H __GUI_GRIDY(1.25)
+#define __GUI_PANE_BUTTON_H __GUI_GRIDY(1.25)
+#define __GUI_PANE_BUTTON_W __GUI_GRIDX(1.25)
+#define __GUI_PANE_BUTTONWIDE_W __GUI_GRIDX(4)
 #define __GUI_PANE_CONTENT_X (2.5 * GRID_W)
 #define __GUI_PANE_CONTENT_Y (2.5 * GRID_H)
 #define __GUI_PANE_CONTENT_W (__GUI_PANE_W - (2 * __GUI_PANE_CONTENT_X))
-#define __GUI_PANE_RESIZE_W (5 * GRID_W)
-#define __GUI_PANE_RESIZE_H (5 * GRID_H)
+#define __GUI_PANE_RESIZE_W __GUI_GRIDX(1)
+#define __GUI_PANE_RESIZE_H __GUI_GRIDY(1)
+
+
+#define __GUI_SETTING_W __GUI_GRIDX(30)
+#define __GUI_SETTING_H __GUI_GRIDY(30)
+#define __GUI_SETTING_X (CENTER_X - __GUI_SETTING_W * 0.5)
+#define __GUI_SETTING_Y (CENTER_Y - __GUI_SETTING_H * 0.5)
+#define __GUI_SETTING_BUTTON_W __GUI_GRIDX(4)
+#define __GUI_SETTING_CATEGORY_H __GUI_GRIDY(2)
+#define __GUI_SETTING_SPACING_X __GUI_GRIDX(1)
+#define __GUI_SETTING_SPACING_Y __GUI_GRIDY(0.25)
+#define __GUI_SETTING_TEXT_W __GUI_GRIDX(7.5)
+#define __GUI_SETTING_TEXT_H __GUI_GRIDY(1)
+#define __GUI_SETTING_SETTING_W __GUI_GRIDX(20)
+#define __GUI_SETTING_LINE_H __GUI_GRIDY(1.25)
+#define __GUI_SETTING_LABEL_W __GUI_GRIDX(2)
 
 // IDCs
 #define __IDC_PANE_HEADER 10
@@ -83,8 +100,8 @@
 #define __IDC_USEDOBJECT 170801
 
 
-
 // COLORS
+#define __COLOR_TITLE_TEXT {1, 1, 1, 1}
 #define __COLOR_BACKGROUND_SIDEBAR {46/255, 46/255, 46/255, 1}
 #define __COLOR_BACKGROUND_CONTENT {43/255, 43/255, 43/255, 1}
 #define __COLOR_BACKGROUND_ALT {88/255, 88/255, 88/255, 0.25}

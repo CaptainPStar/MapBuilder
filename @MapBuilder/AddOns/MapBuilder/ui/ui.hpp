@@ -5,17 +5,23 @@
 #include "\MB\MapBuilder\include.hpp"
 #include "baseclasses.hpp"
 
+class ctrlButton;
+class ctrlButtonPictureKeepAspect;
+class ctrlCheckbox;
+class ctrlCombo;
+class ctrlControlsGroup;
+class ctrlControlsGroupNoHScrollbars;
 class ctrlControlsGroupNoScrollbars;
 class ctrlControlsGroupNoVScrollbars;
-class ctrlControlsGroupNoHScrollbars;
-
-class ctrlButtonPictureKeepAspect;
-class ctrlStaticPicture;
-class ctrlStaticBackground;
-class ctrlCheckbox;
-class ctrlToolboxPictureKeepAspect;
 class ctrlEdit;
+class ctrlStatic;
+class ctrlStaticBackground;
+class ctrlStaticPicture;
+class CtrlToolbox;
+class ctrlToolboxPictureKeepAspect;
 class ctrlTree;
+class ctrlXSliderH;
+class ctrlStaticTitle;
 class RscTextMulti;
 
 #include "controls\resizer.hpp"
@@ -23,6 +29,14 @@ class RscTextMulti;
 #include "controls\map.hpp"
 #include "controls\gizmo.hpp"
 #include "controls\headerbutton.hpp"
+#include "controls\toolbox.hpp"
+#include "controls\buttons.hpp"
+#include "controls\title.hpp"
+#include "controls\background.hpp"
+
+#include "settings.hpp"
+
+
 
 #include "paneCore\header.hpp"
 #include "paneCore\content.hpp"
