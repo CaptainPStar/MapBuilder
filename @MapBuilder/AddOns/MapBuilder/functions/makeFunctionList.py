@@ -21,6 +21,10 @@ for folder,files in folders.items():
     for file in files:
         f.write("\tclass "+file.replace("fn_","")+" {\n")
         f.write("\t\trecompile = 1;\n")
+        if file.startswith("fn_preInit"):
+            f.write("\t\tpreinit = 1;\n")
+        if file.startswith("fn_postInit"):
+            f.write("\t\tpostInit = 1;\n")
         f.write("\t};\n")
     f.write("};\n")
 f.close()
