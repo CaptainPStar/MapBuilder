@@ -31,17 +31,17 @@ if ((_paneCtrlClass == "") || !(isClass (configFile >> _paneCtrlClass))) then {
 
 // -- Makes either a 'floating' window not attached that you can freely move, or a preset size on in a sidebar
 private ["_paneCtrl", "_contentWidth"];
-private _contentWidth = [["ui.setting", _paneID, "sizeX"], nil] call MB_fnc_uiGetSetting;
-if (isNil "_contentWidth") then {
-    _contentWidth = getNumber (configFile >> _paneCtrlClass >> "w");
+private _contentWidth = [["ui.setting", _paneID, "sizeX"], -1] call MB_fnc_uiGetSetting;
+if (_contentWidth == -1) then {
+    _contentWidth = [(configFile >> _paneCtrlClass >> "w")] call MB_fnc_uiGetCfgSize;
     [["ui.setting", _paneID, "sizeX"], _contentWidth] call MB_fnc_uiSetSetting;
 };
 
 private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_uiGetSetting) > 0;
 if (_floating) then {
     _paneCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", __IDC_PANE_BASEIDC + (_paneCount * __IDC_PANE_IDC)];
-    private _posX = [["ui.setting", _paneID, "posX"], 0] call MB_fnc_uiGetSetting;
-    private _posY = [["ui.setting", _paneID, "posY"], 0] call MB_fnc_uiGetSetting;
+    private _posX = [["ui.setting", _paneID, "posX"], (random 0.4) - 0.2] call MB_fnc_uiGetSetting;
+    private _posY = [["ui.setting", _paneID, "posY"], (random 0.4) - 0.2] call MB_fnc_uiGetSetting;
     _paneCtrl ctrlSetPosition [_posX, _posY];
     _panectrl ctrlCommit 0;
 
@@ -102,16 +102,14 @@ private _contentCtrl = __GUI_WINDOW ctrlCreate [_paneCtrlClass, __IDC_PANE_CONTE
 private _collapsed = !_forceOpen && { ([["ui.setting", _paneID, "collapsed"], "cfg"] call MB_fnc_uiGetSetting) > 0; };
 private _contentHeight = 0;
 if !(_collapsed) then {
-    _contentHeight = [["ui.setting", _paneID, "sizeY"], nil] call MB_fnc_uiGetSetting;
-    if (isNil "_contentHeight") then {
-        _contentHeight = getNumber (configFile >> _paneCtrlClass >> "h");
+    _contentHeight = [["ui.setting", _paneID, "sizeY"], -1] call MB_fnc_uiGetSetting;
+    if (_contentHeight == -1) then {
+        _contentHeight = [(configFile >> _paneCtrlClass >> "h")] call MB_fnc_uiGetCfgSize;
         [["ui.setting", _paneID, "sizeY"], _contentHeight] call MB_fnc_uiSetSetting;
     };
 };
 
-systemChat str [_contentHeight, _contentWidth];
 [_contentCtrl, _contentHeight, _contentWidth] call MB_fnc_uiAdjustContentCtrl;
-
 private _paneTitle = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "title");
 (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TOGGLE) cbSetChecked _collapsed;
 (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_TEXT) ctrlSetText _paneTitle;

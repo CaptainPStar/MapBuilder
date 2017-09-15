@@ -39,53 +39,49 @@ switch (toLower _mode) do {
         };
 
         // -- Some work arounds for Z-order shenanigans.
-        private _resizeHandle = ([_paneCtrl, _paneTempCtrl, _offsetReal, _offsetRelative, _offsetDetach, _panePos] spawn {
-            disableSerialization;
-            params ["_paneCtrl", "_paneTempCtrl", "_offsetReal", "_offsetRelative", "_offsetDetach", "_panePos"];
-
+        private _resizeHandle = [{
+            (_this select 0) params ["_paneCtrl", "_paneTempCtrl", "_offsetReal", "_offsetRelative", "_offsetDetach", "_panePos"];
             // TOOD: This only supports one sidebar now, make a general "posInSidebar" function that will return index if it's within one
             private _sidebarPos = [(uiNamespace getVariable ["MB_UI_Sidebars", []]) select 0] call MB_fnc_getCtrlPositionReal;
-            while { !(isNull (__GUI_WINDOW)) } do {
+            if (isNull (__GUI_WINDOW)) exitWith {
+                [_this select 1] call MB_fnc_removePerFrameHandler;
+            };
 
-                // -- The current position of the top left corner on the screen (Use this to set position)
-                private _positionToSet = [
-                    (getMousePosition select 0) - (_offsetReal select 0),
-                    (getMousePosition select 1) - (_offsetReal select 1)
-                ];
-
-                // -- If more than one third left of the pane is outside the bar, detach it
-                private _positionDetachCheck = [
-                    (_positionToSet select 0) + (_offsetDetach select 0),
-                    (_positionToSet select 1) + (_offsetDetach select 1)
+            // -- The current position of the top left corner on the screen (Use this to set position)
+            private _positionToSet = [
+                (getMousePosition select 0) - (_offsetReal select 0),
+                (getMousePosition select 1) - (_offsetReal select 1)
             ];
 
-                // -- Figure out if we should be attaching to a sidepanel.
-                //if (_paneCtrl getVariable ["allowAttaching", false]) then { };
-                private _floating = !([_positionDetachCheck, _sidebarPos] call MB_fnc_uiPosInPos);
-                if !(_floating) then {
-                    if (_paneCtrl != _paneTempCtrl) then {
-                        _paneTempCtrl ctrlShow false;
-                        _positionToSet = [
-                            (_panePos select 0),
-                            (getMousePosition select 1) - (_offsetRelative select 1)
-                        ];
-                    };
+            // -- If more than one third left of the pane is outside the bar, detach it
+            private _positionDetachCheck = [
+                (_positionToSet select 0) + (_offsetDetach select 0),
+                (_positionToSet select 1) + (_offsetDetach select 1)
+            ];
 
-                    _paneCtrl ctrlSetPosition _positionToSet;
-                    _paneCtrl ctrlCommit 0;
-                } else {
-                    _paneCtrl ctrlSetPosition [_panePos select 0, _panePos select 1];
-                    _paneCtrl ctrlCommit 0;
-                    _paneTempCtrl ctrlSetPosition _positionToSet;
-                    _paneTempCtrl ctrlCommit 0;
-                    _paneTempCtrl ctrlShow true;
+            // -- Figure out if we should be attaching to a sidepanel.
+            private _floating = !([_positionDetachCheck, _sidebarPos] call MB_fnc_uiPosInPos);
+            if !(_floating) then {
+                if (_paneCtrl != _paneTempCtrl) then {
+                    _paneTempCtrl ctrlShow false;
+                    _positionToSet = [
+                        (_panePos select 0),
+                        (getMousePosition select 1) - (_offsetRelative select 1)
+                    ];
                 };
 
-                uiNamespace setVariable ["MB_MovingFloating", _floating];
-                uiSleep 0.1;
+                _paneCtrl ctrlSetPosition _positionToSet;
+                _paneCtrl ctrlCommit 0;
+            } else {
+                _paneCtrl ctrlSetPosition [_panePos select 0, _panePos select 1];
+                _paneCtrl ctrlCommit 0;
+                _paneTempCtrl ctrlSetPosition _positionToSet;
+                _paneTempCtrl ctrlCommit 0;
+                _paneTempCtrl ctrlShow true;
             };
-        });
 
+            uiNamespace setVariable ["MB_MovingFloating", _floating];
+        }, 0, [_paneCtrl, _paneTempCtrl, _offsetReal, _offsetRelative, _offsetDetach, _panePos]] call MB_fnc_addPerFrameHandler;
         uiNamespace setVariable ["MB_MovingHandle", _resizeHandle];
         uiNamespace setVariable ["MB_MovingTarget", _paneTempCtrl];
         uiNamespace setVariable ["MB_MovingReal", _paneCtrl];
@@ -99,10 +95,9 @@ switch (toLower _mode) do {
     };
 
     case "end": {
-        private _handle = uiNamespace getVariable "MB_MovingHandle";
-        if (isNil "_handle") exitWith { };
-
-        terminate _handle;
+        private _handle = uiNamespace getVariable ["MB_MovingHandle", -1];
+        if (_handle == -1) exitWith { };
+        [_handle] call MB_fnc_removePerFrameHandler;
 
         private _floating = uiNamespace getVariable ["MB_MovingFloating", false];
         private _paneTempCtrl = uiNamespace getVariable ["MB_MovingTarget", controlNull];

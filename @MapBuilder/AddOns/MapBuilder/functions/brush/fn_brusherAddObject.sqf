@@ -10,9 +10,9 @@ if(count(_path)>0) then {
 	};
 };
 
+if (_data isEqualTo []) exitWith { };
 (_data select 0) pushBack MB_CurClass;
 (_data select 1) pushBack 1;
 
 [] call mb_fnc_brusherUpdateObjectList;
 ["Cur"] call mb_fnc_brusherUpdateTemplateList;
-
