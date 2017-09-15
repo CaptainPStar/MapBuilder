@@ -40,8 +40,8 @@ if (_contentWidth == -1) then {
 private _floating = ([["ui.setting", _paneID, "floating"], "cfg"] call MB_fnc_uiGetSetting) > 0;
 if (_floating) then {
     _paneCtrl = __GUI_WINDOW ctrlCreate ["MB_CorePane", __IDC_PANE_BASEIDC + (_paneCount * __IDC_PANE_IDC)];
-    private _posX = [["ui.setting", _paneID, "posX"], (random 0.4) - 0.2] call MB_fnc_uiGetSetting;
-    private _posY = [["ui.setting", _paneID, "posY"], (random 0.4) - 0.2] call MB_fnc_uiGetSetting;
+    private _posX = [["ui.setting", _paneID, "posX"], (random 0.4) - 0.4] call MB_fnc_uiGetSetting;
+    private _posY = [["ui.setting", _paneID, "posY"], (random 0.4) - 0.4] call MB_fnc_uiGetSetting;
     _paneCtrl ctrlSetPosition [_posX, _posY];
     _panectrl ctrlCommit 0;
 
