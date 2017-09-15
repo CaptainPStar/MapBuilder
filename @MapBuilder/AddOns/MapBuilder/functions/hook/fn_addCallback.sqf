@@ -1,12 +1,18 @@
-private["_hook","_callback","_hindex","_cindex","_return","_condition"];
-	_hook = [_this,0,""] call bis_fnc_param;
-	_callback = [_this,1,{},[{},""]] call bis_fnc_param;
-	_condition = [_this,2,{true},[{},""]] call bis_fnc_param;
-	_hindex = MB_HookList find _hook;
-	if(_hindex == -1) then {
-		_hindex = MB_HookList pushBack _hook;
-		MB_Hooks set[_hindex,[]];
-	};
-	_cindex = (MB_Hooks select _hindex) pushBack [_callback,_condition];
-	_return = [_hindex,_cindex];
-	_return;
+/*
+    Function:       MB_fnc_addCallback
+    Author:        	NeoArmageddon/Adanteh
+    Description:    Adds a callback/event, which allows you to stack events belonging to a hook you can call
+*/
+
+if (isNil "MB_callBackNamespace") then {
+	MB_callBackNamespace = false call MB_fnc_createNamespace;
+};
+
+params ["_hook", ["_callback", {}, [{}, ""]], ["_condition", {}, [{}, ""]]];
+
+private _hookCurrent = MB_callBackNamespace getVariable [_hook, []];
+_callback = [_callback] call MB_parseToCode;
+_condition = [_condition] call MB_parseToCode;
+private _callbackIndex = _hookCurrent pushBack [_callback, _condition];
+MB_callBackNamespace setVariable [toLower _hook, _hookCurrent];
+[toLower _hook, _callbackIndex];

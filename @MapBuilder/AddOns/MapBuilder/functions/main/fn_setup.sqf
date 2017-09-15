@@ -87,7 +87,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	MB_importTB_ClassName = [];
 
 	//Bootstrap all variables:
-	call mb_fnc_initHookFunctions; //Must be first
 	call mb_fnc_initImportTBHashFunctions;
 	call mb_fnc_initBrushFunctions;
 	call mb_fnc_initControlFunctions;
@@ -113,7 +112,7 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	//["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
-	
+
 	if(!isNull _logic) then {
 		private["_autostart"];
 		_autostart = _logic getvariable ["Autostart",false];
