@@ -8,8 +8,10 @@ params [["_code", {}, [{}, ""]]];
 if (_code isEqualType {}) exitWith { _code };
 if !(_code isEqualType "") exitWith { { false } };
 
-private _function = missionNamespace getVariable _code;
-if (!isNil _function && { _function isEqualType {} }) exitWith { _function };
+private _function = uiNamespace getVariable _code;
+if (!(isNil "_function") && { _function isEqualType {} }) exitWith {
+    _function
+};
 
 _code = compile _code;
 _code;
