@@ -19,29 +19,25 @@ switch (toLower _mode) do {
 
         private _adjustX = _floating; // -- Only adjust width if not attached to a sidebar
         uiNamespace setVariable ["MB_ResizingTarget", _contentCtrl];
-        private _resizeHandle = ([_contentPosReal, _adjustX] spawn {
-            disableSerialization;
-            params ["_contentPosReal", "_adjustX"];
-
-            // TOOD: Replace by perFrame
-            while { !(isNull (__GUI_WINDOW)) } do {
-                private _sizeY = (getMousePosition select 1) - (_contentPosReal select 1);
-                private _sizeX = [-1, (getMousePosition select 0) - (_contentPosReal select 0)] select _adjustX;
-
-                [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), _sizeY, _sizeX] call MB_fnc_uiAdjustContentCtrl;
-                uiSleep 0.1;
+        private _resizeHandle = [{
+            (_this select 0) params ["_contentPosReal", "_adjustX"];
+            if (isNull (__GUI_WINDOW)) exitWith {
+                [_this select 1] call MB_fnc_removePerFrameHandler;
             };
-        });
 
+            private _sizeY = (getMousePosition select 1) - (_contentPosReal select 1);
+            private _sizeX = [-1, (getMousePosition select 0) - (_contentPosReal select 0)] select _adjustX;
+            [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), _sizeY, _sizeX] call MB_fnc_uiAdjustContentCtrl;
+
+        }, 0, [_contentPosReal, _adjustX]] call MB_fnc_addPerFrameHandler;
         uiNamespace setVariable ["MB_ResizingHandle", _resizeHandle];
-
     };
 
     case "end": {
-        private _handle = uiNamespace getVariable "MB_ResizingHandle";
-        if (isNil "_handle") exitWith { };
+        private _handle = uiNamespace getVariable ["MB_ResizingHandle", -1];
+        if (_handle == -1) exitWith { };
+        [_handle] call MB_fnc_removePerFrameHandler;
 
-        terminate _handle;
         private _contentCtrl = uiNamespace getVariable ["MB_ResizingTarget", controlNull];
         private _sizeX = (ctrlPosition _contentCtrl) select 2;
         private _sizeY = (ctrlPosition _contentCtrl) select 3;
