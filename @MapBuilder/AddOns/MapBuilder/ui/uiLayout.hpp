@@ -39,6 +39,8 @@ class MapBuilder {
       collapsed = 1;
       floating = 0;
       enabled = 1;
+
+      onLoad = "['onload', _this] call MB_fnc_updateFavorites";
     };
 
     class UsedObjects: Default {
@@ -49,7 +51,7 @@ class MapBuilder {
       enabled = 1;
       helpurl = "Used_Objects";
 
-      onLoad = "_this call MB_fnc_updateUsed";
+      onLoad = "['onload', _this] call MB_fnc_updateUsed";
     };
 
     class 3dpreview: Default {

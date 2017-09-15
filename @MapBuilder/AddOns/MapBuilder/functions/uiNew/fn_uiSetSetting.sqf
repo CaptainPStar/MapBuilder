@@ -5,7 +5,7 @@
     Example:        [["ui.setting", 'library', "enabled"], 0] call MB_fnc_uiSetSetting;
 */
 
-params ["_settingToSet", "_value"];
+params ["_settingToSet", "_value", ["_save", true]];
 
 if (_settingToSet isEqualType []) then {
     _settingToSet = _settingToSet joinString ".";
@@ -17,6 +17,8 @@ if (isNil "_value") then {
     profileNamespace setVariable [_settingToSet, _value];
 };
 
-saveProfileNamespace;
+if (_save) then {
+    saveProfileNamespace;
+};
 
 0;

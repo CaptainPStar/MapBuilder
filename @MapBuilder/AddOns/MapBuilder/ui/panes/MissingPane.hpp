@@ -4,7 +4,7 @@ class MB_MissingPane: MB_CoreContent {
   class controls: controls {
     class Background: MB_CtrlPaneBackground { };
 
-    class Text: RscTextMulti {
+    class Text: RscStructuredText {
       idc = __IDC_PANE_CONTENT_DEFAULT;
       x = 0;
       y = 0;

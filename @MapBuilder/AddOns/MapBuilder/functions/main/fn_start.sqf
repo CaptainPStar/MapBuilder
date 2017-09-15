@@ -29,6 +29,7 @@
 
 	MB_CameraSpeedModifier = ["camera.speedmodifier", 1] call MB_fnc_uiGetSetting;
 	MB_CameraEasing = ["camera.easing", true] call MB_fnc_uiGetSetting;
+	MB_CameraFollowTerrain = ["camera.terrainfollow", true] call MB_fnc_uiGetSetting;
 
 	MBCamera = "camera" camCreate (MB_CamPos select 0);
 	MBCamera switchCamera "Internal";
@@ -62,7 +63,6 @@
 	//addMissionEventHandler ['Draw3D',{call MB_fnc_Draw3D;}];
 	MB_RegisterKeys = true;
 	//[] call MB_fnc_refreshFilters;
-	//[] call MB_fnc_disable3DPreview;
 	[] call MB_fnc_SetEditorFocus;
 	[666] spawn MB_fnc_closeWindow;
 

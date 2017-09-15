@@ -12,7 +12,7 @@ private _cfg = (configFile >> "MapBuilder" >> "Panes");
     private _paneID = configName _x;
     private _paneConfig = _x;
     {
-        ([["ui.setting", _paneID, _x], nil] call MB_fnc_uiSetSetting);
+        ([["ui.setting", _paneID, _x], nil, false] call MB_fnc_uiSetSetting);
     } forEach [
         "sidebar",
         "collapsed",
@@ -25,3 +25,4 @@ private _cfg = (configFile >> "MapBuilder" >> "Panes");
     ];
 
 } forEach ("getNumber (_x >> 'scope') >= 2" configClasses _cfg);
+saveProfileNamespace;

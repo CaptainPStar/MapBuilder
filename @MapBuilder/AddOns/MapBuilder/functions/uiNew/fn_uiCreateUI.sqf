@@ -27,4 +27,6 @@ uiNamespace setVariable ["MB_sidebarLeft", nil];
 "MB_fnc_uiGetSetting" call BIS_fnc_recompile;
 "MB_fnc_uiSetSetting" call BIS_fnc_recompile;
 
+
+
 [] call MB_fnc_uiLoadPanes;

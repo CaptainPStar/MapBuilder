@@ -113,9 +113,15 @@
 	//MBCamera camSetDir [(MB_CamPos select 1),0,0];
 	//[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;
 	//MBCamera camSetDive (MB_CamPos select 2);
-	_dirNUp = [(MB_CamPos select 2),0,(MB_CamPos select 1)] call MB_fnc_CalcDirAndUpVector;
+	private _cameraPosNew = [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
+	if !(MB_CameraFollowTerrain) then {
+		systemChat str [_cameraPosNew];
+		_cameraPosNew = AGLToASL _cameraPosNew;
+	};
+
+	private _dirNUp = [(MB_CamPos select 2),0,(MB_CamPos select 1)] call MB_fnc_CalcDirAndUpVector;
 	MBCamera setVectorDirAndUp _dirNUp;
-	MBCamera camSetPos [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
+	MBCamera camSetPos _cameraPosNew;
 	MBCamera camCommit MB_CamCommit;
 	MB_CamPos set [0,_camPos];
 	//systemchat format["Real: [%1,%2,%3] : O : %4", getposATL MBCamera,getdir MBCamera,MBCamera call bis_fnc_getPitchBank, MB_CamPos];

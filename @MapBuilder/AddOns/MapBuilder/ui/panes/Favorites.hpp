@@ -25,21 +25,21 @@ class MB_PaneFavorites: MB_CoreContent {
 			y = __GUI_PANE_CONTENT_Y + (20 * GRID_H);
       w = __GUI_PANE_BUTTONWIDE_W;
 			text = "Add";
-			action = "[MB_CurClass] call MB_fnc_AddFavorite;";
+			action = "['add'] call MB_fnc_updateFavorites;";
 		};
 
 		class Button2: Button1 {
       idc = __IDC_BUTTON_2;
 			x =  (2 * __GUI_PANE_CONTENT_X) + (1 * __GUI_PANE_BUTTONWIDE_W);
 			text = "Remove";
-			action = "[] call MB_fnc_RemoveFavorite;";
+			action = "['remove'] call MB_fnc_updateFavorites;";
 		};
 
 		class Button3: Button1 {
       idc = __IDC_BUTTON_3;
 			x =  (3 * __GUI_PANE_CONTENT_X) + (2 * __GUI_PANE_BUTTONWIDE_W);
 			text = "Select";
-			action = "[] call MB_fnc_SelectFavorite;";
+			action = "['select'] call MB_fnc_updateFavorites;";
 		};
 
     class Resizer: MB_CtrlResizer { };

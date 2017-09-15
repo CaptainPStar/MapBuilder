@@ -51,7 +51,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	//MB_ObjectListNames = [];
 	//MB_ObjectLists = []; //Ob
 
-	MB_LibraryFavorites = [];
 	MB_LibraryInUse = [];
 
 	MB_Objects = []; //All placed objects

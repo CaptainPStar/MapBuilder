@@ -15,6 +15,15 @@
     []
 ]]] call MB_fnc_settingsWindow;
 
+["add", ["camera", "Map Builder - Camera", "Camera", [
+    "Follow terrain",
+    "Whether the camera should move up and down along the terrain",
+    "MB_CtrlSettingCheckbox",
+    { missionNamespace getVariable ["MB_CameraFollowTerrain", true] },
+    { true },
+    { MB_CameraFollowTerrain = ((_this select 1) == 1); ["camera.terrainfollow", MB_CameraFollowTerrain] call MB_fnc_uiSetSetting },
+    []
+]]] call MB_fnc_settingsWindow;
 
 ["add", ["camera", "Map Builder - Camera", "Camera", [
     "Movement speed",

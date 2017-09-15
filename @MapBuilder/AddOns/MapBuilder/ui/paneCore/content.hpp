@@ -3,7 +3,7 @@ class MB_CoreContent: ctrlControlsGroupNoScrollbars {
   x = 0;
   y = __GUI_PANE_HEADER_H;
   w = __GUI_PANE_W;
-  h = (15 * GRID_H);
+  h = (40 * GRID_H);
   MB_hAdjust = 1;
   MB_wAdjust = 1;
   MB_wMin = 40 * GRID_W;

@@ -6,7 +6,11 @@ class MB_MainMenuStrip: MB_MenuStrip
   h = "SafeZoneH * 0.02";
   class Items
   {
-    class default { };
+    class default {
+      text = "";
+      data = "Empty";
+      enable = 0;
+    };
     items[] = {"Project","Objects","Tools","Settings", "Help"};
     class Project
     {
@@ -36,7 +40,7 @@ class MB_MainMenuStrip: MB_MenuStrip
     class Objects
     {
       text = "Objects";
-      items[] = {"ManageLibrary","Favorites","UsedObjects"};
+      items[] = {"ManageLibrary","Favorites","Library","UsedObjects"};
       data = "";
       value = 1;
     };
@@ -44,33 +48,34 @@ class MB_MainMenuStrip: MB_MenuStrip
     {
       text = "Manage Library";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\av\32_library_add_ca.paa";
       action = "systemchat ""Unimplemented"";";
-      //opensNewWindow = 1;
     };
     class Favorites {
       text = "Favorites";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\action\32_favorite_border_ca.paa";
       action = "['favorites', true] call MB_fnc_uiPaneOpen;";
-      //opensNewWindow = 1;
+    };
+
+    class Library {
+      text = "Library";
+      data = "";
+      picture = "\mb\mapBuilder\data\icons\av\32_library_books_ca.paa";
+      action = "['Library', true] call MB_fnc_uiPaneOpen;";
     };
 
     class UsedObjects {
       text = "Used Objects";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\action\32_view_list_ca.paa";
       action = "['usedobjects', true] call MB_fnc_uiPaneOpen;";
-      //opensNewWindow = 1;
     };
 
     class Tools
     {
       text = "Tools";
-      items[] = {"Brusher","Fencer","Presets"};
+      items[] = {"Brusher","Fencer","Presets", "3DPreview"};
       data = "";
       value = 1;
     };
@@ -78,33 +83,35 @@ class MB_MainMenuStrip: MB_MenuStrip
     {
       text = "Brusher";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\image\32_brush_ca.paa";
       action = "['brusher', true] call MB_fnc_uiPaneOpen;";
-      //opensNewWindow = 1;
     };
     class Fencer
     {
       text = "Fencer";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\editor\32_border_style_ca.paa";
       action = "['fencer', true] call MB_fnc_uiPaneOpen;";
-      //opensNewWindow = 1;
+    };
+    class 3DPreview {
+      text = "Preview";
+      data = "";
+      picture = "\mb\mapBuilder\data\icons\image\32_photo_filter_ca.paa";
+      action = "['3dpreview', true] call MB_fnc_uiPaneOpen;";
     };
     class Presets
     {
       text = "Presets";
       data = "";
       //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\maps\32_local_library_ca.paa";
       action = "['preset', true] call MB_fnc_uiPaneOpen;";
       //opensNewWindow = 1;
     };
     class Settings
     {
       text = "Settings";
-      items[] = {"Camera"};
+      items[] = {"Camera", "ResetUI"};
       data = "";
       value = 1;
     };
@@ -112,15 +119,13 @@ class MB_MainMenuStrip: MB_MenuStrip
     {
       text = "Camera";
       data = "";
-      //shortcuts[] = {"512 + 0x31"};
       picture = "\mb\mapBuilder\data\icons\image\32_photo_camera_ca.paa";
       action = "['show', 'camera'] call MB_fnc_settingsWindow;";
-      //opensNewWindow = 1;
     };
     class Help
     {
       text = "Help";
-      items[] = {"About","OnlineHelp","Test"};
+      items[] = {"About","ResetUI","OnlineHelp","Test"};
       data = "";
       value = 1;
     };
@@ -129,7 +134,7 @@ class MB_MainMenuStrip: MB_MenuStrip
       text = "About";
       data = "";
       //shortcuts[] = {"512 + 0x31"};
-      //picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
+      picture = "\mb\mapBuilder\data\icons\social\32_cake_ca.paa";
       action = "['about', true] call MB_fnc_uiPaneOpen;";
       //opensNewWindow = 1;
     };
@@ -137,6 +142,7 @@ class MB_MainMenuStrip: MB_MenuStrip
     {
       text = "Reset UI";
       data = "";
+      picture = "\mb\mapBuilder\data\icons\action\32_settings_backup_restore_ca.paa";
       action = "[true] call MB_fnc_uiResetSettings;";
     };
     class OnlineHelp

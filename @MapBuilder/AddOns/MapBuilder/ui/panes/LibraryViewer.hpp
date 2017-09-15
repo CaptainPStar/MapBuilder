@@ -11,6 +11,7 @@ class MB_PaneLibraryViewer: MB_CoreContent {
       h = (5 * GRID_H);
       w = __GUI_PANE_CONTENT_W;
       colorBackground[] = __COLOR_BACKGROUND_ALT;
+      onTreeSelChanged = "_this call MB_FNC_LibrarySelect;";
       colorBorder[] = {0, 0, 0, 0};
 
       MB_wAdjust = 1;
@@ -32,7 +33,7 @@ class MB_PaneLibraryViewer: MB_CoreContent {
       MB_wAdjust = 1;
       MB_wOffset = 2 * __GUI_PANE_CONTENT_X;
       MB_hAdjust = 1;
-      MB_hOffset = (__GUI_PANE_CONTENT_Y + (7 * GRID_H));
+      MB_hOffset = (__GUI_PANE_CONTENT_Y + (8 * GRID_H));
     };
 
     class Resizer: MB_CtrlResizer { };

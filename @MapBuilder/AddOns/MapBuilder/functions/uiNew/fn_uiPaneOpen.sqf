@@ -11,7 +11,12 @@ _paneID = toLower _paneID;
 private _currentPanes = +(uiNamespace getVariable ["MB_allPanes", []]);
 private _paneIndex = _currentPanes find _paneID;
 if ((_paneIndex != -1) && !_replace) exitWith { // -- Already open
-    (uiNamespace getVariable ["MB_pane" + _paneID, controlNull]) ctrlShow true;
+    private _targetPane = (uiNamespace getVariable ["MB_pane" + _paneID, controlNull]);
+    _targetPane ctrlShow true;
+    ctrlSetFocus _targetPane;
+    if (_targetPane getVariable ["collapsed", false]) then {
+        [_paneCtrl, true] call MB_fnc_uiPaneToggle;
+    };
     0
 };
 
@@ -47,7 +52,7 @@ if (_floating) then {
 
     // -- If we're allowed to close this window (and it's floating) create a close button
 
-    private _cantClose = ([["ui.setting", _paneID, "cantClose"], "cfg"] call MB_fnc_uiGetSetting) == 0;
+    private _cantClose = ([["ui.setting", _paneID, "cantClose"], "cfg"] call MB_fnc_uiGetSetting) == 1;
     if (_cantClose) then {
         (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlEnable false;
         (_paneCtrl controlsGroupCtrl __IDC_PANE_HEADER_CLOSE) ctrlShow false;
@@ -90,7 +95,7 @@ if (_floating) then {
 private _header = _paneCtrl controlsGroupCtrl __IDC_PANE_HEADER;
 private _helpURL = ([["ui.setting", _paneID, "helpurl"], "cfg"] call MB_fnc_uiGetSetting);
 if (_helpURL != "") then {
-    private _text = format ["<a href='http:\\wiki.map-builder.info/w/%1'><img image='\mb\mapBuilder\data\icons\action\32_help_ca.paa' /></a>", _helpURL];
+    private _text = format ["<a href='http:\\wiki.map-builder.info/w/%1'><img size='0.5' image='\mb\mapBuilder\data\icons\action\32_help_ca.paa' /></a>", _helpURL];
     (_header controlsGroupCtrl __IDC_PANE_HEADER_HELP) ctrlSetStructuredText (parseText _text);
 } else {
     (_header controlsGroupCtrl __IDC_PANE_HEADER_HELP) ctrlSetStructuredText (parseText "");
@@ -126,7 +131,7 @@ uiNamespace setVariable ["MB_allPanes", _currentPanes];
 [["ui.setting", _paneID, "enabled"], 1] call MB_fnc_uiSetSetting;
 
 // -- Run some extra fancy code (Makes it easier to extend mapBuilder)
-private _code = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "onLoad");;
+private _code = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "onLoad");
 if (_code != "") then {
     _code = compile _code;
     [_paneCtrl] call _code;
