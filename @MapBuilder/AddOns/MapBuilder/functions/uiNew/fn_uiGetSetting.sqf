@@ -2,6 +2,7 @@
     Function:       MB_fnc_uiGetSetting
     Author:         Adanteh
     Description:    Gets a UI setting from the UI settings file
+    Example:        ["ui.fencer.offset", 0] call MB_fnc_uiGetSetting
 */
 
 // TODO: IMO This should be written in files with IO, preferably in Json type stuff

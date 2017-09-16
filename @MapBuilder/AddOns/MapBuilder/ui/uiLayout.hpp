@@ -64,6 +64,8 @@ class MapBuilder {
       sidebar = "right";
 
       onLoad = "['onload', _this] call MB_fnc_update3DPreview";
+      onCollapse = "['collapse', _this] call MB_fnc_update3DPreview";
+      onClose = "['disable', _this] call MB_fnc_update3DPreview";
     };
 
     class about: Default {
@@ -90,6 +92,10 @@ class MapBuilder {
       title = "Fencer";
       type = "MB_Window_Fencer_Group";
       helpurl = "Fencer";
+
+      onLoad = "['onload', _this] call MB_fnc_useFencer";
+      onCollapse = "['collapse', _this] call MB_fnc_useFencer";
+      onClose = "['close', _this] call MB_fnc_useFencer";
     };
 
     class Help: about {

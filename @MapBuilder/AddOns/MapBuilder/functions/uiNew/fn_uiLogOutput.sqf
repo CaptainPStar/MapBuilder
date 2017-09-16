@@ -14,6 +14,7 @@ if !(_message isEqualType (parseText "")) then {
 };
 
 switch (toLower _state) do {
+    case "important": {};
     case "error": {}; // -- Make RED
     case "default": {};
     default {};

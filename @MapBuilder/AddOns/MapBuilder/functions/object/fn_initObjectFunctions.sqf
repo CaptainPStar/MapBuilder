@@ -26,7 +26,7 @@ MB_ObjectMoveHeight = false;
 ["EndLeftMBDrag",{_this spawn MB_fnc_EndObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
 ["MouseMoved",{_this spawn MB_fnc_UpdateObjectHeightDrag;},{MB_Mode==0 && count(MB_ObjectChangeHeightSelection)>0}] call MB_fnc_addCallback;
 //Move camera but only when no object is dragged in height
-["MouseWheelMove",{_this spawn MB_fnc_ChangeHeightSelectedByMouseWheel;},{[DIK_LALT] call MB_fnc_isPressed}] call MB_fnc_addCallback;
+["MouseWheelMove",{_this call MB_fnc_ChangeHeightSelectedByMouseWheel;},{[DIK_LALT] call MB_fnc_isPressed}] call MB_fnc_addCallback;
 //############################
 // Object Selection Rotation
 //############################

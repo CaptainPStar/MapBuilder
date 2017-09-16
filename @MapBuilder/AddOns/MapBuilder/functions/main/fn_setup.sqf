@@ -73,9 +73,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	//Debug Logging
 	"MB_Helper" callExtension format["log|%1;%2;%3",name player,MB_VERSION,worldName];
 
-	//Fencer
-	MB_FencerDir = 0;
-	MB_FencerPreview = ObjNull;
 
 	//Autosave
 	MB_autosaveInterval = -1;
