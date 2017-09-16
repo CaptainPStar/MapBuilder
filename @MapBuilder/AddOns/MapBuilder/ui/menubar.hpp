@@ -111,7 +111,7 @@ class MB_MainMenuStrip: MB_MenuStrip
     class Settings
     {
       text = "Settings";
-      items[] = {"Camera", "ResetUI"};
+      items[] = {"Camera", "Weather", "ResetUI"};
       data = "";
       value = 1;
     };
@@ -121,6 +121,13 @@ class MB_MainMenuStrip: MB_MenuStrip
       data = "";
       picture = "\mb\mapBuilder\data\icons\image\32_photo_camera_ca.paa";
       action = "['show', 'camera'] call MB_fnc_settingsWindow;";
+    };
+    class Weather
+    {
+      text = "Weather";
+      data = "";
+      picture = "\mb\mapBuilder\data\icons\image\32_filter_drama_ca.paa";
+      action = "['show', 'weather'] call MB_fnc_settingsWindow;";
     };
     class Help
     {
