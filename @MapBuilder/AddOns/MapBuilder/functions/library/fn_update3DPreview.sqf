@@ -34,6 +34,17 @@ switch (toLower _mode) do {
         ['show'] call MB_fnc_update3DPreview;
     };
 
+    // -- Show object when opening, hide object when closing
+    case "collapse": {
+        private _paneCtrl = (_args param [0, controlNull]);
+        if (_paneCtrl getVariable ["collapsed", false]) then {
+            ["disable"] call MB_fnc_update3DPreview;
+        } else {
+            ["show"] call MB_fnc_update3DPreview;
+        };
+    };
+
+    // -- Show and update the object shown
     case "show": {
         #define __PREVIEWPOS [100, 100, 1000]
         _args params [["_type", missionNamespace getVariable ["MB_CurClass", ""]]];
