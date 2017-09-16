@@ -3,7 +3,7 @@ class MB_PaneUsedObjects: MB_CoreContent {
   class Controls: Controls {
     class Background: MB_CtrlPaneBackground { };
 
-    class MB_Window_Used_List: RscTree {
+    class MB_Window_Used_List: ctrlTree {
       idc = __IDC_USEDOBJECT;
       x = __GUI_PANE_CONTENT_X;
       y = __GUI_PANE_CONTENT_Y;
@@ -11,6 +11,7 @@ class MB_PaneUsedObjects: MB_CoreContent {
       h = (40 * GRID_H);
       sizeEx = 0.03;
       colorBackground[] = __COLOR_BACKGROUND_ALT;
+      colorBorder[] = {0, 0, 0, 0};
       onTreeSelChanged = "['select'] call MB_fnc_updateUsed;";
       onMouseExit = "false";
 

@@ -29,6 +29,8 @@ switch (toLower _mode) do {
 
     // -- When the 3D Preview pane is originally opened
     case "onload": {
+        private _previewCtrl = ((_args param [0, controlNull]) controlsGroupCtrl __IDC_PANE_CONTENT) controlsGroupCtrl __IDC_ELEMENT_1;
+        uiNamespace setVariable ["MB_PreviewPicture", _previewCtrl];
         ['show'] call MB_fnc_update3DPreview;
     };
 
@@ -36,6 +38,12 @@ switch (toLower _mode) do {
         #define __PREVIEWPOS [100, 100, 1000]
         _args params [["_type", missionNamespace getVariable ["MB_CurClass", ""]]];
         if (_type == "") exitWith { };
+
+        private _previewCtrl = uiNamespace getVariable ["MB_PreviewPicture", controlNull];
+        if !(isPiPEnabled) exitWith {
+            _previewCtrl ctrlSetText "\mb\mapbuilder\data\disable_pip_ca.paa";
+        };
+        _previewCtrl ctrlSetText "#(argb,512,512,1)r2t(mbpreviewrtt,1)";
 
         if (isNull MB_3DPreviewCam) then {
         	MB_3DPreviewCam = "camera" camCreate __PREVIEWPOS;

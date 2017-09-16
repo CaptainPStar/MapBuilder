@@ -62,6 +62,8 @@ class MapBuilder {
       enabled = 1;
       floating = 0;
       sidebar = "right";
+
+      onLoad = "['onload', _this] call MB_fnc_update3DPreview";
     };
 
     class about: Default {
