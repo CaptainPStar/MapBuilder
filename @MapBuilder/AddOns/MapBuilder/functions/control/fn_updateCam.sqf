@@ -66,7 +66,7 @@
 		};
 		//Move Down
 		if ([DIK_Z] call MB_fnc_isPressed ) then {
-			_camPos set [2,(_camPos select 2)-_mod*0.1];
+			_camPos set [2, 0 max ((_camPos select 2)-_mod*0.1)];
 		};
 	} else {
 		MB_CamSpeed = (MB_CamSpeed - 0.15) max 0.75;
@@ -94,9 +94,7 @@
 		MB_CamPos set[1,(MB_CamPos select 1)-360];
 	};
 
-	if ((_camPos select 2)<0) then {
-		_camPos set[2,0];
-	};
+
 	if ((MB_CamPos select 1)>=360) then {
 		MB_CamPos set[1,(MB_CamPos select 1)%360];
 	};
@@ -113,15 +111,17 @@
 	//MBCamera camSetDir [(MB_CamPos select 1),0,0];
 	//[MBCamera,(MB_CamPos select 2),0] call bis_fnc_setPitchBank;
 	//MBCamera camSetDive (MB_CamPos select 2);
-	private _cameraPosNew = [(_camPos select 0),(_camPos select 1),(_camPos select 2)];
+
+	private _camPosNew = +_camPos;
 	if !(MB_CameraFollowTerrain) then {
-		systemChat str [_cameraPosNew];
-		_cameraPosNew = AGLToASL _cameraPosNew;
+		private _terrainHeight = 0 max (getTerrainheightASL _camPos); // -- Stay at same level above sea
+		_camPosNew set [2, ((0 max (_camPos select 2)) - _terrainHeight)];
+		_camPos set [2, (_camPos select 2) max _terrainHeight];
 	};
 
 	private _dirNUp = [(MB_CamPos select 2),0,(MB_CamPos select 1)] call MB_fnc_CalcDirAndUpVector;
 	MBCamera setVectorDirAndUp _dirNUp;
-	MBCamera camSetPos _cameraPosNew;
+	MBCamera camSetPos _camPosNew;
 	MBCamera camCommit MB_CamCommit;
 	MB_CamPos set [0,_camPos];
 	//systemchat format["Real: [%1,%2,%3] : O : %4", getposATL MBCamera,getdir MBCamera,MBCamera call bis_fnc_getPitchBank, MB_CamPos];

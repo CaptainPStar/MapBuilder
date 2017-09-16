@@ -4,7 +4,7 @@
     Description:    Removes a certain indexed from the given hook
 */
 
-params [["_id",[],[[]]];
+params [["_id",[],[[]]]];
 
 if (count _id < 2) exitWith { };
 

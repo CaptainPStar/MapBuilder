@@ -12,6 +12,7 @@ uiNamespace setVariable ["MB_UI_Sidebars", nil];
 uiNamespace setVariable ["MB_sidebarRight", nil];
 uiNamespace setVariable ["MB_sidebarLeft", nil];
 
+"MB_fnc_updatecam" call bis_fnc_recompile;
 "MB_fnc_uiSidebarCreate" call bis_fnc_recompile;
 "MB_fnc_uiLoadPanes" call bis_fnc_recompile;
 "MB_fnc_uiPanesShift" call BIS_fnc_recompile;
