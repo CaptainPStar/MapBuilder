@@ -32,6 +32,9 @@ if (_replace) then {
 private _paneCtrlClass = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "type");
 if ((_paneCtrlClass == "") || !(isClass (configFile >> _paneCtrlClass))) then {
     _paneCtrlClass = "MB_MissingPane";
+    if !(isClass (configFile >> "MapBuilder" >> "Panes" >> _paneID)) then {
+        _paneID = "Default";
+    };
 };
 
 // -- Makes either a 'floating' window not attached that you can freely move, or a preset size on in a sidebar

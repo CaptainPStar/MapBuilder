@@ -105,7 +105,7 @@ class MB_MainMenuStrip: MB_MenuStrip
       data = "";
       //shortcuts[] = {"512 + 0x31"};
       picture = "\mb\mapBuilder\data\icons\maps\32_local_library_ca.paa";
-      action = "['preset', true] call MB_fnc_uiPaneOpen;";
+      action = "['presets', true] call MB_fnc_uiPaneOpen;";
       //opensNewWindow = 1;
     };
     class Settings

@@ -10,7 +10,7 @@ class MB_MissingPane: MB_CoreContent {
       y = 0;
       h = 15 * GRID_H;
       w = 20 * __GUI_PANE_W;
-      text = "This window has a non-existant 'type' entry within Mapbuilder>>Panes config";
+      text = "This window has a non-existant 'type' entry within Mapbuilder>>Panes config<br /><br />Check uiLayout.hpp to fix this";
       MB_hAdjust = 1;
       MB_wAdjust = 1;
       MB_hOffset = __GUI_PANE_BUTTON_H;
