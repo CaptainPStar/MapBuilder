@@ -1,10 +1,15 @@
-private["_display","_ctrl","_index","_data","_path"];
-disableSerialization;
-_display = uinamespace getvariable 'mb_main_dialog';
-_ctrl = _display displayCtrl 171202;
-_path = (tvCurSel 171202);
-_data = [];
-_index = 0;
+/*
+    Function:       MB_fnc_brusherRemoveTemplate
+    Author:         NeoArmageddon
+    Description:    Removes object from brushing template
+*/
+
+private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+#define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
+
+private _path = (tvCurSel __CTRLCONTENT(171202));
+private _data = [];
+private _index = 0;
 
 if(count(_path)>0) then {
 	_index = _path select 0;

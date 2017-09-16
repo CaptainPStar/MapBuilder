@@ -1,8 +1,17 @@
-private["_data"];
-_display = uinamespace getvariable 'mb_main_dialog';
-_path = (tvCurSel (_display displayCtrl 171202));
-_data = [];
-_index = 0;
+/*
+    Function:       MB_fnc_brusherAddObject
+    Author:         NeoArmageddon
+    Description:    Adds selected object to the brush
+*/
+
+private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+#define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
+
+private _listCtrl = __CTRLCONTENT(171202);
+private _path = tvCurSel _listCtrl;
+private _data = [];
+private _index = 0;
+
 if(count(_path)>0) then {
 	_index = _path select 0;
 	if(_index < count(MB_CurBrush)) then {

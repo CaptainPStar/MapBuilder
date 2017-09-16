@@ -1,8 +1,17 @@
-private["_data"];
-_ctrl = _this select 0;
-_path = (tvCurSel _ctrl);
-_data = [];
-_index = 0;
+/*
+    Function:       MB_fnc_brusherUpdateObjectPanel
+    Author:         NeoArmageddon
+    Description:    Does something
+*/
+
+private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+#define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
+
+params [["_ctrl", controlNull]];
+
+private _path = (tvCurSel _ctrl);
+private _data = [];
+private _index = 0;
 if(count(_path)>0) then {
 	_index = _path select 0;
 	if(_index < count(MB_CurBrush)) then {
@@ -29,42 +38,39 @@ if(count(_data)>0) then {
 	// 171215 Random Dir
 	// 171216 Random Pitch
 	// 171217 Random Bank
-	// 171218 Random Scale	
+	// 171218 Random Scale
 
-	disableSerialization;
-	_display = uinamespace getvariable 'mb_main_dialog';
-	
 	[] call mb_fnc_brusherUpdateObjectList;
-	
-	(_display displayCtrl 171203) ctrlSetText format["%1",(_data select 2)];
-	
-	(_display displayCtrl 171204) ctrlSetText format["%1",(_data select 3)];
-	
-	(_display displayCtrl 171205) ctrlSetText format["%1",(_data select 4) select 0];
-	
-	(_display displayCtrl 171206) ctrlSetText format["%1",(_data select 4) select 1];
-	
-	(_display displayCtrl 171207) ctrlSetText format["%1",(_data select 4) select 2];
-	
-	(_display displayCtrl 171208) ctrlSetText format["%1",(_data select 5)];
-	
-	(_display displayCtrl 171209) ctrlSetText format["%1",(_data select 6)];
-	
-	(_display displayCtrl 171210) ctrlSetText format["%1",(_data select 7)];
-	
-	(_display displayCtrl 171211) ctrlSetText format["%1",(_data select 8)];
-	
-	(_display displayCtrl 171212) ctrlSetText format["%1",(_data select 9) select 0];
-	
-	(_display displayCtrl 171213) ctrlSetText format["%1",(_data select 9) select 1];
-	
-	(_display displayCtrl 171214) ctrlSetText format["%1",(_data select 9) select 2];
-	
-	(_display displayCtrl 171215) ctrlSetText format["%1",(_data select 10)];
-	
-	(_display displayCtrl 171216) ctrlSetText format["%1",(_data select 11)];
-	
-	(_display displayCtrl 171217) ctrlSetText format["%1",(_data select 12)];
-	
-	(_display displayCtrl 171218) ctrlSetText format["%1",(_data select 13)];
+
+	__CTRLCONTENT(171203) ctrlSetText format["%1",(_data select 2)];
+
+	__CTRLCONTENT(171204) ctrlSetText format["%1",(_data select 3)];
+
+	__CTRLCONTENT(171205) ctrlSetText format["%1",(_data select 4) select 0];
+
+	__CTRLCONTENT(171206) ctrlSetText format["%1",(_data select 4) select 1];
+
+	__CTRLCONTENT(171207) ctrlSetText format["%1",(_data select 4) select 2];
+
+	__CTRLCONTENT(171208) ctrlSetText format["%1",(_data select 5)];
+
+	__CTRLCONTENT(171209) ctrlSetText format["%1",(_data select 6)];
+
+	__CTRLCONTENT(171210) ctrlSetText format["%1",(_data select 7)];
+
+	__CTRLCONTENT(171211) ctrlSetText format["%1",(_data select 8)];
+
+	__CTRLCONTENT(171212) ctrlSetText format["%1",(_data select 9) select 0];
+
+	__CTRLCONTENT(171213) ctrlSetText format["%1",(_data select 9) select 1];
+
+	__CTRLCONTENT(171214) ctrlSetText format["%1",(_data select 9) select 2];
+
+	__CTRLCONTENT(171215) ctrlSetText format["%1",(_data select 10)];
+
+	__CTRLCONTENT(171216) ctrlSetText format["%1",(_data select 11)];
+
+	__CTRLCONTENT(171217) ctrlSetText format["%1",(_data select 12)];
+
+	__CTRLCONTENT(171218) ctrlSetText format["%1",(_data select 13)];
 };

@@ -1,26 +1,30 @@
-private["_display","_ctrl","_curFile","_brushFiles","_brushFolder","_listbox"];
+/*
+    Function:       MB_fnc_brusherUpdateFileList
+    Author:         NeoArmageddon
+    Description:    Updates the list of saved brush files
+*/
+
 disableSerialization;
 
-_display = uinamespace getvariable 'mb_main_dialog';
-_listbox = _display displayCtrl 171201;
-_brushFolder = ("MB_FileIO" callExtension "listfiles|brushes");
-_brushFiles = [_brushFolder,"|"] call BIS_fnc_splitString;
+private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+#define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
+
+private _listbox = __CTRLCONTENT(171201);
+private _brushFolder = ("MB_FileIO" callExtension "listfiles|brushes");
+private _brushFiles = [_brushFolder,"|"] call BIS_fnc_splitString;
 _brushFiles = _brushFiles - ["."];
 _brushFiles = _brushFiles - [".."];
-
-
-_curFile = ctrlText (_display displayCtrl 171220);
-
+private _curFile = ctrlText __CTRLCONTENT(171220);
 
 tvClear _listbox;
 {
 	private["_name","_index"];
-	_name = [_x,"."] call BIS_fnc_splitString;
-	_index =_listBox tvAdd [[],(_name select 0)];
+	private _name = [_x,"."] call BIS_fnc_splitString;
+	private _index =_listBox tvAdd [[],(_name select 0)];
 	_listbox tvSetData [[_index], (_name select 0)];
 	if((_name select 0) == _curFile) then {
 		_listbox tvSetCurSel [_index];
 	};
 } foreach _brushFiles;
 _listbox tvSort[[], false];
-(_display displayCtrl 171220) ctrlSetText _curFile;
+__CTRLCONTENT(171220) ctrlSetText _curFile;

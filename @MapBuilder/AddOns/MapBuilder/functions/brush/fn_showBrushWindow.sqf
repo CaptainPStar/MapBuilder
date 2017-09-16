@@ -1,16 +1,15 @@
-private["_display","_ctrl"];
-	disableSerialization;
-	_display = uinamespace getvariable 'mb_main_dialog';
-	_ctrl = _display displayCtrl 171200;
-	
-	if(!ctrlShown _ctrl) then {
-		[171200,false] spawn MB_fnc_openWindow;
-		
-		[] call mb_fnc_brusherUpdateFileList;
-		
-		["First"] call mb_fnc_brusherUpdateTemplateList;
-		
-	} else {
-		[171200,false] spawn MB_fnc_closeWindow;
-	};
-	
+/*
+    Function:       MB_fnc_showBrushWindow
+    Author:         NeoArmageddon
+    Description:    Called when loading in the brush window
+*/
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
+params ["_paneCtrl"];
+
+systemChat str ["Brusher", _this];
+
+private _brusherCtrl = (_paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT);
+uiNamespace setVariable ["MB_BrushContent", _brusherCtrl];
+
+[] call mb_fnc_brusherUpdateFileList;
+["First"] call mb_fnc_brusherUpdateTemplateList;

@@ -1,9 +1,13 @@
-private["_data","_path"];
+/*
+    Function:       MB_fnc_brusherApplySettings
+    Author:         NeoArmageddon
+    Description:    A Function That Does stuff
+*/
 
-	disableSerialization;
-	_display = uinamespace getvariable 'mb_main_dialog';
+private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+#define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
 
-	MB_BrushWidth = parseNumber ctrlText(_display displayCtrl 171221);
-	MB_BrushCamFollow = ctrlChecked (_display displayCtrl 171222);
-	MB_BrusherLockDir = ctrlChecked (_display displayCtrl 171223);
-	//MB_BrushCamFollowAngleLock = ctrlChecked (_display displayCtrl 171223);
+MB_BrushWidth = parseNumber ctrlText __CTRLCONTENT(171221);
+MB_BrushCamFollow = ctrlChecked  __CTRLCONTENT(171222);
+MB_BrusherLockDir = ctrlChecked  __CTRLCONTENT(171223);
+//MB_BrushCamFollowAngleLock = ctrlChecked  __CTRLCONTENT(171223);

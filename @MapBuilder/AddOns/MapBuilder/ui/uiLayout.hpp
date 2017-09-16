@@ -80,6 +80,10 @@ class MapBuilder {
     class brusher: about {
       title = "Brushes";
       type = "MB_Window_brusher_Group";
+
+      onLoad = "_this call MB_fnc_showBrushWindow";
+      onCollapse = "";
+      onClose = "";
     };
 
     class Export: about {

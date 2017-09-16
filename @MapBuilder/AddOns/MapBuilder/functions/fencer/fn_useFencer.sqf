@@ -9,7 +9,6 @@
 
 params [["_mode", "refresh"], ["_args", []]];
 
-systemChat str ["Fencer", _this];
 private _return = true;
 switch (toLower _mode) do {
     case "onload": {
@@ -29,8 +28,6 @@ switch (toLower _mode) do {
         private _offset = __CTRLFENCER(170410);
         private _terrainAlign = __CTRLFENCER(170411);
         private _libraryMode = __CTRLFENCER(170412);
-
-        systemChat str [_offset, _terrainAlign, _libraryMode];
 
         _offset ctrlSetText (["ui.fencer.offset", "0.0"] call MB_fnc_uiGetSetting);
         _terrainAlign ctrlSetChecked ((["ui.fencer.terrainAlign", 0] call MB_fnc_uiGetSetting) > 0);

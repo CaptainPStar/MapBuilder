@@ -84,7 +84,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 
 	//Bootstrap all variables:
 	call mb_fnc_initImportTBHashFunctions;
-	call mb_fnc_initBrushFunctions;
 	call mb_fnc_initControlFunctions;
 	call mb_fnc_initExportFunctions;
 	call mb_fnc_initFencerFunctions;
