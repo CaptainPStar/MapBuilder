@@ -50,6 +50,7 @@ class MB_MainMenuStrip: MB_MenuStrip
       data = "";
       picture = "\mb\mapBuilder\data\icons\av\32_library_add_ca.paa";
       action = "systemchat ""Unimplemented"";";
+      enabled = 0;
     };
     class Favorites {
       text = "Favorites";

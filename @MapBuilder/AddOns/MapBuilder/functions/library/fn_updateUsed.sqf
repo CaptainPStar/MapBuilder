@@ -12,14 +12,14 @@ switch (toLower _mode) do {
 	case "onload": {
 		private _paneCtrl = (_args param [0, controlNull]);
 		private _listCtrl = (_paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT) controlsGroupCtrl __IDC_USEDOBJECT;
-		uiNamespace setVariable ["MB_UsedObjectsList", _listCtrl]
+		uiNamespace setVariable ["MB_UsedObjectsList", _listCtrl];
 		['refresh'] call MB_fnc_updateUsed;
 	};
 
 	case 'select': {
 		private _listCtrl = uiNamespace getVariable ["MB_UsedObjectsList", controlNull];
 		[_listCtrl] call MB_fnc_librarySelect;
-	};
+};
 
 	case "selectall": {
 		private _listCtrl = uiNamespace getVariable ["MB_UsedObjectsList", controlNull];

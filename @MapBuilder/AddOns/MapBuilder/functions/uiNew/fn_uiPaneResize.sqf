@@ -13,23 +13,24 @@ switch (toLower _mode) do {
         private _collapsed = _paneCtrl getVariable ["collapsed", false];
         private _floating = _paneCtrl getVariable ["floating", false];
 
-        private _contentPosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
+        private _panePosReal = [_paneCtrl] call MB_fnc_getCtrlPositionReal; // Get real position, not the position within controlGroup
         private _display = ctrlParent _paneCtrl;
         private _contentCtrl = _paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT;
+        private _resizeButtonReal = [_ctrl] call MB_fnc_getCtrlPositionReal;
 
         private _adjustX = _floating; // -- Only adjust width if not attached to a sidebar
         uiNamespace setVariable ["MB_ResizingTarget", _contentCtrl];
         private _resizeHandle = [{
-            (_this select 0) params ["_contentPosReal", "_adjustX"];
+            (_this select 0) params ["_panePosReal", "_adjustX"];
             if (isNull (__GUI_WINDOW)) exitWith {
                 [_this select 1] call MB_fnc_removePerFrameHandler;
             };
 
-            private _sizeY = (getMousePosition select 1) - (_contentPosReal select 1);
-            private _sizeX = [-1, (getMousePosition select 0) - (_contentPosReal select 0)] select _adjustX;
+            private _sizeY = (getMousePosition select 1) - (_panePosReal select 1);
+            private _sizeX = [-1, (getMousePosition select 0) - (_panePosReal select 0)] select _adjustX;
             [(uiNamespace getVariable ["MB_ResizingTarget", controlNull]), _sizeY, _sizeX] call MB_fnc_uiAdjustContentCtrl;
 
-        }, 0, [_contentPosReal, _adjustX]] call MB_fnc_addPerFrameHandler;
+        }, 0, [_panePosReal, _adjustX]] call MB_fnc_addPerFrameHandler;
         uiNamespace setVariable ["MB_ResizingHandle", _resizeHandle];
     };
 

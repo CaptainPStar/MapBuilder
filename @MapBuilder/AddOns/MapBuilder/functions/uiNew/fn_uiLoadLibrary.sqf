@@ -26,6 +26,7 @@ _fnc_addItem = {
     		[_value,_newPath] call _fnc_addItem;
     	};
     	if (_value isEqualType "") then {
+            diag_log str ["[MB Library]", _newPath, _value];
     		_libraryCtrl tvSetData [_newPath, _value];
     	};
         nil;

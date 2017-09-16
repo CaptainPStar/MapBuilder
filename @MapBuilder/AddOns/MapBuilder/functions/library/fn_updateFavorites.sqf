@@ -34,8 +34,8 @@ switch (toLower _mode) do {
 	case "add": {
 		private _class = _args param [0, missionNamespace getVariable ["MB_CurClass", ""]];
 		if (_class != "") then {
-			private _added = MB_FavoriteObjects pushBackUnique _class;
-			if (_added) then {
+			private _index = MB_FavoriteObjects pushBackUnique _class;
+			if (_index != -1) then {
 				['refresh'] call MB_fnc_updateFavorites;
 			};
 		};
@@ -64,10 +64,10 @@ switch (toLower _mode) do {
 	case "remove": {
 		private _favoritesList = uiNamespace getVariable ["MB_FavoritesList", controlNull];
 		private _index = MB_FavoriteObjects find (_favoritesList tvData (tvCurSel _favoritesList));
-		if (_index > =0) then {
+		if (_index >= 0) then {
 			MB_FavoriteObjects deleteAt _index;
 		};
-		['update'] call MB_fnc_updateFavorites;
+		['refresh'] call MB_fnc_updateFavorites;
 	};
 
 	// -- Run whenever we add, remove or open the pane

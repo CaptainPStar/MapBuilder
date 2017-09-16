@@ -8,6 +8,9 @@
 params ["_ctrl"];
 private _data = _ctrl tvData (tvCurSel _ctrl);
 
+// TODO: We should remember what is collapsed and expanded, so we can restore that state whenever we open the library.
+// Saves a lot of constnatly reopening the same things (BIS' Eden also doesn't do this and it's annoying as hell)
+
 if (_data != "") then {
 	MB_CurClass = _data;
 
@@ -17,7 +20,7 @@ if (_data != "") then {
 		private _previewCtrl = ((_previewPane controlsGroupCtrl __IDC_PANE_CONTENT) controlsGroupCtrl __IDC_ELEMENT_1);
 		if !(isNull _previewCtrl) then {
 			// _previewCtrl ctrlSetModel (getText (configFile >> "CfgVehicles" >> _data >> "model"));
-			['show', [_data]] call MB_fnc_show3DPreview;
+			['show', [_data]] call MB_fnc_update3DPreview;
 		};
 	};
 };

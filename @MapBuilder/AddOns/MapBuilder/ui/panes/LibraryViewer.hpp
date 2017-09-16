@@ -10,8 +10,7 @@ class MB_PaneLibraryViewer: MB_CoreContent {
       y = __GUI_PANE_CONTENT_Y;
       h = (5 * GRID_H);
       w = __GUI_PANE_CONTENT_W;
-      colorBackground[] = __COLOR_BACKGROUND_ALT;
-      onTreeSelChanged = "_this call MB_FNC_LibrarySelect;";
+      colorBackground[] = __COLOR_BACKGROUND_ALT;      
       colorBorder[] = {0, 0, 0, 0};
 
       MB_wAdjust = 1;
@@ -29,6 +28,7 @@ class MB_PaneLibraryViewer: MB_CoreContent {
       w = __GUI_PANE_CONTENT_W;
       colorBackground[] = __COLOR_BACKGROUND_ALT;
       colorBorder[] = {0, 0, 0, 0};
+      onTreeSelChanged = "_this call MB_FNC_LibrarySelect;";
 
       MB_wAdjust = 1;
       MB_wOffset = 2 * __GUI_PANE_CONTENT_X;

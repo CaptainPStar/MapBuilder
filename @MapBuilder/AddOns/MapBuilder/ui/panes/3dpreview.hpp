@@ -15,7 +15,8 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.58,0.01,15,15)
 			MB_wAdjust = 1;
 			MB_wOffset = (2 * MB_WINDOW_PADDING_X);
 			MB_hAdjust = 1;
-			MB_hOffset = (2 * MB_WINDOW_PADDING_Y);
+			MB_hOffset = (2 * MB_WINDOW_PADDING_Y) + __GUI_PANE_RESIZE_H;
 		};
+
 		class Resizer: MB_CtrlResizer { };
 END_WINDOW
