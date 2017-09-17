@@ -121,7 +121,7 @@ class MB_Main
 			colorActive[] = {1,1,1,1};
 			colorDisabled[] = {1,1,1,1};
 			text = "\MB\MapBuilder\data\icon.paa";
-			action = "[170600,false] spawn MB_fnc_openAboutWindow;";
+			action = "['about'] call MB_fnc_uiPaneOpen;";
 		};
 
 		/*class MB_OverlayGroup: ctrlControlsGroupNoScrollbars {

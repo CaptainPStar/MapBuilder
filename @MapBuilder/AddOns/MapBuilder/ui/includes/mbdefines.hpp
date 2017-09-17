@@ -31,6 +31,10 @@
 #define __GUI_GRIDX(var1) ((GRID_W * 4) * var1)
 #define __GUI_GRIDY(var1) ((GRID_H * 4) * var1)
 
+// -- Toolbar
+#define GRID_TOOLBAR_X(var1) (var1 * (5 * GRID_W))
+#define GRID_TOOLBAR_Y(var1) (var1 * (5 * GRID_W))
+
 // Variables
 #define __GUI_WINDOW (uiNamespace getVariable ['mb_main_dialog', displayNull])
 
@@ -45,6 +49,8 @@
 #define __GUI_PANE_CONTENT_W (__GUI_PANE_W - (2 * __GUI_PANE_CONTENT_X))
 #define __GUI_PANE_RESIZE_W __GUI_GRIDX(1)
 #define __GUI_PANE_RESIZE_H __GUI_GRIDY(1)
+
+#define __GUI_BAR_BUTTON_H
 
 
 #define __GUI_SETTING_W __GUI_GRIDX(30)
