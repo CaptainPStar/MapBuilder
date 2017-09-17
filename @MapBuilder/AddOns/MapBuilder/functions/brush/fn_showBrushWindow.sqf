@@ -6,8 +6,6 @@
 #include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 params ["_paneCtrl"];
 
-systemChat str ["Brusher", _this];
-
 private _brusherCtrl = (_paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT);
 uiNamespace setVariable ["MB_BrushContent", _brusherCtrl];
 

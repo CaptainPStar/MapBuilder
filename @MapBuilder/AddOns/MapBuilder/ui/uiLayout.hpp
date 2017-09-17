@@ -75,6 +75,10 @@ class MapBuilder {
       collapsed = 0;
       enabled = 0;
       allowSidebar = 0;
+
+      onLoad = "_this call MB_fnc_openAboutWindow";
+      onCollapse = "";
+      onClose = "";
     };
 
     class brusher: about {
@@ -90,6 +94,10 @@ class MapBuilder {
       title = "Export";
       type = "MB_Window_Export_Group";
       helpurl = "Export";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
     class Fencer: about {
@@ -105,29 +113,49 @@ class MapBuilder {
     class Help: about {
       title = "Help";
       type = "MB_Window_Help_Group";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
     class ObjectInspector: about {
       title = "Object Inspector";
       type = "MB_Window_ObjectInspector_Group";
       helpurl = "Object_Inspector";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
     class Masker: about {
       title = "Masker";
       type = "MB_Window_Masker_Group";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
     class Project: about {
       title = "Project";
       type = "MB_Window_Project_Group";
       helpurl = "Project_Save_and_Load";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
     class Presets: about {
       title = "Presets";
       type = "";
       helpurl = "Presets";
+
+      onLoad = "";
+      onCollapse = "";
+      onClose = "";
     };
 
 

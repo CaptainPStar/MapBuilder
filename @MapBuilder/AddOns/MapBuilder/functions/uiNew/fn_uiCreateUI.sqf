@@ -13,6 +13,7 @@ uiNamespace setVariable ["MB_sidebarRight", nil];
 uiNamespace setVariable ["MB_sidebarLeft", nil];
 
 
+"MB_fnc_openAboutWindow" call bis_fnc_recompile;
 "MB_fnc_fencerUpdatePreview" call bis_fnc_recompile;
 "MB_fnc_fencerPlace" call BIS_fnc_recompile;
 "MB_fnc_useFencer" call bis_fnc_recompile;
