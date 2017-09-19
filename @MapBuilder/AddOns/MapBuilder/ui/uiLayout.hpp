@@ -143,9 +143,9 @@ class MapBuilder {
       type = "MB_Window_Project_Group";
       helpurl = "Project_Save_and_Load";
 
-      onLoad = "";
+      onLoad = "['onload', _this] call MB_fnc_showProjects";
       onCollapse = "";
-      onClose = "";
+      onClose = "['close', _this] call MB_fnc_showProjects";
     };
 
     class Presets: about {

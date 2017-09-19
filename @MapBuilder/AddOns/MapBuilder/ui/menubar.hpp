@@ -25,7 +25,7 @@ class MB_MainMenuStrip: MB_MenuStrip
       data = "";
       //shortcuts[] = {"512 + 0x31"};
       picture = "\a3\3DEN\Data\Displays\Display3DEN\ToolBar\save_ca.paa";
-      action = "[] call MB_fnc_ShowProjectWindow;";
+      action = "['project', true] call MB_fnc_uiPaneOpen;";
       //opensNewWindow = 1;
     };
     class Export
@@ -112,7 +112,7 @@ class MB_MainMenuStrip: MB_MenuStrip
     class Settings
     {
       text = "Settings";
-      items[] = {"Camera", "Weather", "ResetUI"};
+      items[] = {"Camera", "GeneralSettings", "Weather", "ResetUI"};
       data = "";
       value = 1;
     };

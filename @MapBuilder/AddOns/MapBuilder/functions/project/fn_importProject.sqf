@@ -1,3 +1,5 @@
+disableSerialization;
+
 private["_filename"];
 	_filename = [_this,0,"Unknown_Project"] call bis_fnc_param;
 	if(_filename == "") exitWith {systemChat "Error: Can't load a project without name!";};

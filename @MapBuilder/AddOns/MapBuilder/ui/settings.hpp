@@ -62,6 +62,5 @@ class MB_CtrlSettingDialog {
           };
         };
       };
-
     };
 };

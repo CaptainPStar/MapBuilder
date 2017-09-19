@@ -31,6 +31,7 @@ if (_replace) then {
 
 private _paneCtrlClass = getText (configFile >> "MapBuilder" >> "Panes" >> _paneID >> "type");
 if ((_paneCtrlClass == "") || !(isClass (configFile >> _paneCtrlClass))) then {
+    [["Missing pane", _paneCtrlClass, _paneID], "warning"] call MB_fnc_uiLogOutput;
     _paneCtrlClass = "MB_MissingPane";
     if !(isClass (configFile >> "MapBuilder" >> "Panes" >> _paneID)) then {
         _paneID = "Default";

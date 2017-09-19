@@ -23,10 +23,6 @@
 	"MB_fnc_uiCreateUI" call bis_fnc_recompile;
 	[] call MB_fnc_uiCreateUI;
 
-	// [1,false] call MB_fnc_togglePopup;
-	// [2,false] call MB_fnc_togglePopup;
-	// [3,false] call MB_fnc_togglePopup;
-
 	MB_CameraSpeedModifier = ["camera.speedmodifier", 1] call MB_fnc_uiGetSetting;
 	MB_CameraEasing = ["camera.easing", true] call MB_fnc_uiGetSetting;
 	MB_CameraFollowTerrain = ["camera.terrainfollow", true] call MB_fnc_uiGetSetting;

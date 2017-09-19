@@ -73,11 +73,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	//Debug Logging
 	"MB_Helper" callExtension format["log|%1;%2;%3",name player,MB_VERSION,worldName];
 
-
-	//Autosave
-	MB_autosaveInterval = -1;
-	MB_nextProjectAutosave = time + MB_autosaveInterval;
-
 	//terrainbuilder import hash
 	MB_importTB_P3D = [];
 	MB_importTB_ClassName = [];
@@ -94,9 +89,7 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	call mb_fnc_initMultiplayerFunctions;
 	call mb_fnc_initObjectFunctions;
 	call mb_fnc_initObjectInspectorFunctions;
-	call mb_fnc_initPopupFunctions;
 	call mb_fnc_initPresetFunctions;
-	call mb_fnc_initProjectFunctions;
 	call mb_fnc_initSelectionFunctions;
 	call mb_fnc_initUIFunctions;
 	call mb_fnc_initViewFunctions;
@@ -104,7 +97,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	call mb_fnc_initQuadtreeFunctions;
 	[] call MB_fnc_loadLibrary;
 	call mb_fnc_addMBAction;
-	//["loop","MB_fnc_autosave"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_calcSelectionCenter"] call mb_fnc_addCallback;
 	//["camUpdate","MB_fnc_rotate3DPreview"] call mb_fnc_addCallback;
 

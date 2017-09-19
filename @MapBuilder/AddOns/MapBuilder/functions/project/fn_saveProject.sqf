@@ -1,3 +1,5 @@
+disableSerialization;
+
 private["_filename","_confirmed","_folder"];
 _filename = [_this,0,"project"] call bis_fnc_param;
 if(_filename == "") exitWith {systemChat "Error: Projects needs a name!";};
@@ -21,16 +23,16 @@ if(_confirmed) then {
 			_type = typeof _obj;
 			_vars = [_obj] call MB_fnc_getObjectVars;
 			//[_pos,_pitch,_bank,_yaw,_simulate,_locked,_scale]
-			
+
 			_exactPos = [_obj] call MB_fnc_getExactPosition;
-			
+
 			_string = format["[""object"",[%1,%2,%3]]",str _type,_vars,_exactPos];
-			
+
 			"MB_FileIO" callExtension format["write|%1",_string];
 		};
 	} foreach MB_Objects;
 	{
-		_string = ["favoriteObj",[_x]] call MB_fnc_toStoreArr;	
+		_string = ["favoriteObj",[_x]] call MB_fnc_toStoreArr;
 		"MB_FileIO" callExtension format["write|%1",_string];
 
 	} foreach MB_FavoriteObjects;

@@ -11,13 +11,13 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			text = "Project Files:";
 		};
 		class Popup_ProjectsList : MB_RscListBox {
-			idc = 170204;
+			idc = __IDC_ELEMENT_1;
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 0;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 2;
 			w = MB_WINDOW_GRID_X * 28;
 			h = MB_WINDOW_GRID_Y * 10;
-			onLBSelChanged="call MB_fnc_ProjectsPopupSelect;";//--- action/function to call when listbox or combobox has been changed
-            onLBDblClick="call MB_fnc_ProjectsPopupSelect;";//--- action/function to call when listbox or combobox has been double clicked
+			onLBSelChanged = "['select', _this] call MB_fnc_showProjects;";//--- action/function to call when listbox or combobox has been changed
+      onLBDblClick = "['select', _this] call MB_fnc_showProjects;";//--- action/function to call when listbox or combobox has been double clicked
 		};
 		class Popup_ProjectsFilenameLabel : MB_RscText {
 			idc = -1;
@@ -28,7 +28,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			text = "Filename:";
 		};
 		class Popup_ProjectsFilename : MB_RscEdit {
-			idc = 170205;
+			idc = __IDC_ELEMENT_2;
 			text = "";
 			x =  MB_WINDOW_PADDING_X + MB_WINDOW_GRID_X * 3.5;
 			y = MB_WINDOW_PADDING_Y + MB_WINDOW_GRID_Y * 13;
@@ -43,7 +43,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Save";
-			action = "[ctrlText 170205] spawn MB_fnc_saveProject;";
+			action = "[ctrlText (uiNamespace getVariable ['MB_ProjectCurrent', controlNull])] spawn MB_fnc_saveProject;";
 			tooltip = "Save current project as ""Filename"".mbproj";
 		};
 		class Popup_ProjectsLoadButton : MB_RscButton {
@@ -53,7 +53,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Load";
-			action = "[ctrlText 170205] spawn MB_fnc_loadProject;";
+			action = "[ctrlText (uiNamespace getVariable ['MB_ProjectCurrent', controlNull])] spawn MB_fnc_loadProject;";
 			tooltip = "Load ""Filename"".mbproj. Current project will be cleared.";
 		};
 		class Popup_ProjectsImportButton : MB_RscButton {
@@ -63,7 +63,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Import";
-			action = "[ctrlText 170205] spawn MB_fnc_importProject;";
+			action = "[ctrlText (uiNamespace getVariable ['MB_ProjectCurrent', controlNull])] spawn MB_fnc_importProject;";
 			tooltip = "Load ""Filename"".mbproj and merge with current project.";
 		};
 		class Popup_ProjectsClearButton : MB_RscButton {
@@ -73,7 +73,7 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.25,0.3,28,18)
 			w = MB_WINDOW_GRID_X * 4;
 			h = MB_WINDOW_GRID_Y * 1;
 			text = "Clear";
-			action = "[ctrlText 170205] spawn MB_fnc_clearProject;";
+			action = "[ctrlText (uiNamespace getVariable ['MB_ProjectCurrent', controlNull])] spawn MB_fnc_clearProject;";
 			tooltip = "Clear current project.";
 		};
 END_WINDOW
