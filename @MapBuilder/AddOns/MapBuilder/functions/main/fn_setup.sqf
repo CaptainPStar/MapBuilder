@@ -89,7 +89,6 @@ _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 	call mb_fnc_initMultiplayerFunctions;
 	call mb_fnc_initObjectFunctions;
 	call mb_fnc_initObjectInspectorFunctions;
-	call mb_fnc_initPresetFunctions;
 	call mb_fnc_initSelectionFunctions;
 	call mb_fnc_initUIFunctions;
 	call mb_fnc_initViewFunctions;

@@ -150,12 +150,12 @@ class MapBuilder {
 
     class Presets: about {
       title = "Presets";
-      type = "";
+      type = "MB_Window_Presets_Group";
       helpurl = "Presets";
 
-      onLoad = "";
+      onLoad = "['onload', _this] call MB_fnc_showPresets";
       onCollapse = "";
-      onClose = "";
+      onClose = "['close', _this] call MB_fnc_showPresets";
     };
 
 

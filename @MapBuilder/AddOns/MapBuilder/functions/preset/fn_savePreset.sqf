@@ -1,3 +1,5 @@
+disableSerialization;
+
 private["_filename","_pos","_zPos","_dir","_pitch","_bank","_scale","_layer","_type","_refObj"];
 _filename = [_this,0,"Unknown_Preset"] call bis_fnc_param;
 if(_filename == "") exitWith {systemChat "Error: Preset needs a name!";endLoadingScreen;};
@@ -19,8 +21,8 @@ if(_confirmed) then {
 		if(!isNull(_x)) then {
 			_obj = _x;
 			_type =(typeof _obj);
-			
-		
+
+
 			_pos = _obj getvariable "MB_ObjVar_PositionATL";
 			_pitch = _obj getvariable "MB_ObjVar_Pitch";
 			_bank = _obj getvariable "MB_ObjVar_Bank";
@@ -44,5 +46,5 @@ if(_confirmed) then {
 	systemChat ("MB_FileIO" callExtension "close");
 	systemchat format["Preset saved!"];
 	endLoadingScreen;
-	[] call MB_FNC_refreshPresetList;
+	['refresh'] call MB_fnc_showPresets;
 };

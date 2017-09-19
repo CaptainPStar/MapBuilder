@@ -30,5 +30,3 @@ addMissionEventHandler ["Loaded", {
 	} count MB_core_perFrameHandleArray;
 	MB_core_lastTickTime = diag_tickTime;
 }];
-
-BIS_fnc_arrayShuffle;

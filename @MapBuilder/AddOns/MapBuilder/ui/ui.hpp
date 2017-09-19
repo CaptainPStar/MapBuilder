@@ -50,6 +50,7 @@ class RscTextMulti;
 #include "panes\Favorites.hpp"
 #include "panes\fencer.hpp"
 #include "panes\help.hpp"
+#include "panes\presets.hpp"
 //#include "panes\infopopup.hpp"
 #include "panes\inspector.hpp"
 #include "panes\LibraryViewer.hpp"

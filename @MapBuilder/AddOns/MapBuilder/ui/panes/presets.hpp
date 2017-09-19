@@ -8,13 +8,13 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,20,12)
 			text = "Existing presets:";
 		};
 		class MB_Popup_Preset_List : MB_RscListBox {
-			idc = 170501;
+			idc = __IDC_ELEMENT_1;
 			WINDOW_POSITION(0,2,20,5)
-			onLBSelChanged="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been changed
-			onLBDblClick="call MB_fnc_PresetSelect;";//--- action/function to call when listbox or combobox has been double clicked
+			onLBSelChanged="['select', _this] call MB_fnc_showPresets;";//--- action/function to call when listbox or combobox has been changed
+			onLBDblClick="['select', _this] call MB_fnc_showPresets;";//--- action/function to call when listbox or combobox has been double clicked
 		};
 		class MB_Popup_Preset_Filename : MB_RscEdit {
-			idc = 170502;
+			idc = __IDC_ELEMENT_2;
 			text = "";
 			WINDOW_POSITION(0,7.2,14,1)
 			colorBackground[] = {0,0.75,0,0.75};
@@ -23,13 +23,13 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.3,0.35,20,12)
 			idc = -1;
 			WINDOW_POSITION(0,8.4,6,1)
 			text = "Save";
-			action = "[ctrlText 170502] spawn MB_fnc_savePreset;";
+			action = "['save'] call MB_fnc_showPresets;";
 		};
 		class MB_Popup_Preset_OpenButton : MB_RscButton {
 			idc = -1;
 			WINDOW_POSITION(7,8.4,6,1)
 			text = "Load";
-			action = "[ctrlText 170502] spawn MB_fnc_loadPreset;";
+			action = "['load'] call MB_fnc_showPresets;";
 		};
 
 		class MB_Popup_Preset_Tip: MB_RscStructuredText {
