@@ -1,8 +1,8 @@
 class MB_MainMenuStrip: MB_MenuStrip
 {
-  x = "SafeZoneX + (SafeZoneW * 0.03)";
+  x = safeZoneX + GRID_TOOLBAR_X(2);
   y = "SafeZoneY + (SafezoneH * 0)";
-  w = "SafeZoneW * 0.97";
+  w = safeZoneW - GRID_TOOLBAR_X(2);
   h = "SafeZoneH * 0.02";
   class Items
   {

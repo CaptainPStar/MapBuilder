@@ -22,6 +22,7 @@
 
 	"MB_fnc_uiCreateUI" call bis_fnc_recompile;
 	[] call MB_fnc_uiCreateUI;
+	[] call MB_fnc_uiToolbar;
 
 	MB_CameraSpeedModifier = ["camera.speedmodifier", 1] call MB_fnc_uiGetSetting;
 	MB_CameraEasing = ["camera.easing", true] call MB_fnc_uiGetSetting;

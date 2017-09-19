@@ -9,7 +9,7 @@ params ["_sidebarTarget"];
 
 private _sidebarPosition = switch (toLower _sidebarTarget) do {
     case "right": {
-        [safeZoneX + safeZoneW - __GUI_PANE_W, safeZoneY + (safeZoneH * 0.04), __GUI_PANE_W, safeZoneH * 0.93];
+        [safeZoneX + safeZoneW - __GUI_PANE_W, safeZoneY + (safeZoneH * 0.02), __GUI_PANE_W, safeZoneH * 0.98];
     };
     case "left": {
         [safeZoneX, safeZoneY, __GUI_PANE_W, safeZoneH];

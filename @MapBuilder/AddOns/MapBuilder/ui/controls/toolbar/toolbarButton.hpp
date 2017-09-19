@@ -5,6 +5,9 @@ class MB_CtrlToolbarButton: MB_RscButtonToolbar {
   tooltip = "<Unknown>";
   x = 0;
   y = 0;
-  w = GRID_TOOLBAR_X(1);
-  h = GRID_TOOLBAR_Y(1);
+  w = GRID_TOOLBAR_X(1.5);
+  h = GRID_TOOLBAR_Y(1.5);
+  colorBackgroundActive[] = {0, 0, 0, 0};
+  colorFocused[] = {0.9,0.9,0.9, 0};
+  colorShadow[] = {0, 0, 0, 0};
 };

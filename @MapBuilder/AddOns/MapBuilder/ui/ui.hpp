@@ -34,6 +34,8 @@ class RscTextMulti;
 #include "controls\title.hpp"
 #include "controls\background.hpp"
 
+#include "controls\toolbar\toolbarButton.hpp"
+
 #include "settings.hpp"
 #include "popup.hpp"
 
@@ -60,7 +62,7 @@ class RscTextMulti;
 #include "panes\UsedObjects.hpp"
 
 #include "uiLayout.hpp"
-
+//#include "wipfile.hpp"
 
 class MB_Main
 {
