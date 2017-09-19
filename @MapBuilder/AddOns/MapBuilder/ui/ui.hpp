@@ -35,8 +35,7 @@ class RscTextMulti;
 #include "controls\background.hpp"
 
 #include "settings.hpp"
-
-
+#include "popup.hpp"
 
 #include "paneCore\header.hpp"
 #include "paneCore\content.hpp"

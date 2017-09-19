@@ -123,6 +123,13 @@ class MB_MainMenuStrip: MB_MenuStrip
       picture = "\mb\mapBuilder\data\icons\image\32_photo_camera_ca.paa";
       action = "['show', 'camera'] call MB_fnc_settingsWindow;";
     };
+    class GeneralSettings
+    {
+      text = "General";
+      data = "";
+      picture = "\mb\mapBuilder\data\icons\action\32_settings_applications_ca.paa";
+      action = "['show', 'general'] call MB_fnc_settingsWindow;";
+    };
     class Weather
     {
       text = "Weather";
