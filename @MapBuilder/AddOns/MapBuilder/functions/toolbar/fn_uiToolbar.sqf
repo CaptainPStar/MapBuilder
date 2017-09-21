@@ -10,6 +10,7 @@ private _posY = 0;
 private _toolbarGroup = __GUI_WINDOW displayCtrl __IDC_TOOLBARGROUP;
 private _ySize = [(configFile >> "MB_CtrlToolbarButton" >> "h")] call MB_fnc_uiGetCfgSize;
 private _ySPacing = [(_toolbarConfig >> "ySpacing")] call MB_fnc_uiGetCfgSize;
+private _colorHightlight = getArray (_toolbarConfig >> "colorHighlight");
 
 {
     private _cfg = _x;
@@ -24,6 +25,7 @@ private _ySPacing = [(_toolbarConfig >> "ySpacing")] call MB_fnc_uiGetCfgSize;
     private _action = getText (_x >> "action");
     private _data = getText (_x >> "data");
     private _value = getNumber (_x >> "value");
+    private _default = getNumber (_x >> "default") > 0;
     private _enabled = !(isNumber (_x >> "enable")) || (getNumber (_x >> "enable") > 0); // -- If the number isn't thre, enable by default
 
     _toolbarCtrl ctrlSetTooltip _tooltip;
@@ -33,6 +35,9 @@ private _ySPacing = [(_toolbarConfig >> "ySpacing")] call MB_fnc_uiGetCfgSize;
     _toolbarCtrl setVariable ["data", _data];
     _toolbarCtrl setVariable ["value", _value];
 
+    if (_default) then {
+        _toolbarCtrl ctrlSetTextColor _colorHightlight;
+    };
     //systemChat str [configName _x, _toolbarCtrl, _picture, _posY];
     uiNamespace setVariable [("MB_ToolbarButton_" + configName _x), _toolbarCtrl];
 
