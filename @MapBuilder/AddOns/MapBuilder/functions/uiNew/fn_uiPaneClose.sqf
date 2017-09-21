@@ -26,4 +26,6 @@ if (false) then {
 
 [["ui.setting", _paneID, "enabled"], 0] call MB_fnc_uiSetSetting;
 
+ctrlSetFocus __GUI_VIEWPORT;
+
 true;

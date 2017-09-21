@@ -37,6 +37,7 @@
 
 // Variables
 #define __GUI_WINDOW (uiNamespace getVariable ['mb_main_dialog', displayNull])
+#define __GUI_VIEWPORT ((uiNamespace getVariable ['mb_main_dialog', displayNull]) displayCtrl 170001)
 
 // SIZES
 #define __GUI_PANE_W (80 * GRID_W)
@@ -69,7 +70,10 @@
 
 // IDCs
 #define __IDC_TOOLBARBUTTON 161001
+#define __IDC_TOOLBAR 162000
 #define __IDC_TOOLBARGROUP 162001
+#define __IDC_TOOLBARSETTINGSGROUP 162002
+#define __IDC_TOOLBARSETTINGs 162003
 
 #define __IDC_PANE_HEADER 10
 #define __IDC_PANE_HEADER_BG 11
@@ -124,3 +128,6 @@
 #define __COLOR_BUTTON_TEXT {0.749, 0.749, 0.749, 1}
 #define __COLOR_BUTTON_TEXT_ACCENT {0, 0, 0, 1}
 #define __COLOR_BUTTON_TEXT_DISABLED {0.25, 0.25, 0.25, 1}
+
+#define __COLOR_TOOLBUTTON {0.5, 0.5, 0.5, 0.7}
+#define __COLOR_TOOLBUTTON_HIGHLIGHT {1, 1, 1, 1}
