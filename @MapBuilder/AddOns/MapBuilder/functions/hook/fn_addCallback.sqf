@@ -8,7 +8,7 @@ if (isNil "MB_callBackNamespace") then {
 	MB_callBackNamespace = false call MB_fnc_createNamespace;
 };
 
-params ["_hook", ["_callback", {}, [{}, ""]], ["_condition", {}, [{}, ""]]];
+params ["_hook", ["_callback", {}, [{}, ""]], ["_condition", { true }, [{}, ""]]];
 
 private _hookCurrent = MB_callBackNamespace getVariable [_hook, []];
 _callback = [_callback] call MB_fnc_parseToCode;
