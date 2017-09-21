@@ -33,7 +33,7 @@ private _ySPacing = [(_toolbarConfig >> "ySpacing")] call MB_fnc_uiGetCfgSize;
     _toolbarCtrl setVariable ["data", _data];
     _toolbarCtrl setVariable ["value", _value];
 
-    systemChat str [configName _x, _toolbarCtrl, _picture, _posY];
+    //systemChat str [configName _x, _toolbarCtrl, _picture, _posY];
     uiNamespace setVariable [("MB_ToolbarButton_" + configName _x), _toolbarCtrl];
 
     _posY = _posY + (_ySize + _ySPacing);

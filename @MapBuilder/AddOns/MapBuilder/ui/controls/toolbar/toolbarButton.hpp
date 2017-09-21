@@ -10,4 +10,5 @@ class MB_CtrlToolbarButton: MB_RscButtonToolbar {
   colorBackgroundActive[] = {0, 0, 0, 0};
   colorFocused[] = {0.9,0.9,0.9, 0};
   colorShadow[] = {0, 0, 0, 0};
+  colorText[] = __COLOR_TOOLBUTTON;
 };

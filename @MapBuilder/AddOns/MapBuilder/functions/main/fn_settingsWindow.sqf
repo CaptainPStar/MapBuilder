@@ -4,6 +4,7 @@
     Description:    Handles showing, adding and editing the settings windows
     Example:        ["show", "camera"] call MB_fnc_settingsWindow;
 */
+#include "\mb\MapBuilder\ui\includes\mbdefines.hpp"
 
 disableSerialization;
 
@@ -249,6 +250,7 @@ switch (toLower _mode) do {
 	case "unload": {
 		uiNamespace setVariable ["MB_settings_settingsCategory", nil];
 		saveProfileNamespace;
+		ctrlSetFocus __GUI_VIEWPORT;
 	};
 
 	default {
