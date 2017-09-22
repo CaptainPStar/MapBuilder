@@ -8,6 +8,8 @@
 private["_logic"];
 _logic = [_this,0,objNull,[objNull]] call BIS_fnc_param;
 
+	MB_namespace = false call MB_fnc_createNamespace;
+
 	MB_Keys = [];
 	for "_i" from 0 to 255 do {
 		MB_Keys set [_i,false];

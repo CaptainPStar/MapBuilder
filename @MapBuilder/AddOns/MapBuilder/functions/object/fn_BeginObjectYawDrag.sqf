@@ -1,8 +1,8 @@
 private["_yaw","_obj","_pos"];
-	
+
 
 if((_this select 5)) then {
-	MB_ObjectChangeYawRotationCenter = MB_MousePosition;
+	MB_ObjectChangeYawRotationCenter = MB_namespace getVariable ["mb.drag.startPos", MB_MousePosition];
 } else {
 	if(isNull(MB_ClickedObject)) then {
 		MB_ObjectChangeYawRotationCenter =[] call MB_fnc_calcSelectionCenter;
