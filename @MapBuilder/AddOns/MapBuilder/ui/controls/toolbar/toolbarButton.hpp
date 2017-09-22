@@ -7,8 +7,8 @@ class MB_CtrlToolbarButton: MB_RscButtonToolbar {
   y = 0;
   w = GRID_TOOLBAR_X(1.5);
   h = GRID_TOOLBAR_Y(1.5);
-  colorBackgroundActive[] = {0, 0, 0, 0};
-  colorFocused[] = {0.9,0.9,0.9, 0};
+  colorFocused[] = {0.9, 0.9, 0.9, 0};
   colorShadow[] = {0, 0, 0, 0};
+  colorBackgroundActive[] = __COLOR_TOOLBUTTON_HOVERBG;
   colorText[] = __COLOR_TOOLBUTTON;
 };

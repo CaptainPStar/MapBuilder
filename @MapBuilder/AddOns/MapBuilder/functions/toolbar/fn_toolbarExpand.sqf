@@ -13,7 +13,7 @@ switch (toLower _mode) do {
             false
         };
         private _pos = ctrlPosition _sidebar;
-        _pos set [2, GRID_TOOLBAR_X(2)];
+        _pos set [2, GRID_TOOLBAR_X(2.2)];
         _sidebar ctrlSetPosition _pos;
         _sidebar ctrlCommit 0.1;
     };
@@ -22,7 +22,7 @@ switch (toLower _mode) do {
         private _ctrl = _args param [0, controlNull];
         private _sidebar = uiNamespace getVariable ["MB.Toolbar.contentCtrl", controlNull];
         private _pos = ctrlPosition _sidebar;
-        _pos set [2, GRID_TOOLBAR_X(2) + __GUI_PANE_W];
+        _pos set [2, GRID_TOOLBAR_X(2.2) + __GUI_PANE_W];
         _sidebar ctrlSetPosition _pos;
         _sidebar ctrlCommit 0.1;
     };
