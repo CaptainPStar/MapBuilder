@@ -15,11 +15,13 @@ class ctrlControlsGroupNoScrollbars;
 class ctrlControlsGroupNoVScrollbars;
 class ctrlEdit;
 class ctrlStatic;
+class ctrlActiveText;
 class ctrlStaticBackground;
 class ctrlStaticPicture;
 class CtrlToolbox;
 class ctrlToolboxPictureKeepAspect;
 class ctrlTree;
+class ctrlListbox;
 class ctrlXSliderH;
 class ctrlStaticTitle;
 class RscTextMulti;
@@ -33,6 +35,7 @@ class RscTextMulti;
 #include "controls\buttons.hpp"
 #include "controls\title.hpp"
 #include "controls\background.hpp"
+#include "controls\mouseoverbox.hpp"
 
 #include "controls\toolbar\toolbarButton.hpp"
 
@@ -61,8 +64,10 @@ class RscTextMulti;
 #include "panes\project.hpp"
 #include "panes\UsedObjects.hpp"
 
+#include "panes\settingsBrush.hpp"
+
 #include "uiLayout.hpp"
-//#include "wipfile.hpp"
+#include "wipfile.hpp"
 
 class MB_Main
 {

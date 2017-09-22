@@ -2,6 +2,7 @@
     Function:       MB_fnc_dispatchCallback
     Author:         NeoArmageddon/Adanteh
     Description:    Calls a hook, if condition is matched
+	Example:		['ui.focusreset', [_ctrl]] call MB_fnc_dispatchCallback
 */
 
 params ["_hook", ["_params", []]];

@@ -4,7 +4,7 @@
     Description:    Updates an object in the brush list
 */
 
-private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+private _brusherCtrl = uiNamespace getVariable ["MB_Brush.contentCtrl", controlNull];
 #define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
 
 

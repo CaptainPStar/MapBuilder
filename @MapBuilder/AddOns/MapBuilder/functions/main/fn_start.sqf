@@ -15,14 +15,14 @@
 		_control ctrlcommit 0;
 	};
 
-
+	diag_mergeConfigFile ["B:\Arma\Frontline\MapBuilder\@MapBuilder\AddOns\MapBuilder\config.cpp"];
 	startLoadingScreen ["Starting MapBuilder...","MB_LoadingScreen"];
 	//(findDisplay 46) createDisplay "MB_Main";
 	createDialog "MB_Main";
 
 	"MB_fnc_uiCreateUI" call bis_fnc_recompile;
 	[] call MB_fnc_uiCreateUI;
-	[] call MB_fnc_uiToolbar;
+	["init"] call MB_fnc_uiToolbar;
 
 	MB_CameraSpeedModifier = ["camera.speedmodifier", 1] call MB_fnc_uiGetSetting;
 	MB_CameraEasing = ["camera.easing", true] call MB_fnc_uiGetSetting;

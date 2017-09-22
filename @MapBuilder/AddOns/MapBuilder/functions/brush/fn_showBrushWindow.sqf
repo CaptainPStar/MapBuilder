@@ -7,7 +7,7 @@
 params ["_paneCtrl"];
 
 private _brusherCtrl = (_paneCtrl controlsGroupCtrl __IDC_PANE_CONTENT);
-uiNamespace setVariable ["MB_BrushContent", _brusherCtrl];
+uiNamespace setVariable ["MB_Brush.contentCtrl", _brusherCtrl];
 
-[] call mb_fnc_brusherUpdateFileList;
+[_brusherCtrl] call mb_fnc_brusherUpdateFileList;
 ["First"] call mb_fnc_brusherUpdateTemplateList;

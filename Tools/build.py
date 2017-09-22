@@ -97,6 +97,11 @@ def build_da_pbo(addonbuilder, foldertopack):
             pboprefix_file = open(os.path.join(path, "$PBOPREFIX$.txt"), 'r')
             pboprefix_path = (pboprefix_file.readlines()[0])[7:]
             print(pboprefix_path)
+        elif os.path.isfile(os.path.join(path, "$PBOPREFIX$")):
+            do_pboprefix = True
+            pboprefix_file = open(os.path.join(path, "$PBOPREFIX$"), 'r')
+            pboprefix_path = (pboprefix_file.readlines()[0])
+            print(pboprefix_path)
         else:
             do_pboprefix = False
 

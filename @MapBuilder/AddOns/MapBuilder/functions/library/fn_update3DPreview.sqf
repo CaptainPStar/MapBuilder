@@ -49,6 +49,7 @@ switch (toLower _mode) do {
         #define __PREVIEWPOS [100, 100, 1000]
         _args params [["_type", missionNamespace getVariable ["MB_CurClass", ""]]];
         if (_type == "") exitWith { };
+        if !(isClass (configFile >> "CfgVehicles" >> _type)) exitWith { };
 
         private _previewCtrl = uiNamespace getVariable ["MB_PreviewPicture", controlNull];
         if !(isPiPEnabled) exitWith {

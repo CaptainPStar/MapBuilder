@@ -4,7 +4,7 @@
     Description:    Does something
 */
 
-private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+private _brusherCtrl = uiNamespace getVariable ["MB_Brush.contentCtrl", controlNull];
 #define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
 
 params [["_ctrl", controlNull]];

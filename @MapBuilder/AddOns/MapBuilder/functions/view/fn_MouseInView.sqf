@@ -7,8 +7,10 @@ if(_in) then {
 	_ctrl = _display displayCtrl 170001;
 	//ctrlSetFocus _ctrl;
 	MB_ViewportHasFocus = true;
+	["ui.view.mousein"] call MB_fnc_dispatchCallbacks;
 } else {
 	//systemChat "Mouse left View";
 	_this call MB_fnc_resetKeys;
 	MB_ViewportHasFocus = false;
+	["ui.view.mouseout"] call MB_fnc_dispatchCallbacks;
 };

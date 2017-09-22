@@ -4,7 +4,7 @@
     Description:    Updates the list of saved brush files
 */
 
-private _brusherCtrl = uiNamespace getVariable ["MB_BrushContent", controlNull];
+private _brusherCtrl = uiNamespace getVariable ["MB_Brush.contentCtrl", controlNull];
 #define __CTRLCONTENT(var1) (_brusherCtrl controlsGroupCtrl var1)
 
 private _path = tvCurSel __CTRLCONTENT(171202);

@@ -45,11 +45,11 @@ BEGIN_WINDOW(IDC,NAME,TITLE,0.1,0.1,48,30)
 			tooltip = "A list of brushfiles from the 'brushes'-folder.";
 		};
 		class MB_Window_Brusher_FileList : MB_RscTree {
-			idc = 171201;
+			idc = __IDC_ELEMENT_1;
 			WINDOW_POSITION(0,2,12,23)
 			sizeEx = 0.03;
 			colorBackground[] = {0, 0.8, 0, 0.5};
-			onTreeSelChanged = "call mb_fnc_brusherSelectFile;";
+			onTreeSelChanged = "[] call mb_fnc_brusherSelectFile;";
 			onMouseExit = "";
 		};
 		class MB_Window_Brusher_FileNameEdit: MB_RscEdit {
