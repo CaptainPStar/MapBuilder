@@ -19,6 +19,11 @@ class CfgVehicleClasses
 		mapbuilder_displayname = "Trees";
 		mapbuilder_library = "A3 Extra";
 	};
+	class MB_Tanoa_Vegetation : MB_A3_Trees
+	{
+		displayName = "MB Tanoa Vegetation";
+		mapbuilder_displayname = "Tanoa Vegetation";
+	};
 	class MB_A3_Bushes : MB_A3_Trees
 	{
 		displayName = "MB A3 Bushes";
@@ -43,6 +48,11 @@ class CfgVehicleClasses
 	{
 		displayName = "MB A3 Rocks (Blunt)";
 		mapbuilder_displayname = "Rocks (Blunt)";
+	};
+	class MB_Tanoa_rocks : MB_A3_Trees
+	{
+		displayName = "MB Tanoa Rocks";
+		mapbuilder_displayname = "Tanoa Rocks";
 	};
 	class MB_A3_Rocks_Water : MB_A3_Trees
 	{
@@ -200,6 +210,553 @@ class CfgVehicles
 	class Items_base_F;
 	class Scrapyard_base_F;
 	
+	class Cliff_boulder_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_Boulder_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_boulder_F.p3d";
+	};
+	class Cliff_peak_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_peak_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_peak_F.p3d";
+	};
+	class Cliff_stone_big_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_big_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_big_F.p3d";
+	};
+	class Cliff_stone_big_LC_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_big_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_big_LC_F.p3d";
+	};
+	class Cliff_stone_medium_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_medium_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_medium_F.p3d";
+	};
+	class Cliff_stone_medium_LC_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_medium_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_medium_LC_F.p3d";
+	
+	};
+	class Cliff_stone_small_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_small_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_small_F.p3d";
+	};
+	class Cliff_stone_small_LC_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stone_small_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stone_small_LC_F.p3d";
+	};
+	class Cliff_stoneCluster_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_stoneCluster_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_stoneCluster_F.p3d";
+	};
+	class Cliff_surfaceMine_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_surfaceMine_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_surfaceMine_F.p3d";
+	};
+	class Cliff_wall_long_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_wall_long_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_wall_long_F.p3d";
+	};
+	class Cliff_wall_round_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_wall_round_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_wall_round_F.p3d";
+	};
+	class Cliff_wall_tall_F: Static
+	{
+		scope = 2;
+		displayName = "Cliff_wall_tall_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\cliff\cliff_wall_tall_F.p3d";
+	};
+	class LavaBoulder_01_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_01_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_01_F.p3d";
+	};
+	class LavaBoulder_01_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_01_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_01_water_F.p3d";
+	};
+	class LavaBoulder_02_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_02_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_02_F.p3d";
+	};
+	class LavaBoulder_02_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_02_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_02_water_F.p3d";
+	};
+	class LavaBoulder_03_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_03_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_03_F.p3d";
+	};
+	class LavaBoulder_03_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_03_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_03_water_F.p3d";
+	};
+	class LavaBoulder_04_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_04_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_04_F.p3d";
+	};
+	class LavaBoulder_04_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaBoulder_04_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaBoulder_04_water_F.p3d";
+	};
+	class LavaStone_big_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_big_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_big_F.p3d";
+	};
+	class LavaStone_big_LC_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_big_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_big_LC_F.p3d";
+	};
+	class LavaStone_big_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_big_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_big_water_F.p3d";
+	};
+	class LavaStone_big_water_LC_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_big_water_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_big_water_LC_F.p3d";
+	};
+	class LavaStone_small_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_small_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_small_F.p3d";
+	};
+	class LavaStone_small_LC_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_small_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_small_LC_F.p3d";
+	};
+	class LavaStone_small_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_small_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_small_water_F.p3d";
+	};
+	class LavaStone_small_water_LC_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStone_small_water_LC_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStone_small_water_LC_F.p3d";
+	};
+	class LavaStoneCluster_large_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStoneCluster_large_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStoneCluster_large_F.p3d";
+	};
+	class LavaStoneCluster_large_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStoneCluster_large_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStoneCluster_large_water_F.p3d";
+	};
+	class LavaStoneCluster_small_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStoneCluster_small_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStoneCluster_small_F.p3d";
+	};
+	class LavaStoneCluster_small_water_F: Static
+	{
+		scope = 2;
+		displayName = "LavaStoneCluster_small_water_F";
+		vehicleClass = "MB_Tanoa_rocks";
+		model = "a3\rocks_f_exp\LavaStones\LavaStoneCluster_small_water_F.p3d";
+	};
+	class b_Ginger_3_F: Static
+	{
+		scope = 2;
+		displayName = "b_Ginger_3_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Ginger_3_F.p3d";
+	};
+	class b_Ginger_9_F: Static
+	{
+		scope = 2;
+		displayName = "b_Ginger_9_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Ginger_9_F.p3d";
+	};
+	class b_Ginger_20_F: Static
+	{
+		scope = 2;
+		displayName = "b_Ginger_20_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Ginger_20_F.p3d";
+	};
+	class b_Sugarcane_mature_row_F: Static
+	{
+		scope = 2;
+		displayName = "b_Sugarcane_mature_row_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Sugarcane_mature_row_F.p3d";
+	};
+	class b_Sugarcane_sapling_row_F: Static
+	{
+		scope = 2;
+		displayName = "b_Sugarcane_sapling_row_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Sugarcane_sapling_row_F.p3d";
+	};
+	class b_Sugarcane_sapling_single_F: Static
+	{
+		scope = 2;
+		displayName = "b_Sugarcane_sapling_single_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\b_Sugarcane_sapling_single_F.p3d";
+	};
+	class t_Banana_F: Static
+	{
+		scope = 2;
+		displayName = "t_Banana_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\t_Banana_F.p3d";
+	};
+	class t_Banana_slim_F: Static
+	{
+		scope = 2;
+		displayName = "t_Banana_slim_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\t_Banana_slim_F.p3d";
+	};
+	class t_Banana_wild_F: Static
+	{
+		scope = 2;
+		displayName = "t_Banana_wild_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\t_Banana_wild_F.p3d";
+	};
+	class t_Cacao_ripe_F: Static
+	{
+		scope = 2;
+		displayName = "t_Cacao_ripe_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Crop\t_Cacao_ripe_F.p3d";
+	};
+	class d_LianaTangle_narrow_F: Static
+	{
+		scope = 2;
+		displayName = "d_LianaTangle_narrow_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Lianas\d_LianaTangle_narrow_F.p3d";
+	};
+	class d_LianaTangle_wide_F: Static
+	{
+		scope = 2;
+		displayName = "d_LianaTangle_wide_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Lianas\d_LianaTangle_wide_F.p3d";
+	};
+	class b_Calochlaena_F: Static
+	{
+		scope = 2;
+		displayName = "b_Calochlaena_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Calochlaena_F.p3d";
+	};
+	class b_Cestrum_F: Static
+	{
+		scope = 2;
+		displayName = "b_Cestrum_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Cestrum_F.p3d";
+	};
+	class b_Colored_red_F: Static
+	{
+		scope = 2;
+		displayName = "b_Colored_red_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Colored_red_F.p3d";
+	};
+	class b_Colored_yellow_F: Static
+	{
+		scope = 2;
+		displayName = "b_Colored_yellow_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Colored_yellow_F.p3d";
+	};
+	class b_Cycas_F: Static
+	{
+		scope = 2;
+		displayName = "b_Cycas_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Cycas_F.p3d";
+	};
+	class b_FicusC2d_tanoa_F: Static
+	{
+		scope = 2;
+		displayName = "b_FicusC2d_tanoa_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_FicusC2d_tanoa_F.p3d";
+	};
+	class b_Gardenia_dec_01_F: Static
+	{
+		scope = 2;
+		displayName = "b_Gardenia_dec_01_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Gardenia_dec_01_F.p3d";
+	};
+	class b_Gardenia_dec_02_F: Static
+	{
+		scope = 2;
+		displayName = "b_Gardenia_dec_02_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Gardenia_dec_02_F.p3d";
+	};
+	class b_Gardenia_F: Static
+	{
+		scope = 2;
+		displayName = "b_Gardenia_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Gardenia_F.p3d";
+	};
+	class b_Leucaena_F: Static
+	{
+		scope = 2;
+		displayName = "b_Leucaena_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Leucaena_F.p3d";
+	};
+	class b_NeriumO2d_tanoa_F: Static
+	{
+		scope = 2;
+		displayName = "b_NeriumO2d_tanoa_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_NeriumO2d_tanoa_F.p3d";
+	};
+	class b_PiperMeth_F: Static
+	{
+		scope = 2;
+		displayName = "b_PiperMeth_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_PiperMeth_F.p3d";
+	};
+	class b_Rhizophora_F: Static
+	{
+		scope = 2;
+		displayName = "b_Rhizophora_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Shrub\b_Rhizophora_F.p3d";
+	};
+	class t_Agathis_tall_F: Static
+	{
+		scope = 2;
+		displayName = "t_Agathis_tall_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Agathis_tall_F.p3d";
+	};
+	class t_Agathis_wide_F: Static
+	{
+		scope = 2;
+		displayName = "t_Agathis_wide_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Agathis_wide_F.p3d";
+	};
+	class t_Albizia_F: Static
+	{
+		scope = 2;
+		displayName = "t_Albizia_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Albizia_F.p3d";
+	};
+	class t_Cocos_bend_F: Static
+	{
+		scope = 2;
+		displayName = "t_Cocos_bend_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Cocos_bend_F.p3d";
+	};
+	class t_Cocos_small_F: Static
+	{
+		scope = 2;
+		displayName = "t_Cocos_small_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Cocos_small_F.p3d";
+	};
+	class t_Cocos_tall_F: Static
+	{
+		scope = 2;
+		displayName = "t_Cocos_tall_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Cocos_tall_F.p3d";
+	};
+	class t_CocosNucifera2s_small_F: Static
+	{
+		scope = 2;
+		displayName = "t_CocosNucifera2s_small_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_CocosNucifera2s_small_F.p3d";
+	};
+	class t_CocosNucifera3s_bend_F: Static
+	{
+		scope = 2;
+		displayName = "t_CocosNucifera3s_bend_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_CocosNucifera3s_bend_F.p3d";
+	};
+	class t_CocosNucifera3s_tall_F: Static
+	{
+		scope = 2;
+		displayName = "t_CocosNucifera3s_tall_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_CocosNucifera3s_tall_F.p3d";
+	};
+	class t_Cyathea_F: Static
+	{
+		scope = 2;
+		displayName = "t_Cyathea_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Cyathea_F.p3d";
+	};
+	class t_Ficus_big_F: Static
+	{
+		scope = 2;
+		displayName = "t_Ficus_big_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Ficus_big_F.p3d";
+	};
+	class t_Ficus_medium_F: Static
+	{
+		scope = 2;
+		displayName = "t_Ficus_medium_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Ficus_medium_F.p3d";
+	};
+	class t_Ficus_small_F: Static
+	{
+		scope = 2;
+		displayName = "t_Ficus_small_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Ficus_small_F.p3d";
+	};
+	class t_Inocarpus_F: Static
+	{
+		scope = 2;
+		displayName = "t_Inocarpus_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Inocarpus_F.p3d";
+	};
+	class t_Leucaena_F: Static
+	{
+		scope = 2;
+		displayName = "t_Leucaena_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Leucaena_F.p3d";
+	};
+	class t_Millettia_F: Static
+	{
+		scope = 2;
+		displayName = "t_Millettia_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Millettia_F.p3d";
+	};
+	class t_Millettia_plantation_F: Static
+	{
+		scope = 2;
+		displayName = "t_Millettia_plantation_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Millettia_plantation_F.p3d";
+	};
+	class t_Palaquium_F: Static
+	{
+		scope = 2;
+		displayName = "t_Palaquium_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Palaquium_F.p3d";
+	};
+	class t_Pritchardia_F: Static
+	{
+		scope = 2;
+		displayName = "t_Pritchardia_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Pritchardia_F.p3d";
+	};
+	class t_Rhizophora_F: Static
+	{
+		scope = 2;
+		displayName = "t_Rhizophora_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\Tree\t_Rhizophora_F.p3d";
+	};
 	class VergePost_F: Static
 	{
 		scope = 2;
