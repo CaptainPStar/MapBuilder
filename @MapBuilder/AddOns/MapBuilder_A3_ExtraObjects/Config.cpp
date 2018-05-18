@@ -757,6 +757,90 @@ class CfgVehicles
 		vehicleClass = "MB_Tanoa_Vegetation";
 		model = "a3\vegetation_f_exp\Tree\t_Rhizophora_F.p3d";
 	};
+	class d_FallenBranch_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenBranch_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenBranch_F.p3d";
+	};
+	class d_FallenBranch_LC_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenBranch_LC_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenBranch_LC_F.p3d";
+	};
+	class d_FallenTrunk_branches_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_branches_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_branches_F.p3d";
+	};
+	class d_FallenTrunk_branches_LC_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_branches_LC_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_branches_LC_F.p3d";
+	};
+	class d_FallenTrunk_clear_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_clear_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_clear_F.p3d";
+	};
+	class d_FallenTrunk_clear_LC_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_clear_LC_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_clear_LC_F.p3d";
+	};
+	class d_FallenTrunk_roots_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_roots_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_roots_F.p3d";
+	};
+	class d_FallenTrunk_roots_LC_F: Static
+	{
+		scope = 2;
+		displayName = "d_FallenTrunk_roots_LC_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_FallenTrunk_roots_LC_F.p3d";
+	};
+	class d_TreeStump_cut_large_F: Static
+	{
+		scope = 2;
+		displayName = "d_TreeStump_cut_large_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_TreeStump_cut_large_F.p3d";
+	};
+	class d_TreeStump_cut_small_F: Static
+	{
+		scope = 2;
+		displayName = "d_TreeStump_cut_small_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_TreeStump_cut_small_F.p3d";
+	};
+	class d_TreeStump_natural_large_F: Static
+	{
+		scope = 2;
+		displayName = "d_TreeStump_natural_large_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_TreeStump_natural_large_F.p3d";
+	};
+	class d_TreeStump_natural_small_F: Static
+	{
+		scope = 2;
+		displayName = "d_TreeStump_natural_small_F";
+		vehicleClass = "MB_Tanoa_Vegetation";
+		model = "a3\vegetation_f_exp\TreeParts\d_TreeStump_natural_small_F.p3d";
+	};
 	class VergePost_F: Static
 	{
 		scope = 2;
